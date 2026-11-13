@@ -1,0 +1,122 @@
+@import 'tailwindcss';
+
+/* Self-hosted variable fonts (latin subset only; font-display: swap). */
+@font-face {
+    font-family: 'Nunito Sans Variable';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 200 1000;
+    src: url('@fontsource-variable/nunito-sans/files/nunito-sans-latin-wght-normal.woff2') format('woff2-variations');
+}
+@font-face {
+    font-family: 'Fraunces Variable';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 100 900;
+    src: url('@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2') format('woff2-variations');
+}
+
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/*
+ |----------------------------------------------------------------------
+ | DESIGN TOKENS: the ONLY place to change when re-skinning a brand.
+ | See docs/reference/DESIGN_SYSTEM.md
+ |----------------------------------------------------------------------
+ | Brand palette (Germany): flag red, sunflower gold, deep space blue,
+ | vanilla custard, vivid tangerine.
+ | Contrast notes (WCAG AA): white on red 4.9:1, navy on gold/custard/white
+ | > 9:1. Tangerine is for borders and fills behind NAVY text only.
+ */
+@theme {
+    --font-sans: 'Nunito Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+
+    --color-brand-custard: #eae2b7;
+    --color-brand-gold: #fcbf49;
+    --color-brand-red: #d6282b;
+    --color-brand-navy: #003049;
+    --color-brand-tangerine: #f77f00;
+
+    /* Derived tones */
+    --color-brand-custard-light: #f7f3df;
+    --color-brand-navy-dark: #001f30;
+    --color-brand-navy-soft: #1c4a63;
+    --color-brand-red-dark: #b01e21;
+    --color-brand-gold-dark: #e3a42b;
+    --color-ink: #003049;
+    --color-ink-soft: #3d5566;
+
+    --breakpoint-xs: 30rem;
+
+    --radius-card: 1rem;
+    --shadow-card: 0 10px 30px -12px rgb(0 48 73 / 0.35);
+
+    --animate-fade-up: fade-up 0.4s ease-out both;
+    @keyframes fade-up {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: none; }
+    }
+}
+
+@layer base {
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+        font-family: var(--font-sans);
+        color: var(--color-ink);
+        background: #fff;
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+    h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.15; letter-spacing: -0.01em; font-weight: 700; }
+    :focus-visible { outline: 3px solid var(--color-brand-tangerine); outline-offset: 2px; border-radius: 4px; }
+    img { height: auto; }
+    @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+}
+
+@layer components {
+    .container-x { width: 100%; max-width: 72rem; margin-inline: auto; padding-inline: 1rem; }
+    @media (min-width: 40rem) { .container-x { padding-inline: 1.5rem; } }
+
+    .prose-ggt { max-width: 65ch; }
+    .prose-ggt > * + * { margin-top: 1rem; }
+    .prose-ggt h2 { font-size: 1.5rem; margin-top: 2rem; }
+    .prose-ggt h3 { font-size: 1.2rem; margin-top: 1.5rem; }
+    .prose-ggt ul { list-style: disc; padding-left: 1.25rem; }
+    .prose-ggt ol { list-style: decimal; padding-left: 1.25rem; }
+    .prose-ggt a { color: var(--color-brand-red-dark); text-decoration: underline; }
+
+    .btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+        font-weight: 800; border-radius: 9999px; padding: .75rem 1.5rem; min-height: 2.75rem;
+        transition: background-color .15s, transform .15s, box-shadow .15s; cursor: pointer; text-align: center;
+        line-height: 1.2;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--color-brand-red); color: #fff; box-shadow: 0 6px 16px -6px rgb(214 40 43 / .7); }
+    .btn-primary:hover { background: var(--color-brand-red-dark); }
+    .btn-gold { background: var(--color-brand-gold); color: var(--color-brand-navy); }
+    .btn-gold:hover { background: var(--color-brand-gold-dark); }
+    .btn-outline { border: 2px solid var(--color-brand-navy); color: var(--color-brand-navy); background: transparent; }
+    .btn-outline:hover { background: var(--color-brand-navy); color: #fff; }
+    .btn-outline-light { border: 2px solid #fff; color: #fff; }
+    .btn-outline-light:hover { background: #fff; color: var(--color-brand-navy); }
+    .btn-sm { padding: .5rem 1rem; min-height: 2.25rem; font-size: .875rem; }
+
+    .field-label { display: block; font-weight: 700; font-size: .875rem; margin-bottom: .25rem; }
+    .field-input {
+        width: 100%; border: 2px solid #c9d3d9; border-radius: .5rem; background: #fff; color: var(--color-ink);
+        padding: .6rem .75rem; min-height: 2.75rem; font-size: 1rem; /* 16px stops iOS zoom */
+    }
+    .field-input:focus { border-color: var(--color-brand-tangerine); outline: none; box-shadow: 0 0 0 3px rgb(247 127 0 / .3); }
+    .field-input[aria-invalid='true'] { border-color: var(--color-brand-red); }
+    .field-error { color: var(--color-brand-red-dark); font-size: .875rem; font-weight: 700; margin-top: .25rem; }
+
+    .card { background: #fff; border-radius: var(--radius-card); box-shadow: var(--shadow-card); overflow: hidden; }
+    [x-cloak] { display: none !important; }
+}
