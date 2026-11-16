@@ -14,6 +14,8 @@ Licence check done on 2026-11-11 from the Commons file metadata. Re-check before
 | `hiddensee-lighthouse.jpg` | [Ostseeinsel Hiddensee - Leuchtturm auf dem Dornbusch - panoramio.jpg](https://commons.wikimedia.org/wiki/File:Ostseeinsel_Hiddensee_-_Leuchtturm_auf_dem_Dornbusch_-_panoramio.jpg) | Gottfried Hoffmann | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0) | Hiddensee destination; Hiddensee package |
 | `hiddensee-beach.jpg` | [Hiddensee - Flickr - abbilder (1).jpg](https://commons.wikimedia.org/wiki/File:Hiddensee_-_Flickr_-_abbilder_(1).jpg) | abbilder | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) | Hiddensee package gallery |
 | `gengenbach-rathaus.jpg` | [Gengenbach-Rathaus-06-2025-gje.jpg](https://commons.wikimedia.org/wiki/File:Gengenbach-Rathaus-06-2025-gje.jpg) | Gerd Eichmann | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) | Gengenbach destination; Black Forest package; Chauffeur Driven card; Fairytale Towns gallery |
+| `neuschwanstein-castle.jpg` | [Neuschwanstein Castle (532850).jpg](https://commons.wikimedia.org/wiki/File:Neuschwanstein_Castle_(532850).jpg) | cameralends | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) | Home "Why book" arch photo |
+| `bacharach-rhine.jpg` | [Blick auf Bacharach und den Rhein - Flickr - abbilder.jpg](https://commons.wikimedia.org/wiki/File:Blick_auf_Bacharach_und_den_Rhein_-_Flickr_-_abbilder.jpg) | abbilder | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0) | Home "Why book" second photo |
 
 ## Notes
 
@@ -28,3 +30,5 @@ Licence check done on 2026-11-11 from the Commons file metadata. Re-check before
 Upload in **Admin > Media** (or inside a package, page or settings screen). Alt text is mandatory. Then add a row to this table and to `database/seed-images/credits.json` if it needs a credit.
 ## Video
 - `public/videos/hero.mp4`: AI-generated (Higgsfield, Seedance 2.5, prompt: aerial drift over a half-timbered German hillside town at golden hour). No third-party footage; replace with licensed real footage if preferred.
+
+New seed photos are imported on deploy by `php artisan images:import-seed` (add the file to `database/seed-images`, an entry to `ImageSeeder::ALT` and `credits.json`). Originals are stored at max 3840px wide.

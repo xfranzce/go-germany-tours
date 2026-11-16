@@ -123,8 +123,9 @@
 
 {{-- 1b. WHY BOOK WITH US (light): layered photo collage + benefit cards (reveal on scroll) --}}
 @php
-    $whyImg = $galleryItems->first(fn ($g) => str_contains($g['path'], 'quedlinburg-lane')) ?? $galleryItems->first();
-    $whyImg2 = $galleryItems->first(fn ($g) => str_contains($g['path'], 'cochem')) ?? $galleryItems->skip(1)->first();
+    $whyFind = fn (string $stem) => ($m = \App\Models\Media::query()->where('path', 'like', "media/{$stem}-%")->first()) ? ['path' => $m->path, 'media' => $m] : null;
+    $whyImg = $whyFind('neuschwanstein-castle') ?? $galleryItems->first(fn ($g) => str_contains($g['path'], 'quedlinburg-lane')) ?? $galleryItems->first();
+    $whyImg2 = $whyFind('bacharach-rhine') ?? $galleryItems->first(fn ($g) => str_contains($g['path'], 'cochem')) ?? $galleryItems->skip(1)->first();
 @endphp
 <section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-custard-light to-white text-brand-navy py-20 sm:py-28" aria-labelledby="book-title"
          x-data="{ shown: false }" x-init="const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { shown = true; o.disconnect() } }, { threshold: 0.15 }); o.observe($el)">
@@ -138,7 +139,7 @@
                 {{-- gold offset frame --}}
                 <div class="absolute left-5 top-5 right-16 bottom-11 sm:left-7 sm:top-7 rounded-t-[999px] border-2 border-brand-gold/70" aria-hidden="true"></div>
                 <div class="relative aspect-[4/5] overflow-hidden rounded-t-[999px] shadow-[0_40px_80px_-30px_rgb(0_48_73/0.55)]">
-                    <x-picture :path="$whyImg['path']" hires sizes="(min-width: 1024px) 40vw, 90vw" class="w-full h-full object-cover scale-105 hover:scale-110 transition duration-[1500ms]"/>
+                    <x-picture :path="$whyImg['path']" hires sizes="(min-width: 1024px) 40vw, 90vw" class="w-full h-full object-cover object-[32%_50%] scale-105 hover:scale-110 transition duration-[1500ms]"/>
                     <div class="absolute inset-0 bg-gradient-to-t from-brand-navy/25 via-transparent to-transparent" aria-hidden="true"></div>
                 </div>
                 @if($whyImg2)

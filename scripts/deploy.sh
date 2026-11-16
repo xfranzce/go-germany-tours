@@ -18,5 +18,5 @@ if [ -n "$(git status --porcelain)" ]; then git add -A && git commit -q -m "${1:
 Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>"; fi
 echo "== push"; git push -q origin main
 echo "== upload build + pull + migrate"
-tar czf - public/build | "${SSH[@]}" "set -e; cd $GGT_REMOTE_APP && git pull -q && tar xzf - && $PHP \$(which composer) install --no-dev -o -n -q && $PHP artisan migrate --force && $PHP artisan optimize:clear >/dev/null"
+tar czf - public/build | "${SSH[@]}" "set -e; cd $GGT_REMOTE_APP && git pull -q && tar xzf - && $PHP \$(which composer) install --no-dev -o -n -q && $PHP artisan migrate --force && $PHP artisan images:import-seed && $PHP artisan optimize:clear >/dev/null"
 echo "== live check"; curl -s -o /dev/null -w "%{http_code}\n" "$GGT_URL"

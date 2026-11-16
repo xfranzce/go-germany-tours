@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\File;
  */
 class ImageSeeder extends Seeder
 {
-    private const ALT = [
+    public const ALT = [
         'hero-quedlinburg' => 'Quedlinburg castle hill and abbey church towers above the red-roofed old town',
         'quedlinburg-lane' => 'Cobbled lane lined with half-timbered houses in Quedlinburg',
         'saxon-switzerland-bastei' => 'Sandstone rock towers rising from morning mist in Saxon Switzerland',
@@ -27,6 +27,8 @@ class ImageSeeder extends Seeder
         'hiddensee-lighthouse' => 'Dornbusch lighthouse on a grassy hill on Hiddensee island',
         'hiddensee-beach' => 'Fishing boat on the sandy beach of Hiddensee with the Baltic Sea behind',
         'gengenbach-rathaus' => 'The pink baroque town hall on the market square in Gengenbach',
+        'neuschwanstein-castle' => 'Neuschwanstein Castle on its wooded rock above the Bavarian lakes and meadows',
+        'bacharach-rhine' => 'The Rhine valley town of Bacharach with its church tower, vineyards and castle',
     ];
 
     public function run(): void
