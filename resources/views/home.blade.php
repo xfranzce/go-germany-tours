@@ -104,7 +104,7 @@
          x-data="{ shown: false }" x-init="const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { shown = true; o.disconnect() } }, { threshold: 0.15 }); o.observe($el)">
     <div class="pointer-events-none absolute -z-10 -top-40 -left-40 size-[34rem] rounded-full bg-brand-gold/25 blur-[120px]" aria-hidden="true"></div>
     <div class="pointer-events-none absolute -z-10 -bottom-40 -right-32 size-[30rem] rounded-full bg-brand-custard blur-[100px]" aria-hidden="true"></div>
-    <span class="pointer-events-none absolute -z-10 right-0 top-6 font-display italic text-[11rem] sm:text-[17rem] leading-none text-brand-navy/[0.05] select-none" aria-hidden="true">Germany</span>
+    <span class="pointer-events-none absolute -z-10 right-0 top-6 font-display italic text-[11rem] sm:text-[17rem] leading-none text-brand-navy/[0.025] select-none" aria-hidden="true">Germany</span>
 
     <div class="container-x grid gap-16 lg:gap-24 lg:grid-cols-[0.9fr_1fr] lg:items-center">
         @if($whyImg)
