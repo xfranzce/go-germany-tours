@@ -403,14 +403,14 @@
          x-init="const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { shown = true; o.disconnect() } }, { threshold: 0.1 }); o.observe($el)">
     <div class="pointer-events-none absolute -z-10 -top-32 -right-32 size-[30rem] rounded-full bg-brand-gold/20 blur-[120px]" aria-hidden="true"></div>
     <div class="pointer-events-none absolute -z-10 bottom-0 -left-32 size-[26rem] rounded-full bg-brand-tangerine/15 blur-[120px]" aria-hidden="true"></div>
-    <div class="container-x">
+    <div class="container-x max-w-[1700px]">
         <div class="mb-10 grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16">
             <x-section-heading id="gallery-title" light align="left" eyebrow="A visual journey" title="Beyond the postcard." class="!mb-0"/>
             <p class="text-base sm:text-lg text-white/85 lg:max-w-xl lg:justify-self-end">A glimpse of Germany beyond the familiar, from quiet village lanes and half-timbered streets to misty cliffs, river valleys and landscapes worth taking the longer way for. Tap a photo to see it full size.</p>
         </div>
         <div class="grid grid-cols-1 gap-[15px] sm:grid-cols-4 auto-rows-[18rem] lg:auto-rows-[25rem]">
             @foreach($mosaic as $g)
-                <button type="button" class="group relative isolate overflow-hidden rounded-xl text-left shadow-[0_20px_40px_-24px_rgb(0_0_0/0.8)] transition duration-700 ease-out hover:-translate-y-1.5 hover:shadow-[0_34px_60px_-26px_rgb(0_0_0/0.9)] {{ $g['span'] }}"
+                <button type="button" class="group relative isolate overflow-hidden rounded-none text-left shadow-[0_20px_40px_-24px_rgb(0_0_0/0.8)] transition duration-700 ease-out hover:-translate-y-1.5 hover:shadow-[0_34px_60px_-26px_rgb(0_0_0/0.9)] {{ $g['span'] }}"
                         :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'" style="transition-delay: {{ $loop->index * 110 }}ms"
                         data-src="{{ $g['media']->url() }}" data-cap="{{ $g['label'] }}" data-alt="{{ $g['media']->alt }}"
                         @click="src = $el.dataset.src; cap = $el.dataset.cap; alt = $el.dataset.alt; open = true"
