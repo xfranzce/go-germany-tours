@@ -1,9 +1,12 @@
 @props(['src', 'poster' => null, 'class' => ''])
-{{-- Looping muted background video from public/videos/{src}. Renders nothing if the file is missing, so the photo behind it shows. --}}
+{{-- Looping muted background video from public/videos/{src}. Renders nothing if the file is missing, so the photo behind it shows.
+     The file is only fetched once the page has loaded AND the video is near the screen, so it never delays the first paint. --}}
 @if(file_exists(public_path('videos/'.$src)))
-    <video class="{{ $class }}" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"
+    <video class="{{ $class }}" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"
            @if($poster) poster="{{ $poster }}" @endif
-           x-data x-init="if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { $el.pause(); $el.removeAttribute('autoplay') }">
-        <source src="{{ asset('videos/'.$src) }}" type="video/mp4">
-    </video>
+           data-src="{{ asset('videos/'.$src) }}"
+           x-data x-init="
+               if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || (navigator.connection && navigator.connection.saveData)) return;
+               const go = () => { new IntersectionObserver((e, o) => { if (e[0].isIntersecting) { o.disconnect(); $el.src = $el.dataset.src; $el.play().catch(() => {}) } }, { rootMargin: '300px' }).observe($el) };
+               document.readyState === 'complete' ? setTimeout(go, 400) : addEventListener('load', () => setTimeout(go, 400), { once: true })"></video>
 @endif
