@@ -18,7 +18,7 @@
             @endif
         </div>
         <nav aria-label="Explore">
-            <p class="font-display font-bold text-lg">Explore</p>
+            <p class="eyebrow text-brand-gold">Explore</p>
             <ul class="mt-3 space-y-2">
                 <li><a class="hover:text-brand-gold" href="{{ route('packages.index') }}">All packages</a></li>
                 @foreach(\App\Models\TourType::active()->get(['name', 'slug']) as $t)
@@ -28,7 +28,7 @@
             </ul>
         </nav>
         <nav aria-label="Destinations">
-            <p class="font-display font-bold text-lg">Destinations</p>
+            <p class="eyebrow text-brand-gold">Destinations</p>
             <ul class="mt-3 space-y-2">
                 @foreach(\App\Models\Destination::active()->get(['name', 'slug']) as $d)
                     <li><a class="hover:text-brand-gold" href="{{ route('destinations.show', $d->slug) }}">{{ $d->name }}</a></li>

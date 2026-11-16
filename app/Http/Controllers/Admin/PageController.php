@@ -9,7 +9,7 @@ class PageController extends AdminController
 {
     /** Editable home page text (key => [label, default shown when blank]). */
     public const HOME_TEXT = [
-        'hero_h1' => ['Hero headline (H1)', 'Tailor-Made Germany Tours Through Its Fairytale Towns'],
+        'hero_h1' => ['Hero headline (H1). Put *stars* around the words to highlight, e.g. Tours Through *Fairytale Towns*', 'Tailor-Made Tours of *Germany\'s Fairytale Towns*'],
         'hero_sub' => ['Hero sub-heading', 'Self drive, chauffeur driven or small-group coach. Explore Quedlinburg, Saxon Switzerland, Cochem, Hiddensee and Gengenbach, planned around you.'],
         'why_title' => ['"Why choose us" title', 'Why travelers choose us'],
         'why_intro' => ['"Why choose us" intro', 'Germany is easier to enjoy when the planning is done for you.'],

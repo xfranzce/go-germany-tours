@@ -10,7 +10,7 @@
                 </ol>
             </nav>
         @endif
-        <h1 class="text-3xl sm:text-5xl font-extrabold max-w-4xl">{{ $title }}</h1>
+        <h1 class="text-4xl sm:text-5xl max-w-4xl">{{ $title }}</h1>
         @if(!empty($lead))<p class="mt-3 text-lg text-white/90 max-w-3xl">{{ $lead }}</p>@endif
     </div>
 </section>

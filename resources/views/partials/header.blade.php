@@ -3,7 +3,7 @@
     $navDests = \App\Models\Destination::active()->get(['name', 'slug']);
     $logo = \App\Models\Media::forPath($site['logo'] ?? null);
 @endphp
-<header class="sticky top-0 z-40 bg-white/95 backdrop-blur shadow-sm" x-data="{ mobile: false }" @keydown.escape="mobile = false">
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-brand-custard" x-data="{ mobile: false }" @keydown.escape="mobile = false">
     <div class="container-x flex items-center justify-between gap-4 py-3">
         <a href="{{ route('home') }}" class="flex items-center gap-2.5 font-display font-extrabold text-xl text-brand-navy leading-none" aria-label="{{ $site['brand_name'] }} home">
             @if($logo)
@@ -16,13 +16,13 @@
             @endif
         </a>
 
-        <nav class="hidden lg:flex items-center gap-1 font-bold" aria-label="Main">
+        <nav class="hidden lg:flex items-center gap-1 font-bold text-sm uppercase tracking-wider" aria-label="Main">
             @foreach([['Tours', 'tours', $navTypes, 'tours.show'], ['Destinations', 'destinations', $navDests, 'destinations.show']] as [$label, $id, $items, $route])
                 <div class="relative" x-data="{ open: false }" @keydown.escape="open = false" @click.outside="open = false">
                     <button type="button" class="px-3 py-2 rounded-lg hover:bg-brand-custard-light inline-flex items-center gap-1" :aria-expanded="open" aria-controls="menu-{{ $id }}" @click="open = !open">
                         {{ $label }} <x-icon name="chevron-down" class="w-4 h-4"/>
                     </button>
-                    <ul id="menu-{{ $id }}" x-show="open" x-cloak x-transition.opacity class="absolute left-0 mt-1 min-w-56 bg-white rounded-xl shadow-card p-2 z-50">
+                    <ul id="menu-{{ $id }}" x-show="open" x-cloak x-transition.opacity class="absolute left-0 mt-2 min-w-64 bg-white rounded-2xl shadow-card border-t-4 border-brand-gold p-2 z-50 normal-case tracking-normal">
                         @foreach($items as $item)
                             <li><a class="block px-3 py-2 rounded-lg hover:bg-brand-custard-light" href="{{ route($route, $item->slug) }}">{{ $item->name }}</a></li>
                         @endforeach

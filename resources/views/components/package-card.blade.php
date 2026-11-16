@@ -10,9 +10,9 @@
         <p class="text-xs font-extrabold uppercase tracking-wider text-brand-red-dark">{{ $package->tourType->name }} &middot; {{ $package->destination->name }}</p>
         <h{{ $level }} class="text-xl mt-1"><a href="{{ $package->url() }}" class="hover:underline">{{ $package->title }}</a></h{{ $level }}>
         <p class="mt-2 text-ink-soft text-sm flex-1">{{ $package->summary }}</p>
-        <dl class="mt-4 flex items-end justify-between">
-            <div><dt class="sr-only">Duration</dt><dd class="font-bold">{{ $package->nights }} nights</dd></div>
-            <div class="text-right"><dt class="sr-only">Price</dt><dd class="font-display font-extrabold text-xl">{{ $package->priceLabel() }}@if($package->is_sample)<span class="block text-xs font-sans font-normal text-ink-soft">sample price</span>@endif</dd></div>
+        <dl class="mt-4 pt-4 border-t border-brand-custard flex items-end justify-between">
+            <div><dt class="text-xs uppercase tracking-wider text-ink-soft font-bold">Duration</dt><dd class="font-bold">{{ $package->nights }} nights</dd></div>
+            <div class="text-right"><dt class="text-xs uppercase tracking-wider text-ink-soft font-bold">Price</dt><dd class="font-display font-extrabold text-xl">{{ $package->priceLabel() }}@if($package->is_sample)<span class="block text-xs font-sans font-normal text-ink-soft">sample price</span>@endif</dd></div>
         </dl>
         <div class="mt-4 grid grid-cols-2 gap-2">
             <x-button :href="$package->url()" variant="outline" size="sm">View details</x-button>

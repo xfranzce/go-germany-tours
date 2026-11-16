@@ -1,7 +1,8 @@
-@props(['path' => null, 'alt' => null, 'sizes' => '100vw', 'priority' => false, 'class' => ''])
+@props(['path' => null, 'alt' => null, 'sizes' => '100vw', 'priority' => false, 'class' => '', 'hires' => false])
 @php $m = \App\Models\Media::forPath($path); @endphp
 @if($m)
-    <img src="{{ $m->url(min(1280, max($m->widths))) }}" srcset="{{ $m->srcset() }}" sizes="{{ $sizes }}"
+    {{-- default src is 1920px (hires: 2560px); browsers pick from srcset up to 3840px --}}
+    <img src="{{ $m->url($hires ? max(array_filter($m->widths, fn ($w) => $w <= 2560) ?: [max($m->widths)]) : max(array_filter($m->widths, fn ($w) => $w <= 1920) ?: [min($m->widths)])) }}" srcset="{{ $m->srcset() }}" sizes="{{ $sizes }}"
          width="{{ $m->width }}" height="{{ $m->height }}" alt="{{ $alt ?? $m->alt }}"
          @if($priority) fetchpriority="high" loading="eager" @else loading="lazy" @endif decoding="async" class="{{ $class }}">
 @else

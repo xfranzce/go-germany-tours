@@ -62,12 +62,12 @@ class PublicPagesTest extends TestCase
         }
     }
 
-    public function test_home_has_faq_structured_data_and_the_quiz_steps_from_the_database(): void
+    public function test_home_has_faq_structured_data_and_the_hero_destination_dropdown(): void
     {
         $html = $this->get('/')->assertOk()->getContent();
         $this->assertStringContainsString('"@type":"FAQPage"', $html);
         $this->assertStringContainsString('"@type":"TravelAgency"', $html);
-        $this->assertStringContainsString('Would you like to visit Quedlinburg or Cochem?', $html);
+        $this->assertStringContainsString('id="hero-dest"', $html); // hero uses a destination dropdown, not the quiz
         $this->assertStringNotContainsString('googletagmanager.com/gtm.js', $html); // GTM off until an ID is set
     }
 

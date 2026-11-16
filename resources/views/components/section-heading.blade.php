@@ -1,9 +1,9 @@
-@props(['title', 'eyebrow' => null, 'intro' => null, 'align' => 'center', 'tag' => 'h2', 'light' => false])
-<div {{ $attributes->except('id')->merge(['class' => 'mb-10 max-w-3xl '.($align === 'center' ? 'text-center mx-auto' : '')]) }}>
+@props(['title', 'eyebrow' => null, 'intro' => null, 'align' => 'center', 'tag' => 'h2', 'light' => false, 'emphasis' => null])
+<div {{ $attributes->except('id')->merge(['class' => 'mb-14 max-w-2xl '.($align === 'center' ? 'text-center mx-auto' : '')]) }}>
     @if($eyebrow)
-        <p class="text-sm font-extrabold uppercase tracking-[0.15em] {{ $light ? 'text-brand-gold' : 'text-brand-red-dark' }}">{{ $eyebrow }}</p>
+        <p class="eyebrow {{ $align === 'center' ? 'centered' : '' }} {{ $light ? 'text-brand-gold' : 'text-brand-red-dark' }}">{{ $eyebrow }}</p>
     @endif
-    <{{ $tag }} @if($attributes->get('id')) id="{{ $attributes->get('id') }}" @endif class="text-3xl sm:text-4xl mt-1 {{ $light ? 'text-white' : '' }}">{{ $title }}</{{ $tag }}>
-    <div class="mt-3 h-1 w-16 rounded bg-brand-gold {{ $align === 'center' ? 'mx-auto' : '' }}" aria-hidden="true"></div>
-    @if($intro)<p class="mt-4 text-lg {{ $light ? 'text-white/90' : 'text-ink-soft' }}">{{ $intro }}</p>@endif
+    <{{ $tag }} @if($attributes->get('id')) id="{{ $attributes->get('id') }}" @endif class="mt-4 {{ $light ? 'text-white' : '' }}">{{ $title }}@if($emphasis) <em class="block italic font-medium {{ $light ? 'text-brand-gold' : 'text-brand-red' }}">{{ $emphasis }}</em>@endif</{{ $tag }}>
+    <span class="flag-rule {{ $align === 'center' ? 'centered' : '' }}" aria-hidden="true"></span>
+    @if($intro)<p class="mt-5 text-base sm:text-lg {{ $light ? 'text-white/85' : 'text-ink-soft' }}">{{ $intro }}</p>@endif
 </div>

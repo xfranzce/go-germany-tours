@@ -8,18 +8,18 @@ Google Ads landing-page site for one GoTour brand. Server-rendered Laravel 12 (P
 
 ## Folder map
 - `app/Http/Controllers/*` public pages; `Admin/*` admin screens (`routes/admin.php`, guard `admin`, model `AdminUser`)
-- `app/Services/EnquiryService.php` ONE place that validates + saves every enquiry; `RecaptchaService`, `ImageService` (WebP + responsive widths)
+- `app/Services/EnquiryService.php` ONE place that validates + saves every enquiry; `RecaptchaService`, `ImageService` (WebP q85, widths 480-3840px; `php artisan images:regenerate` re-encodes seeded images from `database/seed-images`)
 - `app/Services/Ghl/*` GoHighLevel: `GhlFields` (field names), `GhlClient`, `GhlPayloadBuilder`, `GhlSync`; jobs in `app/Jobs`; commands `ghl:setup`, `ghl:test`
 - `app/Http/Middleware/CaptureTracking.php` first/last-touch cookies; `SecurityHeaders.php`
 - `app/Support/Seo.php` page SEO + JSON-LD; `Html.php` rich-text sanitiser; `Countries.php` dial codes + E.164
 - `app/Models/Setting.php` key/value site settings (defaults in `config/gogermany.php`), shared to all views as `$site`
 - `resources/css/app.css` ALL design tokens (`@theme`); `resources/js/app.js` Alpine: modal store, `enquiryForm`, `heroQuiz`, lazy reCAPTCHA; `admin.js` Trix + repeater
-- `resources/views/components/*` button, section-heading, faq-item, form-field, enquiry-form, hero-quiz, package-card, picture, icon; `components/admin/*` admin fields
+- `resources/views/components/*` button, section-heading, faq-item, form-field, enquiry-form, hero-quiz, package-card, picture, icon; `video-bg` (optional looping background videos from `public/videos/{hero,banner,cta}.mp4`; missing file = photo shows; see `public/videos/README.txt`); `components/admin/*` admin fields
 - `database/seeders/*`, `database/seed-images/*` (licensed photos + `credits.json`)
 - `docs/reference/*` guides; `tests/Feature/*`
 
 ## Business rules that are NOT obvious from the code
-1. **Every enquiry form** posts to `POST /enquiry` (`EnquiryController` -> `EnquiryService`). Forms: hero quiz, modal (also used for tour-type/package/"Ask us a question" buttons), package sidebar, contact. One Blade component `<x-enquiry-form>`. Never create a second submission path.
+1. **Every enquiry form** posts to `POST /enquiry` (`EnquiryController` -> `EnquiryService`). Forms: hero quiz (`<x-hero-quiz>` still exists but the home hero currently uses a destination dropdown + video instead; re-add the component to bring it back), modal (also used for tour-type/package/"Ask us a question" buttons), package sidebar, contact. One Blade component `<x-enquiry-form>`. Never create a second submission path.
 2. **Consent text is fixed** in `config/gogermany.php` (`consent_text`). The checkbox is required, unticked by default, enforced in browser AND server (`accepted`). `{company}` = legal company name from settings. Do not reword without legal sign-off; bump `terms_version` (Admin > Site settings) if Terms/Privacy/consent change.
 3. **Evidence is stored per enquiry**: consent flag, exact text shown, terms version, timestamp, IP, user agent, page URL.
 4. **reCAPTCHA v2** verified server-side after all other validation passes; **fails closed** (Google unreachable = rejected). The Google script loads lazily only when someone uses a form (focus/touch), explicit rendering so several widgets/modal work. Local `.env` uses Google's public TEST keys; real keys go in Admin > Site settings or `.env`.

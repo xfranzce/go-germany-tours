@@ -14,7 +14,7 @@
         <div class="prose-ggt">{!! $type->description !!}</div>
     </div>
     <aside class="card p-5 self-start border-4 border-brand-tangerine">
-        <h2 class="text-xl">Get a {{ strtolower($type->name) }} quote</h2>
+        <h2 class="text-2xl">Get a {{ strtolower($type->name) }} quote</h2>
         <p class="mt-2 text-ink-soft">Free and with no obligation.</p>
         <x-button class="w-full mt-4" data-title="Get a quote: {{ $type->name }}" data-prefill="Interested in: {{ $type->name }} tours."
                   @click="$store.modal.show({form:'package_quote', ...$el.dataset})">Get a Quote</x-button>

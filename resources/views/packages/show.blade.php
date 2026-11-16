@@ -63,7 +63,7 @@
                 @foreach([['Included', $package->inclusions, 'check'], ['Not included', $package->exclusions, 'x']] as [$label, $items, $ic])
                     @if($items)
                         <div class="card p-5">
-                            <h2 class="text-xl">{{ $label }}</h2>
+                            <h2 class="text-2xl">{{ $label }}</h2>
                             <ul class="mt-3 space-y-2">@foreach($items as $i)<li class="flex gap-2"><x-icon :name="$ic" class="w-5 h-5 mt-0.5 shrink-0 {{ $ic === 'check' ? 'text-green-700' : 'text-brand-red-dark' }}"/>{{ $i }}</li>@endforeach</ul>
                         </div>
                     @endif
