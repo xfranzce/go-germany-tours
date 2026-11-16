@@ -53,4 +53,30 @@ class GhlSync
 
         return (string) ($result['contact']['id'] ?? '');
     }
+
+    /**
+     * Create any missing GHL custom fields (same as `php artisan ghl:setup`).
+     *
+     * @return array{created: string[], existing: int, failed: array<string, string>}
+     */
+    public function ensureFields(): array
+    {
+        $existing = collect($this->client->customFields())->pluck('id', 'name');
+        $created = [];
+        $failed = [];
+        foreach (GhlFields::all() as $name => $type) {
+            if ($existing->has($name)) {
+                continue;
+            }
+            try {
+                $this->client->createCustomField($name, $type);
+                $created[] = $name;
+            } catch (\Throwable $e) {
+                $failed[$name] = $e->getMessage();
+            }
+        }
+        \Illuminate\Support\Facades\Cache::forget('ghl.field_ids');
+
+        return ['created' => $created, 'existing' => $existing->count(), 'failed' => $failed];
+    }
 }

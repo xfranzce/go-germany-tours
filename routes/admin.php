@@ -45,6 +45,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Settings, users, media
         Route::get('settings', [Admin\SettingController::class, 'edit'])->name('settings.edit');
+        Route::get('gohighlevel', [Admin\GhlController::class, 'edit'])->name('ghl.edit');
+        Route::put('gohighlevel', [Admin\GhlController::class, 'update'])->name('ghl.update');
+        Route::post('gohighlevel/test', [Admin\GhlController::class, 'test'])->name('ghl.test');
+        Route::post('gohighlevel/setup', [Admin\GhlController::class, 'setup'])->name('ghl.setup');
         Route::put('settings', [Admin\SettingController::class, 'update'])->name('settings.update');
         Route::resource('users', Admin\AdminUserController::class)->except('show');
         Route::get('media', [Admin\MediaController::class, 'index'])->name('media.index');

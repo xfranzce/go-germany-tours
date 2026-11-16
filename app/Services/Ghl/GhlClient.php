@@ -2,8 +2,10 @@
 
 namespace App\Services\Ghl;
 
+use App\Models\Setting;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
 
 /**
@@ -12,20 +14,46 @@ use Illuminate\Support\Facades\Http;
  */
 class GhlClient
 {
-    public function enabled(): bool
+    /** Admin > GoHighLevel saves the token encrypted; .env is the fallback. */
+    public function token(): string
     {
-        return filled(config('services.ghl.token')) && filled(config('services.ghl.location_id'));
+        $stored = Setting::get('ghl_api_token_enc');
+        if (filled($stored)) {
+            try {
+                return Crypt::decryptString($stored);
+            } catch (\Throwable) {
+                // APP_KEY changed or value damaged: fall back to .env rather than sending garbage
+            }
+        }
+
+        return (string) config('services.ghl.token');
     }
 
     public function locationId(): string
     {
-        return (string) config('services.ghl.location_id');
+        return (string) (Setting::get('ghl_location_id') ?: config('services.ghl.location_id'));
+    }
+
+    /** Where the credentials come from: 'admin', 'env' or null (not configured). */
+    public function source(): ?string
+    {
+        if (filled(Setting::get('ghl_api_token_enc')) && filled(Setting::get('ghl_location_id'))) {
+            return 'admin';
+        }
+
+        return filled(config('services.ghl.token')) && filled(config('services.ghl.location_id')) ? 'env' : null;
+    }
+
+    /** Credentials present AND not switched off in the admin. */
+    public function enabled(): bool
+    {
+        return filled($this->token()) && filled($this->locationId()) && Setting::get('ghl_enabled', '1') !== '0';
     }
 
     private function http(): PendingRequest
     {
         return Http::baseUrl(config('services.ghl.base_url'))
-            ->withToken((string) config('services.ghl.token'))
+            ->withToken($this->token())
             ->withHeaders(['Version' => config('services.ghl.api_version'), 'Accept' => 'application/json'])
             ->acceptJson()->asJson()->timeout(15);
     }

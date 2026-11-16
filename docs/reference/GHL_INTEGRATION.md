@@ -58,3 +58,9 @@ Custom fields (names are exact; defined only in `app/Services/Ghl/GhlFields.php`
 
 ## Assumptions to confirm on first live run
 Endpoints used: `GET /locations/{id}/customFields`, `POST /locations/{id}/customFields` (`dataType` TEXT/LARGE_TEXT, `model` contact), `GET /contacts/search/duplicate?locationId&email`, `POST /contacts/upsert` (`customFields: [{id, field_value}]`), `DELETE /contacts/{id}`, `GET /locations/{id}`. If GHL changes a response shape, only `GhlClient.php` / `GhlSync.php` need adjusting.
+
+## Entering the credentials in the admin (no server access needed)
+Admin > **GoHighLevel** (Administrators only):
+1. Paste the **Location ID** and the **Private Integration token** (`pit-...`), keep "Send enquiries to GoHighLevel" ticked, Save.
+2. Press **Test connection**, then **Create missing custom fields** (same as `php artisan ghl:setup`).
+The token is stored encrypted with the app key and never shown again (only its last 4 characters). Values saved here override `.env`. Untick the switch to pause the sync; enquiries are always saved here first and never blocked. If `APP_KEY` is ever changed, paste the token again.

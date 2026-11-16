@@ -13,7 +13,7 @@
         ['admin.dashboard', 'Dashboard'], ['admin.enquiries.index', 'Enquiries'], ['admin.packages.index', 'Packages'],
         ['admin.tour-types.index', 'Tour types'], ['admin.destinations.index', 'Destinations'], ['admin.quiz.index', 'Hero quiz'],
         ['admin.pages.index', 'Pages'], ['admin.testimonials.index', 'Testimonials'], ['admin.faqs.index', 'FAQs'],
-        ['admin.posts.index', 'Travel guides'], ['admin.media.index', 'Media'], ['admin.settings.edit', 'Site settings'], ['admin.users.index', 'Admin users'],
+        ['admin.posts.index', 'Travel guides'], ['admin.media.index', 'Media'], ['admin.settings.edit', 'Site settings'], ['admin.ghl.edit', 'GoHighLevel'], ['admin.users.index', 'Admin users'],
     ];
     $adminUser = auth('admin')->user();
     $links = array_values(array_filter($links, fn ($l) => $adminUser->canAccessRoute($l[0]) && ! ($adminUser->isEditor() && $l[0] === 'admin.dashboard')));
