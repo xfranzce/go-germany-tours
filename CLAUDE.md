@@ -38,7 +38,7 @@ Google Ads landing-page site for one GoTour brand. Server-rendered Laravel 12 (P
 Live site (Hostinger) is updated with `GGT_SSH_PASSWORD=... bash scripts/deploy.sh "message"` (see docs/reference/DEPLOYMENT.md). After any local change, deploy it.
 
 ## Conventions
-- Logo: `<x-logo-mark>` (travel compass: ring follows text colour, red north / gold south needle) + wordmark in the header/footer when no logo is uploaded in Site settings; files in `public/images/logo/` (svg + png, light and white versions) and the favicon is inline in `layouts/app.blade.php`.
+- Logo: `<x-logo-mark>` (premium compass: double ring follows text colour, faceted red north / gold south needle; two-line "Go Germany" + tracked gold-ruled "TOURS" wordmark) + wordmark in the header/footer when no logo is uploaded in Site settings; files in `public/images/logo/` (svg + png, light and white versions) and the favicon is inline in `layouts/app.blade.php`.
 - Header menus: **Tours** mega menu (one column per tour type, with its packages) and **About Us** mega menu (About Us, Meet Our Team `/meet-our-team`, Testimonials `/testimonials`, FAQs `/faqs`). Team page is a CMS page (key `team`, Admin > Pages); Testimonials/FAQs pages read the same data as the home page. `AboutMenuPagesSeeder` adds the team page on existing sites.
 - Header is transparent over the page top (white text) and turns solid white after scrolling; there is no top bar. Pages that start on a light background must add `@section('solid_header', '1')` (404, thank-you do). Page headers have extra top padding to sit under it.
 - Section headings: eyebrow, then plain `<h2>` (global size, `mt-4`), `flag-rule`, intro `mt-5 text-base sm:text-lg`. Never override heading font sizes on section titles; prefer `<x-section-heading>`.

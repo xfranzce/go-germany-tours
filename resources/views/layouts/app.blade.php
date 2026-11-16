@@ -30,7 +30,7 @@
     @if($faviconMedia)
         <link rel="icon" href="{{ $faviconMedia->url(min($faviconMedia->widths)) }}" type="image/webp">
     @else
-        <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23003049'/%3E%3Cpath d='M32 9 42 32H22z' fill='%23D6282B'/%3E%3Cpath d='M32 55 22 32h20z' fill='%23FCBF49'/%3E%3C/svg%3E">
+        <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23003049'/%3E%3Ccircle cx='32' cy='32' r='27' fill='none' stroke='%23FCBF49' stroke-width='1.5'/%3E%3Cpath d='M32 10 32 32 27 32z' fill='%23D6282B'/%3E%3Cpath d='M32 10 37 32 32 32z' fill='%23A81E21'/%3E%3Cpath d='M32 54 32 32 37 32z' fill='%23FCBF49'/%3E%3Cpath d='M32 54 27 32 32 32z' fill='%23E0A21F'/%3E%3C/svg%3E">
     @endif
 
     @foreach(\App\Support\Seo::fontPreloads() as $font)

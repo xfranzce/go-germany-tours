@@ -27,8 +27,8 @@
             @if($logo)
                 <img src="{{ $logo->url(min(480, max($logo->widths))) }}" alt="{{ $site['brand_name'] }}" width="{{ $logo->width }}" height="{{ $logo->height }}" class="h-10 w-auto">
             @else
-                <x-logo-mark class="size-9 shrink-0"/>
-                <span class="font-display text-2xl font-semibold tracking-tight">{{ $site['brand_name'] }}</span>
+                <x-logo-mark class="size-11 shrink-0"/>
+                <span class="flex flex-col leading-none"><span class="font-display text-[1.7rem] font-semibold tracking-tight">Go Germany</span><span class="mt-1.5 flex items-center gap-2 text-[0.62rem] font-semibold uppercase tracking-[0.42em]"><span class="h-px w-5 bg-brand-gold"></span>Tours</span></span>
             @endif
         </a>
 
