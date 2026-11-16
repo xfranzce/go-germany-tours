@@ -65,6 +65,15 @@
                 @if($h1c)<span class="block">{{ $h1c }}</span>@endif
             </h1>
             <p class="mx-auto lg:mx-0 mt-6 max-w-xl text-base sm:text-lg text-white/90">{{ $page->text('hero_sub', 'Self drive, chauffeur driven or small-group coach. Explore Quedlinburg, Saxon Switzerland, Cochem, Hiddensee and Gengenbach, planned around you.') }}</p>
+
+            <ul class="mx-auto lg:mx-0 mt-8 grid max-w-xl grid-cols-2 gap-x-6 gap-y-4 border-t border-white/25 pt-7 text-left" aria-label="Why travel with us">
+                @foreach([['pin', 'Germany locations'], ['lock', 'Private tours'], ['chat', 'Professional guides'], ['star', 'Excellent reviews']] as [$ic, $txt])
+                    <li class="flex items-center gap-3">
+                        <span class="grid size-10 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-black/20" aria-hidden="true"><x-icon :name="$ic" class="h-5 w-5"/></span>
+                        <span class="text-sm font-bold uppercase tracking-[0.12em] text-white sm:text-[0.8rem]">{{ $txt }}</span>
+                    </li>
+                @endforeach
+            </ul>
         </div>
 
         <div class="mx-auto w-full max-w-xl lg:mx-0 lg:ml-auto">
