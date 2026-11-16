@@ -1,6 +1,5 @@
 @php
     $navTypes = \App\Models\TourType::active()->get(['name', 'slug']);
-    $navDests = \App\Models\Destination::active()->get(['name', 'slug']);
     $logo = \App\Models\Media::forPath($site['logo'] ?? null);
 @endphp
 <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-brand-custard" x-data="{ mobile: false }" @keydown.escape="mobile = false">
@@ -17,7 +16,7 @@
         </a>
 
         <nav class="hidden lg:flex items-center gap-1 font-bold text-sm uppercase tracking-wider" aria-label="Main">
-            @foreach([['Tours', 'tours', $navTypes, 'tours.show'], ['Destinations', 'destinations', $navDests, 'destinations.show']] as [$label, $id, $items, $route])
+            @foreach([['Tours', 'tours', $navTypes, 'tours.show']] as [$label, $id, $items, $route])
                 <div class="relative" x-data="{ open: false }" @keydown.escape="open = false" @click.outside="open = false">
                     <button type="button" class="px-3 py-2 rounded-lg hover:bg-brand-custard-light inline-flex items-center gap-1" :aria-expanded="open" aria-controls="menu-{{ $id }}" @click="open = !open">
                         {{ $label }} <x-icon name="chevron-down" class="w-4 h-4"/>
@@ -46,8 +45,6 @@
         <div class="container-x py-3 grid gap-1 font-bold max-h-[75vh] overflow-y-auto">
             <p class="text-xs uppercase tracking-wider text-ink-soft mt-1">Tours</p>
             @foreach($navTypes as $t)<a class="py-2 pl-2" href="{{ route('tours.show', $t->slug) }}">{{ $t->name }}</a>@endforeach
-            <p class="text-xs uppercase tracking-wider text-ink-soft mt-2">Destinations</p>
-            @foreach($navDests as $d)<a class="py-2 pl-2" href="{{ route('destinations.show', $d->slug) }}">{{ $d->name }}</a>@endforeach
             <hr class="my-2 border-brand-custard">
             <a class="py-2" href="{{ route('packages.index') }}">All packages</a>
             <a class="py-2" href="{{ route('about') }}">About</a>

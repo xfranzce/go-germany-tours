@@ -31,17 +31,19 @@
 @endif
 
 @section('content')
-{{-- 1. HERO: full-screen video background, headline and a destination dropdown (no quiz) --}}
-<section class="relative isolate flex min-h-[88svh] flex-col justify-center bg-brand-navy-dark text-white overflow-hidden" aria-labelledby="hero-title">
+{{-- 1. HERO: video background; headline and copy on the left, the quote quiz on the right --}}
+<section class="relative isolate flex min-h-[88svh] items-center bg-brand-navy-dark text-white overflow-hidden" aria-labelledby="hero-title">
     @if($heroMedia)
         <x-picture :path="$heroPath" priority hires sizes="100vw" class="absolute inset-0 -z-20 w-full h-full object-cover"/>
     @endif
     <x-video-bg src="hero.mp4" class="absolute inset-0 -z-[15] w-full h-full object-cover"/>
-    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-dark/90 via-brand-navy-dark/35 to-brand-navy-dark/55" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/85 via-brand-navy-dark/50 to-brand-navy-dark/30" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-dark/70 via-transparent to-brand-navy-dark/30" aria-hidden="true"></div>
 
-    <div class="container-x pt-20 pb-36 sm:pt-28 sm:pb-44 text-center">
-        <p class="eyebrow centered text-brand-gold">The Germany Collection</p>
-        @php
+    <div class="container-x grid items-center gap-10 py-16 sm:py-24 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+        <div class="text-center lg:text-left">
+            <p class="eyebrow text-brand-gold">The Germany Collection</p>
+            @php
             // Highlighted words: wrap them in *stars* in Admin > Pages > Home; otherwise the last three words are highlighted.
             $h1 = trim($page->text('hero_h1', 'Tailor-Made Tours of *Germany\'s Fairytale Towns*'));
             if (preg_match('/^(.*?)\*(.+?)\*(.*)$/s', $h1, $m)) {
@@ -51,64 +53,26 @@
                 $n = count($w) > 4 ? 3 : (count($w) > 1 ? 1 : 0);
                 [$h1a, $h1b, $h1c] = [implode(' ', array_slice($w, 0, count($w) - $n)), implode(' ', array_slice($w, count($w) - $n)), ''];
             }
-        @endphp
-        <h1 id="hero-title" class="mx-auto mt-6 max-w-5xl text-4xl sm:text-6xl lg:text-7xl leading-[1.08]">
-            <span class="block">{{ $h1a }}</span>
-            @if($h1b)
-                <em class="relative mx-auto mt-2 block w-fit not-italic sm:mt-3"><span class="italic font-medium text-brand-gold">{{ $h1b }}</span>
-                    <svg class="hl-underline absolute left-0 -bottom-2 sm:-bottom-3 w-full h-3 sm:h-4 text-brand-gold" viewBox="0 0 300 12" preserveAspectRatio="none" fill="none" aria-hidden="true">
-                        <path d="M2 8 C 60 2, 110 11, 170 6 S 260 3, 298 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" pathLength="1"/>
-                    </svg></em>
-            @endif
-            @if($h1c)<span class="block">{{ $h1c }}</span>@endif
-        </h1>
-        <p class="mx-auto mt-6 max-w-xl text-base sm:text-lg text-white/90">{{ $page->text('hero_sub', 'Self drive, chauffeur driven or small-group coach. Explore Quedlinburg, Saxon Switzerland, Cochem, Hiddensee and Gengenbach, planned around you.') }}</p>
+            @endphp
+            <h1 id="hero-title" class="mt-6 max-w-3xl text-4xl sm:text-6xl lg:text-7xl leading-[1.08] mx-auto lg:mx-0">
+                <span class="block">{{ $h1a }}</span>
+                @if($h1b)
+                    <em class="relative mx-auto lg:mx-0 mt-2 block w-fit not-italic sm:mt-3"><span class="italic font-medium text-brand-gold">{{ $h1b }}</span>
+                        <svg class="hl-underline absolute left-0 -bottom-2 sm:-bottom-3 w-full h-3 sm:h-4 text-brand-gold" viewBox="0 0 300 12" preserveAspectRatio="none" fill="none" aria-hidden="true">
+                            <path d="M2 8 C 60 2, 110 11, 170 6 S 260 3, 298 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" pathLength="1"/>
+                        </svg></em>
+                @endif
+                @if($h1c)<span class="block">{{ $h1c }}</span>@endif
+            </h1>
+            <p class="mx-auto lg:mx-0 mt-6 max-w-xl text-base sm:text-lg text-white/90">{{ $page->text('hero_sub', 'Self drive, chauffeur driven or small-group coach. Explore Quedlinburg, Saxon Switzerland, Cochem, Hiddensee and Gengenbach, planned around you.') }}</p>
+        </div>
 
-        @if($destinations->isNotEmpty())
-            <form class="mx-auto mt-10 max-w-2xl" x-data="{ url: '' }" @submit.prevent="window.location.href = url || '#tours'" aria-label="Choose a destination">
-                <label for="hero-dest" class="eyebrow centered text-white/90">Where to next?</label>
-                <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:gap-0 sm:rounded sm:bg-white/10 sm:backdrop-blur-md sm:border sm:border-white/30 sm:p-1.5">
-                    <div class="relative flex-1">
-                        <select id="hero-dest" x-model="url"
-                                class="w-full appearance-none bg-white/10 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-white/30 sm:border-0 rounded sm:rounded-none text-white font-semibold tracking-wide px-5 py-4 pr-12 min-h-14 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold [&>option]:text-brand-navy [&>option]:bg-white">
-                            <option value="">Choose a destination</option>
-                            @foreach($destinations as $d)
-                                <option value="{{ route('destinations.show', $d->slug) }}">{{ $d->name }}</option>
-                            @endforeach
-                        </select>
-                        <x-icon name="chevron-down" class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-gold"/>
-                    </div>
-                    <button type="submit" class="btn btn-primary sm:px-8">Explore destination</button>
-                </div>
-            </form>
-        @endif
-
-        <p class="mt-8"><button type="button" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-white/90 hover:text-brand-gold border-b border-white/40 pb-1" @click="$store.modal.show()">Or get a free quote <x-icon name="arrow-right" class="w-4 h-4"/></button></p>
+        <div class="mx-auto w-full max-w-xl lg:mx-0 lg:ml-auto">
+            <x-hero-quiz/>
+        </div>
     </div>
 
-    {{-- Destination ticker floating over the bottom of the hero --}}
-    @if($destinations->isNotEmpty())
-    <div class="absolute inset-x-0 bottom-0 marquee border-t border-white/25 bg-transparent py-4 sm:py-5" aria-label="Destinations we cover">
-    {{-- Two identical halves, each repeating the list 3x so a half is always wider than the screen; the track slides -50% and loops seamlessly --}}
-    <div class="marquee-track font-display text-base sm:text-xl text-white [text-shadow:0_1px_8px_rgb(0_20_30/0.6)]">
-        @foreach([0, 1] as $half)
-            <div class="flex shrink-0 items-center" @if($half) aria-hidden="true" @endif>
-                @foreach(range(1, 3) as $rep)
-                    <ul class="flex shrink-0 items-center" @if($rep > 1) aria-hidden="true" @endif>
-                        @foreach($destinations as $d)
-                            <li class="flex items-center">
-                                <a href="{{ route('destinations.show', $d->slug) }}" class="px-4 sm:px-6 whitespace-nowrap hover:text-brand-gold transition" @if($half || $rep > 1) tabindex="-1" @endif>{{ $d->name }}</a>
-                                <span class="text-brand-gold text-[0.6rem]" aria-hidden="true">&#9670;</span>
-                            </li>
-                        @endforeach
-                    </ul>
-                @endforeach
-            </div>
-        @endforeach
-    </div>    </div>
-    @endif
-
-    <a href="#tours" class="absolute bottom-24 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 text-[0.65rem] font-bold uppercase tracking-[0.3em] text-white/70 hover:text-brand-gold">
+    <a href="#tours" class="absolute bottom-6 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 text-[0.65rem] font-bold uppercase tracking-[0.3em] text-white/70 hover:text-brand-gold">
         Scroll <span class="block w-px h-10 bg-gradient-to-b from-brand-gold to-transparent" aria-hidden="true"></span>
     </a>
 </section>
