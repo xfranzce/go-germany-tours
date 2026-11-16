@@ -513,13 +513,19 @@
 <section class="py-16 sm:py-24 bg-brand-custard-light" aria-labelledby="journal-title">
     <div class="container-x">
         <x-section-heading id="journal-title" eyebrow="Travel journal" title="Ideas for planning" emphasis="your Germany trip."/>
-        <div class="grid gap-8 md:grid-cols-3">
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             @foreach($posts as $post)
-                <article class="card flex flex-col p-8">
-                    <p class="eyebrow text-brand-red-dark">Guide {{ sprintf('%02d', $loop->iteration) }}</p>
-                    <h3 class="mt-3"><a class="hover:text-brand-red transition" href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a></h3>
-                    <p class="mt-3 text-ink-soft flex-1">{{ $post->excerpt }}</p>
-                    <a class="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-red-dark" href="{{ route('blog.show', $post->slug) }}">Read more <x-icon name="arrow-right" class="w-4 h-4"/><span class="sr-only">: {{ $post->title }}</span></a>
+                <article class="group card flex flex-col overflow-hidden transition duration-500 hover:-translate-y-1.5 hover:shadow-xl">
+                    <a href="{{ route('blog.show', $post->slug) }}" class="relative block aspect-[3/2] overflow-hidden bg-brand-custard" tabindex="-1" aria-hidden="true">
+                        <x-picture :path="$post->image" sizes="(min-width: 1024px) 28rem, (min-width: 768px) 45vw, 92vw" class="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-105"/>
+                        <span class="absolute left-4 top-4 rounded-full bg-brand-gold px-3 py-1 text-[0.7rem] font-extrabold uppercase tracking-wider text-brand-navy shadow">Travel guide</span>
+                    </a>
+                    <div class="flex flex-1 flex-col p-6 sm:p-7">
+                        <p class="text-xs font-bold uppercase tracking-[0.16em] text-ink-soft">{{ $post->published_at->format('M j, Y') }} <span aria-hidden="true">&middot;</span> {{ $post->readingMinutes() }} min read</p>
+                        <h3 class="mt-3"><a class="transition hover:text-brand-red" href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a></h3>
+                        <p class="mt-3 flex-1 text-ink-soft">{{ $post->excerpt }}</p>
+                        <a class="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-red-dark" href="{{ route('blog.show', $post->slug) }}">Read more <x-icon name="arrow-right" class="h-4 w-4 transition group-hover:translate-x-1"/><span class="sr-only">: {{ $post->title }}</span></a>
+                    </div>
                 </article>
             @endforeach
         </div>

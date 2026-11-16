@@ -88,5 +88,6 @@ Use the PHP binary path hPanel shows for your PHP version. Enquiry emails and GH
 - The server CLI default is PHP 8.2 but the lockfile needs 8.4: use `/opt/alt/php84/usr/bin/php`. The web PHP version is forced by `AddHandler application/x-httpd-alt-php84___lsphp .php` at the top of `public/.htaccess` on the server (marked `skip-worktree`; not committed).
 - No Node on the server: run `npm run build` locally and upload `public/build` (gitignored).
 - Packages use soft deletes (Trash tab + bulk actions in admin, `PackageController::bulk`). Optional `rating` (0-5, REAL only; sample packages show a "sample rating" label) + `review_count`; `price_from` (current price) and optional `price_was` (the crossed-out "From $X pp" price above it, only when higher; admin labels: "From price" = price_was, "Current price" = price_from).
+- Blog posts: featured `image` (cards, home, top of post); `BlogImagesSeeder` fills empty images + a 3rd sample post (safe to re-run).
 - Testimonials have `name`, `location`, `source` (shown on the card); the three seeded ones are dummy and badged PLACEHOLDER.
 - Update: `GGT_SSH_PASSWORD=... bash scripts/deploy.sh "message"` (builds, commits, pushes, uploads build, pulls, migrates; server details in git-ignored `.deploy.env`).

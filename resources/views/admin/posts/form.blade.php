@@ -13,7 +13,7 @@
         <x-admin.field name="published_at" label="Publish date" type="date" :value="$item->published_at?->format('Y-m-d')"/>
         <x-admin.field name="excerpt" label="Short intro" type="textarea" :rows="2" :value="$item->excerpt" maxlength="500" class="sm:col-span-2"/>
         <div class="sm:col-span-2"><x-admin.rich name="body" label="Article" :value="$item->body"/></div>
-        <x-admin.image :current="$item->image" label="Social share image" class="sm:col-span-2"/>
+        <x-admin.image :current="$item->image" label="Featured image (shown on blog cards, the home page and the top of the post; also used when the post is shared)" class="sm:col-span-2"/>
         <x-admin.field name="is_published" label="Published" type="checkbox" :value="$item->is_published"/>
         <x-admin.field name="noindex" label="Hide from search engines" type="checkbox" :value="$item->noindex"/>
         <x-admin.field name="seo_title" label="SEO title (max 70)" :value="$item->seo_title" maxlength="70"/>
