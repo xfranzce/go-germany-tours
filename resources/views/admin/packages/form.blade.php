@@ -23,10 +23,14 @@
         <x-admin.field name="tour_type_id" label="Tour type" type="select" :options="$types" :value="$package->tour_type_id" required/>
         <x-admin.field name="destination_id" label="Destination" type="select" :options="$destinations" :value="$package->destination_id" required/>
         <x-admin.field name="nights" label="Nights" type="number" :value="$package->nights" required/>
-        <div class="grid grid-cols-[1fr_6rem] gap-3">
-            <x-admin.field name="price_was" label="Old price per person (optional, shown crossed out before the current price; must be higher)" type="number" step="0.01" :value="$package->price_was"/>
+        <div class="grid grid-cols-[1fr_1fr_6rem] gap-3">
+            <x-admin.field name="price_was" label="Old price pp (optional, crossed out; must be higher)" type="number" step="0.01" :value="$package->price_was"/>
             <x-admin.field name="price_from" label="'From' price per person" type="number" step="0.01" :value="$package->price_from"/>
             <x-admin.field name="currency" label="Currency" type="select" :options="['USD' => 'USD', 'EUR' => 'EUR', 'GBP' => 'GBP', 'CAD' => 'CAD', 'AUD' => 'AUD']" :value="$package->currency"/>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+            <x-admin.field name="rating" label="Guest rating, 0 to 5 (REAL ratings only; blank = no stars)" type="number" step="0.1" min="0" max="5" :value="$package->rating"/>
+            <x-admin.field name="review_count" label="Number of reviews (optional)" type="number" :value="$package->review_count"/>
         </div>
         <x-admin.field name="summary" label="Short summary (shown on cards, max 500 characters)" type="textarea" :rows="2" :value="$package->summary" class="sm:col-span-2" maxlength="500"/>
         <div class="sm:col-span-2 flex flex-wrap gap-x-8 gap-y-2">

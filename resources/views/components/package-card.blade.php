@@ -9,6 +9,7 @@
     <div class="p-5 flex flex-col flex-1">
         <p class="text-xs font-extrabold uppercase tracking-wider text-brand-red-dark">{{ $package->tourType->name }} &middot; {{ $package->destination->name }}</p>
         <h{{ $level }} class="text-xl mt-1"><a href="{{ $package->url() }}" class="hover:underline">{{ $package->title }}</a></h{{ $level }}>
+        @if($package->rating)<x-stars :rating="$package->rating" :count="$package->review_count" :sample="$package->is_sample" class="mt-2"/>@endif
         <p class="mt-2 text-ink-soft text-sm flex-1">{{ $package->summary }}</p>
         <dl class="mt-4 pt-4 border-t border-brand-custard flex items-end justify-between">
             <div><dt class="text-xs uppercase tracking-wider text-ink-soft font-bold">Duration</dt><dd class="font-bold">{{ $package->nights }} nights</dd></div>

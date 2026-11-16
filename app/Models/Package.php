@@ -15,6 +15,7 @@ class Package extends Model
         'is_published' => 'boolean', 'is_featured' => 'boolean', 'is_sample' => 'boolean', 'noindex' => 'boolean',
         'price_from' => 'decimal:2',
         'price_was' => 'decimal:2',
+        'rating' => 'decimal:1',
     ];
 
     public function tourType(): BelongsTo

@@ -82,6 +82,7 @@
     {{-- Quote sidebar --}}
     <aside class="lg:sticky lg:top-24 self-start" aria-labelledby="quote-title" id="quote">
         <div class="bg-white rounded-2xl border-4 border-brand-tangerine shadow-card p-5">
+            @if($package->rating)<x-stars :rating="$package->rating" :count="$package->review_count" :sample="$package->is_sample" class="mb-2"/>@endif
             <p class="font-sans font-extrabold text-2xl sm:text-3xl leading-tight tracking-tight text-brand-navy">@if($package->hasSale())<s class="block text-base font-sans font-semibold text-ink-soft decoration-brand-red">{{ $package->wasLabel() }}</s>@endif{{ $package->priceLabel() }}</p>
             @if($package->is_sample)<p class="text-xs text-ink-soft">Sample price: placeholder only</p>@endif
             <h2 id="quote-title" class="text-xl mt-2">Get a quote for this trip</h2>
