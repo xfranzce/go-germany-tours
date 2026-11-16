@@ -15,12 +15,12 @@
     })->filter()->values();
     $gallerySpans = ['md:col-span-2 md:row-span-2', '', 'md:row-span-2', '', 'md:col-span-2', 'md:row-span-2', 'md:row-span-2', 'md:col-span-2'];
     $travelers = [
-        ['First-time visitors', 'Classic highlights and an easy first trip to Germany.'],
-        ['Couples', 'Romantic stays in fairytale towns and along the river.'],
-        ['Families', 'Relaxed itineraries that work for every age.'],
-        ['History lovers', 'Castles, abbeys and medieval streets at your own pace.'],
-        ['Nature lovers', 'Sandstone cliffs, vineyards and the Baltic coast.'],
-        ['Special occasions', 'Anniversaries, milestone birthdays and family reunions.'],
+        ['First-time visitors', 'Classic highlights and an easy first trip to Germany.', 'neuschwanstein-castle'],
+        ['Couples', 'Romantic stays in fairytale towns and along the river.', 'bacharach-rhine'],
+        ['Families', 'Relaxed itineraries that work for every age.', 'hiddensee-beach'],
+        ['History lovers', 'Castles, abbeys and medieval streets at your own pace.', 'quedlinburg-lane'],
+        ['Nature lovers', 'Sandstone cliffs, vineyards and the Baltic coast.', 'saxon-switzerland-bastei'],
+        ['Special occasions', 'Anniversaries, milestone birthdays and family reunions.', 'gengenbach-rathaus'],
     ];
 @endphp
 
@@ -293,17 +293,33 @@
     <div class="container-x">
         <x-section-heading id="trav-title" eyebrow="By traveler" title="Journeys for every" emphasis="travel style."
             intro="Whoever is coming along, we shape the trip to suit."/>
-        <div class="grid gap-px bg-brand-navy/15 border border-brand-navy/15 rounded-md overflow-hidden sm:grid-cols-2 lg:grid-cols-3">
-            @foreach($travelers as [$tt, $td])
-                <button type="button" class="group text-left bg-white p-8 sm:p-10 hover:bg-brand-navy hover:text-white transition-colors duration-300"
-                        data-title="Get a quote: {{ $tt }}" data-prefill="Trip style: {{ $tt }}."
-                        @click="$store.modal.show({form:'package_quote', ...$el.dataset})">
-                    <span class="font-display text-3xl text-brand-red group-hover:text-brand-gold">{{ sprintf('%02d', $loop->iteration) }}</span>
-                    <span class="block font-display text-3xl mt-3">{{ $tt }}</span>
-                    <span class="block mt-2 text-ink-soft group-hover:text-white/80">{{ $td }}</span>
-                    <span class="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-red-dark group-hover:text-brand-gold">Plan this trip <x-icon name="arrow-right" class="w-4 h-4"/></span>
-                </button>
-            @endforeach
+        <div x-data="{ a: 0, n: {{ count($travelers) }}, go(d) { this.a = (this.a + d + this.n) % this.n; const c = this.$refs.strip.children[this.a]; c && c.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' }) } }">
+            <div x-ref="strip" class="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:px-0 md:snap-none md:gap-4 md:overflow-visible [&::-webkit-scrollbar]:hidden">
+                @foreach($travelers as $i => [$tt, $td, $stem])
+                    @php $tm = \App\Models\Media::query()->where('path', 'like', "media/{$stem}-%")->first(); @endphp
+                    <div class="group relative h-[26rem] w-[72vw] shrink-0 snap-center cursor-pointer overflow-hidden rounded-2xl bg-brand-navy shadow-card transition-[flex-grow] duration-500 ease-out sm:w-[22rem] md:h-[30rem] md:w-auto md:shrink md:basis-0 max-md:!grow-0 lg:h-[32rem]"
+                         :style="{ flexGrow: a === {{ $i }} ? 5 : 1 }" style="flex-grow: {{ $i === 0 ? 5 : 1 }}"
+                         tabindex="0" role="button" :aria-expanded="a === {{ $i }}" aria-label="{{ $tt }}"
+                         @mouseenter="if (window.matchMedia('(min-width: 768px)').matches) a = {{ $i }}" @focus="a = {{ $i }}" @click="a = {{ $i }}" @keydown.enter.prevent="a = {{ $i }}">
+                        @if($tm)<x-picture :path="$tm->path" sizes="(min-width: 768px) 40vw, 72vw" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"/>@endif
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-navy-dark/85 via-brand-navy-dark/10 to-transparent transition-opacity duration-500" :class="a === {{ $i }} ? 'opacity-100' : 'opacity-40'" aria-hidden="true"></div>
+                        <button type="button" class="absolute right-4 top-4 grid size-11 place-items-center rounded-full bg-white text-brand-navy shadow-lg transition hover:bg-brand-gold" x-show="a === {{ $i }}" x-transition.opacity
+                                aria-label="Get a quote: {{ $tt }}" data-title="Get a quote: {{ $tt }}" data-prefill="Trip style: {{ $tt }}."
+                                @click.stop="$store.modal.show({form:'package_quote', ...$el.dataset})"><x-icon name="arrow-right" class="size-5"/></button>
+                        <div class="absolute inset-x-0 bottom-0 p-6 text-white md:p-7">
+                            <h3 class="font-display text-3xl leading-tight text-white" :class="a === {{ $i }} ? '' : 'md:sr-only'">{{ $tt }}</h3>
+                            <p class="mt-2 max-w-xs text-white/85" x-show="a === {{ $i }}" x-transition.opacity>{{ $td }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="mt-6 flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <button type="button" class="grid size-11 place-items-center rounded-full border-2 border-brand-navy text-brand-navy transition hover:bg-brand-navy hover:text-white" aria-label="Previous" @click="go(-1)"><x-icon name="arrow-right" class="size-5 rotate-180"/></button>
+                    <button type="button" class="grid size-11 place-items-center rounded-full border-2 border-brand-navy text-brand-navy transition hover:bg-brand-navy hover:text-white" aria-label="Next" @click="go(1)"><x-icon name="arrow-right" class="size-5"/></button>
+                </div>
+                <button type="button" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-red-dark hover:text-brand-navy" @click="$store.modal.show()">Plan my trip <x-icon name="arrow-right" class="size-4"/></button>
+            </div>
         </div>
     </div>
 </section>
