@@ -81,3 +81,10 @@ Use the PHP binary path hPanel shows for your PHP version. Enquiry emails and GH
 - Run the checks in SEO_CHECKLIST.md and test one real enquiry end to end (email + admin + GHL).
 - Backups: hPanel backups plus a regular MySQL dump.
 - GHL: add the token/location to `.env`, `php artisan config:cache`, `php artisan ghl:setup`, `php artisan ghl:test`.
+
+## Current Hostinger deployment (shared hosting, SSH port 65002)
+- Site: `mediumturquoise-mosquito-631405.hostingersite.com`. App in `~/domains/<site>/app` (git clone of GitHub `main`); `public_html` is a **symlink to `app/public`**. Old folder backup: `~/domains/_old_public_html_mediumturquoise_backup`.
+- DB host on the server is `127.0.0.1` (the `srv*.hstgr.io` host rejects non-whitelisted IPs). `.env` exists only on the server.
+- The server CLI default is PHP 8.2 but the lockfile needs 8.4: use `/opt/alt/php84/usr/bin/php`. The web PHP version is forced by `AddHandler application/x-httpd-alt-php84___lsphp .php` at the top of `public/.htaccess` on the server (marked `skip-worktree`; not committed).
+- No Node on the server: run `npm run build` locally and upload `public/build` (gitignored).
+- Update: `git pull`, `/opt/alt/php84/usr/bin/php $(which composer) install --no-dev -o`, `php84 artisan migrate --force`, `php84 artisan optimize:clear`, upload `public/build` if CSS/JS changed.
