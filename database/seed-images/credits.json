@@ -104,5 +104,29 @@
         "type": "ai",
         "title": "Small-group coach tour on the Mosel riverside (illustration)",
         "tool": "Higgsfield (Nano Banana 2)"
+    },
+    {
+        "slug": "couple-rhine-vineyard",
+        "type": "ai",
+        "title": "Couple walking hand in hand through Rhine vineyards at sunset (illustration)",
+        "tool": "Higgsfield (Nano Banana 2)"
+    },
+    {
+        "slug": "family-old-town",
+        "type": "ai",
+        "title": "Family strolling through a half-timbered German old town (illustration)",
+        "tool": "Higgsfield (Nano Banana 2)"
+    },
+    {
+        "slug": "medieval-castle-path",
+        "type": "ai",
+        "title": "Medieval hilltop castle at sunset (illustration)",
+        "tool": "Higgsfield (Nano Banana 2)"
+    },
+    {
+        "slug": "anniversary-dinner-terrace",
+        "type": "ai",
+        "title": "Celebration dinner on a terrace below a castle (illustration)",
+        "tool": "Higgsfield (Nano Banana 2)"
     }
 ]

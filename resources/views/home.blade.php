@@ -16,11 +16,11 @@
     $gallerySpans = ['md:col-span-2 md:row-span-2', '', 'md:row-span-2', '', 'md:col-span-2', 'md:row-span-2', 'md:row-span-2', 'md:col-span-2'];
     $travelers = [
         ['First-time visitors', 'Classic highlights and an easy first trip to Germany.', 'neuschwanstein-castle'],
-        ['Couples', 'Romantic stays in fairytale towns and along the river.', 'bacharach-rhine'],
-        ['Families', 'Relaxed itineraries that work for every age.', 'hiddensee-beach'],
-        ['History lovers', 'Castles, abbeys and medieval streets at your own pace.', 'quedlinburg-lane'],
+        ['Couples', 'Romantic stays in fairytale towns and along the river.', 'couple-rhine-vineyard'],
+        ['Families', 'Relaxed itineraries that work for every age.', 'family-old-town'],
+        ['History lovers', 'Castles, abbeys and medieval streets at your own pace.', 'medieval-castle-path'],
         ['Nature lovers', 'Sandstone cliffs, vineyards and the Baltic coast.', 'saxon-switzerland-bastei'],
-        ['Special occasions', 'Anniversaries, milestone birthdays and family reunions.', 'gengenbach-rathaus'],
+        ['Special occasions', 'Anniversaries, milestone birthdays and family reunions.', 'anniversary-dinner-terrace'],
     ];
 @endphp
 

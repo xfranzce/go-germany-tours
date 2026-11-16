@@ -19,7 +19,7 @@ Licence check done on 2026-11-11 from the Commons file metadata. Re-check before
 | `allgau-alps.jpg` | [Allgäu alps autumn 2017-10-13.jpg](https://commons.wikimedia.org/wiki/File:Allg%C3%A4u_alps_autumn_2017-10-13.jpg) | Tommy Rau | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) | Home Alps statement banner |
 
 ## AI-generated illustrations
-The three tour-type card images (`selfdrive-road.jpg`, `chauffeur-private-driver.jpg`, `coach-tour-cochem.jpg`) are AI-generated (Higgsfield, Nano Banana 2) illustrations, not photographs of real trips, and are labelled as such on the Photo credits page. They show a generic car, chauffeur and coach. Replace with your own photos when you have them (Admin > Tour types).
+Four more "By traveler" card images (`couple-rhine-vineyard`, `family-old-town`, `medieval-castle-path`, `anniversary-dinner-terrace`) are AI-generated the same way. The three tour-type card images (`selfdrive-road.jpg`, `chauffeur-private-driver.jpg`, `coach-tour-cochem.jpg`) are AI-generated (Higgsfield, Nano Banana 2) illustrations, not photographs of real trips, and are labelled as such on the Photo credits page. They show a generic car, chauffeur and coach. Replace with your own photos when you have them (Admin > Tour types).
 
 ## Notes
 
