@@ -383,21 +383,40 @@
 </section>
 @endif
 
-{{-- 9. GALLERY: mosaic of full-resolution photos, click to open a lightbox --}}
-@if($galleryItems->count() >= 4)
-<section class="py-16 sm:py-24 bg-brand-navy-dark text-white" aria-labelledby="gallery-title"
+{{-- 9. GALLERY ("A visual journey"): checkerboard mosaic, captions always visible, click for lightbox --}}
+@php
+    $mosaic = collect([
+        ['quedlinburg-lane', 'Half-timbered streets', ''],
+        ['cochem-mosel', 'Riverside towns', ''],
+        ['neuschwanstein-castle', 'Castles and the Alps', 'sm:col-span-2'],
+        ['saxon-switzerland-bastei', 'Sandstone cliffs and mist', 'sm:col-span-2 sm:col-start-3 sm:row-start-1'],
+        ['hiddensee-beach', 'Baltic coast', ''],
+        ['bacharach-rhine', 'Rhine valley', ''],
+    ])->map(function ($t) {
+        $m = \App\Models\Media::query()->where('path', 'like', "media/{$t[0]}-%")->first();
+        return $m ? ['media' => $m, 'path' => $m->path, 'label' => $t[1], 'span' => $t[2]] : null;
+    })->filter()->values();
+@endphp
+@if($mosaic->count() >= 4)
+<section class="py-16 sm:py-24 bg-white" aria-labelledby="gallery-title"
          x-data="{ open: false, src: '', cap: '', alt: '' }" @keydown.escape.window="open = false">
     <div class="container-x">
-        <x-section-heading id="gallery-title" light eyebrow="Gallery" title="Beyond" emphasis="the postcard." intro="Castles, cliffs, riverside villages and half-timbered streets. Tap a photo to see it full size."/>
-        <div class="grid grid-cols-2 md:grid-cols-4 grid-flow-dense auto-rows-[11rem] sm:auto-rows-[14rem] lg:auto-rows-[17rem] gap-2 sm:gap-3">
-            @foreach($galleryItems as $g)
-                <button type="button" class="group relative overflow-hidden rounded-md {{ $gallerySpans[$loop->index] ?? '' }}"
+        <div class="mb-10 grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16">
+            <x-section-heading id="gallery-title" align="left" eyebrow="A visual journey" title="Beyond the postcard." class="!mb-0"/>
+            <p class="text-base sm:text-lg text-ink-soft lg:max-w-xl lg:justify-self-end">A glimpse of Germany beyond the familiar, from quiet village lanes and half-timbered streets to misty cliffs, river valleys and landscapes worth taking the longer way for. Tap a photo to see it full size.</p>
+        </div>
+        <div class="grid grid-cols-1 gap-[15px] sm:grid-cols-4 auto-rows-[18rem] lg:auto-rows-[25rem]">
+            @foreach($mosaic as $g)
+                <button type="button" class="group relative isolate overflow-hidden rounded-lg text-left {{ $g['span'] }}"
                         data-src="{{ $g['media']->url() }}" data-cap="{{ $g['label'] }}" data-alt="{{ $g['media']->alt }}"
                         @click="src = $el.dataset.src; cap = $el.dataset.cap; alt = $el.dataset.alt; open = true"
                         aria-label="View {{ $g['label'] }} photo full size">
-                    <x-picture :path="$g['path']" hires sizes="(min-width: 1024px) 50vw, 100vw" class="absolute inset-0 w-full h-full object-cover transition duration-[1200ms] group-hover:scale-105"/>
-                    <span class="absolute inset-0 bg-gradient-to-t from-brand-navy-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-500" aria-hidden="true"></span>
-                    <span class="absolute left-4 bottom-3 font-display text-2xl text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus-visible:opacity-100 transition duration-500">{{ $g['label'] }}</span>
+                    <x-picture :path="$g['path']" hires sizes="(min-width: 1024px) 50vw, 100vw" class="absolute inset-0 -z-10 w-full h-full object-cover transition duration-[1400ms] ease-out group-hover:scale-105"/>
+                    <span class="absolute inset-0 -z-[5]" style="background-image: linear-gradient(180deg, rgb(0 48 73 / 0) 55%, rgb(0 48 73 / 0.92) 100%)" aria-hidden="true"></span>
+                    <span class="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+                        <span class="block font-display text-2xl sm:text-3xl font-semibold leading-tight text-white">{{ $g['label'] }}</span>
+                        <span class="mt-3 block h-[3px] w-10 bg-brand-gold transition-all duration-500 group-hover:w-24" aria-hidden="true"></span>
+                    </span>
                 </button>
             @endforeach
         </div>
@@ -407,7 +426,7 @@
     <div x-show="open" x-cloak x-transition.opacity class="fixed inset-0 z-[60] bg-brand-navy-dark/95 grid place-items-center p-4"
          role="dialog" aria-modal="true" aria-label="Photo viewer" @click.self="open = false">
         <button type="button" class="absolute top-4 right-4 p-2 text-white hover:text-brand-gold" @click="open = false"><span class="sr-only">Close</span><x-icon name="x" class="w-8 h-8"/></button>
-        <figure class="max-w-6xl w-full">
+        <figure class="max-w-6xl w-full text-white">
             <img :src="src" :alt="alt" class="w-full max-h-[82vh] object-contain rounded">
             <figcaption class="mt-3 text-center font-display text-2xl" x-text="cap"></figcaption>
         </figure>
