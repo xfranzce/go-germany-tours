@@ -22,7 +22,7 @@ class HomeController extends Controller
             'page' => $page,
             'tourTypes' => TourType::active()->get(),
             'destinations' => Destination::active()->get(),
-            'featured' => Package::published()->orderByDesc('is_featured')->orderBy('sort')->with(['tourType', 'destination', 'images'])->take(6)->get(),
+            'featured' => Package::published()->orderByDesc('is_featured')->orderBy('sort')->with(['tourType', 'destination', 'images'])->take(24)->get(),
             'testimonials' => Testimonial::active()->get(),
             'posts' => Post::published()->take(3)->get(),
             'faqs' => $faqs,

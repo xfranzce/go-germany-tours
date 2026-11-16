@@ -184,16 +184,42 @@
     </div>
 </section>
 
-{{-- 3. SIGNATURE JOURNEYS (featured packages) --}}
+{{-- 3. SIGNATURE JOURNEYS: heading left, tour-type tabs right; tabs filter the packages --}}
 @if($featured->isNotEmpty())
-<section class="py-16 sm:py-24" aria-labelledby="featured-title">
+@php
+    $tabs = $featured->groupBy(fn ($p) => $p->tourType->slug)->map(fn ($g) => ['name' => $g->first()->tourType->name, 'packages' => $g->take(6)]);
+@endphp
+<section class="py-16 sm:py-24" aria-labelledby="featured-title" x-data="{ tab: '{{ $tabs->keys()->first() }}' }">
     <div class="container-x">
-        <x-section-heading id="featured-title" eyebrow="Signature journeys" :title="$page->text('featured_title', 'Popular ways to see Germany')" emphasis="Planned around you."
-            :intro="$page->text('featured_intro', 'A few ideas to start from. Every trip can be adjusted to suit you.')"/>
-        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            @foreach($featured as $package)<x-package-card :package="$package"/>@endforeach
+        <div class="mb-12 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <x-section-heading id="featured-title" align="left" eyebrow="Signature journeys" :title="$page->text('featured_title', 'Popular ways to see Germany')" emphasis="Planned around you."
+                :intro="$page->text('featured_intro', 'A few ideas to start from. Every trip can be adjusted to suit you.')" class="!mb-0 lg:max-w-xl"/>
+            <div role="tablist" aria-label="Choose how you travel" class="flex w-full gap-2 overflow-x-auto pb-1 lg:w-auto lg:shrink-0"
+>
+                @foreach($tabs as $slug => $t)
+                    <button type="button" role="tab" id="tab-{{ $slug }}" aria-controls="panel-{{ $slug }}"
+                            :aria-selected="tab === '{{ $slug }}'" :tabindex="tab === '{{ $slug }}' ? 0 : -1"
+                            @click="tab = '{{ $slug }}'"
+                            @keydown.right.prevent="$el.nextElementSibling?.focus(); $el.nextElementSibling?.click()"
+                            @keydown.left.prevent="$el.previousElementSibling?.focus(); $el.previousElementSibling?.click()"
+                            class="shrink-0 rounded-full border-2 px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.14em] transition duration-300 sm:px-6"
+                            :class="tab === '{{ $slug }}' ? 'border-brand-navy bg-brand-navy text-white shadow-lg shadow-brand-navy/20' : 'border-brand-navy/20 bg-white text-brand-navy hover:border-brand-navy'">
+                        {{ $t['name'] }}
+                    </button>
+                @endforeach
+            </div>
         </div>
-        <p class="mt-12 text-center"><x-button :href="route('packages.index')" variant="outline">See all packages <x-icon name="arrow-right" class="w-5 h-5"/></x-button></p>
+
+        @foreach($tabs as $slug => $t)
+            <div role="tabpanel" id="panel-{{ $slug }}" aria-labelledby="tab-{{ $slug }}" tabindex="0"
+                 x-show="tab === '{{ $slug }}'" @unless($loop->first) style="display:none" @endunless
+                 x-transition:enter="transition duration-500 ease-out" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+                <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    @foreach($t['packages'] as $package)<x-package-card :package="$package"/>@endforeach
+                </div>
+                <p class="mt-12 text-center"><x-button :href="route('tours.show', $slug)" variant="outline">See all {{ strtolower($t['name']) }} packages <x-icon name="arrow-right" class="w-5 h-5"/></x-button></p>
+            </div>
+        @endforeach
     </div>
 </section>
 @endif
