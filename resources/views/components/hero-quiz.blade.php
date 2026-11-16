@@ -53,8 +53,8 @@
         <template x-if="onForm">
             <div class="mt-5 animate-fade-up">
                 <p class="font-display font-bold text-xl">Where should we send your quote?</p>
-                <p class="mt-1 text-sm text-ink-soft" x-show="summary()"><span class="font-bold">Your answers:</span> <span x-text="summary()"></span></p>
-                <div class="mt-4">
+                <details class="mt-1 text-xs text-ink-soft" x-show="summary()"><summary class="cursor-pointer font-bold">Your answers &#10003; <span class="font-normal underline">show</span></summary><span class="mt-1 block" x-text="summary()"></span></details>
+                <div class="mt-3">
                     <x-enquiry-form form-id="hero-quiz" form-name="hero_quiz" :quiz="true" :eager="true" submit-label="Send My Free Quote"/>
                 </div>
                 <button type="button" @click="back()" class="mt-3 text-sm font-bold underline underline-offset-2">&larr; Back</button>

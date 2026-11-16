@@ -22,9 +22,10 @@
     $consent = preg_replace('/Privacy Policy/', '<a href="'.route('privacy').'" target="_blank" rel="noopener" class="underline font-bold">Privacy Policy</a>', $consent, 1);
     $countryOptions = collect(Countries::all())->map(fn ($c, $iso) => "{$c[0]} ({$c[1]})")->all();
     $submitted = old('form_id') === $formId;
+    $compact = ($quiz || $modal) && ! $inNoscript;   // shorter layout: tighter spacing, paired fields, optional request box
 @endphp
 <form method="POST" action="{{ route('enquiry.store') }}" id="{{ $formId }}"
-      x-data="enquiryForm({ eager: {{ $eager ? 'true' : 'false' }}, formName: @js($formName) })" @submit.prevent="submit($event)" class="space-y-4" aria-labelledby="{{ $formId }}-legend">
+      x-data="enquiryForm({ eager: {{ $eager ? 'true' : 'false' }}, formName: @js($formName) })" @submit.prevent="submit($event)" class="{{ $compact ? 'space-y-3 [&_.field-input]:!min-h-11 [&_.field-input]:!py-2 [&_.field-label]:!mb-0.5' : 'space-y-4' }}" aria-labelledby="{{ $formId }}-legend">
     @csrf
     <span id="{{ $formId }}-legend" class="sr-only">Enquiry form</span>
     <input type="hidden" name="form_id" value="{{ $formId }}">
@@ -49,13 +50,13 @@
         <p class="rounded-lg bg-red-50 border border-brand-red text-brand-red-dark font-bold p-3" role="alert">Please check the highlighted fields below.</p>
     @endif
 
-    <div class="grid gap-4 sm:grid-cols-2">
+    <div class="grid {{ $compact ? 'gap-3' : 'gap-4' }} sm:grid-cols-2">
         <x-form-field name="first_name" label="First name" :form-id="$formId" :bag="$bag" required autocomplete="given-name"/>
         <x-form-field name="last_name" label="Last name" :form-id="$formId" :bag="$bag" required autocomplete="family-name"/>
     </div>
     <x-form-field name="email" type="email" label="Email" :form-id="$formId" :bag="$bag" required autocomplete="email"/>
 
-    <div class="grid gap-4 grid-cols-[minmax(0,10rem)_1fr]">
+    <div class="grid {{ $compact ? 'gap-3' : 'gap-4' }} grid-cols-[minmax(0,10rem)_1fr]">
         <x-form-field name="phone_country" type="select" label="Country code" :form-id="$formId" :bag="$bag" :options="$countryOptions" :value="'US'" required/>
         <x-form-field name="phone" type="tel" label="Phone" :form-id="$formId" :bag="$bag" required autocomplete="tel-national" placeholder="e.g. 555 123 4567"/>
     </div>
@@ -68,18 +69,31 @@
         </div>
     @endif
 
-    <x-form-field name="travel_date" label="Preferred travel date (approx.)" :form-id="$formId" :bag="$bag" placeholder="e.g. September 2027"/>
-    <x-form-field name="second_quote" type="select" label="Would you like a second quote from a partner?" :form-id="$formId" :bag="$bag"
-                  :options="['Yes' => 'Yes', 'No' => 'No', 'Maybe' => 'Maybe, tell me more']"/>
-    <x-form-field name="special_request" type="textarea" label="Special request" :form-id="$formId" :bag="$bag" :rows="3"
-                  :x-value="$modal ? '$store.modal.prefill' : null"/>
+    <div class="{{ $compact ? 'grid gap-3 sm:grid-cols-2 sm:items-end' : 'space-y-4' }}">
+        <x-form-field name="travel_date" label="Preferred travel date (approx.)" :form-id="$formId" :bag="$bag" placeholder="e.g. September 2027"/>
+        <x-form-field name="second_quote" type="select" :label="$compact ? 'Second quote from a partner?' : 'Would you like a second quote from a partner?'" :form-id="$formId" :bag="$bag"
+                      :options="['Yes' => 'Yes', 'No' => 'No', 'Maybe' => 'Maybe, tell me more']"/>
+    </div>
+    @if($compact)
+        <div x-data="{ more: {{ $modal ? 'true' : 'false' }} }">
+            <button type="button" x-show="!more" @click="more = true; $nextTick(() => $refs.sr.querySelector('textarea').focus())"
+                    class="text-sm font-bold text-brand-red-dark underline underline-offset-2 hover:text-brand-navy">+ Add a special request (optional)</button>
+            <div x-ref="sr" x-show="more" x-cloak>
+                <x-form-field name="special_request" type="textarea" label="Special request" :form-id="$formId" :bag="$bag" :rows="2"
+                              :x-value="$modal ? '$store.modal.prefill' : null"/>
+            </div>
+        </div>
+    @else
+        <x-form-field name="special_request" type="textarea" label="Special request" :form-id="$formId" :bag="$bag" :rows="3"
+                      :x-value="$modal ? '$store.modal.prefill' : null"/>
+    @endif
 
     {{-- Required consent: unticked by default. Wording is fixed in config/gogermany.php --}}
     <div>
         <div class="flex items-start gap-3">
             <input id="{{ $formId }}-consent" type="checkbox" name="consent" value="1" required class="mt-1 h-5 w-5 shrink-0 accent-brand-red"
                    aria-describedby="{{ $formId }}-consent-err" @checked($submitted && old('consent'))>
-            <label for="{{ $formId }}-consent" class="text-xs leading-relaxed text-ink-soft">{!! $consent !!} <span class="text-brand-red font-bold" aria-hidden="true">*</span></label>
+            <label for="{{ $formId }}-consent" class="{{ $compact ? 'text-[0.7rem] leading-snug' : 'text-xs leading-relaxed' }} text-ink-soft">{!! $consent !!} <span class="text-brand-red font-bold" aria-hidden="true">*</span></label>
         </div>
         <div id="{{ $formId }}-consent-err" aria-live="polite">
             @if($bag->first('consent'))<p class="field-error">{{ $bag->first('consent') }}</p>@endif
