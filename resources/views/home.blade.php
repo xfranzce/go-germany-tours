@@ -198,19 +198,40 @@
 </section>
 @endif
 
-{{-- 4b. FULL-BLEED STATEMENT BANNER (fixed background on desktop) --}}
-@if($galleryItems->count() > 2)
-<section class="relative isolate overflow-hidden text-white text-center" aria-labelledby="banner-title">
-    <div class="absolute inset-0 -z-20 bg-brand-navy-dark lg:bg-fixed bg-cover bg-center"
-         style="background-image:url('{{ $galleryItems[1]['media']->url() }}')" aria-hidden="true"></div>
+{{-- 4b. ALPS STATEMENT BANNER: full-bleed mountain photo, slow zoom, frosted panel, reveal on scroll --}}
+@php $alps = \App\Models\Media::query()->where('path', 'like', 'media/allgau-alps-%')->first(); @endphp
+@if($alps || $galleryItems->count() > 2)
+<section class="relative isolate overflow-hidden flex items-center min-h-[36rem] sm:min-h-[46rem] text-white text-center" aria-labelledby="banner-title"
+         x-data="{ shown: false }" x-init="const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { shown = true; o.disconnect() } }, { threshold: 0.2 }); o.observe($el)">
+    <div class="absolute inset-0 -z-20 bg-brand-navy-dark" aria-hidden="true">
+        @if($alps)
+            <x-picture :path="$alps->path" hires sizes="100vw" class="banner-zoom w-full h-full object-cover"/>
+        @else
+            <div class="w-full h-full bg-cover bg-center" style="background-image:url('{{ $galleryItems[1]['media']->url() }}')"></div>
+        @endif
+    </div>
     <x-video-bg src="banner.mp4" class="absolute inset-0 -z-[15] w-full h-full object-cover"/>
-    <div class="absolute inset-0 -z-10 bg-brand-navy-dark/60" aria-hidden="true"></div>
-    <div class="container-x max-w-3xl py-28 sm:py-40">
-        <p class="eyebrow centered text-brand-gold">Germany, your way</p>
-        <h2 id="banner-title" class="mt-4 text-white">Half-timbered streets, castle hills and quiet coastlines.</h2>
-        <span class="flag-rule centered"></span>
-        <p class="mt-5 text-base sm:text-lg text-white/85">Tell us how you like to travel and we will shape the journey around you.</p>
-        <button type="button" class="btn btn-gold mt-9" @click="$store.modal.show()">Plan my trip</button>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-brand-navy-dark/70 via-brand-navy-dark/20 to-brand-navy-dark/80" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgb(0_31_48/0.45),transparent_65%)]" aria-hidden="true"></div>
+
+    <div class="container-x max-w-4xl py-24 sm:py-32">
+        <div class="mx-auto max-w-3xl rounded-2xl border border-white/25 bg-brand-navy-dark/35 backdrop-blur-md px-6 py-10 sm:px-14 sm:py-14 shadow-[0_30px_80px_-30px_rgb(0_0_0/0.8)] transition duration-1000 ease-out"
+             :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
+            <p class="eyebrow centered text-brand-gold">Germany, your way</p>
+            <h2 id="banner-title" class="mt-4 text-white">From Alpine peaks to
+                <em class="block italic font-medium text-brand-gold">fairytale towns.</em></h2>
+            <span class="flag-rule centered" aria-hidden="true"></span>
+            <p class="mt-5 text-base sm:text-lg text-white/90">Tell us how you like to travel and we will shape the journey around you.</p>
+            <ul class="mt-7 flex flex-wrap justify-center gap-2.5 text-xs font-bold uppercase tracking-wider">
+                @foreach(['Self drive', 'Private chauffeur', 'Small-group coach'] as $chip)
+                    <li class="rounded-full border border-white/30 bg-white/10 px-4 py-2">{{ $chip }}</li>
+                @endforeach
+            </ul>
+            <div class="mt-9 flex flex-wrap justify-center gap-3">
+                <button type="button" class="btn btn-gold px-9 shadow-lg shadow-black/30" @click="$store.modal.show()">Plan my trip <x-icon name="arrow-right" class="w-5 h-5"/></button>
+                <a href="{{ route('packages.index') }}" class="btn btn-outline-light px-9">See packages</a>
+            </div>
+        </div>
     </div>
 </section>
 @endif

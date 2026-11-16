@@ -16,6 +16,7 @@ Licence check done on 2026-11-11 from the Commons file metadata. Re-check before
 | `gengenbach-rathaus.jpg` | [Gengenbach-Rathaus-06-2025-gje.jpg](https://commons.wikimedia.org/wiki/File:Gengenbach-Rathaus-06-2025-gje.jpg) | Gerd Eichmann | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) | Gengenbach destination; Black Forest package; Chauffeur Driven card; Fairytale Towns gallery |
 | `neuschwanstein-castle.jpg` | [Neuschwanstein Castle (532850).jpg](https://commons.wikimedia.org/wiki/File:Neuschwanstein_Castle_(532850).jpg) | cameralends | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) | Home "Why book" arch photo |
 | `bacharach-rhine.jpg` | [Blick auf Bacharach und den Rhein - Flickr - abbilder.jpg](https://commons.wikimedia.org/wiki/File:Blick_auf_Bacharach_und_den_Rhein_-_Flickr_-_abbilder.jpg) | abbilder | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0) | Home "Why book" second photo |
+| `allgau-alps.jpg` | [Allgäu alps autumn 2017-10-13.jpg](https://commons.wikimedia.org/wiki/File:Allg%C3%A4u_alps_autumn_2017-10-13.jpg) | Tommy Rau | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) | Home Alps statement banner |
 
 ## Notes
 

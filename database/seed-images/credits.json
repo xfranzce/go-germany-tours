@@ -78,5 +78,13 @@
         "artist": "abbilder",
         "license": "CC BY 2.0",
         "license_url": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+        "slug": "allgau-alps",
+        "title": "Allgäu alps autumn 2017-10-13.jpg",
+        "page": "https://commons.wikimedia.org/wiki/File:Allg%C3%A4u_alps_autumn_2017-10-13.jpg",
+        "artist": "Tommy Rau",
+        "license": "CC0",
+        "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
     }
 ]

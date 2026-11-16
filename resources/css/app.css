@@ -158,3 +158,8 @@
 @keyframes why-float { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-12px) rotate(1deg); } }
 .why-float { animation: why-float 7s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .why-float { animation: none; } }
+
+/* Alps banner: slow cinematic zoom */
+@keyframes banner-zoom { from { transform: scale(1); } to { transform: scale(1.12); } }
+.banner-zoom { animation: banner-zoom 28s ease-in-out infinite alternate; transform-origin: 60% 55%; }
+@media (prefers-reduced-motion: reduce) { .banner-zoom { animation: none; } }
