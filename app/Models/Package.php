@@ -14,6 +14,7 @@ class Package extends Model
         'highlights' => 'array', 'itinerary' => 'array', 'inclusions' => 'array', 'exclusions' => 'array',
         'is_published' => 'boolean', 'is_featured' => 'boolean', 'is_sample' => 'boolean', 'noindex' => 'boolean',
         'price_from' => 'decimal:2',
+        'price_was' => 'decimal:2',
     ];
 
     public function tourType(): BelongsTo
@@ -49,6 +50,17 @@ class Package extends Model
     public function coverPath(): ?string
     {
         return $this->images->first()?->path;
+    }
+
+    /** True when a higher "was" price is set above the current price. */
+    public function hasSale(): bool
+    {
+        return $this->price_from && $this->price_was && (float) $this->price_was > (float) $this->price_from;
+    }
+
+    public function wasLabel(): ?string
+    {
+        return $this->hasSale() ? ($this->currency === 'USD' ? '$' : $this->currency.' ').number_format((float) $this->price_was).' pp' : null;
     }
 
     public function priceLabel(): string
