@@ -88,4 +88,4 @@ Use the PHP binary path hPanel shows for your PHP version. Enquiry emails and GH
 - The server CLI default is PHP 8.2 but the lockfile needs 8.4: use `/opt/alt/php84/usr/bin/php`. The web PHP version is forced by `AddHandler application/x-httpd-alt-php84___lsphp .php` at the top of `public/.htaccess` on the server (marked `skip-worktree`; not committed).
 - No Node on the server: run `npm run build` locally and upload `public/build` (gitignored).
 - Testimonials have `name`, `location`, `source` (shown on the card); drafts are seeded hidden.
-- Update: `git pull`, `/opt/alt/php84/usr/bin/php $(which composer) install --no-dev -o`, `php84 artisan migrate --force`, `php84 artisan optimize:clear`, upload `public/build` if CSS/JS changed.
+- Update: `GGT_SSH_PASSWORD=... bash scripts/deploy.sh "message"` (builds, commits, pushes, uploads build, pulls, migrates; server details in git-ignored `.deploy.env`).

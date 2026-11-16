@@ -32,6 +32,9 @@ Google Ads landing-page site for one GoTour brand. Server-rendered Laravel 12 (P
 11. Phone numbers are stored E.164 (`Countries::e164`). Only `$request->validated()` keys reach a controller: **declare a rule for every field you read** (a missing rule once silently dropped quiz option ids).
 12. Rich text goes through `Html::clean()` on save (allow-list); output is `{!! !!}` only for that sanitised content.
 
+## Deploying
+Live site (Hostinger) is updated with `GGT_SSH_PASSWORD=... bash scripts/deploy.sh "message"` (see docs/reference/DEPLOYMENT.md). After any local change, deploy it.
+
 ## Conventions
 - Design tokens only in `resources/css/app.css` `@theme`; use `brand-*` colour utilities, `font-display`/`font-sans`. Tangerine only behind navy text or as a border (contrast). WCAG AA.
 - Public views are Blade, server-rendered, one `<h1>` per page, SEO through `Seo::make()` in the controller. Images via `<x-picture>` (srcset + width/height, lazy unless `priority`).
