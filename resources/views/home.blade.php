@@ -262,8 +262,10 @@
 </section>
 
 {{-- 6. OUR DIFFERENCE (dark, split layout) --}}
-<section class="py-16 sm:py-24 bg-brand-navy text-white" aria-labelledby="why-title">
-    <div class="container-x grid gap-14 lg:grid-cols-[0.8fr_1.2fr]">
+<section class="relative isolate overflow-hidden py-16 sm:py-24 bg-brand-navy text-white" aria-labelledby="why-title">
+    {{-- faint backdrop on smaller screens; a full map column on wide ones --}}
+    <x-germany-map class="pointer-events-none absolute -z-10 top-1/2 h-[110%] w-auto -translate-y-1/2 opacity-25 -right-16 xl:hidden"/>
+    <div class="container-x relative grid gap-14 lg:grid-cols-[0.8fr_1.2fr] xl:grid-cols-[0.8fr_0.7fr_1.3fr] xl:gap-10">
         <div>
             <p class="eyebrow text-brand-gold">Why {{ $site['brand_name'] }}</p>
             <h2 id="why-title" class="mt-4 text-white">{{ $page->text('why_title', 'Why travelers choose us') }}</h2>
@@ -271,6 +273,7 @@
             <p class="mt-5 text-base sm:text-lg text-white/85">{{ $page->text('why_intro', 'Germany is easier to enjoy when the planning is done for you.') }}</p>
             <button type="button" class="btn btn-gold mt-8" @click="$store.modal.show()">Start planning</button>
         </div>
+        <div class="hidden xl:flex items-center justify-center" aria-hidden="true"><x-germany-map class="h-[28rem] w-auto"/></div>
         <ul class="grid gap-x-10 gap-y-8 sm:grid-cols-2">
             @foreach([
                 ['adjust', 'Choose how you travel', 'Drive yourself, relax with a private driver, or join a small-group coach tour.'],
