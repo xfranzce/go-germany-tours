@@ -28,6 +28,9 @@ class ImageSeeder extends Seeder
         'hiddensee-beach' => 'Fishing boat on the sandy beach of Hiddensee with the Baltic Sea behind',
         'gengenbach-rathaus' => 'The pink baroque town hall on the market square in Gengenbach',
         'neuschwanstein-castle' => 'Neuschwanstein Castle on its wooded rock above the Bavarian lakes and meadows',
+        'selfdrive-road' => 'A car driving along a winding road through vineyards above the Mosel river, with a village and castle in the distance',
+        'chauffeur-private-driver' => 'A chauffeur holding the door of a black sedan on a cobbled square beside a pink baroque town hall',
+        'coach-tour-cochem' => 'A touring coach on the Mosel riverside in Cochem with a group of travelers and the hilltop castle behind',
         'allgau-alps' => 'Autumn larches and a sunlit peak in the Allgäu Alps of Bavaria',
         'bacharach-rhine' => 'The Rhine valley town of Bacharach with its church tower, vineyards and castle',
     ];

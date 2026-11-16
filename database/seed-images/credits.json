@@ -86,5 +86,23 @@
         "artist": "Tommy Rau",
         "license": "CC0",
         "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+        "slug": "selfdrive-road",
+        "type": "ai",
+        "title": "Self drive road trip through the Mosel valley (illustration)",
+        "tool": "Higgsfield (Nano Banana 2)"
+    },
+    {
+        "slug": "chauffeur-private-driver",
+        "type": "ai",
+        "title": "Private chauffeur on a German market square (illustration)",
+        "tool": "Higgsfield (Nano Banana 2)"
+    },
+    {
+        "slug": "coach-tour-cochem",
+        "type": "ai",
+        "title": "Small-group coach tour on the Mosel riverside (illustration)",
+        "tool": "Higgsfield (Nano Banana 2)"
     }
 ]
