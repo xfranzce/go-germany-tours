@@ -46,3 +46,6 @@ Three dummy testimonials (badge "PLACEHOLDER", source "Sample review: replace be
 
 ## Sample packages
 There are 18 SAMPLE packages (6 per tour type; names, nights, prices and 5.0 "sample rating" are placeholders). The last 12 come from `MoreSamplePackagesSeeder` (`php artisan db:seed --class=MoreSamplePackagesSeeder`, safe to re-run). Replace or delete them in Admin > Packages and untick "Sample / placeholder" for real ones.
+
+## Meet Our Team page
+`/meet-our-team` holds three PLACEHOLDER team members. Replace them in Admin > Pages > Meet Our Team with the real people (name, role, short bio) or remove the section. Do not publish placeholders.

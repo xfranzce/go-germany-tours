@@ -14,13 +14,15 @@ class SitemapController extends Controller
     {
         $urls = [['loc' => url('/'), 'mod' => Page::where('key', 'home')->value('updated_at'), 'pri' => '1.0']];
 
-        foreach (['about' => 'about', 'contact' => 'contact', 'terms' => 'terms', 'privacy' => 'privacy'] as $key => $route) {
+        foreach (['about' => 'about', 'team' => 'team', 'contact' => 'contact', 'terms' => 'terms', 'privacy' => 'privacy'] as $key => $route) {
             $page = Page::where('key', $key)->first();
             if ($page && ! $page->noindex) {
                 $urls[] = ['loc' => route($route), 'mod' => $page->updated_at, 'pri' => in_array($key, ['terms', 'privacy']) ? '0.3' : '0.6'];
             }
         }
         $urls[] = ['loc' => route('packages.index'), 'mod' => null, 'pri' => '0.9'];
+        $urls[] = ['loc' => route('testimonials'), 'mod' => null, 'pri' => '0.5'];
+        $urls[] = ['loc' => route('faqs'), 'mod' => null, 'pri' => '0.6'];
         $urls[] = ['loc' => route('blog.index'), 'mod' => null, 'pri' => '0.5'];
 
         foreach (TourType::active()->get() as $t) {

@@ -50,7 +50,7 @@ class PublicPagesTest extends TestCase
 
     public function test_every_public_page_renders_with_one_h1_title_description_and_canonical(): void
     {
-        $urls = ['/', '/packages', '/about', '/contact', '/terms-and-conditions', '/privacy-policy', '/guides', '/photo-credits',
+        $urls = ['/', '/packages', '/about', '/contact', '/terms-and-conditions', '/privacy-policy', '/guides', '/photo-credits', '/meet-our-team', '/testimonials', '/faqs',
             '/destinations/quedlinburg', '/tours/self-drive', Package::first()->url()];
 
         foreach ($urls as $url) {
@@ -60,6 +60,21 @@ class PublicPagesTest extends TestCase
             $this->assertMatchesRegularExpression('/<meta name="description" content="[^"]{20,}"/', $html, $url);
             $this->assertMatchesRegularExpression('/<link rel="canonical" href="[^"]+"/', $html, $url);
         }
+    }
+
+    public function test_header_has_the_tours_and_about_us_mega_menus(): void
+    {
+        $html = $this->get('/')->assertOk()->getContent();
+        $this->assertStringContainsString('id="mega-tours"', $html);
+        $this->assertStringContainsString('id="mega-about"', $html);
+        foreach (['Self Drive', 'Chauffeur Driven', 'Coach Tours'] as $type) {
+            $this->assertStringContainsString($type, $html);
+        }
+        foreach (['/about', '/meet-our-team', '/testimonials', '/faqs'] as $path) {
+            $this->assertStringContainsString($path, $html);
+        }
+        $this->assertStringContainsString(Package::first()->url(), $html, 'tour mega menu lists packages');
+        $this->get('/faqs')->assertOk()->assertSee('"@type":"FAQPage"', false);
     }
 
     public function test_home_has_faq_structured_data_and_the_hero_quiz_without_a_destination_dropdown(): void
@@ -89,7 +104,11 @@ class PublicPagesTest extends TestCase
 
     public function test_package_filters_work_and_filtered_views_are_noindex(): void
     {
-        $this->get('/packages?type=coach-tours')->assertOk()->assertSee('Mosel Valley')->assertDontSee('Hiddensee Baltic Island Escape')->assertSee('noindex', false);
+        $html = $this->get('/packages?type=coach-tours')->assertOk()->assertSee('noindex', false)->getContent();
+        // Check the results area only: the header's Tours mega menu intentionally lists every package.
+        preg_match('/<main.*<\/main>/s', $html, $m);
+        $this->assertStringContainsString('Mosel Valley', $m[0]);
+        $this->assertStringNotContainsString('Hiddensee Baltic Island Escape', $m[0]);
         $this->get('/packages')->assertOk()->assertDontSee('content="noindex', false);
     }
 

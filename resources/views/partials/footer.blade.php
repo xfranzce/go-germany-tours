@@ -1,7 +1,7 @@
 @php $tel = preg_replace('/[^+\d]/', '', $site['phone'] ?? ''); @endphp
 <footer class="bg-brand-navy text-white mt-16">
     <div class="h-1.5 flex" aria-hidden="true"><span class="flex-1 bg-brand-navy-dark"></span><span class="flex-1 bg-brand-red"></span><span class="flex-1 bg-brand-gold"></span></div>
-    <div class="container-x py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="container-x py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div class="lg:col-span-2">
             <p class="font-display font-extrabold text-2xl">{{ $site['brand_name'] }}</p>
             <p class="mt-3 max-w-md text-white/85">{{ $site['footer_text'] }}</p>
@@ -25,6 +25,15 @@
                     <li><a class="hover:text-brand-gold" href="{{ route('tours.show', $t->slug) }}">{{ $t->name }}</a></li>
                 @endforeach
                 <li><a class="hover:text-brand-gold" href="{{ route('blog.index') }}">Travel guides</a></li>
+            </ul>
+        </nav>
+        <nav aria-label="About us">
+            <p class="eyebrow text-brand-gold">About us</p>
+            <ul class="mt-3 space-y-2">
+                <li><a class="hover:text-brand-gold" href="{{ route('about') }}">About Us</a></li>
+                <li><a class="hover:text-brand-gold" href="{{ route('team') }}">Meet Our Team</a></li>
+                <li><a class="hover:text-brand-gold" href="{{ route('testimonials') }}">Testimonials</a></li>
+                <li><a class="hover:text-brand-gold" href="{{ route('faqs') }}">FAQs</a></li>
             </ul>
         </nav>
     </div>

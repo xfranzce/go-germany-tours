@@ -18,6 +18,9 @@ Route::get('/destinations/{slug}', [DestinationController::class, 'show'])->name
 Route::get('/tours/{slug}', [TourTypeController::class, 'show'])->name('tours.show');
 
 Route::get('/about', [PageController::class, 'about'])->name('about');
+Route::get('/meet-our-team', [PageController::class, 'team'])->name('team');
+Route::get('/testimonials', [PageController::class, 'testimonials'])->name('testimonials');
+Route::get('/faqs', [PageController::class, 'faqs'])->name('faqs');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/terms-and-conditions', [PageController::class, 'terms'])->name('terms');
 Route::get('/privacy-policy', [PageController::class, 'privacy'])->name('privacy');

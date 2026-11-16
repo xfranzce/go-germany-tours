@@ -19,6 +19,8 @@ class PagesSeeder extends Seeder
                 .'<p>Choose how you want to travel: drive yourself, relax with a chauffeur, or join a coach tour. Tell us what you have in mind and we will send a tailored quote.</p>'
                 .'<p>[CONFIRM: company story, years in business, team, accreditation and licence details]</p>',
                 'seo_title' => 'About Go Germany Tours', 'meta_description' => 'Learn about Go Germany Tours and how we plan self drive, chauffeur driven and coach vacations in Germany.'],
+            'team' => ['title' => 'Meet Our Team', 'content' => '<p>[CONFIRM: introduce the team. Add the real name, role and a short bio of each person, ideally with a photo, here in Admin > Pages > Meet Our Team.]</p><h2>[PLACEHOLDER: Team member name]</h2><p><em>[PLACEHOLDER: role]</em></p><p>[PLACEHOLDER: short bio]</p><h2>[PLACEHOLDER: Team member name]</h2><p><em>[PLACEHOLDER: role]</em></p><p>[PLACEHOLDER: short bio]</p><h2>[PLACEHOLDER: Team member name]</h2><p><em>[PLACEHOLDER: role]</em></p><p>[PLACEHOLDER: short bio]</p>', 'data' => [],
+                'seo_title' => 'Meet Our Team | Go Germany Tours', 'meta_description' => 'Meet the people who plan your Germany vacation at Go Germany Tours.'],
             'contact' => ['title' => 'Contact Us', 'content' => '<p>Tell us about your trip and we will come back to you with a personalised quote. Fill in the form and a member of the team will be in touch.</p>',
                 'seo_title' => 'Contact Go Germany Tours', 'meta_description' => 'Contact Go Germany Tours for a free, no-obligation quote on your Germany vacation.'],
             'terms' => ['title' => 'Terms and Conditions', 'content' => $banner.<<<'HTML'

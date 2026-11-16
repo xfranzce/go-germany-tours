@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faq;
 use App\Models\Page;
+use App\Models\Testimonial;
 use App\Support\Seo;
 
 /** About, Contact, Terms, Privacy: all editable in Admin > Pages. */
@@ -23,6 +25,33 @@ class PageController extends Controller
     }
 
     public function about() { return $this->render('about', 'pages.about', 'about'); }
+
+    /** Meet Our Team: rich-text page editable in Admin > Pages. */
+    public function team() { return $this->render('team', 'pages.about', 'team'); }
+
+    public function testimonials()
+    {
+        return view('pages.testimonials', [
+            'testimonials' => Testimonial::active()->get(),
+            'seo' => Seo::make('Traveler Testimonials', 'What travelers say about planning their Germany vacation with us.', [
+                'canonical' => route('testimonials'),
+                'breadcrumbs' => [['name' => 'Home', 'url' => url('/')], ['name' => 'Testimonials', 'url' => route('testimonials')]],
+            ]),
+        ]);
+    }
+
+    public function faqs()
+    {
+        $faqs = Faq::home()->get();
+
+        return view('pages.faqs', [
+            'faqs' => $faqs,
+            'seo' => Seo::make('Frequently Asked Questions', 'Answers about our self drive, chauffeur driven and coach tours of Germany, quotes and planning.', [
+                'canonical' => route('faqs'), 'schema' => [Seo::faqSchema($faqs)],
+                'breadcrumbs' => [['name' => 'Home', 'url' => url('/')], ['name' => 'FAQs', 'url' => route('faqs')]],
+            ]),
+        ]);
+    }
 
     public function contact() { return $this->render('contact', 'pages.contact', 'contact'); }
 
