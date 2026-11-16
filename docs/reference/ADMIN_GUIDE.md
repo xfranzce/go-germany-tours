@@ -49,3 +49,6 @@ Add people (password at least 12 characters), change a name/email/password, remo
 
 ## When something looks wrong
 Hard refresh (Ctrl+F5). If a change does not appear on the site, save again; settings are cached for up to an hour at most. Ask a developer for server errors (`storage/logs/laravel.log`).
+
+## Packages: bulk actions and trash
+On Admin > Packages, tick one or more rows (or the box in the header to tick all) and use the toolbar: **Publish, Unpublish, Feature, Unfeature, Mark sample, Not sample, Trash**. Trashed packages disappear from the public site (soft delete, nothing is erased). Open the **Trash** tab, tick packages and press **Restore** to bring them back. Deleting a package from its edit page also moves it to the trash.

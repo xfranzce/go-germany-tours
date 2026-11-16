@@ -21,6 +21,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Packages
         Route::put('packages-order', [Admin\PackageController::class, 'reorder'])->name('packages.reorder');
+        Route::post('packages/bulk/{action}', [Admin\PackageController::class, 'bulk'])->whereIn('action', ['trash', 'restore', 'publish', 'unpublish', 'sample', 'unsample', 'feature', 'unfeature'])->name('packages.bulk');
         Route::resource('packages', Admin\PackageController::class)->except('show');
         Route::post('packages/{package}/duplicate', [Admin\PackageController::class, 'duplicate'])->name('packages.duplicate');
         Route::post('packages/{package}/toggle/{field}', [Admin\PackageController::class, 'toggle'])->whereIn('field', ['is_published', 'is_featured'])->name('packages.toggle');

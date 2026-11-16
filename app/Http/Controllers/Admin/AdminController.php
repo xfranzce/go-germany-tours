@@ -48,7 +48,8 @@ abstract class AdminController extends Controller
         $base = Str::slug($given ?: $fallback) ?: 'item';
         $slug = $base;
         $i = 2;
-        while ($modelClass::where('slug', $slug)->when($ignoreId, fn ($q) => $q->where('id', '!=', $ignoreId))->exists()) {
+        $query = fn () => in_array(\Illuminate\Database\Eloquent\SoftDeletes::class, class_uses_recursive($modelClass)) ? $modelClass::withTrashed() : $modelClass::query();
+        while ($query()->where('slug', $slug)->when($ignoreId, fn ($q) => $q->where('id', '!=', $ignoreId))->exists()) {
             $slug = $base.'-'.$i++;
         }
 

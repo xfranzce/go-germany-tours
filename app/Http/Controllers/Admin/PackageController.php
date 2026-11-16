@@ -14,11 +14,14 @@ class PackageController extends AdminController
 {
     public function index(Request $request)
     {
+        $view = $request->input('view') === 'trash' ? 'trash' : 'all';
         $packages = Package::with(['tourType', 'destination'])
+            ->when($view === 'trash', fn ($q) => $q->onlyTrashed())
             ->when($request->filled('q'), fn ($q) => $q->where('title', 'like', '%'.$request->input('q').'%'))
             ->orderBy('sort')->orderBy('title')->get();
+        $trashCount = Package::onlyTrashed()->count();
 
-        return view('admin.packages.index', compact('packages'));
+        return view('admin.packages.index', compact('packages', 'view', 'trashCount'));
     }
 
     public function create()
@@ -50,7 +53,32 @@ class PackageController extends AdminController
     {
         $package->delete();
 
-        return redirect()->route('admin.packages.index')->with('status', 'Package deleted.');
+        return redirect()->route('admin.packages.index')->with('status', 'Package moved to trash. You can restore it from the Trash tab.');
+    }
+
+    /** Bulk actions on the ticked packages: trash, restore, publish, unpublish, sample, unsample, feature, unfeature. */
+    public function bulk(Request $request, string $action)
+    {
+        $ids = $request->validate(['ids' => ['required', 'array', 'min:1'], 'ids.*' => ['integer']], ['ids.required' => 'Tick at least one package first.'])['ids'];
+        $packages = Package::withTrashed()->whereIn('id', $ids);
+
+        $changes = [
+            'publish' => ['is_published' => true], 'unpublish' => ['is_published' => false],
+            'sample' => ['is_sample' => true], 'unsample' => ['is_sample' => false],
+            'feature' => ['is_featured' => true], 'unfeature' => ['is_featured' => false],
+        ];
+        if ($action === 'trash') {
+            $count = Package::whereIn('id', $ids)->get()->each->delete()->count();
+            $done = 'moved to trash';
+        } elseif ($action === 'restore') {
+            $count = $packages->onlyTrashed()->get()->each->restore()->count();
+            $done = 'restored';
+        } else {
+            $count = Package::whereIn('id', $ids)->update($changes[$action]);
+            $done = ['publish' => 'published', 'unpublish' => 'unpublished', 'sample' => 'marked as sample', 'unsample' => 'marked as not sample', 'feature' => 'featured on the home page', 'unfeature' => 'unfeatured'][$action];
+        }
+
+        return back()->with('status', $count.' '.($count === 1 ? 'package' : 'packages').' '.$done.'.');
     }
 
     public function toggle(Package $package, string $field)
