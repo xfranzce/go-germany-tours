@@ -9,6 +9,7 @@
     @csrf @if(! $isNew) @method('PUT') @endif
     <x-admin.field name="name" label="Guest name" :value="$item->name" required/>
     <x-admin.field name="location" label="Where they are from" :value="$item->location"/>
+    <x-admin.field name="source" label="Where the review came from (e.g. Google review, March 2025)" :value="$item->source" class="sm:col-span-2"/>
     <x-admin.field name="quote" label="Review text" type="textarea" :rows="5" :value="$item->quote" required class="sm:col-span-2" maxlength="1000"/>
     <x-admin.field name="sort" label="Order" type="number" :value="$item->sort"/>
     <div class="space-y-2">

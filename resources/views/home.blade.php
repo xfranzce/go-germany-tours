@@ -293,7 +293,7 @@
                     <span class="font-display text-7xl leading-none text-brand-gold" aria-hidden="true">&ldquo;</span>
                     @if($r->is_placeholder)<p class="inline-block bg-brand-gold text-brand-navy text-xs font-extrabold px-2 py-0.5 rounded">PLACEHOLDER</p>@endif
                     <blockquote class="mt-2 text-lg">{{ $r->quote }}</blockquote>
-                    <figcaption class="mt-5 font-bold border-t border-brand-custard pt-4">{{ $r->name }}<span class="block font-normal text-ink-soft text-sm">{{ $r->location }}</span></figcaption>
+                    <figcaption class="mt-5 font-bold border-t border-brand-custard pt-4">{{ $r->name }}<span class="block font-normal text-ink-soft text-sm">{{ $r->location }}</span>@if($r->source)<span class="block font-normal text-ink-soft text-xs mt-1">{{ $r->source }}</span>@endif</figcaption>
                 </figure>
             @endforeach
         </div>

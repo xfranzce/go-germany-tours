@@ -46,7 +46,7 @@ class TestimonialController extends AdminController
     private function data(Request $request): array
     {
         $d = $request->validate([
-            'name' => ['required', 'string', 'max:100'], 'location' => ['nullable', 'string', 'max:100'],
+            'name' => ['required', 'string', 'max:100'], 'location' => ['nullable', 'string', 'max:100'], 'source' => ['nullable', 'string', 'max:100'],
             'quote' => ['required', 'string', 'max:1000'], 'sort' => ['nullable', 'integer', 'min:0'],
         ]);
 
