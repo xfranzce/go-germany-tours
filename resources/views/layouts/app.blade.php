@@ -54,7 +54,6 @@
 @endif
 <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:bg-white focus:p-3 focus:m-2 focus:rounded">Skip to content</a>
 
-@include('partials.topbar')
 @include('partials.header')
 
 <main id="main" class="flex-1">

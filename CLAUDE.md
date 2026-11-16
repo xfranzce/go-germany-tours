@@ -38,6 +38,7 @@ Google Ads landing-page site for one GoTour brand. Server-rendered Laravel 12 (P
 Live site (Hostinger) is updated with `GGT_SSH_PASSWORD=... bash scripts/deploy.sh "message"` (see docs/reference/DEPLOYMENT.md). After any local change, deploy it.
 
 ## Conventions
+- Header is transparent over the page top (white text) and turns solid white after scrolling; there is no top bar. Pages that start on a light background must add `@section('solid_header', '1')` (404, thank-you do). Page headers have extra top padding to sit under it.
 - Section headings: eyebrow, then plain `<h2>` (global size, `mt-4`), `flag-rule`, intro `mt-5 text-base sm:text-lg`. Never override heading font sizes on section titles; prefer `<x-section-heading>`.
 - Design tokens only in `resources/css/app.css` `@theme`; use `brand-*` colour utilities, `font-display`/`font-sans`. Tangerine only behind navy text or as a border (contrast). WCAG AA.
 - Public views are Blade, server-rendered, one `<h1>` per page, SEO through `Seo::make()` in the controller. Images via `<x-picture>` (srcset + width/height, lazy unless `priority`).

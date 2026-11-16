@@ -1,6 +1,6 @@
 {{-- Expects: $title (the page H1), optional $crumbs [[name,url]], $lead --}}
 <section class="bg-brand-navy text-white">
-    <div class="container-x py-10 sm:py-14">
+    <div class="container-x pt-28 pb-10 sm:pt-36 sm:pb-14">
         @if(!empty($crumbs))
             <nav aria-label="Breadcrumb" class="text-sm text-white/80 mb-3">
                 <ol class="flex flex-wrap gap-x-2">

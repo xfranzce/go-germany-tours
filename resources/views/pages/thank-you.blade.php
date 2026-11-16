@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('solid_header', '1')
 @section('content')
 <section class="py-20 bg-brand-custard-light">
     <div class="container-x max-w-2xl text-center">

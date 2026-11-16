@@ -1,5 +1,6 @@
 @extends('layouts.app', ['seo' => \App\Support\Seo::make('Page not found', 'Sorry, we could not find that page.', ['noindex' => true])])
 
+@section('solid_header', '1')
 @section('content')
 <section class="py-24 bg-brand-custard-light">
     <div class="container-x max-w-xl text-center">

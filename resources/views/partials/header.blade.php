@@ -1,10 +1,15 @@
 @php
     $navTypes = \App\Models\TourType::active()->get(['name', 'slug']);
     $logo = \App\Models\Media::forPath($site['logo'] ?? null);
+    // Pages that start on a light background keep a solid bar (@section('solid_header', '1'))
+    $solid = \Illuminate\Support\Facades\View::hasSection('solid_header');
 @endphp
-<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-brand-custard" x-data="{ mobile: false }" @keydown.escape="mobile = false">
+<header class="{{ $solid ? 'sticky' : 'fixed inset-x-0' }} top-0 z-40 border-b transition-colors duration-300"
+        x-data="{ mobile: false, scrolled: {{ $solid ? 'true' : 'false' }} }" @keydown.escape="mobile = false"
+        @if(! $solid) x-init="scrolled = window.scrollY > 24" @scroll.window.passive="scrolled = window.scrollY > 24" @endif
+        :class="scrolled || mobile ? 'bg-white/95 backdrop-blur border-brand-custard text-brand-navy shadow-sm' : 'bg-transparent border-transparent text-white'">
     <div class="container-x flex items-center justify-between gap-4 py-3">
-        <a href="{{ route('home') }}" class="flex items-center gap-2.5 font-display font-extrabold text-xl text-brand-navy leading-none" aria-label="{{ $site['brand_name'] }} home">
+        <a href="{{ route('home') }}" class="flex items-center gap-2.5 font-display font-extrabold text-xl leading-none" aria-label="{{ $site['brand_name'] }} home">
             @if($logo)
                 <img src="{{ $logo->url(min(480, max($logo->widths))) }}" alt="{{ $site['brand_name'] }}" width="{{ $logo->width }}" height="{{ $logo->height }}" class="h-10 w-auto">
             @else
@@ -18,19 +23,19 @@
         <nav class="hidden lg:flex items-center gap-1 font-bold text-sm uppercase tracking-wider" aria-label="Main">
             @foreach([['Tours', 'tours', $navTypes, 'tours.show']] as [$label, $id, $items, $route])
                 <div class="relative" x-data="{ open: false }" @keydown.escape="open = false" @click.outside="open = false">
-                    <button type="button" class="px-3 py-2 rounded-lg hover:bg-brand-custard-light inline-flex items-center gap-1" :aria-expanded="open" aria-controls="menu-{{ $id }}" @click="open = !open">
+                    <button type="button" class="px-3 py-2 rounded-lg hover:bg-current/10 inline-flex items-center gap-1" :aria-expanded="open" aria-controls="menu-{{ $id }}" @click="open = !open">
                         {{ $label }} <x-icon name="chevron-down" class="w-4 h-4"/>
                     </button>
-                    <ul id="menu-{{ $id }}" x-show="open" x-cloak x-transition.opacity class="absolute left-0 mt-2 min-w-64 bg-white rounded-2xl shadow-card border-t-4 border-brand-gold p-2 z-50 normal-case tracking-normal">
+                    <ul id="menu-{{ $id }}" x-show="open" x-cloak x-transition.opacity class="absolute left-0 mt-2 min-w-64 bg-white text-brand-navy rounded-2xl shadow-card border-t-4 border-brand-gold p-2 z-50 normal-case tracking-normal">
                         @foreach($items as $item)
-                            <li><a class="block px-3 py-2 rounded-lg hover:bg-brand-custard-light" href="{{ route($route, $item->slug) }}">{{ $item->name }}</a></li>
+                            <li><a class="block px-3 py-2 rounded-lg hover:bg-current/10" href="{{ route($route, $item->slug) }}">{{ $item->name }}</a></li>
                         @endforeach
                     </ul>
                 </div>
             @endforeach
-            <a href="{{ route('packages.index') }}" class="px-3 py-2 rounded-lg hover:bg-brand-custard-light">Packages</a>
-            <a href="{{ route('about') }}" class="px-3 py-2 rounded-lg hover:bg-brand-custard-light">About</a>
-            <a href="{{ route('contact') }}" class="px-3 py-2 rounded-lg hover:bg-brand-custard-light">Contact</a>
+            <a href="{{ route('packages.index') }}" class="px-3 py-2 rounded-lg hover:bg-current/10">Packages</a>
+            <a href="{{ route('about') }}" class="px-3 py-2 rounded-lg hover:bg-current/10">About</a>
+            <a href="{{ route('contact') }}" class="px-3 py-2 rounded-lg hover:bg-current/10">Contact</a>
             <button type="button" class="btn btn-primary btn-sm ml-2" @click="$store.modal.show()">Free Quote</button>
         </nav>
 
@@ -41,7 +46,7 @@
         </button>
     </div>
 
-    <nav id="mobile-menu" class="lg:hidden border-t border-brand-custard bg-white" x-show="mobile" x-cloak aria-label="Mobile">
+    <nav id="mobile-menu" class="lg:hidden border-t border-brand-custard bg-white text-brand-navy" x-show="mobile" x-cloak aria-label="Mobile">
         <div class="container-x py-3 grid gap-1 font-bold max-h-[75vh] overflow-y-auto">
             <p class="text-xs uppercase tracking-wider text-ink-soft mt-1">Tours</p>
             @foreach($navTypes as $t)<a class="py-2 pl-2" href="{{ route('tours.show', $t->slug) }}">{{ $t->name }}</a>@endforeach
