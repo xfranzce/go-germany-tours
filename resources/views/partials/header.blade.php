@@ -21,7 +21,8 @@
         @keydown.escape="mobile = false; menu = null" @click.outside="menu = null"
         @if(! $solid) x-init="scrolled = window.scrollY > 24" @scroll.window.passive="scrolled = window.scrollY > 24" @endif
         :class="scrolled || mobile || menu ? 'bg-white/95 backdrop-blur border-brand-custard text-brand-navy shadow-sm' : 'bg-transparent border-transparent text-white'">
-    <div class="container-x flex items-center justify-between gap-4 py-3">
+    <div class="container-x flex items-center justify-between gap-4 transition-[padding] duration-300 {{ $solid ? 'py-4' : '' }}"
+         @if(! $solid) :class="scrolled ? 'py-3' : 'py-5 lg:py-7'" @endif>
         <a href="{{ route('home') }}" class="flex items-center gap-2.5 font-display font-extrabold text-xl leading-none" aria-label="{{ $site['brand_name'] }} home">
             @if($logo)
                 <img src="{{ $logo->url(min(480, max($logo->widths))) }}" alt="{{ $site['brand_name'] }}" width="{{ $logo->width }}" height="{{ $logo->height }}" class="h-10 w-auto">

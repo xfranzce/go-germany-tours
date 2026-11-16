@@ -40,7 +40,7 @@
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/85 via-brand-navy-dark/50 to-brand-navy-dark/30" aria-hidden="true"></div>
     <div class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-dark/70 via-transparent to-brand-navy-dark/30" aria-hidden="true"></div>
 
-    <div class="container-x grid items-center gap-8 pt-28 pb-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:pt-24 lg:pb-10 [@media(max-height:820px)]:lg:pt-20 [@media(max-height:820px)]:lg:pb-6">
+    <div class="container-x grid items-center gap-8 pt-32 pb-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:pt-32 lg:pb-10 [@media(max-height:820px)]:lg:pt-28 [@media(max-height:820px)]:lg:pb-6">
         <div class="text-center lg:text-left">
             <p class="eyebrow text-brand-gold">The Germany Collection</p>
             @php
