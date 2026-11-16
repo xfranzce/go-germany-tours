@@ -7,7 +7,7 @@
 <form method="POST" action="{{ route('admin.packages.reorder') }}" class="bg-white rounded-xl shadow overflow-x-auto">
     @csrf @method('PUT')
     <table class="w-full text-sm">
-        <thead class="bg-gray-50 text-left"><tr><th class="p-3 w-20">Order</th><th class="p-3">Package</th><th class="p-3">Type / destination</th><th class="p-3">From</th><th class="p-3">Status</th><th class="p-3 text-right">Actions</th></tr></thead>
+        <thead class="bg-gray-50 text-left"><tr><th class="p-3 w-20">Order</th><th class="p-3">Package</th><th class="p-3">Type / destination</th><th class="p-3">Price</th><th class="p-3">Status</th><th class="p-3 text-right">Actions</th></tr></thead>
         <tbody>
         @forelse($packages as $p)
             <tr class="border-t align-top">
