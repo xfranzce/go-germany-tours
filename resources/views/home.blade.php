@@ -386,20 +386,23 @@
 {{-- 9. GALLERY ("A visual journey"): checkerboard mosaic, captions always visible, click for lightbox --}}
 @php
     $mosaic = collect([
-        ['quedlinburg-lane', 'Half-timbered streets', ''],
-        ['cochem-mosel', 'Riverside towns', ''],
-        ['neuschwanstein-castle', 'Castles and the Alps', 'sm:col-span-2'],
-        ['saxon-switzerland-bastei', 'Sandstone cliffs and mist', 'sm:col-span-2 sm:col-start-3 sm:row-start-1'],
-        ['hiddensee-beach', 'Baltic coast', ''],
-        ['bacharach-rhine', 'Rhine valley', ''],
+        ['quedlinburg-lane', 'Half-timbered streets', '', 'Quedlinburg, Saxony-Anhalt'],
+        ['cochem-mosel', 'Riverside towns', '', 'Cochem, Mosel valley'],
+        ['neuschwanstein-castle', 'Castles and the Alps', 'sm:col-span-2', 'Neuschwanstein, Bavaria'],
+        ['saxon-switzerland-bastei', 'Sandstone cliffs and mist', 'sm:col-span-2 sm:col-start-3 sm:row-start-1', 'Saxon Switzerland, Saxony'],
+        ['hiddensee-beach', 'Baltic coast', '', 'Hiddensee island'],
+        ['bacharach-rhine', 'Rhine valley', '', 'Bacharach, Rhine'],
     ])->map(function ($t) {
         $m = \App\Models\Media::query()->where('path', 'like', "media/{$t[0]}-%")->first();
-        return $m ? ['media' => $m, 'path' => $m->path, 'label' => $t[1], 'span' => $t[2]] : null;
+        return $m ? ['media' => $m, 'path' => $m->path, 'label' => $t[1], 'span' => $t[2], 'place' => $t[3]] : null;
     })->filter()->values();
 @endphp
 @if($mosaic->count() >= 4)
-<section class="py-16 sm:py-24 bg-white" aria-labelledby="gallery-title"
-         x-data="{ open: false, src: '', cap: '', alt: '' }" @keydown.escape.window="open = false">
+<section class="relative isolate overflow-hidden py-20 sm:py-28 bg-gradient-to-b from-brand-custard-light via-white to-brand-custard-light" aria-labelledby="gallery-title"
+         x-data="{ open: false, src: '', cap: '', alt: '', shown: false }" @keydown.escape.window="open = false"
+         x-init="const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { shown = true; o.disconnect() } }, { threshold: 0.1 }); o.observe($el)">
+    <div class="pointer-events-none absolute -z-10 -top-32 -right-32 size-[30rem] rounded-full bg-brand-gold/25 blur-[110px]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -z-10 bottom-0 -left-32 size-[26rem] rounded-full bg-brand-red/10 blur-[110px]" aria-hidden="true"></div>
     <div class="container-x">
         <div class="mb-10 grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16">
             <x-section-heading id="gallery-title" align="left" eyebrow="A visual journey" title="Beyond the postcard." class="!mb-0"/>
@@ -407,18 +410,25 @@
         </div>
         <div class="grid grid-cols-1 gap-[15px] sm:grid-cols-4 auto-rows-[18rem] lg:auto-rows-[25rem]">
             @foreach($mosaic as $g)
-                <button type="button" class="group relative isolate overflow-hidden rounded-lg text-left {{ $g['span'] }}"
+                <button type="button" class="group relative isolate overflow-hidden rounded-xl text-left shadow-[0_20px_40px_-24px_rgb(0_48_73/0.6)] transition duration-700 ease-out hover:-translate-y-1.5 hover:shadow-[0_34px_60px_-26px_rgb(0_48_73/0.75)] {{ $g['span'] }}"
+                        :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'" style="transition-delay: {{ $loop->index * 110 }}ms"
                         data-src="{{ $g['media']->url() }}" data-cap="{{ $g['label'] }}" data-alt="{{ $g['media']->alt }}"
                         @click="src = $el.dataset.src; cap = $el.dataset.cap; alt = $el.dataset.alt; open = true"
                         aria-label="View {{ $g['label'] }} photo full size">
                     <x-picture :path="$g['path']" hires sizes="(min-width: 1024px) 50vw, 100vw" class="absolute inset-0 -z-10 w-full h-full object-cover transition duration-[1400ms] ease-out group-hover:scale-105"/>
                     <span class="absolute inset-0 -z-[5]" style="background-image: linear-gradient(180deg, rgb(0 48 73 / 0) 55%, rgb(0 48 73 / 0.92) 100%)" aria-hidden="true"></span>
+                    <span class="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-[0.7rem] font-extrabold uppercase tracking-wider text-brand-navy shadow-md backdrop-blur"><x-icon name="pin" class="w-3.5 h-3.5 text-brand-red"/>{{ $g['place'] }}</span>
+                    <span class="absolute right-4 top-4 grid size-11 place-items-center rounded-full bg-brand-gold text-brand-navy opacity-0 scale-75 shadow-lg transition duration-500 group-hover:opacity-100 group-hover:scale-100 group-focus-visible:opacity-100 group-focus-visible:scale-100" aria-hidden="true"><svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span>
                     <span class="absolute inset-x-0 bottom-0 p-5 sm:p-6">
                         <span class="block font-display text-2xl sm:text-3xl font-semibold leading-tight text-white">{{ $g['label'] }}</span>
                         <span class="mt-3 block h-[3px] w-10 bg-brand-gold transition-all duration-500 group-hover:w-24" aria-hidden="true"></span>
                     </span>
                 </button>
             @endforeach
+        </div>
+        <div class="mt-12 flex flex-col items-center gap-4 text-center transition duration-1000 ease-out" :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'" style="transition-delay: 800ms">
+            <p class="font-display text-2xl sm:text-3xl text-brand-navy">Seen enough to start planning? <em class="text-brand-red">Let us build it around you.</em></p>
+            <button type="button" class="btn btn-primary px-10 shadow-lg shadow-brand-red/20" @click="$store.modal.show()">Get a free quote <x-icon name="arrow-right" class="w-5 h-5"/></button>
         </div>
     </div>
 
