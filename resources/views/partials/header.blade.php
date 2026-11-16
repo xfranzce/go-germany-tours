@@ -35,7 +35,7 @@
         <nav class="hidden lg:flex items-center gap-1 font-bold text-sm uppercase tracking-wider" aria-label="Main">
             {{-- TOURS: full-width mega menu, one column per tour type --}}
             <div @mouseenter="hover('tours')" @mouseleave="menu === 'tours' && (menu = null)">
-                <button type="button" class="px-3 py-2 rounded-lg hover:bg-current/10 inline-flex items-center gap-1" :aria-expanded="menu === 'tours'" aria-controls="mega-tours"
+                <button type="button" class="px-3 py-2 rounded-lg hover:bg-current/10 inline-flex items-center gap-1 uppercase" :aria-expanded="menu === 'tours'" aria-controls="mega-tours"
                         @click="menu = menu === 'tours' ? null : 'tours'">
                     Tours <span class="inline-flex transition" :class="menu === 'tours' && 'rotate-180'"><x-icon name="chevron-down" class="w-4 h-4"/></span>
                 </button>
@@ -81,7 +81,7 @@
 
             {{-- ABOUT US: full-width mega menu, an image card for each company page plus a quote promo --}}
             <div @mouseenter="hover('about')" @mouseleave="menu === 'about' && (menu = null)">
-                <button type="button" class="px-3 py-2 rounded-lg hover:bg-current/10 inline-flex items-center gap-1" :aria-expanded="menu === 'about'" aria-controls="mega-about"
+                <button type="button" class="px-3 py-2 rounded-lg hover:bg-current/10 inline-flex items-center gap-1 uppercase" :aria-expanded="menu === 'about'" aria-controls="mega-about"
                         @click="menu = menu === 'about' ? null : 'about'">
                     About Us <span class="inline-flex transition" :class="menu === 'about' && 'rotate-180'"><x-icon name="chevron-down" class="w-4 h-4"/></span>
                 </button>
