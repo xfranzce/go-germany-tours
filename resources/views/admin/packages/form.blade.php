@@ -5,6 +5,14 @@
 @section('actions')
     <a class="btn btn-outline btn-sm" href="{{ route('admin.packages.index') }}">&larr; All packages</a>
     @unless($isNew)@if($package->is_published)<a class="btn btn-outline btn-sm" target="_blank" rel="noopener" href="{{ $package->url() }}">View on site</a>@endif @endunless
+    <button type="submit" form="package-form" class="btn btn-primary btn-sm">Save package</button>
+    @unless($isNew)
+        <form method="POST" action="{{ route('admin.packages.destroy', $package) }}" class="inline" x-data
+              @submit="if (!confirm('Permanently delete this package? This cannot be undone.')) $event.preventDefault()">
+            @csrf @method('DELETE')
+            <button class="btn btn-outline btn-sm !border-brand-red !text-brand-red hover:!bg-brand-red hover:!text-white">Delete package</button>
+        </form>
+    @endunless
 @endsection
 
 @section('content')
@@ -12,7 +20,7 @@
     $itinerary = old('itinerary', $package->itinerary ?? []);
     $faqs = old('faqs', $package->exists ? $package->faqs->map(fn ($f) => ['question' => $f->question, 'answer' => $f->answer])->all() : []);
 @endphp
-<form method="POST" enctype="multipart/form-data" action="{{ $isNew ? route('admin.packages.store') : route('admin.packages.update', $package) }}" class="space-y-6">
+<form id="package-form" method="POST" enctype="multipart/form-data" action="{{ $isNew ? route('admin.packages.store') : route('admin.packages.update', $package) }}" class="space-y-6">
     @csrf @if(! $isNew) @method('PUT') @endif
 
     <section class="bg-white rounded-xl shadow p-5 grid gap-4 sm:grid-cols-2">
