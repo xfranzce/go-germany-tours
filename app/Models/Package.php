@@ -60,13 +60,13 @@ class Package extends Model
 
     public function wasLabel(): ?string
     {
-        return $this->hasSale() ? ($this->currency === 'USD' ? '$' : $this->currency.' ').number_format((float) $this->price_was).' pp' : null;
+        return $this->hasSale() ? 'From '.($this->currency === 'USD' ? '$' : $this->currency.' ').number_format((float) $this->price_was).' pp' : null;
     }
 
     public function priceLabel(): string
     {
         return $this->price_from
-            ? 'From '.($this->currency === 'USD' ? '$' : $this->currency.' ').number_format((float) $this->price_from).' pp'
+            ? ($this->hasSale() ? '' : 'From ').($this->currency === 'USD' ? '$' : $this->currency.' ').number_format((float) $this->price_from).' pp'
             : 'Price on request';
     }
 }
