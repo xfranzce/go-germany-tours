@@ -40,3 +40,6 @@ Terms and Conditions and Privacy Policy contain `[CONFIRM: ...]` blocks (pricing
 - Google Ads conversion action and GTM trigger (FORMS_AND_TRACKING.md).
 - Cookie banner/consent management for non-US visitors: not built.
 - Hostinger plan features (SSH, document root, cron) confirmed against the real plan.
+
+## Testimonials
+Three dummy testimonials (badge "PLACEHOLDER", source "Sample review: replace before launch") are shown on the home page. Replace them in Admin > Testimonials with real, permissioned reviews (name, town, source) and untick "placeholder" before running ads.

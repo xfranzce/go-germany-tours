@@ -7,7 +7,7 @@ use App\Models\Post;
 use App\Models\Testimonial;
 use Illuminate\Database\Seeder;
 
-/** FAQs, hidden draft testimonials and starter blog posts. All draft copy: review before launch. */
+/** FAQs, dummy (PLACEHOLDER-badged) testimonials and starter blog posts. All draft copy: review before launch. */
 class ContentSeeder extends Seeder
 {
     public function run(): void
@@ -26,16 +26,16 @@ class ContentSeeder extends Seeder
             }
         }
 
-        // DRAFT wording, hidden (is_active=false) until replaced with real, permissioned guest reviews.
-        // Do not activate these as-is: invented reviews are deceptive advertising.
+        // DUMMY testimonials shown with a PLACEHOLDER badge while the site is new. Replace with real,
+        // permissioned guest reviews (name, town, source) BEFORE running ads: remove the placeholder flag only for real ones.
         if (! Testimonial::exists()) {
             $drafts = [
-                ['DRAFT: Guest name 1', 'DRAFT: Home town', 'We wanted the fairytale towns without the stress of planning it all. The route was sorted before we landed and every stay was in the heart of the old town. Quedlinburg felt like walking into a storybook.'],
-                ['DRAFT: Guest name 2', 'DRAFT: Home town', 'Having a private driver along the Mosel meant we could enjoy the wine villages and the views instead of watching the road. Everything ran on time and nothing felt rushed.'],
-                ['DRAFT: Guest name 3', 'DRAFT: Home town', 'I had a few questions about dates and group size and got a clear, tailored reply, with no pressure. The self-drive route through the Black Forest was exactly the pace we wanted.'],
+                ['Sample Guest A.', 'Sample town', 'We wanted the fairytale towns without the stress of planning it all. The route was sorted before we landed and every stay was in the heart of the old town. Quedlinburg felt like walking into a storybook.'],
+                ['Sample Guest B.', 'Sample town', 'Having a private driver along the Mosel meant we could enjoy the wine villages and the views instead of watching the road. Everything ran on time and nothing felt rushed.'],
+                ['Sample Guest C.', 'Sample town', 'I had a few questions about dates and group size and got a clear, tailored reply, with no pressure. The self-drive route through the Black Forest was exactly the pace we wanted.'],
             ];
             foreach ($drafts as $i => [$name, $loc, $quote]) {
-                Testimonial::create(['name' => $name, 'location' => $loc, 'quote' => $quote, 'is_placeholder' => true, 'is_active' => false, 'sort' => $i + 1]);
+                Testimonial::create(['name' => $name, 'location' => $loc, 'quote' => $quote, 'source' => 'Sample review: replace before launch', 'is_placeholder' => true, 'is_active' => true, 'sort' => $i + 1]);
             }
         }
 
