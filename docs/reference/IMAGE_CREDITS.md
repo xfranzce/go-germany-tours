@@ -31,5 +31,6 @@ Licence check done on 2026-11-11 from the Commons file metadata. Re-check before
 Upload in **Admin > Media** (or inside a package, page or settings screen). Alt text is mandatory. Then add a row to this table and to `database/seed-images/credits.json` if it needs a credit.
 ## Video
 - `public/videos/hero.mp4`: AI-generated (Higgsfield, Seedance 2.5, prompt: aerial drift over a half-timbered German hillside town at golden hour). No third-party footage; replace with licensed real footage if preferred.
+- `public/videos/banner.mp4`: AI-generated (Higgsfield, Seedance 2.5, prompt: aerial flight over autumn Bavarian Alps with drifting clouds). Plays over the Alps banner photo.
 
 New seed photos are imported on deploy by `php artisan images:import-seed` (add the file to `database/seed-images`, an entry to `ImageSeeder::ALT` and `credits.json`). Originals are stored at max 3840px wide.
