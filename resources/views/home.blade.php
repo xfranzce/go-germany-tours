@@ -155,9 +155,10 @@
 
         <div>
             <p class="eyebrow text-brand-gold">Why book with {{ $site['brand_name'] }}</p>
-            <h2 id="book-title" class="mt-4 text-white text-4xl sm:text-5xl lg:text-6xl">Every German journey,
+            <h2 id="book-title" class="mt-4 text-white">Every German journey,
                 <em class="block italic font-medium text-brand-gold">feel uniquely yours.</em></h2>
-            <p class="mt-6 text-base sm:text-lg text-white/80 max-w-xl">Discover Germany through journeys shaped around how you like to travel. From fairytale towns with half-timbered streets to river valleys, sandstone cliffs and the Baltic coast, every detail is planned to make your trip unforgettable.</p>
+            <span class="flag-rule" aria-hidden="true"></span>
+            <p class="mt-5 text-base sm:text-lg text-white/85 max-w-xl">Discover Germany through journeys shaped around how you like to travel. From fairytale towns with half-timbered streets to river valleys, sandstone cliffs and the Baltic coast, every detail is planned to make your trip unforgettable.</p>
 
             <ol class="mt-10 grid gap-4 max-w-xl">
                 @foreach([
@@ -170,8 +171,8 @@
                         <span class="absolute -right-1 -top-4 font-display text-8xl leading-none text-white/[0.06] group-hover:text-brand-gold/20 transition" aria-hidden="true">0{{ $i + 1 }}</span>
                         <span class="grid place-items-center shrink-0 size-12 rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-brand-gold/20 group-hover:scale-110 transition" aria-hidden="true"><x-icon :name="$ic" class="w-5 h-5"/></span>
                         <div class="relative">
-                            <h3 class="text-white text-xl sm:text-2xl">{{ $t }}</h3>
-                            <p class="mt-1 text-sm sm:text-base text-white/75">{{ $d }}</p>
+                            <h3 class="text-white">{{ $t }}</h3>
+                            <p class="mt-1 text-sm sm:text-base text-white/80">{{ $d }}</p>
                         </div>
                     </li>
                 @endforeach
@@ -205,9 +206,9 @@
     <div class="absolute inset-0 -z-10 bg-brand-navy-dark/60" aria-hidden="true"></div>
     <div class="container-x max-w-3xl py-28 sm:py-40">
         <p class="eyebrow centered text-brand-gold">Germany, your way</p>
-        <h2 id="banner-title" class="mt-5 text-white">Half-timbered streets, castle hills and quiet coastlines.</h2>
+        <h2 id="banner-title" class="mt-4 text-white">Half-timbered streets, castle hills and quiet coastlines.</h2>
         <span class="flag-rule centered"></span>
-        <p class="mt-6 text-lg text-white/90">Tell us how you like to travel and we will shape the journey around you.</p>
+        <p class="mt-5 text-base sm:text-lg text-white/85">Tell us how you like to travel and we will shape the journey around you.</p>
         <button type="button" class="btn btn-gold mt-9" @click="$store.modal.show()">Plan my trip</button>
     </div>
 </section>
@@ -246,8 +247,9 @@
     <div class="container-x grid gap-14 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
             <p class="eyebrow text-brand-gold">Why {{ $site['brand_name'] }}</p>
-            <h2 id="why-title" class="mt-3 text-white">{{ $page->text('why_title', 'Why travelers choose us') }}</h2>
-            <p class="mt-5 text-lg text-white/85">{{ $page->text('why_intro', 'Germany is easier to enjoy when the planning is done for you.') }}</p>
+            <h2 id="why-title" class="mt-4 text-white">{{ $page->text('why_title', 'Why travelers choose us') }}</h2>
+            <span class="flag-rule" aria-hidden="true"></span>
+            <p class="mt-5 text-base sm:text-lg text-white/85">{{ $page->text('why_intro', 'Germany is easier to enjoy when the planning is done for you.') }}</p>
             <button type="button" class="btn btn-gold mt-8" @click="$store.modal.show()">Start planning</button>
         </div>
         <ul class="grid gap-x-10 gap-y-8 sm:grid-cols-2">
@@ -440,7 +442,8 @@
     <div class="container-x text-center max-w-3xl">
         <p class="eyebrow centered text-brand-gold">Start planning</p>
         <h2 id="cta-title" class="mt-4 text-white">{{ $page->text('cta_title', 'Ready to see Germany your way?') }}</h2>
-        <p class="mt-4 text-lg text-white/90">{{ $page->text('cta_text', 'Get a free, no-obligation quote in under a minute.') }}</p>
+        <span class="flag-rule centered" aria-hidden="true"></span>
+        <p class="mt-5 text-base sm:text-lg text-white/85">{{ $page->text('cta_text', 'Get a free, no-obligation quote in under a minute.') }}</p>
         <div class="mt-9 flex flex-wrap justify-center gap-3">
             <button type="button" class="btn btn-primary text-lg" @click="$store.modal.show()">Start Your Adventure</button>
             @php $tel = preg_replace('/[^+\d]/', '', $site['phone'] ?? ''); @endphp
