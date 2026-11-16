@@ -1,0 +1,2 @@
+{{-- Go Germany Tours mark: ring (currentColor) + red gable roof + gold base. Pass a class for the size. --}}
+<svg {{ $attributes->merge(['class' => 'size-9 shrink-0']) }} viewBox="0 0 64 64" role="img" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="29.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M16 40 32 22l16 18" fill="none" stroke="#D6282B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 47h20" stroke="#FCBF49" stroke-width="4" stroke-linecap="round"/></svg>

@@ -3,7 +3,7 @@
     <div class="h-1.5 flex" aria-hidden="true"><span class="flex-1 bg-brand-navy-dark"></span><span class="flex-1 bg-brand-red"></span><span class="flex-1 bg-brand-gold"></span></div>
     <div class="container-x py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div class="lg:col-span-2">
-            <p class="font-display font-extrabold text-2xl">{{ $site['brand_name'] }}</p>
+            <p class="flex items-center gap-3 font-display text-2xl font-semibold"><x-logo-mark class="size-10 shrink-0"/>{{ $site['brand_name'] }}</p>
             <p class="mt-3 max-w-md text-white/85">{{ $site['footer_text'] }}</p>
             <ul class="mt-5 space-y-2 text-white/90">
                 @if($tel)<li><a class="inline-flex items-center gap-2 hover:text-brand-gold" href="tel:{{ $tel }}"><x-icon name="phone" class="w-4 h-4"/> {{ $site['phone_display'] ?: $site['phone'] }}</a></li>@endif
