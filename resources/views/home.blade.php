@@ -398,19 +398,19 @@
     })->filter()->values();
 @endphp
 @if($mosaic->count() >= 4)
-<section class="relative isolate overflow-hidden py-20 sm:py-28 bg-gradient-to-b from-brand-custard-light via-white to-brand-custard-light" aria-labelledby="gallery-title"
+<section class="relative isolate overflow-hidden py-20 sm:py-28 bg-brand-navy-dark text-white" aria-labelledby="gallery-title"
          x-data="{ open: false, src: '', cap: '', alt: '', shown: false }" @keydown.escape.window="open = false"
          x-init="const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { shown = true; o.disconnect() } }, { threshold: 0.1 }); o.observe($el)">
-    <div class="pointer-events-none absolute -z-10 -top-32 -right-32 size-[30rem] rounded-full bg-brand-gold/25 blur-[110px]" aria-hidden="true"></div>
-    <div class="pointer-events-none absolute -z-10 bottom-0 -left-32 size-[26rem] rounded-full bg-brand-red/10 blur-[110px]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -z-10 -top-32 -right-32 size-[30rem] rounded-full bg-brand-gold/20 blur-[120px]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -z-10 bottom-0 -left-32 size-[26rem] rounded-full bg-brand-tangerine/15 blur-[120px]" aria-hidden="true"></div>
     <div class="container-x">
         <div class="mb-10 grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16">
-            <x-section-heading id="gallery-title" align="left" eyebrow="A visual journey" title="Beyond the postcard." class="!mb-0"/>
-            <p class="text-base sm:text-lg text-ink-soft lg:max-w-xl lg:justify-self-end">A glimpse of Germany beyond the familiar, from quiet village lanes and half-timbered streets to misty cliffs, river valleys and landscapes worth taking the longer way for. Tap a photo to see it full size.</p>
+            <x-section-heading id="gallery-title" light align="left" eyebrow="A visual journey" title="Beyond the postcard." class="!mb-0"/>
+            <p class="text-base sm:text-lg text-white/85 lg:max-w-xl lg:justify-self-end">A glimpse of Germany beyond the familiar, from quiet village lanes and half-timbered streets to misty cliffs, river valleys and landscapes worth taking the longer way for. Tap a photo to see it full size.</p>
         </div>
         <div class="grid grid-cols-1 gap-[15px] sm:grid-cols-4 auto-rows-[18rem] lg:auto-rows-[25rem]">
             @foreach($mosaic as $g)
-                <button type="button" class="group relative isolate overflow-hidden rounded-xl text-left shadow-[0_20px_40px_-24px_rgb(0_48_73/0.6)] transition duration-700 ease-out hover:-translate-y-1.5 hover:shadow-[0_34px_60px_-26px_rgb(0_48_73/0.75)] {{ $g['span'] }}"
+                <button type="button" class="group relative isolate overflow-hidden rounded-xl text-left shadow-[0_20px_40px_-24px_rgb(0_0_0/0.8)] transition duration-700 ease-out hover:-translate-y-1.5 hover:shadow-[0_34px_60px_-26px_rgb(0_0_0/0.9)] {{ $g['span'] }}"
                         :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'" style="transition-delay: {{ $loop->index * 110 }}ms"
                         data-src="{{ $g['media']->url() }}" data-cap="{{ $g['label'] }}" data-alt="{{ $g['media']->alt }}"
                         @click="src = $el.dataset.src; cap = $el.dataset.cap; alt = $el.dataset.alt; open = true"
@@ -427,8 +427,8 @@
             @endforeach
         </div>
         <div class="mt-12 flex flex-col items-center gap-4 text-center transition duration-1000 ease-out" :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'" style="transition-delay: 800ms">
-            <p class="font-display text-2xl sm:text-3xl text-brand-navy">Seen enough to start planning? <em class="text-brand-red">Let us build it around you.</em></p>
-            <button type="button" class="btn btn-primary px-10 shadow-lg shadow-brand-red/20" @click="$store.modal.show()">Get a free quote <x-icon name="arrow-right" class="w-5 h-5"/></button>
+            <p class="font-display text-2xl sm:text-3xl text-white">Seen enough to start planning? <em class="text-brand-gold">Let us build it around you.</em></p>
+            <button type="button" class="btn btn-gold px-10 shadow-lg shadow-brand-gold/20" @click="$store.modal.show()">Get a free quote <x-icon name="arrow-right" class="w-5 h-5"/></button>
         </div>
     </div>
 
