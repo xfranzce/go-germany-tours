@@ -25,7 +25,7 @@ class QuizSeeder extends Seeder
         ];
 
         foreach ($steps as $i => [$key, $question, $type, $options]) {
-            $step = QuizStep::updateOrCreate(['key' => $key], ['question' => $question, 'type' => $type, 'sort' => $i, 'is_active' => true]);
+            $step = QuizStep::updateOrCreate(['key' => $key], ['question' => $question, 'type' => $type, 'sort' => $i, 'is_active' => $key !== 'destination']); // destination step is off by default (quiz starts at time of year); re-enable in Admin > Hero quiz
             if ($step->options()->exists()) {
                 continue;
             }
