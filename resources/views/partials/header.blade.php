@@ -3,11 +3,14 @@
     // Packages per tour type for the Tours mega menu (4 each)
     $navPackages = \App\Models\Package::published()->get(['id', 'title', 'slug', 'nights', 'tour_type_id'])->groupBy('tour_type_id');
     $aboutLinks = [
-        ['about', 'About Us', 'Who we are and how we plan your trip', 'shield'],
-        ['team', 'Meet Our Team', 'The people behind your journey', 'chat'],
-        ['testimonials', 'Testimonials', 'What travelers say about us', 'star'],
-        ['faqs', 'FAQs', 'Answers to common questions', 'check'],
+        ['about', 'About Us', 'Who we are and how we plan your trip', 'hero-quedlinburg'],
+        ['team', 'Meet Our Team', 'The people behind your journey', 'gengenbach-rathaus'],
+        ['testimonials', 'Testimonials', 'What travelers say about us', 'cochem-mosel'],
+        ['faqs', 'FAQs', 'Answers to common questions', 'saxon-switzerland-bastei'],
     ];
+    $aboutMedia = \App\Models\Media::query()->where(function ($q) use ($aboutLinks) {
+        foreach ($aboutLinks as $l) { $q->orWhere('path', 'like', 'media/'.$l[3].'-%'); }
+    })->get();
     $logo = \App\Models\Media::forPath($site['logo'] ?? null);
     // Pages that start on a light background keep a solid bar (@section('solid_header', '1'))
     $solid = \Illuminate\Support\Facades\View::hasSection('solid_header');
@@ -77,31 +80,35 @@
 
             <a href="{{ route('packages.index') }}" class="px-3 py-2 rounded-lg hover:bg-current/10">Packages</a>
 
-            {{-- ABOUT US: mega menu with the four company pages and a quote promo --}}
-            <div class="relative" @mouseenter="hover('about')" @mouseleave="menu === 'about' && (menu = null)">
+            {{-- ABOUT US: full-width mega menu, an image card for each company page plus a quote promo --}}
+            <div @mouseenter="hover('about')" @mouseleave="menu === 'about' && (menu = null)">
                 <button type="button" class="px-3 py-2 rounded-lg hover:bg-current/10 inline-flex items-center gap-1" :aria-expanded="menu === 'about'" aria-controls="mega-about"
                         @click="menu = menu === 'about' ? null : 'about'">
                     About Us <span class="inline-flex transition" :class="menu === 'about' && 'rotate-180'"><x-icon name="chevron-down" class="w-4 h-4"/></span>
                 </button>
                 <div id="mega-about" x-show="menu === 'about'" x-cloak x-transition.opacity.duration.200ms
-                     class="absolute right-0 top-full w-[40rem] normal-case tracking-normal before:absolute before:inset-x-0 before:-top-4 before:h-4">
-                    <div class="mt-0 grid grid-cols-[1fr_1.7fr] overflow-hidden rounded-b-2xl border-t-4 border-brand-gold bg-white text-brand-navy shadow-[0_30px_60px_-20px_rgb(0_48_73/0.45)]">
-                        <div class="flex flex-col justify-between gap-6 bg-brand-navy p-6 text-white">
-                            <div>
-                                <p class="eyebrow text-brand-gold">Go Germany Tours</p>
-                                <p class="mt-3 font-display text-2xl font-semibold leading-tight">Journeys planned around you.</p>
-                                <p class="mt-2 text-sm font-normal text-white/80">Tell us how you like to travel and we will shape the trip.</p>
+                     class="absolute inset-x-0 top-full normal-case tracking-normal before:absolute before:inset-x-0 before:-top-4 before:h-4">
+                    <div class="border-t-4 border-brand-gold bg-white text-brand-navy shadow-[0_30px_60px_-20px_rgb(0_48_73/0.45)]">
+                        <div class="container-x grid gap-6 py-8 lg:grid-cols-[1fr_repeat(4,minmax(0,1fr))]">
+                            <div class="flex flex-col justify-between gap-6 rounded-xl bg-brand-navy p-6 text-white">
+                                <div>
+                                    <p class="eyebrow text-brand-gold">{{ $site['brand_name'] }}</p>
+                                    <p class="mt-3 font-display text-2xl font-semibold leading-tight">Journeys planned around you.</p>
+                                    <p class="mt-2 text-sm font-normal text-white/80">Tell us how you like to travel and we will shape the trip.</p>
+                                </div>
+                                <button type="button" class="btn btn-gold btn-sm self-start" @click="menu = null; $store.modal.show()">Get a free quote</button>
                             </div>
-                            <button type="button" class="btn btn-gold btn-sm self-start" @click="menu = null; $store.modal.show()">Get a free quote</button>
-                        </div>
-                        <ul class="grid gap-1 p-4">
-                            @foreach($aboutLinks as [$r, $label, $desc, $ic])
-                                <li><a href="{{ route($r) }}" class="group flex items-center gap-4 rounded-xl p-3 hover:bg-brand-custard-light" @click="menu = null">
-                                    <span class="grid size-11 shrink-0 place-items-center rounded-full bg-brand-custard text-brand-navy transition group-hover:bg-brand-gold"><x-icon :name="$ic" class="h-5 w-5"/></span>
-                                    <span><span class="block font-bold group-hover:text-brand-red">{{ $label }}</span><span class="block text-sm font-normal text-ink-soft">{{ $desc }}</span></span>
-                                </a></li>
+                            @foreach($aboutLinks as [$r, $label, $desc, $stem])
+                                @php $img = $aboutMedia->first(fn ($m) => str_starts_with($m->path, 'media/'.$stem.'-')); @endphp
+                                <a href="{{ route($r) }}" class="group block min-w-0" @click="menu = null">
+                                    <span class="block aspect-[4/3] overflow-hidden rounded-xl bg-brand-custard">
+                                        @if($img)<x-picture :path="$img->path" sizes="20rem" class="h-full w-full object-cover transition duration-700 group-hover:scale-105"/>@endif
+                                    </span>
+                                    <span class="mt-3 flex items-center justify-between gap-2 font-display text-xl font-semibold group-hover:text-brand-red">{{ $label }}<x-icon name="arrow-right" class="h-4 w-4 shrink-0 -translate-x-1 opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100"/></span>
+                                    <span class="mt-0.5 block text-sm font-normal text-ink-soft">{{ $desc }}</span>
+                                </a>
                             @endforeach
-                        </ul>
+                        </div>
                     </div>
                 </div>
             </div>
