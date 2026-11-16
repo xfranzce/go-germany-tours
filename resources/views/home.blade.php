@@ -32,7 +32,7 @@
 
 @section('content')
 {{-- 1. HERO: video background; headline and copy on the left, the quote quiz on the right --}}
-<section class="relative isolate flex min-h-[88svh] items-center bg-brand-navy-dark text-white overflow-hidden" aria-labelledby="hero-title">
+<section class="relative isolate flex min-h-svh items-center bg-brand-navy-dark text-white overflow-hidden" aria-labelledby="hero-title">
     @if($heroMedia)
         <x-picture :path="$heroPath" priority hires sizes="100vw" class="absolute inset-0 -z-20 w-full h-full object-cover"/>
     @endif
@@ -40,7 +40,7 @@
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/85 via-brand-navy-dark/50 to-brand-navy-dark/30" aria-hidden="true"></div>
     <div class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-dark/70 via-transparent to-brand-navy-dark/30" aria-hidden="true"></div>
 
-    <div class="container-x grid items-center gap-10 py-16 sm:py-24 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+    <div class="container-x grid items-center gap-8 pt-28 pb-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:pt-24 lg:pb-10 [@media(max-height:820px)]:lg:pt-20 [@media(max-height:820px)]:lg:pb-6">
         <div class="text-center lg:text-left">
             <p class="eyebrow text-brand-gold">The Germany Collection</p>
             @php
@@ -54,7 +54,7 @@
                 [$h1a, $h1b, $h1c] = [implode(' ', array_slice($w, 0, count($w) - $n)), implode(' ', array_slice($w, count($w) - $n)), ''];
             }
             @endphp
-            <h1 id="hero-title" class="mt-6 max-w-3xl text-[1.75rem] sm:text-5xl lg:text-[3.25rem] xl:text-[3.5rem] 2xl:text-6xl leading-[1.08] mx-auto lg:mx-0">
+            <h1 id="hero-title" class="mt-6 max-w-3xl text-[1.75rem] sm:text-5xl lg:text-[3.25rem] xl:text-[3.5rem] 2xl:text-6xl [@media(max-height:820px)]:lg:!text-[2.75rem] leading-[1.08] mx-auto lg:mx-0">
                 <span class="block">{{ $h1a }}</span>
                 @if($h1b)
                     <em class="relative mx-auto lg:mx-0 mt-2 block w-fit whitespace-nowrap not-italic sm:mt-3"><span class="italic font-medium text-brand-gold">{{ $h1b }}</span>
@@ -64,9 +64,9 @@
                 @endif
                 @if($h1c)<span class="block">{{ $h1c }}</span>@endif
             </h1>
-            <p class="mx-auto lg:mx-0 mt-6 max-w-xl text-base sm:text-lg text-white/90">{{ $page->text('hero_sub', 'Self drive, chauffeur driven or small-group coach. Explore Quedlinburg, Saxon Switzerland, Cochem, Hiddensee and Gengenbach, planned around you.') }}</p>
+            <p class="mx-auto lg:mx-0 mt-5 max-w-xl text-base sm:text-lg text-white/90 [@media(max-height:820px)]:lg:text-base">{{ $page->text('hero_sub', 'Self drive, chauffeur driven or small-group coach. Explore Quedlinburg, Saxon Switzerland, Cochem, Hiddensee and Gengenbach, planned around you.') }}</p>
 
-            <ul class="mx-auto lg:mx-0 mt-8 grid max-w-xl grid-cols-2 gap-x-6 gap-y-4 border-t border-white/25 pt-7 text-left" aria-label="Why travel with us">
+            <ul class="mx-auto lg:mx-0 mt-6 grid max-w-xl grid-cols-2 gap-x-6 gap-y-3 border-t border-white/25 pt-5 text-left [@media(max-height:820px)]:lg:mt-4" aria-label="Why travel with us">
                 @foreach([['pin', 'Germany locations'], ['lock', 'Private tours'], ['chat', 'Professional guides'], ['star', 'Excellent reviews']] as [$ic, $txt])
                     <li class="flex items-center gap-3">
                         <span class="grid size-10 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-black/20" aria-hidden="true"><x-icon :name="$ic" class="h-5 w-5"/></span>

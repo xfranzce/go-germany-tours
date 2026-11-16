@@ -1,6 +1,6 @@
 @php $steps = \App\Models\QuizStep::forQuiz(); @endphp
 <section id="quote" aria-labelledby="quiz-title"
-         class="bg-white text-brand-navy rounded-lg border-t-4 border-x border-b border-brand-tangerine border-x-brand-custard border-b-brand-custard shadow-2xl p-6 sm:p-8 min-h-[30rem] scroll-mt-28"
+         class="bg-white text-brand-navy rounded-lg border-t-4 border-x border-b border-brand-tangerine border-x-brand-custard border-b-brand-custard shadow-2xl p-5 sm:p-7 min-h-[26rem] scroll-mt-28"
          x-data="heroQuiz(@js($steps))" x-ref="card">
     <h2 id="quiz-title" class="text-center !text-2xl sm:!text-3xl">Start your adventure</h2>
 
