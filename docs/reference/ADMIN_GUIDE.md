@@ -52,3 +52,10 @@ Hard refresh (Ctrl+F5). If a change does not appear on the site, save again; set
 
 ## Packages: bulk actions and trash
 On Admin > Packages, tick one or more rows (or the box in the header to tick all) and use the toolbar: **Publish, Unpublish, Feature, Unfeature, Mark sample, Not sample, Trash**. Trashed packages disappear from the public site (soft delete, nothing is erased). Open the **Trash** tab, tick packages and press **Restore** to bring them back. Deleting a package from its edit page also moves it to the trash.
+
+## Admin roles (Administrator and Editor)
+Admin > Admin users > Add admin (or Edit) has a **Role** field.
+- **Administrator**: everything.
+- **Editor**: only Packages, Pages, Travel guides (posts), Media, and the categories/tags (Tour types and Destinations). Enquiries, Hero quiz, Testimonials, FAQs, Site settings and Admin users are hidden and blocked (403). Editors land on Packages after signing in.
+- At least one Administrator must always exist. Existing users were set to Administrator.
+Permissions live in `AdminUser::EDITOR_AREAS` and are enforced by the `admin.role` middleware (`EnsureAdminRole`).

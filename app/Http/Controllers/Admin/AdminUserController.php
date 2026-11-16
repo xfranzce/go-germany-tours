@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\AdminUser;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class AdminUserController extends AdminController
@@ -24,6 +25,7 @@ class AdminUserController extends AdminController
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'email', 'max:150', 'unique:admin_users,email'],
             'password' => ['required', 'confirmed', Password::min(12)],
+            'role' => ['required', Rule::in(array_keys(AdminUser::ROLES))],
         ]);
         AdminUser::create($d);
 
@@ -41,8 +43,12 @@ class AdminUserController extends AdminController
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'email', 'max:150', 'unique:admin_users,email,'.$user->id],
             'password' => ['nullable', 'confirmed', Password::min(12)],
+            'role' => ['required', Rule::in(array_keys(AdminUser::ROLES))],
         ]);
-        $user->fill(['name' => $d['name'], 'email' => $d['email']]);
+        if ($d['role'] !== AdminUser::ROLE_ADMIN && $user->role === AdminUser::ROLE_ADMIN && AdminUser::where('role', AdminUser::ROLE_ADMIN)->count() <= 1) {
+            return back()->withErrors(['role' => 'There must be at least one Administrator.'])->withInput();
+        }
+        $user->fill(['name' => $d['name'], 'email' => $d['email'], 'role' => $d['role']]);
         if (filled($d['password'] ?? null)) {
             $user->password = $d['password'];
         }

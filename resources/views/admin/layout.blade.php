@@ -15,6 +15,8 @@
         ['admin.pages.index', 'Pages'], ['admin.testimonials.index', 'Testimonials'], ['admin.faqs.index', 'FAQs'],
         ['admin.posts.index', 'Travel guides'], ['admin.media.index', 'Media'], ['admin.settings.edit', 'Site settings'], ['admin.users.index', 'Admin users'],
     ];
+    $adminUser = auth('admin')->user();
+    $links = array_values(array_filter($links, fn ($l) => $adminUser->canAccessRoute($l[0]) && ! ($adminUser->isEditor() && $l[0] === 'admin.dashboard')));
 @endphp
 <div class="lg:flex min-h-screen">
     <aside class="lg:w-60 bg-brand-navy text-white lg:min-h-screen shrink-0">
@@ -29,7 +31,7 @@
             @endforeach
             <a href="{{ url('/') }}" target="_blank" rel="noopener" class="block px-3 py-2 mt-3 text-sm text-white/80 underline">View website</a>
             <form method="POST" action="{{ route('admin.logout') }}" class="px-3 mt-2">@csrf
-                <button class="text-sm underline text-white/80">Log out ({{ auth('admin')->user()->name }})</button>
+                <button class="text-sm underline text-white/80">Log out ({{ auth('admin')->user()->name }}, {{ \App\Models\AdminUser::ROLES[auth('admin')->user()->role] ?? 'Administrator' }})</button>
             </form>
         </nav>
     </aside>

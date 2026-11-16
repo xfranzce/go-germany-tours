@@ -10,6 +10,10 @@ class DashboardController extends Controller
 {
     public function __invoke(GhlClient $ghl)
     {
+        if (auth('admin')->user()->isEditor()) {
+            return redirect()->route('admin.packages.index');
+        }
+
         return view('admin.dashboard', [
             'thisWeek' => Enquiry::where('created_at', '>=', now()->startOfWeek())->count(),
             'newCount' => Enquiry::where('status', 'new')->count(),

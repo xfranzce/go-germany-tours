@@ -10,6 +10,7 @@ Google Ads landing-page site for one GoTour brand. Server-rendered Laravel 12 (P
 - `app/Http/Controllers/*` public pages; `Admin/*` admin screens (`routes/admin.php`, guard `admin`, model `AdminUser`)
 - `app/Services/EnquiryService.php` ONE place that validates + saves every enquiry; `RecaptchaService`, `ImageService` (WebP q85, widths 480-3840px; `php artisan images:regenerate` re-encodes seeded images from `database/seed-images`)
 - `app/Services/Ghl/*` GoHighLevel: `GhlFields` (field names), `GhlClient`, `GhlPayloadBuilder`, `GhlSync`; jobs in `app/Jobs`; commands `ghl:setup`, `ghl:test`
+- Admin roles: `admin_users.role` (admin|editor); Editors only reach `AdminUser::EDITOR_AREAS` (packages, posts, pages, media, tour-types, destinations) via `EnsureAdminRole` middleware (alias `admin.role`). New admin routes are admin-only unless added to that list.
 - `app/Http/Middleware/CaptureTracking.php` first/last-touch cookies; `SecurityHeaders.php`
 - `app/Support/Seo.php` page SEO + JSON-LD; `Html.php` rich-text sanitiser; `Countries.php` dial codes + E.164
 - `app/Models/Setting.php` key/value site settings (defaults in `config/gogermany.php`), shared to all views as `$site`

@@ -9,6 +9,8 @@
     @csrf @if(! $isNew) @method('PUT') @endif
     <x-admin.field name="name" label="Name" :value="$user->name" required/>
     <x-admin.field name="email" label="Email" type="email" :value="$user->email" required/>
+    <x-admin.field name="role" label="Role" type="select" :options="\App\Models\AdminUser::ROLES" :value="old('role', $user->role ?? 'admin')" required
+        help="Editors can only manage Packages, Pages, Travel guides, Media, Tour types and Destinations. Administrators can do everything."/>
     <x-admin.field name="password" label="{{ $isNew ? 'Password' : 'New password (leave blank to keep)' }}" type="password" :required="$isNew" help="At least 12 characters."/>
     <x-admin.field name="password_confirmation" label="Confirm password" type="password" :required="$isNew"/>
     <div class="sm:col-span-2"><button class="btn btn-primary">Save</button></div>
