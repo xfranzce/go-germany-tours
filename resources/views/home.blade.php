@@ -121,28 +121,28 @@
     </ul>
 </section>
 
-{{-- 1b. WHY BOOK WITH US: layered photo collage + glass benefit cards (reveal on scroll) --}}
+{{-- 1b. WHY BOOK WITH US (light): layered photo collage + benefit cards (reveal on scroll) --}}
 @php
     $whyImg = $galleryItems->first(fn ($g) => str_contains($g['path'], 'quedlinburg-lane')) ?? $galleryItems->first();
     $whyImg2 = $galleryItems->first(fn ($g) => str_contains($g['path'], 'cochem')) ?? $galleryItems->skip(1)->first();
 @endphp
-<section class="relative isolate overflow-hidden bg-brand-navy-dark text-white py-20 sm:py-28" aria-labelledby="book-title"
+<section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-custard-light to-white text-brand-navy py-20 sm:py-28" aria-labelledby="book-title"
          x-data="{ shown: false }" x-init="const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { shown = true; o.disconnect() } }, { threshold: 0.15 }); o.observe($el)">
-    <div class="pointer-events-none absolute -z-10 -top-40 -left-40 size-[34rem] rounded-full bg-brand-gold/20 blur-[120px]" aria-hidden="true"></div>
-    <div class="pointer-events-none absolute -z-10 -bottom-40 -right-32 size-[30rem] rounded-full bg-brand-tangerine/15 blur-[120px]" aria-hidden="true"></div>
-    <span class="pointer-events-none absolute -z-10 right-0 top-6 font-display italic text-[11rem] sm:text-[17rem] leading-none text-white/[0.04] select-none" aria-hidden="true">Germany</span>
+    <div class="pointer-events-none absolute -z-10 -top-40 -left-40 size-[34rem] rounded-full bg-brand-gold/25 blur-[120px]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -z-10 -bottom-40 -right-32 size-[30rem] rounded-full bg-brand-custard blur-[100px]" aria-hidden="true"></div>
+    <span class="pointer-events-none absolute -z-10 right-0 top-6 font-display italic text-[11rem] sm:text-[17rem] leading-none text-brand-navy/[0.05] select-none" aria-hidden="true">Germany</span>
 
     <div class="container-x grid gap-16 lg:gap-24 lg:grid-cols-[0.9fr_1fr] lg:items-center">
         @if($whyImg)
             <div class="relative mx-auto w-full max-w-md lg:max-w-none pb-16 pr-10 sm:pr-16 transition duration-1000 ease-out" :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
                 {{-- gold offset frame --}}
                 <div class="absolute left-5 top-5 right-16 bottom-11 sm:left-7 sm:top-7 rounded-t-[999px] border-2 border-brand-gold/70" aria-hidden="true"></div>
-                <div class="relative aspect-[4/5] overflow-hidden rounded-t-[999px] shadow-[0_40px_80px_-30px_rgb(0_0_0/0.8)]">
+                <div class="relative aspect-[4/5] overflow-hidden rounded-t-[999px] shadow-[0_40px_80px_-30px_rgb(0_48_73/0.55)]">
                     <x-picture :path="$whyImg['path']" hires sizes="(min-width: 1024px) 40vw, 90vw" class="w-full h-full object-cover scale-105 hover:scale-110 transition duration-[1500ms]"/>
-                    <div class="absolute inset-0 bg-gradient-to-t from-brand-navy-dark/50 via-transparent to-transparent" aria-hidden="true"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-navy/25 via-transparent to-transparent" aria-hidden="true"></div>
                 </div>
                 @if($whyImg2)
-                    <div class="why-float absolute right-0 bottom-0 w-[58%] aspect-[4/3] overflow-hidden rounded-lg border-[6px] border-brand-custard-light shadow-[0_30px_60px_-20px_rgb(0_0_0/0.7)]">
+                    <div class="why-float absolute right-0 bottom-0 w-[58%] aspect-[4/3] overflow-hidden rounded-lg border-[6px] border-white shadow-[0_30px_60px_-20px_rgb(0_48_73/0.5)]">
                         <x-picture :path="$whyImg2['path']" sizes="(min-width: 1024px) 24vw, 50vw" class="w-full h-full object-cover"/>
                     </div>
                 @endif
@@ -154,11 +154,11 @@
         @endif
 
         <div>
-            <p class="eyebrow text-brand-gold">Why book with {{ $site['brand_name'] }}</p>
-            <h2 id="book-title" class="mt-4 text-white">Every German journey,
-                <em class="block italic font-medium text-brand-gold">feel uniquely yours.</em></h2>
+            <p class="eyebrow text-brand-red-dark">Why book with {{ $site['brand_name'] }}</p>
+            <h2 id="book-title" class="mt-4 text-brand-navy">Every German journey,
+                <em class="block italic font-medium text-brand-red">feel uniquely yours.</em></h2>
             <span class="flag-rule" aria-hidden="true"></span>
-            <p class="mt-5 text-base sm:text-lg text-white/85 max-w-xl">Discover Germany through journeys shaped around how you like to travel. From fairytale towns with half-timbered streets to river valleys, sandstone cliffs and the Baltic coast, every detail is planned to make your trip unforgettable.</p>
+            <p class="mt-5 text-base sm:text-lg text-ink-soft max-w-xl">Discover Germany through journeys shaped around how you like to travel. From fairytale towns with half-timbered streets to river valleys, sandstone cliffs and the Baltic coast, every detail is planned to make your trip unforgettable.</p>
 
             <ol class="mt-10 grid gap-4 max-w-xl">
                 @foreach([
@@ -166,13 +166,13 @@
                     ['Beyond the usual stops', 'Quedlinburg, Cochem, Gengenbach and other places many itineraries skip.', 'pin'],
                     ['Built around you, with real support', 'Your dates, group size and budget, with a real person to reply.', 'chat'],
                 ] as $i => [$t, $d, $ic])
-                    <li class="group relative flex gap-5 items-start overflow-hidden rounded-xl border border-white/10 bg-white/[0.06] backdrop-blur-sm p-5 sm:p-6 transition duration-700 ease-out hover:border-brand-gold/60 hover:bg-white/[0.1] hover:-translate-y-0.5"
+                    <li class="group relative flex gap-5 items-start overflow-hidden rounded-xl border border-brand-navy/10 bg-white shadow-card p-5 sm:p-6 transition duration-700 ease-out hover:border-brand-gold hover:shadow-xl hover:-translate-y-0.5"
                         :class="shown ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'" style="transition-delay: {{ 250 + $i * 180 }}ms">
-                        <span class="absolute -right-1 -top-4 font-display text-8xl leading-none text-white/[0.06] group-hover:text-brand-gold/20 transition" aria-hidden="true">0{{ $i + 1 }}</span>
-                        <span class="grid place-items-center shrink-0 size-12 rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-brand-gold/20 group-hover:scale-110 transition" aria-hidden="true"><x-icon :name="$ic" class="w-5 h-5"/></span>
+                        <span class="absolute -right-1 -top-4 font-display text-8xl leading-none text-brand-navy/[0.05] group-hover:text-brand-gold/30 transition" aria-hidden="true">0{{ $i + 1 }}</span>
+                        <span class="grid place-items-center shrink-0 size-12 rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-brand-gold/30 group-hover:scale-110 transition" aria-hidden="true"><x-icon :name="$ic" class="w-5 h-5"/></span>
                         <div class="relative">
-                            <h3 class="text-white">{{ $t }}</h3>
-                            <p class="mt-1 text-sm sm:text-base text-white/80">{{ $d }}</p>
+                            <h3 class="text-brand-navy">{{ $t }}</h3>
+                            <p class="mt-1 text-sm sm:text-base text-ink-soft">{{ $d }}</p>
                         </div>
                     </li>
                 @endforeach
