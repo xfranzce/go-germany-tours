@@ -54,10 +54,10 @@
                 [$h1a, $h1b, $h1c] = [implode(' ', array_slice($w, 0, count($w) - $n)), implode(' ', array_slice($w, count($w) - $n)), ''];
             }
             @endphp
-            <h1 id="hero-title" class="mt-6 max-w-3xl text-4xl sm:text-6xl lg:text-7xl leading-[1.08] mx-auto lg:mx-0">
+            <h1 id="hero-title" class="mt-6 max-w-3xl text-[1.75rem] sm:text-5xl lg:text-[3.25rem] xl:text-[3.5rem] 2xl:text-6xl leading-[1.08] mx-auto lg:mx-0">
                 <span class="block">{{ $h1a }}</span>
                 @if($h1b)
-                    <em class="relative mx-auto lg:mx-0 mt-2 block w-fit not-italic sm:mt-3"><span class="italic font-medium text-brand-gold">{{ $h1b }}</span>
+                    <em class="relative mx-auto lg:mx-0 mt-2 block w-fit whitespace-nowrap not-italic sm:mt-3"><span class="italic font-medium text-brand-gold">{{ $h1b }}</span>
                         <svg class="hl-underline absolute left-0 -bottom-2 sm:-bottom-3 w-full h-3 sm:h-4 text-brand-gold" viewBox="0 0 300 12" preserveAspectRatio="none" fill="none" aria-hidden="true">
                             <path d="M2 8 C 60 2, 110 11, 170 6 S 260 3, 298 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" pathLength="1"/>
                         </svg></em>
