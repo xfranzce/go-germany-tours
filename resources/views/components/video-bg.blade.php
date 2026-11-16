@@ -4,7 +4,7 @@
 @if(file_exists(public_path('videos/'.$src)))
     <video class="{{ $class }}" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"
            @if($poster) poster="{{ $poster }}" @endif
-           data-src="{{ asset('videos/'.$src) }}"
+           data-src="{{ asset('videos/'.$src).'?v='.filemtime(public_path('videos/'.$src)) }}"
            x-data x-init="
                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || (navigator.connection && navigator.connection.saveData)) return;
                const go = () => { new IntersectionObserver((e, o) => { if (e[0].isIntersecting) { o.disconnect(); $el.src = $el.dataset.src; $el.play().catch(() => {}) } }, { rootMargin: '300px' }).observe($el) };
