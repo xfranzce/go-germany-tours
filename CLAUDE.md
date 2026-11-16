@@ -16,6 +16,7 @@ Google Ads landing-page site for one GoTour brand. Server-rendered Laravel 12 (P
 - `resources/css/app.css` ALL design tokens (`@theme`); `resources/js/app.js` Alpine: modal store, `enquiryForm`, `heroQuiz`, lazy reCAPTCHA; `admin.js` Trix + repeater
 - `resources/views/components/*` button, section-heading, faq-item, form-field, enquiry-form, hero-quiz, package-card, picture, icon; `video-bg` (optional looping background videos from `public/videos/{hero,banner,cta}.mp4`; missing file = photo shows; see `public/videos/README.txt`); `components/admin/*` admin fields
 - `database/seeders/*`, `database/seed-images/*` (licensed photos + `credits.json`)
+- `public/images/partners/*` sister-brand logos for the home "Our Partners" strip (copied from gobritaintrips.com; edit the `$partners` array in `home.blade.php`)
 - `docs/reference/*` guides; `tests/Feature/*`
 
 ## Business rules that are NOT obvious from the code
