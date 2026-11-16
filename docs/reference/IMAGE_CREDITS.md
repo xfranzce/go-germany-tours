@@ -26,3 +26,5 @@ Licence check done on 2026-11-11 from the Commons file metadata. Re-check before
 ## Adding or replacing images
 
 Upload in **Admin > Media** (or inside a package, page or settings screen). Alt text is mandatory. Then add a row to this table and to `database/seed-images/credits.json` if it needs a credit.
+## Video
+- `public/videos/hero.mp4`: AI-generated (Higgsfield, Seedance 2.5, prompt: aerial drift over a half-timbered German hillside town at golden hour). No third-party footage; replace with licensed real footage if preferred.
