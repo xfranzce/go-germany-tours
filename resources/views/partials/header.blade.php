@@ -123,17 +123,50 @@
         </button>
     </div>
 
-    <nav id="mobile-menu" class="lg:hidden border-t border-brand-custard bg-white text-brand-navy" x-show="mobile" x-cloak aria-label="Mobile">
-        <div class="container-x py-3 grid gap-1 font-bold max-h-[75vh] overflow-y-auto">
-            <p class="text-xs uppercase tracking-wider text-ink-soft mt-1">Tours</p>
-            @foreach($navTypes as $t)<a class="py-2 pl-2" href="{{ route('tours.show', $t->slug) }}">{{ $t->name }}</a>@endforeach
-            <hr class="my-2 border-brand-custard">
-            <a class="py-2" href="{{ route('packages.index') }}">All packages</a>
-            <p class="text-xs uppercase tracking-wider text-ink-soft mt-3">About Us</p>
-            @foreach($aboutLinks as [$r, $label])<a class="py-2 pl-2" href="{{ route($r) }}">{{ $label }}</a>@endforeach
-            <hr class="my-2 border-brand-custard">
-            <a class="py-2" href="{{ route('contact') }}">Contact</a>
-            <button type="button" class="btn btn-primary mt-2" @click="mobile = false; $store.modal.show()">Get a Free Quote</button>
+    {{-- Mobile menu: accordion mega menu (Tours with photos, About Us with photos) --}}
+    <nav id="mobile-menu" class="lg:hidden border-t border-brand-custard bg-white text-brand-navy" x-show="mobile" x-cloak aria-label="Mobile"
+         x-data="{ sec: 'tours' }">
+        <div class="container-x max-h-[calc(100svh-4.5rem)] overflow-y-auto py-3 font-bold">
+            {{-- TOURS --}}
+            <div class="border-b border-brand-custard">
+                <button type="button" class="flex w-full items-center justify-between py-3.5 text-sm uppercase tracking-wider" :aria-expanded="sec === 'tours'" aria-controls="m-tours" @click="sec = sec === 'tours' ? null : 'tours'">
+                    Tours <span class="inline-flex transition" :class="sec === 'tours' && 'rotate-180'"><x-icon name="chevron-down" class="size-5"/></span>
+                </button>
+                <div id="m-tours" x-show="sec === 'tours'" x-transition.opacity class="space-y-3 pb-4">
+                    @foreach($navTypes as $t)
+                        <a href="{{ route('tours.show', $t->slug) }}" class="flex items-center gap-4 rounded-xl border border-brand-custard p-2.5" @click="mobile = false">
+                            <span class="block size-20 shrink-0 overflow-hidden rounded-lg bg-brand-custard">
+                                @if($t->image)<x-picture :path="$t->image" sizes="6rem" class="h-full w-full object-cover"/>@endif
+                            </span>
+                            <span class="min-w-0">
+                                <span class="block font-display text-xl font-semibold leading-tight">{{ $t->name }}</span>
+                                @if($t->summary)<span class="mt-1 line-clamp-2 block text-sm font-normal text-ink-soft">{{ $t->summary }}</span>@endif
+                            </span>
+                        </a>
+                    @endforeach
+                    <a href="{{ route('packages.index') }}" class="flex items-center justify-between rounded-xl bg-brand-custard-light px-4 py-3 text-sm uppercase tracking-wider text-brand-red-dark" @click="mobile = false">All packages <x-icon name="arrow-right" class="size-4"/></a>
+                </div>
+            </div>
+
+            {{-- ABOUT US --}}
+            <div class="border-b border-brand-custard">
+                <button type="button" class="flex w-full items-center justify-between py-3.5 text-sm uppercase tracking-wider" :aria-expanded="sec === 'about'" aria-controls="m-about" @click="sec = sec === 'about' ? null : 'about'">
+                    About Us <span class="inline-flex transition" :class="sec === 'about' && 'rotate-180'"><x-icon name="chevron-down" class="size-5"/></span>
+                </button>
+                <div id="m-about" x-show="sec === 'about'" x-transition.opacity class="grid grid-cols-2 gap-3 pb-4">
+                    @foreach($aboutLinks as [$r, $label, $desc, $stem])
+                        @php $img = $aboutMedia->first(fn ($m) => str_starts_with($m->path, 'media/'.$stem.'-')); @endphp
+                        <a href="{{ route($r) }}" class="block min-w-0" @click="mobile = false">
+                            <span class="block aspect-[4/3] overflow-hidden rounded-xl bg-brand-custard">@if($img)<x-picture :path="$img->path" sizes="12rem" class="h-full w-full object-cover"/>@endif</span>
+                            <span class="mt-2 block font-display text-lg font-semibold leading-tight">{{ $label }}</span>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+
+            <a class="block border-b border-brand-custard py-3.5 text-sm uppercase tracking-wider" href="{{ route('packages.index') }}">Packages</a>
+            <a class="block border-b border-brand-custard py-3.5 text-sm uppercase tracking-wider" href="{{ route('contact') }}">Contact</a>
+            <button type="button" class="btn btn-primary mt-4 w-full" @click="mobile = false; $store.modal.show()">Get a Free Quote</button>
         </div>
     </nav>
 </header>
