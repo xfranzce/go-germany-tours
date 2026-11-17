@@ -33,7 +33,8 @@
 </div>
 <section class="bg-brand-custard py-14" aria-labelledby="type-pkgs">
     <div class="container-x">
-        <h2 id="type-pkgs" class="text-2xl sm:text-3xl mb-6">{{ $type->name }} packages</h2>
+        <x-section-heading id="type-pkgs" eyebrow="{{ $type->name }} packages" title="Popular {{ strtolower($type->name) }} journeys" emphasis="Planned around you."
+            intro="A few ideas to start from. Every trip can be adjusted to suit your dates, group size and budget."/>
         @if($packages->isEmpty())<p class="text-ink-soft">No packages listed yet. Ask us for a tailored trip.</p>
         @else<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">@foreach($packages as $p)<x-package-card :package="$p"/>@endforeach</div>@endif
         <p class="mt-8 text-ink-soft">Other ways to travel:
