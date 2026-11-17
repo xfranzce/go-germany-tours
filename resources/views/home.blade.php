@@ -464,19 +464,47 @@
 </section>
 @endif
 
-{{-- 10. OUR STORY teaser --}}
-<section class="py-16 sm:py-24 bg-brand-custard-light" aria-labelledby="story-title">
-    <div class="container-x grid gap-12 lg:grid-cols-2 lg:items-center">
-        <div class="rounded-[var(--radius-card)] overflow-hidden aspect-[4/3] shadow-card">
-            <x-picture :path="$destinations->first()?->image ?? $heroPath" sizes="(min-width: 1024px) 36rem, 92vw" class="w-full h-full object-cover"/>
+{{-- 10. OUR STORY teaser: layered photo collage + promises --}}
+@php
+    $storyA = \App\Models\Media::query()->where('path', 'like', 'media/quedlinburg-lane-%')->first();
+    $storyB = \App\Models\Media::query()->where('path', 'like', 'media/mosel-vineyard-%')->first();
+@endphp
+<section class="relative overflow-hidden py-16 sm:py-24 bg-brand-custard-light" aria-labelledby="story-title">
+    <span class="pointer-events-none absolute -right-24 -top-24 size-96 rounded-full border-2 border-dashed border-brand-gold/50" aria-hidden="true"></span>
+    <span class="pointer-events-none absolute -bottom-32 -left-24 size-[28rem] rounded-full bg-brand-gold/10" aria-hidden="true"></span>
+    <div class="container-x relative grid gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-20">
+        {{-- collage --}}
+        <div class="relative mx-auto w-full max-w-xl pb-16 pr-8 sm:pr-14 lg:mx-0">
+            <span class="absolute -left-4 -top-4 h-full w-[88%] rounded-[var(--radius-card)] border-2 border-dashed border-brand-gold" aria-hidden="true"></span>
+            <div class="relative aspect-[4/5] w-[88%] overflow-hidden rounded-[var(--radius-card)] shadow-card">
+                @if($storyA)<x-picture :path="$storyA->path" sizes="(min-width: 1024px) 28rem, 80vw" class="size-full object-cover"/>@else<x-picture :path="$destinations->first()?->image ?? $heroPath" sizes="28rem" class="size-full object-cover"/>@endif
+            </div>
+            @if($storyB)
+                <div class="absolute bottom-0 right-0 aspect-square w-[52%] overflow-hidden rounded-[var(--radius-card)] border-[6px] border-brand-custard-light shadow-xl">
+                    <x-picture :path="$storyB->path" sizes="(min-width: 1024px) 15rem, 40vw" class="size-full object-cover"/>
+                </div>
+            @endif
+            <div class="absolute left-4 top-6 flex items-center gap-3 rounded-full bg-white py-2 pl-2 pr-5 shadow-lg sm:-left-6">
+                <span class="grid size-10 place-items-center rounded-full bg-brand-navy text-white"><x-logo-mark class="size-7"/></span>
+                <span class="text-sm font-bold leading-tight text-brand-navy">Free, no-obligation<br>quote</span>
+            </div>
         </div>
+
+        {{-- copy --}}
         <div>
-            <p class="eyebrow text-brand-red-dark">Get to know us</p>
-            <h2 id="story-title" class="mt-3">Plan with peace of mind</h2>
+            <x-section-heading id="story-title" align="left" eyebrow="Get to know us" title="Plan with" emphasis="peace of mind." class="!mb-0 !max-w-none"/>
             <p class="mt-5 text-lg text-ink-soft">Thoughtfully crafted journeys across Germany, shaped by your travel style. Tell us what you have in mind and a member of the team will be in touch with your quote.</p>
-            <div class="mt-8 flex flex-wrap gap-3">
+            <ul class="mt-8 space-y-4">
+                @foreach([['adjust', 'Self drive, private chauffeur or small-group coach'], ['check', 'Itineraries built around your dates, group and budget'], ['chat', 'A real person replies with your quote']] as [$ic, $t])
+                    <li class="flex items-center gap-4">
+                        <span class="grid size-11 shrink-0 place-items-center rounded-full bg-white text-brand-red shadow ring-1 ring-brand-gold/60"><x-icon :name="$ic" class="size-5"/></span>
+                        <span class="text-lg font-semibold text-brand-navy">{{ $t }}</span>
+                    </li>
+                @endforeach
+            </ul>
+            <div class="mt-9 flex flex-wrap gap-3">
+                <button type="button" class="btn btn-primary px-8" @click="$store.modal.show()">Get my free quote <x-icon name="arrow-right" class="size-5"/></button>
                 <x-button :href="route('about')" variant="outline">About us</x-button>
-                <x-button :href="route('contact')">Contact us</x-button>
             </div>
         </div>
     </div>
