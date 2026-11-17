@@ -39,6 +39,38 @@ class GhlIntegrationTest extends TestCase
         ]);
     }
 
+    public function test_plain_utm_and_form_source_fields_use_the_latest_touch_then_the_first(): void
+    {
+        $e = $this->enquiry('hero_quiz', [
+            'page_url' => 'https://x.test/packages/mosel-valley?utm_source=x',
+            'last_touch' => ['utm_source' => 'bing', 'utm_campaign' => 'last-camp', 'gclid' => 'GCLID-2', 'utm_device' => 'm', 'utm_adcreative' => '777', 'utm_adposition' => '1t2'],
+        ]);
+        $v = (new GhlPayloadBuilder())->fieldValues($e);
+
+        $this->assertSame('bing', $v['utm_source']);          // latest touch wins
+        $this->assertSame('cpc', $v['utm_medium']);           // missing in last touch: falls back to first touch
+        $this->assertSame('last-camp', $v['utm_campaign']);
+        $this->assertSame('ad1', $v['utm_content']);
+        $this->assertSame('germany tours', $v['utm_term']);
+        $this->assertSame('GCLID-2', $v['utm_gclid']);
+        $this->assertSame('m', $v['utm_device']);
+        $this->assertSame('777', $v['utm_adcreative']);
+        $this->assertSame('1t2', $v['utm_adposition']);
+        $this->assertSame(config('gogermany.form_names')['hero_quiz'].' (/packages/mosel-valley)', $v['form_source']);
+        $this->assertArrayHasKey('utm_device', GhlFields::all());
+        $this->assertArrayHasKey('form_source', GhlFields::all());
+    }
+
+    public function test_google_ads_value_track_parameters_are_captured_into_the_tracking_cookie(): void
+    {
+        $this->assertContains('utm_device', config('gogermany.tracking_keys'));
+        $response = $this->get('/?utm_source=google&utm_device=m&utm_adcreative=123&utm_adposition=1t1');
+        $touch = json_decode(\Illuminate\Support\Facades\Cookie::getQueuedCookies()[0]->getValue() ?? '', true) ?: [];
+        $this->assertSame('m', $touch['utm_device'] ?? null);
+        $this->assertSame('123', $touch['utm_adcreative'] ?? null);
+        $response->assertOk();
+    }
+
     #[DataProvider('forms')]
     public function test_payload_includes_utm_and_tracking_fields_for_every_form_type(string $form): void
     {

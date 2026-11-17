@@ -37,6 +37,16 @@ class GhlFields
         'wbraid' => 'WBRAID', 'referrer' => 'Referrer', 'landing_page' => 'Landing Page URL',
     ];
 
+    /**
+     * Plain snake_case fields shared with the other Go* sites' GHL setup. They hold the LATEST touch
+     * (what brought the visitor back to enquire) plus the form the enquiry came from.
+     * utm_device / utm_adcreative / utm_adposition come from Google Ads {device} / {creative} / {adposition}.
+     */
+    public const CLASSIC = [
+        'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
+        'utm_device', 'utm_gclid', 'utm_adcreative', 'utm_adposition', 'form_source',
+    ];
+
     public static function tracking(string $key, string $touch): string
     {
         return self::TRACKING[$key].' '.ucfirst($touch); // "UTM Source First"
@@ -56,6 +66,9 @@ class GhlFields
             self::CONSENT_GIVEN => self::TEXT, self::CONSENT_AT => self::TEXT, self::CONSENT_VERSION => self::TEXT,
             self::TIME_OF_YEAR => self::TEXT, self::GROUP_SIZE => self::TEXT, self::NIGHTS => self::TEXT,
         ];
+        foreach (self::CLASSIC as $name) {
+            $fields[$name] = self::TEXT;
+        }
         foreach (array_keys(self::TRACKING) as $key) {
             foreach (['first', 'last'] as $touch) {
                 $fields[self::tracking($key, $touch)] = in_array($key, ['referrer', 'landing_page']) ? self::LARGE : self::TEXT;

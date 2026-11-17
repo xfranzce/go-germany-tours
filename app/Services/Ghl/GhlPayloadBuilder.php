@@ -42,7 +42,23 @@ class GhlPayloadBuilder
             }
         }
 
+        // Plain utm_* / form_source fields: latest touch, falling back to the first touch.
+        $touch = ($e->last_touch ?? []) + ($e->first_touch ?? []);
+        foreach (['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_device', 'utm_adcreative', 'utm_adposition'] as $key) {
+            $v[$key] = $touch[$key] ?? null;
+        }
+        $v['utm_gclid'] = $touch['gclid'] ?? null;
+        $v['form_source'] = $this->formSource($e);
+
         return array_filter($v, fn ($x) => $x !== null && $x !== '');
+    }
+
+    /** Which form on which page, e.g. "Hero quiz (/)" or "Package enquiry (/packages/rhine-classic)". */
+    public function formSource(Enquiry $e): string
+    {
+        $path = $e->page_url ? (parse_url($e->page_url, PHP_URL_PATH) ?: '/') : null;
+
+        return $e->formLabel().($path ? " ({$path})" : '');
     }
 
     public function tags(Enquiry $e): array

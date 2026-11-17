@@ -24,7 +24,7 @@ return [
 
     // First-touch tracking cookie lifetime in days.
     'tracking_days' => 30,
-    'tracking_keys' => ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid'],
+    'tracking_keys' => ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid', 'utm_device', 'utm_adcreative', 'utm_adposition'],
 
     // Enquiries allowed per IP per minute / per hour.
     'rate_limit_per_minute' => 3,

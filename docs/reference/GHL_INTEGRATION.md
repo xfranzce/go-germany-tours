@@ -68,3 +68,12 @@ The token is stored encrypted with the app key and never shown again (only its l
 
 ## Fields that already exist in GoHighLevel
 If a field was created by hand (even with a slightly different label, e.g. "Special Requests"), "Create missing custom fields" and `ghl:setup` reuse it by its field key (`contact.special_request`) and by GHL's "already exists" reply instead of failing. Enquiries then write to that existing field.
+
+
+## UTM and form source fields
+Besides the `... First` / `... Last` attribution fields, each enquiry fills these plain GHL custom fields (they must exist with exactly these names; "Create missing custom fields" adds any that are missing and reuses ones you already have): `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, `utm_device`, `utm_gclid`, `utm_adcreative`, `utm_adposition`, `form_source`.
+
+- Values are the visitor's latest tracked visit, falling back to the first visit.
+- `utm_device`, `utm_adcreative` and `utm_adposition` come from the landing-page URL. In Google Ads use this final URL suffix: `utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_content={adgroupid}&utm_term={keyword}&utm_device={device}&utm_adcreative={creative}&utm_adposition={adposition}`.
+- `utm_gclid` is the Google click id (`gclid`, added automatically by Google Ads auto-tagging).
+- `form_source` is the form and the page it was sent from, for example `Hero quiz (/)` or `Package enquiry (/packages/mosel-valley)`.
