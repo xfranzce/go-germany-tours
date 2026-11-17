@@ -46,6 +46,8 @@
                 @endforeach
             </ul>
         @endif
+        <x-button class="mt-8" data-title="Get a quote: {{ $type->name }}" data-prefill="Interested in: {{ $type->name }} tours."
+                  @click="$store.modal.show({form:'package_quote', ...$el.dataset})">Get a Quote <x-icon name="arrow-right" class="w-5 h-5"/></x-button>
     </section>
     @if($type->image)
         <div class="overflow-hidden rounded-2xl shadow-card"><x-picture :path="$type->image" sizes="(min-width: 1024px) 46rem, 100vw" class="w-full max-h-[32rem] object-cover"/></div>
