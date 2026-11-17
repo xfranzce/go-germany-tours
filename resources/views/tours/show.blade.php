@@ -15,6 +15,14 @@
             </nav>
             <h1 class="max-w-3xl text-4xl sm:text-5xl">{{ $type->name }} Tours of Germany</h1>
             @if($type->summary)<p class="mt-4 max-w-xl text-lg text-white/90">{{ $type->summary }}</p>@endif
+            <ul class="mt-6 max-w-xl space-y-3 border-t border-white/25 pt-5" aria-label="Why book with us">
+                @foreach([['check', 'Free, no-obligation quote'], ['shield', 'Self drive, chauffeur or coach'], ['adjust', 'Itineraries built around you']] as [$ic, $txt])
+                    <li class="flex items-center gap-3">
+                        <span class="grid size-10 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-black/20" aria-hidden="true"><x-icon :name="$ic" class="h-5 w-5"/></span>
+                        <span class="text-sm font-bold uppercase tracking-[0.12em] text-white sm:text-[0.8rem]">{{ $txt }}</span>
+                    </li>
+                @endforeach
+            </ul>
         </div>
         <div class="mx-auto w-full max-w-xl lg:ml-auto lg:mr-0"><x-hero-quiz/></div>
     </div>
