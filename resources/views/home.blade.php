@@ -79,11 +79,11 @@
         <div class="mx-auto w-full max-w-xl lg:mx-0 lg:ml-auto">
             <x-hero-quiz/>
 
-            <ul class="mt-6 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-white/25 pt-5 lg:hidden" aria-label="Why travel with us">
+            <ul class="mt-6 grid grid-cols-4 gap-x-2 border-t border-white/25 pt-5 lg:hidden" aria-label="Why travel with us">
                 @foreach([['pin', 'Germany locations'], ['lock', 'Private tours'], ['chat', 'Professional guides'], ['star', 'Excellent reviews']] as [$ic, $txt])
-                    <li class="flex items-center gap-2.5">
+                    <li class="flex flex-col items-center gap-2 text-center">
                         <span class="grid size-8 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-black/20" aria-hidden="true"><x-icon :name="$ic" class="h-4 w-4"/></span>
-                        <span class="text-[0.65rem] font-bold uppercase leading-tight tracking-[0.1em] text-white">{{ $txt }}</span>
+                        <span class="text-[0.55rem] font-bold uppercase leading-tight tracking-[0.06em] text-white">{{ $txt }}</span>
                     </li>
                 @endforeach
             </ul>
