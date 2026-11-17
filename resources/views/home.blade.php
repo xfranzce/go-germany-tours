@@ -134,13 +134,13 @@
             <span class="flag-rule" aria-hidden="true"></span>
             <p class="mt-5 text-base sm:text-lg text-ink-soft max-w-xl">Discover Germany through journeys shaped around how you like to travel. From fairytale towns with half-timbered streets to river valleys, sandstone cliffs and the Baltic coast, every detail is planned to make your trip unforgettable.</p>
 
-            <ol class="mt-10 grid gap-4 max-w-xl">
+            <ol class="mt-10 grid max-w-xl gap-4 sm:max-w-none sm:grid-cols-3 sm:gap-3 lg:gap-4">
                 @foreach([
                     ['Choose how you travel', 'Self drive, private chauffeur or small-group coach.', 'adjust'],
                     ['Beyond the usual stops', 'Quedlinburg, Cochem, Gengenbach and other places many itineraries skip.', 'pin'],
                     ['Built around you, with real support', 'Your dates, group size and budget, with a real person to reply.', 'chat'],
                 ] as $i => [$t, $d, $ic])
-                    <li class="group relative flex gap-5 items-start overflow-hidden rounded-xl border border-brand-navy/10 bg-white shadow-card p-5 sm:p-6 transition duration-700 ease-out hover:border-brand-gold hover:shadow-xl hover:-translate-y-0.5"
+                    <li class="group relative flex items-start gap-5 overflow-hidden rounded-xl sm:flex-col sm:gap-4 border border-brand-navy/10 bg-white shadow-card p-5 sm:p-6 transition duration-700 ease-out hover:border-brand-gold hover:shadow-xl hover:-translate-y-0.5"
                         :class="shown ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'" style="transition-delay: {{ 250 + $i * 180 }}ms">
                         <span class="absolute -right-1 -top-4 font-display text-8xl leading-none text-brand-navy/[0.05] group-hover:text-brand-gold/30 transition" aria-hidden="true">0{{ $i + 1 }}</span>
                         <span class="grid place-items-center shrink-0 size-12 rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-brand-gold/30 group-hover:scale-110 transition" aria-hidden="true"><x-icon :name="$ic" class="w-5 h-5"/></span>
