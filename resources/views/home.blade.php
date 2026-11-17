@@ -66,7 +66,7 @@
             </h1>
             <p class="mx-auto lg:mx-0 mt-5 max-w-xl text-base sm:text-lg text-white/90 [@media(max-height:820px)]:lg:text-base">{{ $page->text('hero_sub', 'Self drive, chauffeur driven or small-group coach. Explore Quedlinburg, Saxon Switzerland, Cochem, Hiddensee and Gengenbach, planned around you.') }}</p>
 
-            <ul class="mx-auto lg:mx-0 mt-6 grid max-w-xl grid-cols-2 gap-x-6 gap-y-3 border-t border-white/25 pt-5 text-left [@media(max-height:820px)]:lg:mt-4" aria-label="Why travel with us">
+            <ul class="mx-auto lg:mx-0 mt-6 hidden lg:grid max-w-xl grid-cols-2 gap-x-6 gap-y-3 border-t border-white/25 pt-5 text-left [@media(max-height:820px)]:lg:mt-4" aria-label="Why travel with us">
                 @foreach([['pin', 'Germany locations'], ['lock', 'Private tours'], ['chat', 'Professional guides'], ['star', 'Excellent reviews']] as [$ic, $txt])
                     <li class="flex items-center gap-3">
                         <span class="grid size-10 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-black/20" aria-hidden="true"><x-icon :name="$ic" class="h-5 w-5"/></span>
@@ -78,6 +78,15 @@
 
         <div class="mx-auto w-full max-w-xl lg:mx-0 lg:ml-auto">
             <x-hero-quiz/>
+
+            <ul class="mt-6 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-white/25 pt-5 lg:hidden" aria-label="Why travel with us">
+                @foreach([['pin', 'Germany locations'], ['lock', 'Private tours'], ['chat', 'Professional guides'], ['star', 'Excellent reviews']] as [$ic, $txt])
+                    <li class="flex items-center gap-2.5">
+                        <span class="grid size-8 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-black/20" aria-hidden="true"><x-icon :name="$ic" class="h-4 w-4"/></span>
+                        <span class="text-[0.65rem] font-bold uppercase leading-tight tracking-[0.1em] text-white">{{ $txt }}</span>
+                    </li>
+                @endforeach
+            </ul>
         </div>
     </div>
 
