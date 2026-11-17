@@ -449,6 +449,27 @@
 </section>
 @endif
 
+{{-- 11b. EARLY BIRD OFFER (month = 3 months ahead, recalculated on every request) --}}
+@php $ebMonth = now()->addMonthsNoOverflow(3)->format('F Y'); @endphp
+<section class="relative isolate overflow-hidden bg-brand-navy py-14 text-white sm:py-16" aria-labelledby="early-bird-title">
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark via-brand-navy to-brand-navy-dark" aria-hidden="true"></div>
+    <div class="container-x grid items-center gap-8 text-center lg:grid-cols-[auto_1fr_auto] lg:gap-12 lg:text-left">
+        <div class="mx-auto grid size-32 shrink-0 place-items-center rounded-full border-4 border-brand-gold bg-brand-gold text-brand-navy shadow-xl shadow-black/30 sm:size-40 lg:mx-0" aria-hidden="true">
+            <span class="text-center font-display font-extrabold leading-none"><span class="block text-5xl sm:text-6xl">25%</span><span class="mt-1 block text-sm uppercase tracking-[0.2em]">off</span></span>
+        </div>
+        <div>
+            <p class="eyebrow text-brand-gold">Early bird offer</p>
+            <h2 id="early-bird-title" class="mt-3 text-white">Save 25% on Germany tours in {{ $ebMonth }}</h2>
+            <span class="flag-rule mx-auto lg:mx-0" aria-hidden="true"></span>
+            <p class="mt-5 text-base text-white/85 sm:text-lg">Plan ahead and book early. Ask for a free, no-obligation quote for {{ $ebMonth }} and we will include your early bird discount.</p>
+        </div>
+        <div>
+            <x-button data-title="Early bird offer: {{ $ebMonth }}" data-prefill="Early bird offer: 25% off, travelling in {{ $ebMonth }}."
+                      @click="$store.modal.show({form:'package_quote', ...$el.dataset})">Claim your early bird offer <x-icon name="arrow-right" class="w-5 h-5"/></x-button>
+        </div>
+    </div>
+</section>
+
 {{-- 11c. SPEAK TO A SPECIALIST --}}
 @php $tel2 = preg_replace('/[^+\d]/', '', $site['phone'] ?? ''); @endphp
 @if($tel2 || !empty($site['email']))
