@@ -82,7 +82,7 @@ php -S 127.0.0.1:8000 -t public vendor/laravel/framework/src/Illuminate/Foundati
 ## 5. Mail, reCAPTCHA, queue
 
 - **Mail**: `MAIL_MAILER=log` writes enquiry emails to `storage/logs/laravel.log`. To see rendered mail, install Mailpit and use `MAIL_MAILER=smtp`, `MAIL_HOST=127.0.0.1`, `MAIL_PORT=1025`. Emails only send once **Admin > Site settings > Send new-enquiry emails to** has an address.
-- **reCAPTCHA**: `.env` ships Google's public *test* keys (they always pass and show a "for testing only" banner). Real keys: Admin > Site settings, or `.env`.
+- **reCAPTCHA**: `.env` ships Google's public *test* keys (they always pass and show a "for testing only" banner). Real keys: Admin > reCAPTCHA, or `.env`.
 - **Queue**: `QUEUE_CONNECTION=sync` runs emails and GHL syncs immediately. Production uses a real queue; see DEPLOYMENT.md.
 - **GoHighLevel**: off while `GHL_API_TOKEN` / `GHL_LOCATION_ID` are empty.
 

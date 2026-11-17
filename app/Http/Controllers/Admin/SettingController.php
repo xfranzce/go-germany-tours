@@ -13,20 +13,19 @@ class SettingController extends AdminController
         'brand_name' => 'max:80', 'company_name' => 'max:150', 'tagline' => 'max:200',
         'phone' => 'max:30', 'phone_display' => 'max:40', 'email' => 'max:120', 'address' => 'max:300',
         'facebook_url' => 'max:250', 'instagram_url' => 'max:250', 'youtube_url' => 'max:250',
-        'notification_emails' => 'max:500', 'gtm_id' => 'max:20', 'recaptcha_site_key' => 'max:100',
+        'notification_emails' => 'max:500', 'gtm_id' => 'max:20',
         'modal_discount_percent' => 'max:3', 'footer_text' => 'max:300',
         'default_meta_title' => 'max:70', 'default_meta_description' => 'max:320', 'terms_version' => 'max:32',
     ];
 
     public function edit(GhlClient $ghl)
     {
-        return view('admin.settings', ['ghlOn' => $ghl->enabled(), 'hasSecret' => filled(Setting::get('recaptcha_secret_key'))]);
+        return view('admin.settings', ['ghlOn' => $ghl->enabled()]);
     }
 
     public function update(Request $request)
     {
-        $rules = ['recaptcha_secret_key' => ['nullable', 'string', 'max:100']]
-            + $this->imageRules('logo') + $this->imageRules('favicon') + $this->imageRules('og');
+        $rules = $this->imageRules('logo') + $this->imageRules('favicon') + $this->imageRules('og');
         foreach (self::TEXT as $key => $max) {
             $rules[$key] = ['nullable', 'string', $max];
         }
@@ -49,9 +48,6 @@ class SettingController extends AdminController
                 continue;
             }
             Setting::put($key, $data[$key] ?? null);
-        }
-        if (filled($data['recaptcha_secret_key'] ?? null)) {
-            Setting::put('recaptcha_secret_key', $data['recaptcha_secret_key']);
         }
         foreach (['logo' => 'logo', 'favicon' => 'favicon', 'og' => 'default_og_image'] as $field => $key) {
             Setting::put($key, $this->handleImage($request, $field, Setting::get($key)));

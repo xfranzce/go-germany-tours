@@ -49,6 +49,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('gohighlevel', [Admin\GhlController::class, 'update'])->name('ghl.update');
         Route::post('gohighlevel/test', [Admin\GhlController::class, 'test'])->name('ghl.test');
         Route::post('gohighlevel/setup', [Admin\GhlController::class, 'setup'])->name('ghl.setup');
+        Route::get('recaptcha', [Admin\RecaptchaController::class, 'edit'])->name('recaptcha.edit');
+        Route::put('recaptcha', [Admin\RecaptchaController::class, 'update'])->name('recaptcha.update');
+        Route::post('recaptcha/test', [Admin\RecaptchaController::class, 'test'])->name('recaptcha.test');
         Route::put('settings', [Admin\SettingController::class, 'update'])->name('settings.update');
         Route::resource('users', Admin\AdminUserController::class)->except('show');
         Route::get('media', [Admin\MediaController::class, 'index'])->name('media.index');

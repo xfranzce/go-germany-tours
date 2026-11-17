@@ -34,8 +34,7 @@
         <x-admin.field name="notification_emails" label="Send new-enquiry emails to" :value="$site['notification_emails']" class="sm:col-span-2" help="One or more addresses separated by commas. If empty, no staff email is sent."/>
         <x-admin.field name="gtm_id" label="Google Tag Manager ID" :value="$site['gtm_id']" placeholder="GTM-XXXXXXX" help="The GTM snippet is only added to pages when this is filled in."/>
         <div></div>
-        <x-admin.field name="recaptcha_site_key" label="reCAPTCHA v2 site key" :value="\App\Models\Setting::get('recaptcha_site_key')" help="Blank uses the key in .env (Google's test key locally)."/>
-        <x-admin.field name="recaptcha_secret_key" label="reCAPTCHA v2 secret key" type="password" :help="$hasSecret ? 'A secret key is saved. Type a new one only to replace it.' : 'Blank uses the key in .env.'"/>
+        <div class="sm:col-span-2 rounded-lg bg-gray-50 p-3 text-sm"><strong>reCAPTCHA:</strong> keys now have their own screen: <a class="font-bold underline" href="{{ route('admin.recaptcha.edit') }}">Admin &rarr; reCAPTCHA</a>.</div>
         <div class="sm:col-span-2 rounded-lg bg-gray-50 p-3 text-sm">
             <strong>GoHighLevel:</strong> {{ $ghlOn ? 'ON (token and location found in .env)' : 'OFF: add GHL_API_TOKEN and GHL_LOCATION_ID to the .env file, then run php artisan ghl:setup.' }}
             The token is never shown or stored here.
