@@ -205,9 +205,10 @@
     <div class="container-x">
         <x-section-heading id="tours-title" eyebrow="Travel your way" :title="$page->text('tours_title', 'See Germany differently')"
             :intro="$page->text('tours_intro', 'The same beautiful places, three very different experiences.')"/>
-        <div class="grid gap-8 md:grid-cols-3">
+        {{-- phones: swipeable carousel; md and up: three-column grid --}}
+        <div class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden" tabindex="0" aria-label="Ways to travel">
             @foreach($tourTypes as $t)
-                <article class="card flex flex-col">
+                <article class="card flex w-[82%] shrink-0 snap-center flex-col md:w-auto md:shrink">
                     <a href="{{ route('tours.show', $t->slug) }}" class="block aspect-[4/3] bg-brand-custard overflow-hidden" tabindex="-1" aria-hidden="true">
                         <x-picture :path="$t->image" sizes="(min-width: 768px) 24rem, 92vw" class="w-full h-full object-cover"/>
                     </a>
