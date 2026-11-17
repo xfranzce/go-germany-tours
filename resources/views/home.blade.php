@@ -175,8 +175,9 @@
                             @click="tab = '{{ $slug }}'"
                             @keydown.right.prevent="$el.nextElementSibling?.focus(); $el.nextElementSibling?.click()"
                             @keydown.left.prevent="$el.previousElementSibling?.focus(); $el.previousElementSibling?.click()"
-                            class="shrink-0 rounded-full border-2 px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.14em] transition duration-300 sm:px-6"
+                            class="inline-flex shrink-0 items-center gap-2 rounded-full border-2 px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.14em] transition duration-300 sm:px-6"
                             :class="tab === '{{ $slug }}' ? 'border-brand-navy bg-brand-navy text-white shadow-lg shadow-brand-navy/20' : 'border-brand-navy/20 bg-white text-brand-navy hover:border-brand-navy'">
+                        <x-icon :name="['self-drive' => 'car', 'chauffeur-driven' => 'chauffeur', 'coach-tours' => 'bus'][$slug] ?? 'pin'" class="size-6 shrink-0"/>
                         {{ $t['name'] }}
                     </button>
                 @endforeach
