@@ -117,7 +117,7 @@
 
     <div class="container-x grid gap-16 lg:gap-24 lg:grid-cols-[0.9fr_1fr] lg:items-center">
         @if($whyImg)
-            <div class="relative mx-auto w-full max-w-md lg:max-w-none pb-16 pr-10 sm:pr-16 transition duration-1000 ease-out" :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
+            <div class="relative mx-auto hidden w-full max-w-md md:block lg:max-w-none pb-16 pr-10 sm:pr-16 transition duration-1000 ease-out" :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
                 {{-- gold offset frame --}}
                 <div class="absolute left-5 top-5 right-16 bottom-11 sm:left-7 sm:top-7 rounded-t-[999px] border-2 border-brand-gold/70" aria-hidden="true"></div>
                 <div class="relative aspect-[4/5] overflow-hidden rounded-t-[999px] shadow-[0_40px_80px_-30px_rgb(0_48_73/0.55)]">
