@@ -14,7 +14,7 @@
         </div>
 
         {{-- mobile / tablet: vertical route --}}
-        <ol class="relative space-y-8 border-l-2 border-dashed border-brand-gold/70 pl-10 lg:hidden">
+        <ol class="relative mx-3 space-y-8 border-l-2 border-dashed border-brand-gold/70 pl-10 sm:mx-6 lg:hidden">
             @foreach($how as $n => [$t, $d])
                 <li class="relative">
                     <span class="absolute -left-[3.6rem] top-0 grid size-11 place-items-center rounded-full bg-brand-navy font-display text-lg text-white ring-4 ring-brand-gold shadow-md" aria-hidden="true">{{ sprintf('%02d', $n + 1) }}</span>
