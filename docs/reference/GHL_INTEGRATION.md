@@ -64,3 +64,7 @@ Admin > **GoHighLevel** (Administrators only):
 1. Paste the **Location ID** and the **Private Integration token** (`pit-...`), keep "Send enquiries to GoHighLevel" ticked, Save.
 2. Press **Test connection**, then **Create missing custom fields** (same as `php artisan ghl:setup`).
 The token is stored encrypted with the app key and never shown again (only its last 4 characters). Values saved here override `.env`. Untick the switch to pause the sync; enquiries are always saved here first and never blocked. If `APP_KEY` is ever changed, paste the token again.
+
+
+## Fields that already exist in GoHighLevel
+If a field was created by hand (even with a slightly different label, e.g. "Special Requests"), "Create missing custom fields" and `ghl:setup` reuse it by its field key (`contact.special_request`) and by GHL's "already exists" reply instead of failing. Enquiries then write to that existing field.

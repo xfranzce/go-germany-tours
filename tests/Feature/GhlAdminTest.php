@@ -115,4 +115,32 @@ class GhlAdminTest extends TestCase
         $this->actingAs($this->admin('editor'), 'admin')->get('/admin/gohighlevel')->assertForbidden();
         $this->post('/admin/gohighlevel/test')->assertForbidden();
     }
+
+    public function test_setup_reuses_a_field_that_exists_under_another_label_instead_of_failing(): void
+    {
+        $this->actingAs($this->admin(), 'admin')->put('/admin/gohighlevel', ['ghl_location_id' => 've9EPM428h8vShlRW1KT', 'ghl_api_token' => self::TOKEN, 'ghl_enabled' => '1']);
+        Setting::flush();
+
+        $names = array_keys(GhlFields::all());
+        // Every field already exists, but "Special Request" is labelled differently in GHL (same fieldKey).
+        $remote = array_map(fn ($n) => $n === 'Special Request'
+            ? ['id' => 'x1', 'name' => 'Special Requests', 'fieldKey' => 'contact.special_request']
+            : ['id' => 'id-'.$n, 'name' => $n, 'fieldKey' => 'contact.'.trim(preg_replace('/[^a-z0-9]+/', '_', strtolower($n)), '_')], $names);
+        Http::fake(['*/customFields' => Http::response(['customFields' => $remote])]);
+
+        $this->post('/admin/gohighlevel/setup')->assertSessionHas('status', '0 custom field(s) created, '.count($names).' already existed.');
+        Http::assertSentCount(1); // nothing was created
+    }
+
+    public function test_setup_treats_an_already_exists_error_as_existing(): void
+    {
+        $this->actingAs($this->admin(), 'admin')->put('/admin/gohighlevel', ['ghl_location_id' => 've9EPM428h8vShlRW1KT', 'ghl_api_token' => self::TOKEN, 'ghl_enabled' => '1']);
+        Setting::flush();
+
+        Http::fake(['*/customFields' => fn ($request) => $request->method() === 'GET'
+            ? Http::response(['customFields' => []])
+            : Http::response(['statusCode' => 400, 'message' => 'contact.nights already exists. Please input a different name or fieldKey.'], 400)]);
+
+        $this->post('/admin/gohighlevel/setup')->assertSessionHas('ghl_messages', fn ($m) => ! str_contains(implode(' ', $m), 'Failed'));
+    }
 }

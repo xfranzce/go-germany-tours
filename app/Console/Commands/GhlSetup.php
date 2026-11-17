@@ -22,7 +22,7 @@ class GhlSetup extends Command
         }
 
         try {
-            $existing = collect($client->customFields())->pluck('id', 'name');
+            $existing = collect(app(\App\Services\Ghl\GhlSync::class)->fieldIds(true));
         } catch (\Throwable $e) {
             $this->error('Could not list custom fields: '.$e->getMessage());
             $this->line('Check the token, the location ID and that the token has the custom fields read/write scopes.');
@@ -48,6 +48,11 @@ class GhlSetup extends Command
                 $created[] = $name;
                 $this->info("Created: {$name} ({$type})");
             } catch (\Throwable $e) {
+                if (str_contains($e->getMessage(), 'already exists')) {
+                    $skipped[] = $name; // exists in GHL under another label (same field key)
+
+                    continue;
+                }
                 $this->error("Failed: {$name}: ".$e->getMessage());
             }
         }
