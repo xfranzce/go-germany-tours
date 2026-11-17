@@ -71,6 +71,14 @@ class GhlIntegrationTest extends TestCase
         $response->assertOk();
     }
 
+    public function test_contact_country_follows_the_phone_country_chosen_on_the_form(): void
+    {
+        $b = new GhlPayloadBuilder();
+        $this->assertSame('GB', $b->contact($this->enquiry('contact', ['country_code' => 'GB']))['country']);
+        $this->assertSame('US', $b->contact($this->enquiry('contact', ['country_code' => 'US']))['country']);
+        $this->assertArrayNotHasKey('country', $b->contact($this->enquiry('contact')), 'unknown country is never guessed');
+    }
+
     #[DataProvider('forms')]
     public function test_payload_includes_utm_and_tracking_fields_for_every_form_type(string $form): void
     {

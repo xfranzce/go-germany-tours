@@ -36,6 +36,13 @@ class EnquiryFormTest extends TestCase
         Http::fake(['www.google.com/recaptcha/api/siteverify' => Http::response(['success' => $success])]);
     }
 
+    public function test_the_phone_country_is_saved_as_the_enquiry_country(): void
+    {
+        $this->captcha(true);
+        $this->postJson('/enquiry', $this->payload(['phone_country' => 'GB', 'phone' => '7911 123456']))->assertSuccessful();
+        $this->assertSame('GB', Enquiry::latest('id')->first()->country_code);
+    }
+
     public function test_travel_date_must_be_a_real_date_that_is_not_in_the_past(): void
     {
         $this->captcha(true);

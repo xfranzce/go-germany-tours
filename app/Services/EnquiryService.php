@@ -75,6 +75,7 @@ class EnquiryService
             'last_name' => $clean($data['last_name'], 60),
             'email' => mb_strtolower(trim($data['email'])),
             'phone_country' => Countries::dial($data['phone_country']),
+            'country_code' => $data['phone_country'], // ISO code picked next to the phone number (validated against Countries::all())
             'phone_e164' => $e164,
             'travel_date' => $clean($data['travel_date'] ?? null, 60),
             'second_quote' => $data['second_quote'] ?? null,

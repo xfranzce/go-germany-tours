@@ -77,3 +77,6 @@ Besides the `... First` / `... Last` attribution fields, each enquiry fills thes
 - `utm_device`, `utm_adcreative` and `utm_adposition` come from the landing-page URL. In Google Ads use this final URL suffix: `utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_content={adgroupid}&utm_term={keyword}&utm_device={device}&utm_adcreative={creative}&utm_adposition={adposition}`.
 - `utm_gclid` is the Google click id (`gclid`, added automatically by Google Ads auto-tagging).
 - `form_source` is the form and the page it was sent from, for example `Hero quiz (/)` or `Package enquiry (/packages/mosel-valley)`.
+
+## Contact country
+The contact's Country in GHL is the country chosen in the phone-number dropdown of the form (ISO code, saved as `country_code` on the enquiry). If it is somehow unknown nothing is sent, so GHL does not get a guessed country.

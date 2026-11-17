@@ -31,7 +31,7 @@ Google Ads landing-page site for one GoTour brand. Server-rendered Laravel 12 (P
 8. GTM snippet and dataLayer events: GTM ID in admin settings; snippet only rendered when set. Events: `enquiry_submitted` (on AJAX success), `enquiry_thank_you` (thank-you page, only once straight after a real submission; attach the Google Ads conversion to this).
 9. Quiz steps/options are database-driven (Admin > Hero quiz). The step `key` names the answer in enquiries and in GHL (`Quiz: <Key>`); never change keys of live steps.
 10. Placeholders are written `[CONFIRM: ...]` / `SAMPLE` / `PLACEHOLDER` and listed in `docs/reference/CONTENT_TO_CONFIRM.md`. **Never invent business facts** (prices, reviews, awards, years, licences). Terms/Privacy are starter templates needing legal review.
-11. Phone numbers are stored E.164 (`Countries::e164`). Only `$request->validated()` keys reach a controller: **declare a rule for every field you read** (a missing rule once silently dropped quiz option ids).
+11. Phone numbers are stored E.164 (`Countries::e164`). The country picked next to the phone is saved as `enquiries.country_code` (ISO) and sent to GHL as the contact's `country`; never send a fixed default. Only `$request->validated()` keys reach a controller: **declare a rule for every field you read** (a missing rule once silently dropped quiz option ids).
 12. Rich text goes through `Html::clean()` on save (allow-list); output is `{!! !!}` only for that sanitised content.
 
 ## Deploying

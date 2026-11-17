@@ -73,9 +73,16 @@ class GhlPayloadBuilder
 
     public function contact(Enquiry $e): array
     {
-        return [
+        $contact = [
             'firstName' => $e->first_name, 'lastName' => $e->last_name, 'email' => $e->email,
             'phone' => $e->phone_e164, 'tags' => $this->tags($e), 'source' => Setting::get('brand_name').' website',
         ];
+
+        // Country follows the country picked next to the phone number (ISO code), never a fixed default.
+        if ($e->country_code) {
+            $contact['country'] = $e->country_code;
+        }
+
+        return $contact;
     }
 }

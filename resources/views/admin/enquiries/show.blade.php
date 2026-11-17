@@ -11,7 +11,7 @@
         <h2 id="d" class="text-xl mb-3">Details</h2>
         <dl class="grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
             @foreach([['Received', $e->created_at->format('M j, Y H:i')], ['Form', $e->formLabel()], ['Email', $e->email], ['Phone (E.164)', $e->phone_e164], ['Package', $e->package_name ?: 'None'],
-                ['Preferred travel date', $e->travel_date], ['Second quote from partner?', $e->second_quote], ['Time of year', $e->time_of_year], ['Group size', $e->group_size], ['Nights', $e->nights]] as [$l, $v])
+                ['Country', $e->country_code ? (\App\Support\Countries::all()[$e->country_code][0] ?? $e->country_code) : null], ['Preferred travel date', $e->travel_date], ['Second quote from partner?', $e->second_quote], ['Time of year', $e->time_of_year], ['Group size', $e->group_size], ['Nights', $e->nights]] as [$l, $v])
                 @if($v)<div><dt class="font-bold">{{ $l }}</dt><dd class="break-words">{{ $v }}</dd></div>@endif
             @endforeach
             @if($e->special_request)<div class="sm:col-span-2"><dt class="font-bold">Special request</dt><dd class="whitespace-pre-line">{{ $e->special_request }}</dd></div>@endif
