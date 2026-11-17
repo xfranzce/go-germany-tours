@@ -134,7 +134,7 @@
             <span class="flag-rule" aria-hidden="true"></span>
             <p class="mt-5 text-base sm:text-lg text-ink-soft max-w-xl">Discover Germany through journeys shaped around how you like to travel. From fairytale towns with half-timbered streets to river valleys, sandstone cliffs and the Baltic coast, every detail is planned to make your trip unforgettable.</p>
 
-            <ol class="mt-8 grid grid-cols-3 gap-2 sm:mt-10 sm:gap-3 lg:gap-4">
+            <ol class="mt-10 hidden grid-cols-3 gap-3 sm:grid lg:gap-4">
                 @foreach([
                     ['Choose how you travel', 'Self drive, private chauffeur or small-group coach.', 'adjust'],
                     ['Beyond the usual stops', 'Quedlinburg, Cochem, Gengenbach and other places many itineraries skip.', 'pin'],
