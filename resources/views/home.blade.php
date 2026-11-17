@@ -198,41 +198,7 @@
 </section>
 @endif
 
-{{-- 4b. ALPS STATEMENT BANNER: full-bleed mountain photo, slow zoom, frosted panel, reveal on scroll --}}
-@php $alps = \App\Models\Media::query()->where('path', 'like', 'media/allgau-alps-%')->first(); @endphp
-@if($alps || $galleryItems->count() > 2)
-<section class="relative isolate overflow-hidden flex items-center min-h-[36rem] sm:min-h-[46rem] text-white text-center" aria-labelledby="banner-title"
-         x-data="{ shown: false }" x-init="const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { shown = true; o.disconnect() } }, { threshold: 0.2 }); o.observe($el)">
-    <div class="absolute inset-0 -z-20 bg-brand-navy-dark" aria-hidden="true">
-        @if($alps)
-            <x-picture :path="$alps->path" hires sizes="100vw" class="banner-zoom w-full h-full object-cover"/>
-        @else
-            <div class="w-full h-full bg-cover bg-center" style="background-image:url('{{ $galleryItems[1]['media']->url() }}')"></div>
-        @endif
-    </div>
-    <x-video-bg src="banner.mp4" class="absolute inset-0 -z-[15] w-full h-full object-cover"/>
-    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-brand-navy-dark/55 via-brand-navy-dark/15 to-brand-navy-dark/75" aria-hidden="true"></div>
-    <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_60%_at_50%_50%,rgb(0_31_48/0.6),transparent)]" aria-hidden="true"></div>
-
-    <div class="container-x max-w-4xl py-24 sm:py-32 transition duration-1000 ease-out [text-shadow:0_2px_28px_rgb(0_20_30/0.75)]"
-         :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
-        <p class="eyebrow centered text-brand-gold">Germany, your way</p>
-        <h2 id="banner-title" class="mt-4 text-white">From Alpine peaks to
-            <em class="block italic font-medium text-brand-gold">fairytale towns.</em></h2>
-        <span class="flag-rule centered" aria-hidden="true"></span>
-        <p class="mt-5 mx-auto max-w-2xl text-base sm:text-lg text-white">Tell us how you like to travel and we will shape the journey around you.</p>
-        <ul class="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-white/90">
-            @foreach(['Self drive', 'Private chauffeur', 'Small-group coach'] as $chip)
-                <li class="flex items-center gap-4">@unless($loop->first)<span class="size-1.5 rounded-full bg-brand-gold" aria-hidden="true"></span>@endunless{{ $chip }}</li>
-            @endforeach
-        </ul>
-        <div class="mt-10 flex flex-wrap justify-center gap-3 [text-shadow:none]">
-            <button type="button" class="btn btn-gold px-9 shadow-lg shadow-black/30" @click="$store.modal.show()">Plan my trip <x-icon name="arrow-right" class="w-5 h-5"/></button>
-            <a href="{{ route('packages.index') }}" class="btn btn-outline-light px-9">See packages</a>
-        </div>
-    </div>
-</section>
-@endif
+@include('partials.sections.banner')
 
 {{-- 5. TRAVEL YOUR WAY (tour types) --}}
 <section class="py-16 sm:py-24" aria-labelledby="tours-title" id="tours">
@@ -262,35 +228,7 @@
     </div>
 </section>
 
-{{-- 6. OUR DIFFERENCE (dark, split layout) --}}
-<section class="relative isolate overflow-hidden py-16 sm:py-24 bg-brand-navy text-white" aria-labelledby="why-title">
-    {{-- faint backdrop on smaller screens; a full map column on wide ones --}}
-    <x-germany-map class="pointer-events-none absolute -z-10 top-1/2 h-[110%] w-auto -translate-y-1/2 opacity-25 -right-16 xl:hidden"/>
-    <div class="container-x relative grid gap-14 lg:grid-cols-[0.8fr_1.2fr] xl:grid-cols-[0.8fr_0.7fr_1.3fr] xl:gap-10">
-        <div>
-            <p class="eyebrow text-brand-gold">Why {{ $site['brand_name'] }}</p>
-            <h2 id="why-title" class="mt-4 text-white">{{ $page->text('why_title', 'Why travelers choose us') }}</h2>
-            <span class="flag-rule" aria-hidden="true"></span>
-            <p class="mt-5 text-base sm:text-lg text-white/85">{{ $page->text('why_intro', 'Germany is easier to enjoy when the planning is done for you.') }}</p>
-            <button type="button" class="btn btn-gold mt-8" @click="$store.modal.show()">Start planning</button>
-        </div>
-        <div class="hidden xl:flex items-center justify-center" aria-hidden="true"><x-germany-map class="h-[28rem] w-auto"/></div>
-        <ul class="grid gap-x-10 gap-y-8 sm:grid-cols-2">
-            @foreach([
-                ['adjust', 'Choose how you travel', 'Drive yourself, relax with a private driver, or join a small-group coach tour.'],
-                ['pin', 'Beyond the usual stops', 'Quedlinburg, Saxon Switzerland, Cochem, Hiddensee and Gengenbach: towns and landscapes many itineraries skip.'],
-                ['check', 'Built around you', 'Tell us your dates, group size and budget and we shape the trip to fit.'],
-                ['chat', 'A real person replies', 'Send your details and a member of the team follows up with your quote.'],
-            ] as [$ic, $t, $d])
-                <li class="border-t border-white/25 pt-5">
-                    <span class="grid place-items-center w-11 h-11 rounded-full border border-brand-gold text-brand-gold"><x-icon :name="$ic" class="w-6 h-6"/></span>
-                    <h3 class="mt-4">{{ $t }}</h3>
-                    <p class="mt-2 text-white/80">{{ $d }}</p>
-                </li>
-            @endforeach
-        </ul>
-    </div>
-</section>
+@include('partials.sections.why')
 
 {{-- 6b. BY TRAVELER --}}
 <section class="py-16 sm:py-24 bg-brand-custard-light" aria-labelledby="trav-title">
@@ -328,81 +266,9 @@
     </div>
 </section>
 
-{{-- 7. HOW IT WORKS: heading + CTA left, winding dashed route with three stops right (lg); simple vertical route on mobile --}}
-@php
-    $how = [
-        ['Tell us what you want', 'Answer a few quick questions about where, when and how you like to travel. It takes under 30 seconds.', 110, 100],
-        ['Get your tailored quote', 'We put together a quote that fits your dates, group size and budget.', 300, 270],
-        ['Book and go', 'Happy with the plan? Confirm it and we handle the details so you can enjoy Germany.', 130, 450],
-    ];
-@endphp
-<section class="py-16 sm:py-24 bg-white" aria-labelledby="how-title">
-    <div class="container-x grid items-center gap-12 lg:grid-cols-[5fr_7fr] lg:gap-8">
-        <div>
-            <x-section-heading id="how-title" align="left" eyebrow="How it works" :title="$page->text('how_title', 'Your trip in three simple steps')" intro="Tell us what you have in mind and we shape the journey around you." class="!mb-8"/>
-            <button type="button" class="btn btn-gold px-9 shadow-lg shadow-brand-gold/20" @click="$store.modal.show()">Get my free quote <x-icon name="arrow-right" class="w-5 h-5"/></button>
-        </div>
+@include('partials.sections.how')
 
-        {{-- mobile / tablet: vertical route --}}
-        <ol class="relative space-y-8 border-l-2 border-dashed border-brand-gold/70 pl-10 lg:hidden">
-            @foreach($how as $n => [$t, $d])
-                <li class="relative">
-                    <span class="absolute -left-[3.6rem] top-0 grid size-11 place-items-center rounded-full bg-brand-navy font-display text-lg text-white ring-4 ring-brand-gold shadow-md" aria-hidden="true">{{ sprintf('%02d', $n + 1) }}</span>
-                    <h3>{{ $t }}</h3>
-                    <p class="mt-2 text-ink-soft">{{ $d }}</p>
-                </li>
-            @endforeach
-        </ol>
-
-        {{-- desktop: winding route --}}
-        <ol class="relative hidden aspect-[600/540] w-full lg:block">
-            <svg class="absolute inset-0 size-full" viewBox="0 0 600 540" preserveAspectRatio="none" fill="none" aria-hidden="true">
-                <path d="M60 0C60 50 110 50 110 100C110 190 300 170 300 270C300 370 130 350 130 450C130 490 170 510 190 540" stroke="#FCBF49" stroke-width="2.5" stroke-dasharray="3 9" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
-            </svg>
-            @foreach($how as $n => [$t, $d, $x, $y])
-                <li class="absolute" style="left: {{ round($x / 6, 2) }}%; top: {{ round($y / 5.4, 2) }}%;">
-                    <span class="absolute left-0 top-0 grid size-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-brand-navy font-display text-xl text-white ring-4 ring-brand-gold shadow-lg" aria-hidden="true">{{ sprintf('%02d', $n + 1) }}</span>
-                    <div class="absolute left-0 top-0 ml-12 w-64 -translate-y-1/2">
-                        <h3>{{ $t }}</h3>
-                        <p class="mt-2 text-ink-soft">{{ $d }}</p>
-                    </div>
-                </li>
-            @endforeach
-        </ol>
-    </div>
-</section>
-
-{{-- 8. TESTIMONIALS (only shows when at least one is active; use real, permissioned reviews with a source) --}}
-@if($testimonials->isNotEmpty())
-@php
-    $tCount = $testimonials->count();
-    $tGrid = $tCount === 1 ? 'max-w-2xl mx-auto' : ($tCount === 2 ? 'md:grid-cols-2 max-w-4xl mx-auto' : 'md:grid-cols-2 lg:grid-cols-3');
-@endphp
-<section class="relative overflow-hidden py-16 sm:py-24 bg-brand-custard-light" aria-labelledby="reviews-title">
-    <span class="pointer-events-none absolute -top-10 left-4 font-display text-[22rem] leading-none text-brand-gold/20 select-none" aria-hidden="true">&ldquo;</span>
-    <div class="container-x relative">
-        <x-section-heading id="reviews-title" eyebrow="Guest reviews" :title="$page->text('testimonials_title', 'What travelers say')"/>
-        <div class="grid gap-6 lg:gap-8 {{ $tGrid }}">
-            @foreach($testimonials as $r)
-                @php $initials = \Illuminate\Support\Str::of($r->name)->replaceMatches('/[^\p{L}\s]/u', '')->explode(' ')->filter()->take(2)->map(fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)))->implode(''); @endphp
-                <figure class="group relative flex flex-col bg-white rounded-[var(--radius-card)] p-7 sm:p-8 shadow-card border-t-4 border-brand-gold transition duration-300 hover:-translate-y-1 hover:shadow-xl">
-                    <span class="font-display text-6xl leading-none text-brand-gold h-8" aria-hidden="true">&ldquo;</span>
-                    @if($r->is_placeholder)<p class="mb-2 self-start bg-brand-gold text-brand-navy text-xs font-extrabold px-2 py-0.5 rounded">PLACEHOLDER</p>@endif
-                    <blockquote class="mt-3 flex-1 font-display text-xl sm:text-2xl leading-snug text-brand-navy">{{ $r->quote }}</blockquote>
-                    <figcaption class="mt-6 flex items-center gap-4 border-t border-brand-custard pt-5">
-                        <span class="grid place-items-center size-12 shrink-0 rounded-full bg-brand-navy text-brand-gold font-bold text-sm tracking-wide" aria-hidden="true">{{ $initials }}</span>
-                        <span class="min-w-0">
-                            <span class="block font-bold text-brand-navy">{{ $r->name }}</span>
-                            @if($r->location)<span class="block text-sm text-ink-soft">{{ $r->location }}</span>@endif
-                            @if($r->source)<span class="mt-1.5 inline-block rounded-full bg-brand-custard-light px-2.5 py-0.5 text-xs font-semibold text-ink-soft">{{ $r->source }}</span>@endif
-                        </span>
-                    </figcaption>
-                </figure>
-            @endforeach
-        </div>
-    </div>
-</section>
-@endif
+@include('partials.sections.reviews')
 
 {{-- 9. GALLERY ("A visual journey"): checkerboard mosaic, captions always visible, click for lightbox --}}
 @php
@@ -545,17 +411,7 @@
     </div>
 </section>
 
-{{-- 11. FAQ --}}
-@if($faqs->isNotEmpty())
-<section class="py-16 sm:py-24" aria-labelledby="faq-title" id="faq">
-    <div class="container-x max-w-3xl">
-        <x-section-heading id="faq-title" eyebrow="FAQ" :title="$page->text('faq_title', 'Frequently asked questions')"/>
-        <div class="space-y-3">
-            @foreach($faqs as $faq)<x-faq-item :question="$faq->question" :open="$loop->first">{{ $faq->answer }}</x-faq-item>@endforeach
-        </div>
-    </div>
-</section>
-@endif
+@include('partials.sections.faq')
 
 {{-- 11b. JOURNAL --}}
 @if($posts->isNotEmpty())

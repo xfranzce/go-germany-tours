@@ -12,6 +12,16 @@ class Faq extends Model
 
     public function scopeHome($q)
     {
-        return $q->whereNull('package_id')->where('is_active', true)->orderBy('sort');
+        return $q->whereNull('package_id')->whereNull('tour_type_id')->where('is_active', true)->orderBy('sort');
+    }
+
+    public function scopeForTourType($q, int $id)
+    {
+        return $q->where('tour_type_id', $id)->where('is_active', true)->orderBy('sort');
+    }
+
+    public function tourType()
+    {
+        return $this->belongsTo(TourType::class);
     }
 }

@@ -16,6 +16,17 @@ class PublicPagesTest extends TestCase
         $this->seedContent();
     }
 
+    public function test_tour_type_pages_show_about_shared_sections_and_their_own_faqs(): void
+    {
+        $this->seed(\Database\Seeders\TourTypeFaqSeeder::class);
+
+        $this->get('/tours/self-drive')->assertOk()
+            ->assertSee('About Self Drive tours')->assertSee('Why travelers choose us')
+            ->assertSee('How it works')->assertSee('How does a self drive tour work?')->assertSee('"@type":"FAQPage"', false)
+            ->assertDontSee('How big are the coach groups?');
+        $this->get('/')->assertOk()->assertDontSee('How does a self drive tour work?');
+    }
+
     public function test_sitemap_lists_public_pages_and_excludes_private_ones(): void
     {
         $draft = Package::first();

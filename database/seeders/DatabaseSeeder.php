@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             CatalogSeeder::class,
             QuizSeeder::class,
             ContentSeeder::class,
+            TourTypeFaqSeeder::class,
             ImageSeeder::class,
         ]);
     }
