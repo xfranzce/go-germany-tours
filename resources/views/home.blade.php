@@ -167,7 +167,7 @@
         <div class="mb-12 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <x-section-heading id="featured-title" align="left" eyebrow="Signature journeys" :title="$page->text('featured_title', 'Popular ways to see Germany')" emphasis="Planned around you."
                 :intro="$page->text('featured_intro', 'A few ideas to start from. Every trip can be adjusted to suit you.')" class="!mb-0 lg:max-w-xl"/>
-            <div role="tablist" aria-label="Choose how you travel" class="flex w-full gap-2 overflow-x-auto pb-1 lg:w-auto lg:shrink-0"
+            <div role="tablist" aria-label="Choose how you travel" class="grid w-full grid-cols-3 gap-2 lg:flex lg:w-auto lg:shrink-0"
 >
                 @foreach($tabs as $slug => $t)
                     <button type="button" role="tab" id="tab-{{ $slug }}" aria-controls="panel-{{ $slug }}"
@@ -175,7 +175,7 @@
                             @click="tab = '{{ $slug }}'"
                             @keydown.right.prevent="$el.nextElementSibling?.focus(); $el.nextElementSibling?.click()"
                             @keydown.left.prevent="$el.previousElementSibling?.focus(); $el.previousElementSibling?.click()"
-                            class="inline-flex shrink-0 items-center gap-2 rounded-full border-2 px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.14em] transition duration-300 sm:px-6"
+                            class="flex min-w-0 flex-col items-center justify-center gap-1 rounded-2xl border-2 px-1.5 py-2.5 text-center text-[0.65rem] font-extrabold uppercase leading-tight tracking-[0.08em] transition duration-300 sm:text-xs sm:tracking-[0.14em] lg:inline-flex lg:shrink-0 lg:flex-row lg:gap-2 lg:rounded-full lg:px-6 lg:py-2.5 lg:text-left"
                             :class="tab === '{{ $slug }}' ? 'border-brand-navy bg-brand-navy text-white shadow-lg shadow-brand-navy/20' : 'border-brand-navy/20 bg-white text-brand-navy hover:border-brand-navy'">
                         <x-icon :name="['self-drive' => 'car', 'chauffeur-driven' => 'chauffeur', 'coach-tours' => 'bus'][$slug] ?? 'pin'" class="size-6 shrink-0"/>
                         {{ $t['name'] }}
