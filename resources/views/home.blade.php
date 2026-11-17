@@ -296,9 +296,9 @@
             <x-section-heading id="gallery-title" light align="left" eyebrow="A visual journey" title="Beyond the postcard." class="!mb-0"/>
             <p class="text-base sm:text-lg text-white/85 lg:max-w-xl lg:justify-self-end">A glimpse of Germany beyond the familiar, from quiet village lanes and half-timbered streets to misty cliffs, river valleys and landscapes worth taking the longer way for. Tap a photo to see it full size.</p>
         </div>
-        <div class="grid grid-cols-1 gap-[15px] sm:grid-cols-4 auto-rows-[18rem] lg:auto-rows-[25rem]">
+        <div class="-mx-4 flex snap-x snap-mandatory gap-[15px] overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-4 sm:overflow-visible sm:px-0 sm:pb-0 sm:auto-rows-[18rem] lg:auto-rows-[25rem]">
             @foreach($mosaic as $g)
-                <button type="button" class="group relative isolate overflow-hidden rounded-none text-left shadow-[0_20px_40px_-24px_rgb(0_0_0/0.8)] transition duration-700 ease-out hover:-translate-y-1.5 hover:shadow-[0_34px_60px_-26px_rgb(0_0_0/0.9)] {{ $g['span'] }}"
+                <button type="button" class="group relative isolate h-[18rem] w-[80%] shrink-0 snap-center overflow-hidden rounded-none sm:h-auto sm:w-auto sm:shrink text-left shadow-[0_20px_40px_-24px_rgb(0_0_0/0.8)] transition duration-700 ease-out hover:-translate-y-1.5 hover:shadow-[0_34px_60px_-26px_rgb(0_0_0/0.9)] {{ $g['span'] }}"
                         :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'" style="transition-delay: {{ $loop->index * 110 }}ms"
                         data-src="{{ $g['media']->url() }}" data-cap="{{ $g['label'] }}" data-alt="{{ $g['media']->alt }}"
                         @click="src = $el.dataset.src; cap = $el.dataset.cap; alt = $el.dataset.alt; open = true"
@@ -419,9 +419,9 @@
 <section class="py-16 sm:py-24 bg-brand-custard-light" aria-labelledby="journal-title">
     <div class="container-x">
         <x-section-heading id="journal-title" eyebrow="Travel journal" title="Ideas for planning" emphasis="your Germany trip."/>
-        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:overflow-visible md:px-0 md:pb-0 md:grid md:grid-cols-2 md:gap-8 lg:grid-cols-3">
             @foreach($posts as $post)
-                <article class="group card flex flex-col overflow-hidden transition duration-500 hover:-translate-y-1.5 hover:shadow-xl">
+                <article class="group card flex w-[82%] shrink-0 snap-center flex-col overflow-hidden md:w-auto md:shrink transition duration-500 hover:-translate-y-1.5 hover:shadow-xl">
                     <a href="{{ route('blog.show', $post->slug) }}" class="relative block aspect-[3/2] overflow-hidden bg-brand-custard" tabindex="-1" aria-hidden="true">
                         <x-picture :path="$post->image" sizes="(min-width: 1024px) 28rem, (min-width: 768px) 45vw, 92vw" class="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-105"/>
                         <span class="absolute left-4 top-4 rounded-full bg-brand-gold px-3 py-1 text-[0.7rem] font-extrabold uppercase tracking-wider text-brand-navy shadow">Travel guide</span>

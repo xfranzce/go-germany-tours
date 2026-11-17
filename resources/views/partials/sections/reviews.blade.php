@@ -2,16 +2,16 @@
 @if($testimonials->isNotEmpty())
 @php
     $tCount = $testimonials->count();
-    $tGrid = $tCount === 1 ? 'max-w-2xl mx-auto' : ($tCount === 2 ? 'md:grid-cols-2 max-w-4xl mx-auto' : 'md:grid-cols-2 lg:grid-cols-3');
+    $tGrid = $tCount === 1 ? 'md:max-w-2xl md:mx-auto' : ($tCount === 2 ? 'md:grid-cols-2 md:max-w-4xl md:mx-auto' : 'md:grid-cols-2 lg:grid-cols-3');
 @endphp
 <section class="relative overflow-hidden py-16 sm:py-24 bg-brand-custard-light" aria-labelledby="reviews-title">
     <span class="pointer-events-none absolute -top-10 left-4 font-display text-[22rem] leading-none text-brand-gold/20 select-none" aria-hidden="true">&ldquo;</span>
     <div class="container-x relative">
         <x-section-heading id="reviews-title" eyebrow="Guest reviews" :title="$page->text('testimonials_title', 'What travelers say')"/>
-        <div class="grid gap-6 lg:gap-8 {{ $tGrid }}">
+        <div class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:overflow-visible md:px-0 md:pb-0 md:grid md:gap-6 lg:gap-8 {{ $tGrid }}">
             @foreach($testimonials as $r)
                 @php $initials = \Illuminate\Support\Str::of($r->name)->replaceMatches('/[^\p{L}\s]/u', '')->explode(' ')->filter()->take(2)->map(fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)))->implode(''); @endphp
-                <figure class="group relative flex flex-col bg-white rounded-[var(--radius-card)] p-7 sm:p-8 shadow-card border-t-4 border-brand-gold transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <figure class="group relative flex w-[85%] shrink-0 snap-center flex-col md:w-auto md:shrink bg-white rounded-[var(--radius-card)] p-7 sm:p-8 shadow-card border-t-4 border-brand-gold transition duration-300 hover:-translate-y-1 hover:shadow-xl">
                     <span class="font-display text-6xl leading-none text-brand-gold h-8" aria-hidden="true">&ldquo;</span>
                     @if($r->is_placeholder)<p class="mb-2 self-start bg-brand-gold text-brand-navy text-xs font-extrabold px-2 py-0.5 rounded">PLACEHOLDER</p>@endif
                     <blockquote class="mt-3 flex-1 font-display text-xl sm:text-2xl leading-snug text-brand-navy">{{ $r->quote }}</blockquote>
