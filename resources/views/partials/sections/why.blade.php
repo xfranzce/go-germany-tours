@@ -18,7 +18,7 @@
                 ['check', 'Built around you', 'Tell us your dates, group size and budget and we shape the trip to fit.'],
                 ['chat', 'A real person replies', 'Send your details and a member of the team follows up with your quote.'],
             ] as [$ic, $t, $d])
-                <li class="w-[78%] shrink-0 snap-center border-t border-white/25 pt-5 sm:w-auto sm:shrink">
+                <li class="w-[78%] shrink-0 snap-center rounded-xl border border-white/20 bg-white/10 p-5 sm:w-auto sm:shrink sm:rounded-none sm:border-0 sm:border-t sm:border-white/25 sm:bg-transparent sm:p-0 sm:pt-5">
                     <span class="grid place-items-center w-11 h-11 rounded-full border border-brand-gold text-brand-gold"><x-icon :name="$ic" class="w-6 h-6"/></span>
                     <h3 class="mt-4">{{ $t }}</h3>
                     <p class="mt-2 text-white/80">{{ $d }}</p>
