@@ -69,6 +69,7 @@ abstract class TaxonomyController extends AdminController
             'description' => ['nullable', 'string', 'max:50000'],
             'sort' => ['nullable', 'integer', 'min:0'],
             'icon' => ['nullable', 'string', 'max:30'],
+            'highlights' => ['nullable', 'string', 'max:2000'],
             'seo_title' => ['nullable', 'string', 'max:70'],
             'meta_description' => ['nullable', 'string', 'max:320'],
         ] + $this->imageRules());
@@ -86,6 +87,7 @@ abstract class TaxonomyController extends AdminController
         ]);
         if ($this->hasIcon) {
             $item->icon = $data['icon'] ?? null;
+            $item->highlights = $data['highlights'] ?? null;
         }
         $item->save();
     }

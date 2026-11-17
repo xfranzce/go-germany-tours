@@ -34,6 +34,18 @@
         <span class="flag-rule" aria-hidden="true"></span>
         @if($type->summary)<p class="mt-5 text-lg text-ink-soft">{{ $type->summary }}</p>@endif
         <div class="prose-ggt mt-5">{!! $type->description !!}</div>
+        @php $points = array_values(array_filter(array_map('trim', preg_split('/\R/', (string) $type->highlights)))); @endphp
+        @if($points)
+            <h3 class="mt-8 text-xl">What to expect</h3>
+            <ul class="mt-4 space-y-3">
+                @foreach($points as $pt)
+                    <li class="flex items-start gap-3">
+                        <span class="mt-0.5 grid size-7 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy" aria-hidden="true"><x-icon name="check" class="size-4"/></span>
+                        <span class="font-semibold text-brand-navy">{{ $pt }}</span>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
     </section>
     @if($type->image)
         <div class="overflow-hidden rounded-2xl shadow-card"><x-picture :path="$type->image" sizes="(min-width: 1024px) 46rem, 100vw" class="w-full max-h-[32rem] object-cover"/></div>
