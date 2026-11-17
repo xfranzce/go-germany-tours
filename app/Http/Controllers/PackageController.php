@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Destination;
+use App\Models\Faq;
 use App\Models\Package;
+use App\Models\Page;
+use App\Models\Testimonial;
 use App\Models\TourType;
 use App\Support\Seo;
 use Illuminate\Http\Request;
@@ -24,6 +27,7 @@ class PackageController extends Controller
         $filtered = $type || $dest;
 
         return view('packages.index', [
+            'page' => Page::byKey('home'), 'testimonials' => Testimonial::active()->get(), 'faqs' => Faq::home()->get(),
             'packages' => $query->get(), 'types' => $types, 'destinations' => $destinations,
             'type' => $type, 'dest' => $dest,
             'seo' => Seo::make('Germany Tour Packages: Self Drive, Chauffeur and Coach',

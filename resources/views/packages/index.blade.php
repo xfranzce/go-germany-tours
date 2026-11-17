@@ -64,4 +64,9 @@
         </div>
     @endif
 </div>
+@include('partials.sections.banner')
+@include('partials.sections.why')
+@include('partials.sections.how')
+@include('partials.sections.reviews')
+@include('partials.sections.faq')
 @endsection
