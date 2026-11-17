@@ -1,11 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-@include('partials.page-header', [
-    'title' => $type->name.' Tours of Germany',
-    'lead' => $type->summary,
-    'crumbs' => [['Home', route('home')], ['Tours', route('packages.index')], [$type->name, null]],
-])
+<section class="relative isolate overflow-hidden bg-brand-navy text-white">
+    @if($type->image)<x-picture :path="$type->image" priority sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover opacity-25"/>@endif
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/90 via-brand-navy/70 to-brand-navy/50" aria-hidden="true"></div>
+    <div class="container-x grid items-center gap-10 pt-28 pb-12 sm:pt-36 sm:pb-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
+        <div>
+            <nav aria-label="Breadcrumb" class="mb-3 text-sm text-white/80">
+                <ol class="flex flex-wrap gap-x-2">
+                    <li><a class="underline underline-offset-2 hover:text-brand-gold" href="{{ route('home') }}">Home</a> <span aria-hidden="true">/</span></li>
+                    <li><a class="underline underline-offset-2 hover:text-brand-gold" href="{{ route('packages.index') }}">Tours</a> <span aria-hidden="true">/</span></li>
+                    <li><span aria-current="page">{{ $type->name }}</span></li>
+                </ol>
+            </nav>
+            <h1 class="max-w-3xl text-4xl sm:text-5xl">{{ $type->name }} Tours of Germany</h1>
+            @if($type->summary)<p class="mt-4 max-w-xl text-lg text-white/90">{{ $type->summary }}</p>@endif
+        </div>
+        <div class="mx-auto w-full max-w-xl lg:ml-auto lg:mr-0"><x-hero-quiz/></div>
+    </div>
+</section>
 <div class="container-x py-12 grid gap-10 lg:grid-cols-[1fr_22rem]">
     <div>
         @if($type->image)
