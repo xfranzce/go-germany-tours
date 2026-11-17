@@ -116,10 +116,10 @@
             <button type="button" class="btn btn-primary btn-sm ml-2" @click="$store.modal.show()">Free Quote</button>
         </nav>
 
-        <button type="button" class="lg:hidden p-2 -mr-2 rounded-lg" :aria-expanded="mobile" aria-controls="mobile-menu" @click="mobile = !mobile">
-            <span class="sr-only">Menu</span>
-            <x-icon name="menu" class="w-7 h-7" x-show="!mobile"/>
-            <x-icon name="x" class="w-7 h-7" x-show="mobile" x-cloak/>
+        <button type="button" class="lg:hidden flex shrink-0 items-center gap-2 rounded-full border-2 border-current py-1.5 pl-4 pr-3 text-xs font-extrabold uppercase tracking-[0.14em]" :aria-expanded="mobile" aria-controls="mobile-menu" @click="mobile = !mobile">
+            <span x-text="mobile ? 'Close' : 'Menu'">Menu</span>
+            <x-icon name="menu" class="size-6" x-show="!mobile"/>
+            <x-icon name="x" class="size-6" x-show="mobile" x-cloak/>
         </button>
     </div>
 
