@@ -26,7 +26,7 @@ class EnquiryFormTest extends TestCase
             'form_id' => 'contact', 'form_name' => 'contact',
             'first_name' => 'Ada', 'last_name' => 'Lovelace', 'email' => 'ada@example.com',
             'phone_country' => 'US', 'phone' => '(555) 123-4567',
-            'travel_date' => 'September 2027', 'second_quote' => 'No', 'special_request' => 'Window seat <b>please</b>',
+            'travel_date' => now()->addMonths(8)->format('Y-m-d'), 'second_quote' => 'No', 'special_request' => 'Window seat <b>please</b>',
             'consent' => '1', 'g-recaptcha-response' => 'token',
         ], $overrides);
     }
@@ -34,6 +34,22 @@ class EnquiryFormTest extends TestCase
     private function captcha(bool $success): void
     {
         Http::fake(['www.google.com/recaptcha/api/siteverify' => Http::response(['success' => $success])]);
+    }
+
+    public function test_travel_date_must_be_a_real_date_that_is_not_in_the_past(): void
+    {
+        $this->captcha(true);
+
+        $this->postJson('/enquiry', $this->payload(['travel_date' => 'September 2027']))->assertStatus(422)->assertJsonValidationErrors('travel_date');
+        $this->postJson('/enquiry', $this->payload(['travel_date' => now()->subDays(10)->format('Y-m-d')]))->assertStatus(422)->assertJsonValidationErrors('travel_date');
+        $this->postJson('/enquiry', $this->payload(['travel_date' => null]))->assertSuccessful();
+        $this->assertSame(1, Enquiry::count());
+    }
+
+    public function test_the_travel_date_field_is_a_date_picker_that_blocks_past_days(): void
+    {
+        $html = $this->get('/contact')->assertOk()->getContent();
+        $this->assertMatchesRegularExpression('/type="date"[^>]*name="travel_date"[^>]*min="'.now()->format('Y-m-d').'"/', $html);
     }
 
     public function test_enquiry_fails_without_consent(): void

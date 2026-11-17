@@ -27,7 +27,7 @@ class EnquiryService
             'email' => ['required', 'email:rfc', 'max:150'],
             'phone_country' => ['required', Rule::in(array_keys(Countries::all()))],
             'phone' => ['required', 'string', 'max:30', 'regex:/^[0-9+\-\s().]{5,30}$/'],
-            'travel_date' => ['nullable', 'string', 'max:60'],
+            'travel_date' => ['nullable', 'date_format:Y-m-d', 'after_or_equal:yesterday'],
             'second_quote' => ['nullable', Rule::in(['Yes', 'No', 'Maybe'])],
             'special_request' => ['nullable', 'string', 'max:2000'],
             'package_id' => ['nullable', 'integer', 'exists:packages,id'],

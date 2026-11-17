@@ -29,7 +29,7 @@ class GhlIntegrationTest extends TestCase
     {
         return Enquiry::create($extra + [
             'form_name' => $form, 'first_name' => 'Grace', 'last_name' => 'Hopper', 'email' => 'grace@example.com',
-            'phone_country' => '+1', 'phone_e164' => '+15551234567', 'travel_date' => 'May 2027', 'second_quote' => 'Yes',
+            'phone_country' => '+1', 'phone_e164' => '+15551234567', 'travel_date' => now()->addMonths(6)->format('Y-m-d'), 'second_quote' => 'Yes',
             'special_request' => 'Vegetarian', 'package_name' => 'Mosel Valley', 'quiz_answers' => ['destination' => 'Cochem', 'budget' => '$2K per person'],
             'consent_given' => true, 'consent_text' => 'x', 'terms_version' => 'v1', 'consented_at' => now(), 'source' => 'google',
             'first_touch' => ['utm_source' => 'google', 'utm_medium' => 'cpc', 'utm_campaign' => 'first-camp', 'utm_term' => 'germany tours', 'utm_content' => 'ad1',

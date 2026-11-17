@@ -1,6 +1,6 @@
 @props([
     'name', 'label', 'formId', 'type' => 'text', 'required' => false, 'options' => [], 'placeholder' => '',
-    'autocomplete' => null, 'hint' => null, 'rows' => 3, 'value' => null, 'bag' => null, 'xValue' => null,
+    'autocomplete' => null, 'min' => null, 'hint' => null, 'rows' => 3, 'value' => null, 'bag' => null, 'xValue' => null,
 ])
 @php
     $id = "{$formId}-{$name}";
@@ -25,7 +25,7 @@
         </select>
     @else
         <input id="{{ $id }}" type="{{ $type }}" name="{{ $name }}" value="{{ $current }}" class="field-input"
-               placeholder="{{ $placeholder }}" @required($required) @if($autocomplete) autocomplete="{{ $autocomplete }}" @endif
+               placeholder="{{ $placeholder }}" @required($required) @if($autocomplete) autocomplete="{{ $autocomplete }}" @endif @if($min) min="{{ $min }}" @endif
                maxlength="150" aria-describedby="{{ $id }}-err" :aria-invalid="errors.{{ $name }} ? 'true' : 'false'">
     @endif
 

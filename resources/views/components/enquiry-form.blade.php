@@ -70,7 +70,7 @@
     @endif
 
     <div class="{{ $compact ? 'grid gap-3 sm:grid-cols-2 sm:items-end' : 'space-y-4' }}">
-        <x-form-field name="travel_date" label="Preferred travel date (approx.)" :form-id="$formId" :bag="$bag" placeholder="e.g. September 2027"/>
+        <x-form-field name="travel_date" type="date" :min="now()->format('Y-m-d')" label="Preferred travel date (approx.)" :form-id="$formId" :bag="$bag"/>
         <x-form-field name="second_quote" type="select" :label="$compact ? 'Second quote from a partner?' : 'Would you like a second quote from a partner?'" :form-id="$formId" :bag="$bag"
                       :options="['Yes' => 'Yes', 'No' => 'No', 'Maybe' => 'Maybe, tell me more']"/>
     </div>
