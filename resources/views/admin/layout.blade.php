@@ -10,10 +10,10 @@
 <body class="bg-gray-100 min-h-screen text-brand-navy" x-data="{ nav: false }">
 @php
     $links = [
-        ['admin.dashboard', 'Dashboard'], ['admin.enquiries.index', 'Enquiries'], ['admin.packages.index', 'Packages'],
-        ['admin.tour-types.index', 'Tour types'], ['admin.destinations.index', 'Destinations'], ['admin.quiz.index', 'Hero quiz'],
-        ['admin.pages.index', 'Pages'], ['admin.testimonials.index', 'Testimonials'], ['admin.faqs.index', 'FAQs'],
-        ['admin.posts.index', 'Travel guides'], ['admin.media.index', 'Media'], ['admin.settings.edit', 'Site settings'], ['admin.ghl.edit', 'GoHighLevel'], ['admin.recaptcha.edit', 'reCAPTCHA'], ['admin.users.index', 'Admin users'],
+        ['admin.dashboard', 'Dashboard', 'dashboard'], ['admin.enquiries.index', 'Enquiries', 'inbox'], ['admin.packages.index', 'Packages', 'cube'],
+        ['admin.tour-types.index', 'Tour types', 'tag'], ['admin.destinations.index', 'Destinations', 'pin'], ['admin.quiz.index', 'Hero quiz', 'adjust'],
+        ['admin.pages.index', 'Pages', 'document'], ['admin.testimonials.index', 'Testimonials', 'star'], ['admin.faqs.index', 'FAQs', 'question'],
+        ['admin.posts.index', 'Travel guides', 'book'], ['admin.media.index', 'Media', 'photo'], ['admin.settings.edit', 'Site settings', 'cog'], ['admin.ghl.edit', 'GoHighLevel', 'bolt'], ['admin.recaptcha.edit', 'reCAPTCHA', 'shield'], ['admin.users.index', 'Admin users', 'users'],
     ];
     $adminUser = auth('admin')->user();
     $links = array_values(array_filter($links, fn ($l) => $adminUser->canAccessRoute($l[0]) && ! ($adminUser->isEditor() && $l[0] === 'admin.dashboard')));
@@ -25,11 +25,11 @@
             <button type="button" class="lg:hidden p-2" @click="nav = !nav" :aria-expanded="nav"><span class="sr-only">Menu</span><x-icon name="menu" class="w-6 h-6"/></button>
         </div>
         <nav class="px-2 pb-4 lg:block" :class="nav ? 'block' : 'hidden'" aria-label="Admin">
-            @foreach($links as [$route, $label])
+            @foreach($links as [$route, $label, $icon])
                 @php $active = request()->routeIs(str_replace(['.index', '.edit'], '.*', $route)); @endphp
-                <a href="{{ route($route) }}" class="block px-3 py-2 rounded-lg font-bold text-sm {{ $active ? 'bg-brand-gold text-brand-navy' : 'hover:bg-white/10' }}" @if($active) aria-current="page" @endif>{{ $label }}</a>
+                <a href="{{ route($route) }}" class="flex items-center gap-3 px-3 py-2 rounded-lg font-bold text-sm {{ $active ? 'bg-brand-gold text-brand-navy' : 'hover:bg-white/10' }}" @if($active) aria-current="page" @endif><x-icon :name="$icon" class="w-5 h-5 shrink-0 {{ $active ? '' : 'text-brand-gold' }}"/>{{ $label }}</a>
             @endforeach
-            <a href="{{ url('/') }}" target="_blank" rel="noopener" class="block px-3 py-2 mt-3 text-sm text-white/80 underline">View website</a>
+            <a href="{{ url('/') }}" target="_blank" rel="noopener" class="flex items-center gap-3 px-3 py-2 mt-3 text-sm text-white/80 underline"><x-icon name="globe" class="w-5 h-5 shrink-0"/>View website</a>
             <form method="POST" action="{{ route('admin.logout') }}" class="px-3 mt-2">@csrf
                 <button class="text-sm underline text-white/80">Log out ({{ auth('admin')->user()->name }}, {{ \App\Models\AdminUser::ROLES[auth('admin')->user()->role] ?? 'Administrator' }})</button>
             </form>
