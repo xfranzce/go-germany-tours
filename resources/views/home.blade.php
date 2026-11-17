@@ -425,7 +425,7 @@
 
 {{-- 11b. JOURNAL --}}
 @if($posts->isNotEmpty())
-<section class="py-16 sm:py-24 bg-brand-custard-light" aria-labelledby="journal-title">
+<section class="relative overflow-hidden py-16 sm:py-24 bg-brand-custard-light" aria-labelledby="journal-title">
     <div class="container-x">
         <x-section-heading id="journal-title" eyebrow="Travel journal" title="Ideas for planning" emphasis="your Germany trip."/>
         <div data-carousel="md" class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:overflow-visible md:px-0 md:pb-0 md:grid md:grid-cols-2 md:gap-8 lg:grid-cols-3">
