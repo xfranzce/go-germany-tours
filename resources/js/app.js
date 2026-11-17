@@ -165,4 +165,50 @@ Alpine.data('heroQuiz', (steps) => ({
     },
 }));
 
+/* ------------------------------------------------------------------
+ | Mobile carousels: any [data-carousel] row gets prev/next arrows and
+ | dots under it so people can tell it swipes. data-carousel="md" = the
+ | breakpoint where the row stops being a carousel; data-carousel-light
+ | for dark backgrounds.
+ * ------------------------------------------------------------------ */
+function initCarousels() {
+    document.querySelectorAll('[data-carousel]').forEach((track) => {
+        const items = [...track.children];
+        if (items.length < 2) return;
+        const bp = track.dataset.carousel || 'md';
+        const light = track.hasAttribute('data-carousel-light');
+        const hide = bp === 'sm' ? 'sm:hidden' : 'md:hidden';
+        const arrow = (dir) => `<button type="button" data-dir="${dir}" aria-label="${dir < 0 ? 'Previous' : 'Next'}" class="grid size-10 place-items-center rounded-full border-2 transition ${light ? 'border-white text-white hover:bg-white hover:text-brand-navy' : 'border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white'}"><svg viewBox="0 0 24 24" class="size-4 ${dir < 0 ? 'rotate-180' : ''}" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>`;
+        const nav = document.createElement('div');
+        nav.className = `mt-4 flex items-center justify-center gap-4 ${hide}`;
+        nav.innerHTML = arrow(-1)
+            + `<div class="flex items-center gap-2" aria-hidden="true">${items.map(() => `<span class="h-2 w-2 rounded-full transition-all ${light ? 'bg-white/40' : 'bg-brand-navy/25'}"></span>`).join('')}</div>`
+            + arrow(1);
+        track.after(nav);
+        const dots = [...nav.querySelectorAll('span')];
+        let cur = 0;
+        const paint = () => {
+            const mid = track.scrollLeft + track.clientWidth / 2;
+            cur = items.reduce((b, el, i) => (Math.abs(el.offsetLeft + el.offsetWidth / 2 - mid) < Math.abs(items[b].offsetLeft + items[b].offsetWidth / 2 - mid) ? i : b), 0);
+            if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 4) cur = items.length - 1;
+            if (track.scrollLeft <= 4) cur = 0;
+            dots.forEach((d, i) => {
+                d.classList.toggle('w-6', i === cur);
+                d.classList.toggle('w-2', i !== cur);
+                d.classList.toggle(light ? 'bg-brand-gold' : 'bg-brand-red', i === cur);
+                d.classList.toggle(light ? 'bg-white/40' : 'bg-brand-navy/25', i !== cur);
+            });
+        };
+        nav.addEventListener('click', (e) => {
+            const b = e.target.closest('button');
+            if (!b) return;
+            const to = Math.max(0, Math.min(items.length - 1, cur + Number(b.dataset.dir)));
+            track.scrollTo({ left: items[to].offsetLeft - (track.clientWidth - items[to].offsetWidth) / 2, behavior: 'smooth' });
+        });
+        track.addEventListener('scroll', () => requestAnimationFrame(paint), { passive: true });
+        paint();
+    });
+}
+document.addEventListener('DOMContentLoaded', initCarousels);
+
 Alpine.start();
