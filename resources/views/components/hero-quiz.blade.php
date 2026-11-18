@@ -15,7 +15,7 @@
 
     <noscript>
         <p class="mt-4 text-center text-sm text-white/85">Tell us about your trip and we will send a quote.</p>
-        <div class="mt-4 rounded-xl bg-white p-4 text-brand-navy"><x-enquiry-form form-id="hero-plain" form-name="hero_quiz" :extras="true" :in-noscript="true"/></div>
+        <div class="mt-4 rounded-xl border border-white/60 bg-white/90 p-4 text-brand-navy shadow-lg backdrop-blur-md"><x-enquiry-form form-id="hero-plain" form-name="hero_quiz" :extras="true" :in-noscript="true"/></div>
     </noscript>
 
     <div x-cloak class="mt-6">
@@ -55,7 +55,7 @@
             <div class="animate-fade-up">
                 <p class="font-display text-2xl font-bold text-white">Where should we send your quote?</p>
                 <details class="mt-1 text-xs text-white/80" x-show="summary()"><summary class="cursor-pointer font-bold">Your answers &#10003; <span class="font-normal underline">show</span></summary><span class="mt-1 block" x-text="summary()"></span></details>
-                <div class="mt-3 rounded-xl bg-white p-4 text-brand-navy">
+                <div class="mt-3 rounded-xl border border-white/60 bg-white/90 p-4 text-brand-navy shadow-lg backdrop-blur-md">
                     <x-enquiry-form form-id="hero-quiz" form-name="hero_quiz" :quiz="true" :eager="true" submit-label="Send My Free Quote"/>
                 </div>
                 <button type="button" @click="back()" class="mt-3 text-sm font-bold text-white/90 underline underline-offset-2 hover:text-brand-gold">&larr; Back</button>
