@@ -17,7 +17,7 @@ class SheetsService
 {
     public const HEADERS = [
         'Enquiry ID', 'Submitted (UTC)', 'Form', 'First name', 'Last name', 'Email', 'Phone', 'Country', 'Travel date',
-        'Package', 'Time of year', 'Group size', 'Nights', 'Message', 'Quiz answers', 'Source',
+        'Package', 'Time of year', 'Group size', 'Nights', 'Message', 'Source',
         'UTM source', 'UTM medium', 'UTM campaign', 'UTM term', 'UTM content', 'GCLID', 'Page URL', 'Consent given', 'Terms version',
     ];
 
@@ -66,15 +66,26 @@ class SheetsService
     public function row(Enquiry $e): array
     {
         $touch = $e->last_touch ?: ($e->first_touch ?: []);
-        $quiz = collect($e->quiz_answers ?: [])->map(fn ($v, $k) => "$k: $v")->implode('; ');
 
-        return [
+        $values = [
             $e->id, $e->created_at?->utc()->format('Y-m-d H:i:s'), $e->form_name, $e->first_name, $e->last_name, $e->email,
             $e->phone_e164, $e->country_code ?? '', $e->travel_date, $e->package_name, $e->time_of_year, $e->group_size, $e->nights,
-            $e->special_request, $quiz, $e->source,
+            $e->special_request, $e->source,
             $touch['utm_source'] ?? '', $touch['utm_medium'] ?? '', $touch['utm_campaign'] ?? '', $touch['utm_term'] ?? '', $touch['utm_content'] ?? '',
             $touch['gclid'] ?? '', $e->page_url, $e->consent_given ? 'Yes' : 'No', $e->terms_version,
         ];
+        $fields = array_combine(self::HEADERS, $values);
+
+        // One column per quiz question ("travel_style" -> "Travel style"). Answers for Time of year / Group size /
+        // Nights fill those existing columns; any other question gets its own column, added by the script.
+        foreach (($e->quiz_answers ?: []) as $key => $answer) {
+            $title = Str::of((string) $key)->replace(['_', '-'], ' ')->trim()->lower()->ucfirst()->toString();
+            if ($title !== '' && ($fields[$title] ?? '') === '') {
+                $fields[$title] = $answer;
+            }
+        }
+
+        return array_map(fn ($v) => (string) ($v ?? ''), $fields);
     }
 
     /** @throws \RuntimeException when the sheet did not accept the row */
@@ -85,7 +96,7 @@ class SheetsService
             throw new \RuntimeException('No Google Sheets web app URL is saved.');
         }
 
-        $res = Http::timeout(15)->asJson()->post($url, ['token' => $this->token(), 'tab' => $tab, 'headers' => self::HEADERS, 'row' => array_map(fn ($v) => (string) ($v ?? ''), $row)]);
+        $res = Http::timeout(15)->asJson()->post($url, ['token' => $this->token(), 'tab' => $tab, 'fields' => $row, 'headers' => array_keys($row), 'row' => array_values($row)]);
         $json = $res->json();
         if (! $res->successful() || ! is_array($json)) {
             $hint = str_contains($url, '/a/macros/') || str_contains($url, '/macros/a/')
@@ -101,12 +112,12 @@ class SheetsService
     /** Appends a clearly marked sample row. */
     public function test(): array
     {
-        $row = array_fill(0, count(self::HEADERS), '');
-        $row[1] = now()->utc()->format('Y-m-d H:i:s');
-        $row[2] = 'TEST ROW (safe to delete)';
-        $row[3] = 'Test';
-        $row[4] = 'Row';
-        $row[5] = 'test@example.com';
+        $row = array_fill_keys(self::HEADERS, '');
+        $row['Submitted (UTC)'] = now()->utc()->format('Y-m-d H:i:s');
+        $row['Form'] = 'TEST ROW (safe to delete)';
+        $row['First name'] = 'Test';
+        $row['Last name'] = 'Row';
+        $row['Email'] = 'test@example.com';
         try {
             $this->send($row, 'Test');
         } catch (\Throwable $e) {
@@ -127,25 +138,31 @@ function doPost(e) {
   try {
     const d = JSON.parse(e.postData.contents);
     if (d.token !== TOKEN) return out({ ok: false, error: 'Wrong token' });
-    const sh = getTab(d.tab || 'Enquiries', d.headers);
-    const r = sh.getLastRow() + 1;
-    const range = sh.getRange(r, 1, 1, d.row.length);
+    const sh = getTab(d.tab || 'Enquiries');
+    const f = d.fields;
+
+    // Columns are matched by header name. Unknown names (new quiz questions) are added on the right.
+    const hadRows = sh.getLastRow() > 0;
+    const headers = hadRows ? sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0].map(String) : [];
+    Object.keys(f).forEach(function (k) { if (headers.indexOf(k) < 0) headers.push(k); });
+    sh.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight('bold');
+    sh.setFrozenRows(1);
+
+    const r = hadRows ? sh.getLastRow() + 1 : 2;
+    const row = headers.map(function (h) { return f[h] === undefined ? '' : f[h]; });
+    const range = sh.getRange(r, 1, 1, row.length);
     range.setNumberFormat('@'); // keep +49... phone numbers as text
-    range.setValues([d.row]);
+    range.setValues([row]);
     return out({ ok: true });
   } catch (err) {
     return out({ ok: false, error: String(err) });
   }
 }
 
-function getTab(name, headers) {
+function getTab(name) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sh = ss.getSheetByName(name);
   if (!sh) sh = ss.insertSheet(name);
-  if (sh.getLastRow() === 0) {
-    sh.appendRow(headers);
-    sh.setFrozenRows(1);
-  }
   return sh;
 }
 

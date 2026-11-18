@@ -55,7 +55,7 @@ class SheetsTest extends TestCase
 
         Http::fake(['script.google.com/*' => Http::sequence()->push(['ok' => true])->push(['ok' => false, 'error' => 'Wrong token'])]);
         $this->post('/admin/google-sheets/test')->assertSessionHas('status');
-        Http::assertSent(fn ($r) => $r['token'] === app(SheetsService::class)->token() && count($r['row']) === count(SheetsService::HEADERS));
+        Http::assertSent(fn ($r) => $r['token'] === app(SheetsService::class)->token() && array_keys($r['fields']) === SheetsService::HEADERS);
 
         $this->post('/admin/google-sheets/test')->assertSessionHas('sheets_error');
     }
@@ -64,5 +64,19 @@ class SheetsTest extends TestCase
     {
         $e = AdminUser::create(['name' => 'E', 'email' => 'e@example.com', 'password' => 'correct-horse-battery', 'role' => 'editor']);
         $this->actingAs($e, 'admin')->get('/admin/google-sheets')->assertForbidden();
+    }
+
+    public function test_quiz_answers_become_their_own_columns(): void
+    {
+        $e = new \App\Models\Enquiry(['form_name' => 'hero_quiz', 'first_name' => 'A', 'last_name' => 'B', 'email' => 'a@b.co',
+            'quiz_answers' => ['time_of_year' => 'Spring', 'travel_style' => 'Driving yourself', 'group_size' => '3', 'nights' => '7 to 8', 'flights_booked' => 'Yes']]);
+        $f = app(SheetsService::class)->row($e);
+
+        $this->assertSame('Spring', $f['Time of year']);
+        $this->assertSame('3', $f['Group size']);
+        $this->assertSame('7 to 8', $f['Nights']);
+        $this->assertSame('Driving yourself', $f['Travel style']);
+        $this->assertSame('Yes', $f['Flights booked']);
+        $this->assertArrayNotHasKey('Quiz answers', $f);
     }
 }
