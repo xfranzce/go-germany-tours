@@ -1,5 +1,5 @@
 @php $tel = preg_replace('/[^+\d]/', '', $site['phone'] ?? ''); @endphp
-<footer class="bg-brand-navy text-white mt-16">
+<footer class="bg-brand-navy text-white {{ trim(View::yieldContent('flush_footer')) ? '' : 'mt-16' }}">
     <div class="h-1.5 flex" aria-hidden="true"><span class="flex-1 bg-brand-navy-dark"></span><span class="flex-1 bg-brand-red"></span><span class="flex-1 bg-brand-gold"></span></div>
     <div class="container-x py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div class="lg:col-span-2">

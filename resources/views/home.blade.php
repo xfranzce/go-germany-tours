@@ -453,21 +453,35 @@
 </section>
 @endif
 {{-- 12. CLOSING CTA band --}}
-<section class="relative isolate py-24 bg-brand-navy-dark text-white overflow-hidden" aria-labelledby="cta-title">
+@php $tel = preg_replace('/[^+\d]/', '', $site['phone'] ?? ''); @endphp
+<section class="relative isolate overflow-hidden bg-brand-navy-dark py-20 text-white sm:py-28" aria-labelledby="cta-title">
     @if($heroMedia)
-        <x-picture :path="$heroPath" sizes="100vw" class="absolute inset-0 -z-20 w-full h-full object-cover opacity-30"/>
+        <x-picture :path="$heroPath" sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover opacity-60"/>
     @endif
     <x-video-bg src="cta.mp4" class="absolute inset-0 -z-[15] w-full h-full object-cover opacity-40"/>
-    <div class="container-x text-center max-w-3xl">
-        <p class="eyebrow centered text-brand-gold">Start planning</p>
-        <h2 id="cta-title" class="mt-4 text-white">{{ $page->text('cta_title', 'Ready to see Germany your way?') }}</h2>
-        <span class="flag-rule centered" aria-hidden="true"></span>
-        <p class="mt-5 text-base sm:text-lg text-white/85">{{ $page->text('cta_text', 'Get a free, no-obligation quote in under a minute.') }}</p>
-        <div class="mt-9 flex flex-wrap justify-center gap-3">
-            <button type="button" class="btn btn-primary text-lg" @click="$store.modal.show()">Start Your Adventure</button>
-            @php $tel = preg_replace('/[^+\d]/', '', $site['phone'] ?? ''); @endphp
-            @if($tel)<a class="btn btn-outline-light text-lg" href="tel:{{ $tel }}"><x-icon name="phone" class="w-5 h-5"/> {{ $site['phone_display'] ?: $site['phone'] }}</a>@endif
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark via-brand-navy-dark/80 to-brand-navy-dark/20" aria-hidden="true"></div>
+    {{-- tricolour edge so the band reads as its own section --}}
+    <div class="absolute inset-x-0 top-0 flex h-1.5" aria-hidden="true"><span class="flex-1 bg-brand-navy"></span><span class="flex-1 bg-brand-red"></span><span class="flex-1 bg-brand-gold"></span></div>
+    <div class="container-x grid items-center gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
+        <div>
+            <p class="eyebrow text-brand-gold">Start planning</p>
+            <h2 id="cta-title" class="mt-4 text-white">{{ $page->text('cta_title', 'Ready to see Germany your way?') }}</h2>
+            <span class="flag-rule" aria-hidden="true"></span>
+            <p class="mt-5 max-w-xl text-base text-white/90 sm:text-lg">{{ $page->text('cta_text', 'Get a free, no-obligation quote in under a minute.') }}</p>
+            <div class="mt-8 flex flex-wrap gap-3">
+                <button type="button" class="btn btn-primary px-9 text-lg shadow-lg shadow-black/30" @click="$store.modal.show()">Start Your Adventure <x-icon name="arrow-right" class="h-5 w-5"/></button>
+                @if($tel)<a class="btn btn-outline-light text-lg" href="tel:{{ $tel }}"><x-icon name="phone" class="h-5 w-5"/> {{ $site['phone_display'] ?: $site['phone'] }}</a>@endif
+            </div>
         </div>
+        <ul class="space-y-3 rounded-2xl border border-white/25 bg-white/10 p-6 backdrop-blur-md sm:p-7" aria-label="What you get">
+            @foreach([['check', 'Free, no-obligation quote'], ['adjust', 'Itineraries built around you'], ['car', 'Self drive, chauffeur or coach'], ['chat', 'A real person replies']] as [$ic, $txt])
+                <li class="flex items-center gap-3">
+                    <span class="grid size-10 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy" aria-hidden="true"><x-icon :name="$ic" class="h-5 w-5"/></span>
+                    <span class="text-sm font-bold uppercase tracking-[0.12em] text-white">{{ $txt }}</span>
+                </li>
+            @endforeach
+        </ul>
     </div>
 </section>
+@section('flush_footer', '1')
 @endsection
