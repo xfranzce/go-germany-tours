@@ -10,7 +10,7 @@
     <div class="container-x grid items-center gap-12 lg:grid-cols-[5fr_7fr] lg:gap-8">
         <div>
             <x-section-heading id="how-title" align="left" eyebrow="How it works" :title="$page->text('how_title', 'Your trip in three simple steps')" intro="Tell us what you have in mind and we shape the journey around you." class="!mb-8"/>
-            <button type="button" class="btn btn-gold px-9 shadow-lg shadow-brand-gold/20" @click="$store.modal.show()">Get my free quote <x-icon name="arrow-right" class="w-5 h-5"/></button>
+            <button type="button" class="btn btn-primary px-9 shadow-lg shadow-black/30" @click="$store.modal.show()">Get my free quote <x-icon name="arrow-right" class="w-5 h-5"/></button>
         </div>
 
         {{-- mobile / tablet: vertical route --}}

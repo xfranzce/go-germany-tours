@@ -6,7 +6,7 @@
     <a class="btn btn-outline btn-sm" href="{{ route('admin.packages.index') }}">&larr; All packages</a>
     @unless($isNew)@if($package->is_published)<a class="btn btn-outline btn-sm" target="_blank" rel="noopener" href="{{ $package->url() }}">View on site</a>@endif @endunless
     <button type="submit" form="package-form" class="btn btn-primary btn-sm">Save package</button>
-    @unless($isNew)<a class="btn btn-gold btn-sm" href="{{ route('admin.packages.create') }}">+ Add new</a>@endunless
+    @unless($isNew)<a class="btn btn-primary btn-sm" href="{{ route('admin.packages.create') }}">+ Add new</a>@endunless
     @unless($isNew)
         <form method="POST" action="{{ route('admin.packages.destroy', $package) }}" class="inline" x-data
               @submit="if (!confirm('Permanently delete this package? This cannot be undone.')) $event.preventDefault()">

@@ -72,6 +72,6 @@
         @endforelse
         </tbody>
     </table>
-    @if($packages->isNotEmpty() && $view !== 'trash')<div class="p-3 border-t"><button class="btn btn-gold btn-sm">Save order</button> <span class="text-xs text-ink-soft">Lower numbers show first.</span></div>@endif
+    @if($packages->isNotEmpty() && $view !== 'trash')<div class="p-3 border-t"><button class="btn btn-primary btn-sm">Save order</button> <span class="text-xs text-ink-soft">Lower numbers show first.</span></div>@endif
 </form>
 @endsection

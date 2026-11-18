@@ -95,7 +95,7 @@
                                     <p class="mt-3 font-display text-2xl font-semibold leading-tight">Journeys planned around you.</p>
                                     <p class="mt-2 text-sm font-normal text-white/80">Tell us how you like to travel and we will shape the trip.</p>
                                 </div>
-                                <button type="button" class="btn btn-gold btn-sm self-start" @click="menu = null; $store.modal.show()">Get a free quote</button>
+                                <button type="button" class="btn btn-primary btn-sm self-start" @click="menu = null; $store.modal.show()">Get a free quote</button>
                             </div>
                             @foreach($aboutLinks as [$r, $label, $desc, $stem])
                                 @php $img = $aboutMedia->first(fn ($m) => str_starts_with($m->path, 'media/'.$stem.'-')); @endphp

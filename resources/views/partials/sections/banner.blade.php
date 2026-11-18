@@ -23,7 +23,7 @@
             @endforeach
         </ul>
         <div class="mt-10 flex flex-wrap justify-center gap-3 [text-shadow:none]">
-            <button type="button" class="btn btn-gold px-9 shadow-lg shadow-black/30" @click="$store.modal.show()">Plan my trip <x-icon name="arrow-right" class="w-5 h-5"/></button>
+            <button type="button" class="btn btn-primary px-9 shadow-lg shadow-black/30" @click="$store.modal.show()">Plan my trip <x-icon name="arrow-right" class="w-5 h-5"/></button>
             <a href="{{ route('packages.index') }}" class="btn btn-outline-light px-9">See packages</a>
         </div>
     </div>

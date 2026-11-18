@@ -161,7 +161,7 @@
                 @endforeach
             </ol>
 
-            <button type="button" class="btn btn-gold mt-10 px-10 shadow-lg shadow-brand-gold/20" @click="$store.modal.show()">Get a free quote <x-icon name="arrow-right" class="w-5 h-5"/></button>
+            <button type="button" class="btn btn-primary mt-10 px-10 shadow-lg shadow-black/30" @click="$store.modal.show()">Get a free quote <x-icon name="arrow-right" class="w-5 h-5"/></button>
         </div>
     </div>
 </section>
@@ -325,7 +325,7 @@
         </div>
         <div class="mt-12 flex flex-col items-center gap-4 text-center transition duration-1000 ease-out" :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'" style="transition-delay: 800ms">
             <p class="font-display text-2xl sm:text-3xl text-white">Seen enough to start planning? <em class="text-brand-gold">Let us build it around you.</em></p>
-            <button type="button" class="btn btn-gold px-10 shadow-lg shadow-brand-gold/20" @click="$store.modal.show()">Get a free quote <x-icon name="arrow-right" class="w-5 h-5"/></button>
+            <button type="button" class="btn btn-primary px-10 shadow-lg shadow-black/30" @click="$store.modal.show()">Get a free quote <x-icon name="arrow-right" class="w-5 h-5"/></button>
         </div>
     </div>
 
