@@ -3,8 +3,9 @@
 @section('content')
 @php $base = trim(preg_replace('/\s+tours$/i', '', $type->name)); @endphp
 <section class="relative isolate overflow-hidden bg-brand-navy text-white">
-    @if($type->image)<x-picture :path="$type->image" priority sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover opacity-70"/>@endif
-    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/80 via-brand-navy/45 to-brand-navy/15" aria-hidden="true"></div>
+    @if($type->image)<x-picture :path="$type->image" priority sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover"/>@endif
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/85 via-brand-navy-dark/45 to-transparent" aria-hidden="true"></div>
+    <div class="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-brand-navy-dark/60 to-transparent" aria-hidden="true"></div>
     <div class="container-x grid items-center gap-10 pt-28 pb-12 sm:pt-36 sm:pb-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
         <div>
             <nav aria-label="Breadcrumb" class="mb-3 text-sm text-white/80">
