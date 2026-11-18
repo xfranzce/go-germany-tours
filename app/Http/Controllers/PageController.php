@@ -10,12 +10,12 @@ use App\Support\Seo;
 /** About, Contact, Terms, Privacy: all editable in Admin > Pages. */
 class PageController extends Controller
 {
-    private function render(string $key, string $view, string $routeName)
+    private function render(string $key, string $view, string $routeName, array $extra = [])
     {
         $page = Page::byKey($key);
         $content = str_replace('{company}', e(\App\Models\Setting::get('company_name')), (string) $page->content);
 
-        return view($view, [
+        return view($view, $extra + [
             'page' => $page, 'content' => $content,
             'seo' => Seo::make($page->seo_title ?: $page->title, $page->meta_description, [
                 'image' => $page->og_image, 'noindex' => $page->noindex,
@@ -27,7 +27,7 @@ class PageController extends Controller
     public function about() { return $this->render('about', 'pages.about', 'about'); }
 
     /** Meet Our Team: rich-text page editable in Admin > Pages. */
-    public function team() { return $this->render('team', 'pages.about', 'team'); }
+    public function team() { return $this->render('team', 'pages.about', 'team', ['members' => \App\Models\TeamMember::active()->get()]); }
 
     public function testimonials()
     {

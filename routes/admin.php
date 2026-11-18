@@ -41,6 +41,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('pages/{page}', [Admin\PageController::class, 'update'])->name('pages.update');
         Route::resource('testimonials', Admin\TestimonialController::class)->except('show');
         Route::resource('faqs', Admin\FaqController::class)->except('show');
+        Route::resource('team', Admin\TeamController::class)->except('show');
         Route::resource('posts', Admin\PostController::class)->except('show');
 
         // Settings, users, media

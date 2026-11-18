@@ -51,3 +51,5 @@ There are 18 SAMPLE packages (6 per tour type; names, nights, prices and 5.0 "sa
 `/meet-our-team` holds three PLACEHOLDER team members. Replace them in Admin > Pages > Meet Our Team with the real people (name, role, short bio) or remove the section. Do not publish placeholders.
 
 - Home "Early bird offer" (25% off, month = 3 months ahead, auto): confirm the offer terms (who qualifies, booking deadline, exclusions) and that the discount is real before running ads.
+
+- Meet Our Team: six placeholder cards (Admin > Team) need real names, roles, bios and photos; the intro text (Admin > Pages > Meet Our Team) has a [CONFIRM] line for the real team story.
