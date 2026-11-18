@@ -5,4 +5,7 @@
 <div class="container-x py-12"><div class="prose-ggt text-lg">{!! $content !!}</div>
     <p class="mt-8"><x-button @click="$store.modal.show()">Get a Free Quote</x-button></p>
 </div>
+@if(request()->routeIs('about')){{-- the team page shares this view --}}
+@include('partials.sections.why')
+@endif
 @endsection
