@@ -76,7 +76,10 @@ class SheetsService
         $res = Http::timeout(15)->asJson()->post($url, ['token' => $this->token(), 'headers' => self::HEADERS, 'row' => array_map(fn ($v) => (string) ($v ?? ''), $row)]);
         $json = $res->json();
         if (! $res->successful() || ! is_array($json)) {
-            throw new \RuntimeException('Google did not return a valid answer (HTTP '.$res->status().'). Check the web app is deployed with access set to "Anyone".');
+            $hint = str_contains($url, '/a/macros/') || str_contains($url, '/macros/a/')
+                ? ' The saved link contains your company domain, which makes Google ask for a sign-in. Use the plain link from Deploy > Manage deployments: https://script.google.com/macros/s/.../exec'
+                : ' Check the web app is deployed with "Who has access" set to Anyone, and that you copied the Web app URL ending in /exec.';
+            throw new \RuntimeException('Google did not return a valid answer (HTTP '.$res->status().').'.$hint);
         }
         if (empty($json['ok'])) {
             throw new \RuntimeException('The sheet script refused the row: '.mb_substr((string) ($json['error'] ?? 'unknown error'), 0, 200));
