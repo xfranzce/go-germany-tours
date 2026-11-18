@@ -53,3 +53,6 @@ There are 18 SAMPLE packages (6 per tour type; names, nights, prices and 5.0 "sa
 - Home "Early bird offer" (25% off, month = 3 months ahead, auto): confirm the offer terms (who qualifies, booking deadline, exclusions) and that the discount is real before running ads.
 
 - Meet Our Team: six placeholder cards (Admin > Team) need real names, roles, bios and photos; the intro text (Admin > Pages > Meet Our Team) has a [CONFIRM] line for the real team story.
+
+## Contact page
+- Intro paragraph, head office address (if not set in Site settings), support email, phone, operating hours and "reply within 24 hours" are placeholders. Set address/email/phone/social in Admin > Site settings; hours and reply time are in `resources/views/pages/contact.blade.php`.
