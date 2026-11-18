@@ -72,6 +72,24 @@ class EnquiryController extends Controller
         return back()->with('status', 'GoHighLevel sync queued. Refresh in a moment to see the result.');
     }
 
+    /** Sends this enquiry to the Google Sheet right now (synchronously) so the result shows straight away. */
+    public function retrySheet(Enquiry $enquiry, \App\Services\SheetsService $sheets)
+    {
+        if (! $sheets->enabled()) {
+            return back()->withErrors(['sheet' => 'Google Sheets is off or has no URL saved. Check Admin > Google Sheets.']);
+        }
+        try {
+            $sheets->send($sheets->row($enquiry));
+            $enquiry->update(['sheet_status' => 'synced', 'sheet_error' => null, 'sheet_synced_at' => now()]);
+        } catch (\Throwable $e) {
+            $enquiry->update(['sheet_status' => 'failed', 'sheet_error' => mb_substr($e->getMessage(), 0, 500)]);
+
+            return back()->withErrors(['sheet' => $e->getMessage()]);
+        }
+
+        return back()->with('status', 'Row added to the Google Sheet.');
+    }
+
     public function export(Request $request)
     {
         $cols = ['id', 'created_at', 'status', 'form_name', 'first_name', 'last_name', 'email', 'phone_e164', 'package_name', 'travel_date',

@@ -17,6 +17,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Enquiries
         Route::get('enquiries/export', [Admin\EnquiryController::class, 'export'])->name('enquiries.export');
         Route::resource('enquiries', Admin\EnquiryController::class)->only(['index', 'show', 'update', 'destroy']);
+        Route::post('enquiries/{enquiry}/sheet-retry', [Admin\EnquiryController::class, 'retrySheet'])->name('enquiries.sheet-retry');
         Route::post('enquiries/{enquiry}/ghl-retry', [Admin\EnquiryController::class, 'retryGhl'])->name('enquiries.ghl-retry');
 
         // Packages

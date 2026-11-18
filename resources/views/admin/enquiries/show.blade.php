@@ -58,6 +58,15 @@
         <button class="btn btn-primary w-full">Save</button>
     </form>
 
+    <section class="bg-white rounded-xl shadow p-5 text-sm space-y-2" aria-labelledby="sh">
+        <h2 id="sh" class="text-xl">Google Sheets</h2>
+        <p>Status: <strong>{{ $e->sheet_status }}</strong>@if($e->sheet_synced_at) ({{ $e->sheet_synced_at->format('M j, H:i') }})@endif</p>
+        <p class="text-ink-soft">off = Google Sheets was not switched on when this was sent.</p>
+        @if($e->sheet_error)<p class="text-brand-red-dark break-words">Last error: {{ $e->sheet_error }}</p>@endif
+        @error('sheet')<p class="text-brand-red-dark break-words" role="alert">{{ $message }}</p>@enderror
+        <form method="POST" action="{{ route('admin.enquiries.sheet-retry', $e) }}">@csrf<button class="btn btn-outline btn-sm">Send to sheet now</button></form>
+    </section>
+
     <section class="bg-white rounded-xl shadow p-5 text-sm space-y-2" aria-labelledby="g">
         <h2 id="g" class="text-xl">GoHighLevel</h2>
         <p>Status: <strong>{{ $e->ghl_status }}</strong> ({{ $e->ghl_attempts }} attempts)</p>
