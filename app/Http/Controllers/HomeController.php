@@ -24,7 +24,7 @@ class HomeController extends Controller
             'destinations' => Destination::active()->get(),
             'featured' => Package::published()->orderByDesc('is_featured')->orderBy('sort')->with(['tourType', 'destination', 'images'])->take(24)->get(),
             'testimonials' => Testimonial::active()->get(),
-            'posts' => Post::published()->take(3)->get(),
+            'posts' => Post::published()->take(6)->get(),
             'faqs' => $faqs,
             'seo' => Seo::make($page->seo_title, $page->meta_description, [
                 'image' => $page->og_image, 'noindex' => $page->noindex, 'schema' => [Seo::faqSchema($faqs)],
