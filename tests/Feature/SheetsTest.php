@@ -34,6 +34,13 @@ class SheetsTest extends TestCase
         $this->assertSame(self::URL, app(SheetsService::class)->url());
     }
 
+    public function test_accepts_workspace_url_format(): void
+    {
+        $this->admin();
+        $this->put('/admin/google-sheets', ['sheets_webhook_url' => 'https://script.google.com/a/macros/example.com/s/AKfycbyTEST-_1/exec'])->assertSessionHasNoErrors();
+        $this->put('/admin/google-sheets', ['sheets_webhook_url' => 'https://script.google.com/macros/a/example.com/s/AKfycbyTEST-_1/exec'])->assertSessionHasNoErrors();
+    }
+
     public function test_rejects_non_google_url(): void
     {
         $this->admin();

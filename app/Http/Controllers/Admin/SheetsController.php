@@ -25,8 +25,8 @@ class SheetsController extends AdminController
     public function update(Request $request)
     {
         $data = $request->validate([
-            'sheets_webhook_url' => ['nullable', 'string', 'regex:~^https://script\.google\.com/macros/(a/[^/\s]+/)?s/[A-Za-z0-9_-]+/exec$~'],
-        ], ['sheets_webhook_url.regex' => 'That does not look like a Web app URL. It starts with https://script.google.com/macros/s/ and ends with /exec.']);
+            'sheets_webhook_url' => ['nullable', 'string', 'regex:~^https://script\.google\.com/(a/)?macros/((a/)?[A-Za-z0-9.-]+/)?s/[A-Za-z0-9_-]+/exec$~'],
+        ], ['sheets_webhook_url.regex' => 'That does not look like a Web app URL. It starts with https://script.google.com/ and ends with /exec.']);
 
         if (filled($data['sheets_webhook_url'] ?? null)) {
             Setting::put('sheets_webhook_url_enc', Crypt::encryptString(trim($data['sheets_webhook_url'])));
