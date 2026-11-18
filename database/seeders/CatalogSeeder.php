@@ -23,7 +23,7 @@ class CatalogSeeder extends Seeder
         foreach ($types as $i => [$name, $slug, $icon, $summary, $desc]) {
             TourType::updateOrCreate(['slug' => $slug], [
                 'name' => $name, 'icon' => $icon, 'summary' => $summary, 'description' => "<p>{$desc}</p>", 'sort' => $i,
-                'seo_title' => "{$name} Tours of Germany", 'meta_description' => "{$name} vacations in Germany for US travelers. $summary",
+                'seo_title' => preg_replace('/\s+Tours$/i', '', $name).' Tours of Germany', 'meta_description' => "{$name} vacations in Germany for US travelers. $summary",
             ]);
         }
 
