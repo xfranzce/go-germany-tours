@@ -393,28 +393,28 @@
 
 {{-- 11b. JOURNAL: heading + arrows on the left, cards scroll off the right edge --}}
 @if($posts->isNotEmpty())
-<section class="relative isolate overflow-hidden bg-brand-navy-dark py-16 text-white sm:py-24" aria-labelledby="journal-title" x-data>
-    @if($posts->first()->image)<x-picture :path="$posts->first()->image" sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover opacity-25"/>@endif
-    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark via-brand-navy-dark/85 to-brand-navy-dark/60" aria-hidden="true"></div>
+<section class="relative isolate overflow-hidden bg-brand-custard-light py-16 text-brand-navy sm:py-24" aria-labelledby="journal-title" x-data>
+    @if($posts->first()->image)<x-picture :path="$posts->first()->image" sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover opacity-10"/>@endif
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-custard-light via-brand-custard-light/90 to-brand-custard-light/70" aria-hidden="true"></div>
     <div class="mx-auto max-w-[1390px] pl-4 sm:pl-6 lg:grid lg:grid-cols-[21rem_minmax(0,1fr)] lg:items-center lg:gap-10">
         <div class="pr-4 sm:pr-6 lg:pr-0">
-            <p class="eyebrow text-brand-gold">Travel journal</p>
-            <h2 id="journal-title" class="mt-4 text-white">Ideas for planning <em class="block font-medium italic text-brand-gold">your Germany trip.</em></h2>
+            <p class="eyebrow text-brand-red-dark">Travel journal</p>
+            <h2 id="journal-title" class="mt-4">Ideas for planning <em class="block font-medium italic text-brand-red">your Germany trip.</em></h2>
             <span class="flag-rule" aria-hidden="true"></span>
-            <p class="mt-5 text-base text-white/85 sm:text-lg">Guides, routes and local tips to help you shape the trip.</p>
+            <p class="mt-5 text-base text-ink-soft sm:text-lg">Guides, routes and local tips to help you shape the trip.</p>
             <div class="mt-7 flex items-center gap-3">
                 @foreach([-1 => 'Previous guides', 1 => 'Next guides'] as $dir => $lbl)
                     <button type="button" aria-label="{{ $lbl }}" data-dir="{{ $dir }}" @click="$refs.jtrack.scrollBy({ left: $el.dataset.dir * 360, behavior: 'smooth' })"
-                            class="grid size-11 place-items-center rounded-full border-2 border-white/70 text-white transition hover:border-brand-gold hover:bg-brand-gold hover:text-brand-navy">
+                            class="grid size-11 place-items-center rounded-full border-2 border-brand-navy text-brand-navy transition hover:bg-brand-navy hover:text-white">
                         <x-icon name="arrow-right" class="h-5 w-5 {{ $dir < 0 ? 'rotate-180' : '' }}"/>
                     </button>
                 @endforeach
             </div>
-            <p class="mt-6"><x-button :href="route('blog.index')" variant="outline-light" size="sm">All travel guides</x-button></p>
+            <p class="mt-6"><x-button :href="route('blog.index')" variant="outline" size="sm">All travel guides</x-button></p>
         </div>
         <div x-ref="jtrack" class="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 pr-4 [scrollbar-width:none] sm:pr-6 lg:mt-0 lg:-mr-[max(0px,calc((100vw-1390px)/2))] lg:pr-10 [&::-webkit-scrollbar]:hidden" tabindex="0" role="region" aria-label="Travel guides">
             @foreach($posts as $post)
-                <article class="group flex w-[78%] shrink-0 snap-start flex-col overflow-hidden rounded-xl bg-white text-brand-navy shadow-xl shadow-black/30 sm:w-80">
+                <article class="group flex w-[78%] shrink-0 snap-start flex-col overflow-hidden rounded-xl bg-white text-brand-navy shadow-lg shadow-brand-navy/10 sm:w-80">
                     <a href="{{ route('blog.show', $post->slug) }}" class="relative block aspect-[4/3] overflow-hidden bg-brand-custard" tabindex="-1" aria-hidden="true">
                         <x-picture :path="$post->image" sizes="(min-width: 640px) 20rem, 78vw" class="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-105"/>
                     </a>
