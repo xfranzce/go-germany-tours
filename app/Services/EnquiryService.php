@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Middleware\CaptureTracking;
 use App\Jobs\SendEnquiryNotification;
 use App\Jobs\SyncEnquiryToGhl;
+use App\Jobs\SyncEnquiryToSheet;
 use App\Models\Enquiry;
 use App\Models\Package;
 use App\Models\QuizStep;
@@ -146,6 +147,14 @@ class EnquiryService
             SendEnquiryNotification::dispatch($enquiry->id);
         } catch (\Throwable $e) {
             Log::error('Enquiry email dispatch failed: '.$e->getMessage(), ['enquiry' => $enquiry->id]);
+        }
+        try {
+            if (app(SheetsService::class)->enabled()) {
+                $enquiry->update(['sheet_status' => 'pending']);
+                SyncEnquiryToSheet::dispatch($enquiry->id);
+            }
+        } catch (\Throwable $e) {
+            Log::error('Google Sheets dispatch failed: '.$e->getMessage(), ['enquiry' => $enquiry->id]);
         }
         if ($enquiry->ghl_status === 'pending') {
             try {

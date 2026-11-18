@@ -50,7 +50,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('gohighlevel', [Admin\GhlController::class, 'update'])->name('ghl.update');
         Route::post('gohighlevel/test', [Admin\GhlController::class, 'test'])->name('ghl.test');
         Route::post('gohighlevel/setup', [Admin\GhlController::class, 'setup'])->name('ghl.setup');
-        Route::get('recaptcha', [Admin\RecaptchaController::class, 'edit'])->name('recaptcha.edit');
+        Route::get('google-sheets', [Admin\SheetsController::class, 'edit'])->name('sheets.edit');
+        Route::put('google-sheets', [Admin\SheetsController::class, 'update'])->name('sheets.update');
+        Route::post('google-sheets/test', [Admin\SheetsController::class, 'test'])->name('sheets.test');
+        Route::get('recaptcha',[Admin\RecaptchaController::class, 'edit'])->name('recaptcha.edit');
         Route::put('recaptcha', [Admin\RecaptchaController::class, 'update'])->name('recaptcha.update');
         Route::post('recaptcha/test', [Admin\RecaptchaController::class, 'test'])->name('recaptcha.test');
         Route::put('settings', [Admin\SettingController::class, 'update'])->name('settings.update');
