@@ -38,7 +38,7 @@ class SyncEnquiryToSheet implements ShouldQueue
         }
 
         try {
-            $sheets->send($sheets->row($enquiry));
+            $sheets->send($sheets->row($enquiry), SheetsService::tabFor($enquiry->form_name));
             $enquiry->update(['sheet_status' => 'synced', 'sheet_error' => null, 'sheet_synced_at' => now()]);
         } catch (\Throwable $e) {
             $isSync = $this->job?->getConnectionName() === 'sync';

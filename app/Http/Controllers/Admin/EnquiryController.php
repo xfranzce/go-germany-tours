@@ -79,7 +79,7 @@ class EnquiryController extends Controller
             return back()->withErrors(['sheet' => 'Google Sheets is off or has no URL saved. Check Admin > Google Sheets.']);
         }
         try {
-            $sheets->send($sheets->row($enquiry));
+            $sheets->send($sheets->row($enquiry), \App\Services\SheetsService::tabFor($enquiry->form_name));
             $enquiry->update(['sheet_status' => 'synced', 'sheet_error' => null, 'sheet_synced_at' => now()]);
         } catch (\Throwable $e) {
             $enquiry->update(['sheet_status' => 'failed', 'sheet_error' => mb_substr($e->getMessage(), 0, 500)]);

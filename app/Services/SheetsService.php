@@ -21,6 +21,18 @@ class SheetsService
         'UTM source', 'UTM medium', 'UTM campaign', 'UTM term', 'UTM content', 'GCLID', 'Page URL', 'Consent given', 'Terms version',
     ];
 
+    /** Which tab of the sheet an enquiry goes to (created by the script when missing). */
+    public static function tabFor(?string $form): string
+    {
+        return match ($form) {
+            'hero_quiz' => 'Hero quiz',
+            'package_quote', 'header_modal' => 'Get a Quote',
+            'package_question' => 'Ask a Question',
+            'contact' => 'Contact',
+            default => 'Other',
+        };
+    }
+
     public function url(): ?string
     {
         $enc = Setting::get('sheets_webhook_url_enc');
@@ -66,14 +78,14 @@ class SheetsService
     }
 
     /** @throws \RuntimeException when the sheet did not accept the row */
-    public function send(array $row): void
+    public function send(array $row, string $tab = 'Other'): void
     {
         $url = $this->url();
         if (! $url) {
             throw new \RuntimeException('No Google Sheets web app URL is saved.');
         }
 
-        $res = Http::timeout(15)->asJson()->post($url, ['token' => $this->token(), 'headers' => self::HEADERS, 'row' => array_map(fn ($v) => (string) ($v ?? ''), $row)]);
+        $res = Http::timeout(15)->asJson()->post($url, ['token' => $this->token(), 'tab' => $tab, 'headers' => self::HEADERS, 'row' => array_map(fn ($v) => (string) ($v ?? ''), $row)]);
         $json = $res->json();
         if (! $res->successful() || ! is_array($json)) {
             $hint = str_contains($url, '/a/macros/') || str_contains($url, '/macros/a/')
@@ -96,7 +108,7 @@ class SheetsService
         $row[4] = 'Row';
         $row[5] = 'test@example.com';
         try {
-            $this->send($row);
+            $this->send($row, 'Test');
         } catch (\Throwable $e) {
             return ['ok' => false, 'message' => $e->getMessage()];
         }
@@ -115,11 +127,7 @@ function doPost(e) {
   try {
     const d = JSON.parse(e.postData.contents);
     if (d.token !== TOKEN) return out({ ok: false, error: 'Wrong token' });
-    const sh = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
-    if (sh.getLastRow() === 0) {
-      sh.appendRow(d.headers);
-      sh.setFrozenRows(1);
-    }
+    const sh = getTab(d.tab || 'Enquiries', d.headers);
     const r = sh.getLastRow() + 1;
     const range = sh.getRange(r, 1, 1, d.row.length);
     range.setNumberFormat('@'); // keep +49... phone numbers as text
@@ -128,6 +136,17 @@ function doPost(e) {
   } catch (err) {
     return out({ ok: false, error: String(err) });
   }
+}
+
+function getTab(name, headers) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sh = ss.getSheetByName(name);
+  if (!sh) sh = ss.insertSheet(name);
+  if (sh.getLastRow() === 0) {
+    sh.appendRow(headers);
+    sh.setFrozenRows(1);
+  }
+  return sh;
 }
 
 function out(o) {

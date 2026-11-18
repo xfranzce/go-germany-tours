@@ -13,7 +13,7 @@
         @else
             <span class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-bold text-slate-700"><span class="size-2 rounded-full bg-slate-500"></span> Not connected</span>
         @endif
-        <p class="mt-3 text-sm text-ink-soft">Each form submission (hero quiz, pop-up, package pages, contact) adds one row to the first tab of your Google Sheet, including UTM and Google Ads tracking. Spreadsheet problems never stop an enquiry from being saved or emailed.</p>
+        <p class="mt-3 text-sm text-ink-soft">Each form submission (hero quiz, pop-up, package pages, contact) adds one row to its own tab in your Google Sheet (Hero quiz, Get a Quote, Ask a Question, Contact; tabs are created automatically), including UTM and Google Ads tracking. Spreadsheet problems never stop an enquiry from being saved or emailed.</p>
     </div>
 
     @if(session('sheets_error'))
@@ -52,7 +52,7 @@
             <li>Click <b>Deploy &rarr; New deployment</b>, choose the gear and <b>Web app</b>. Set <b>Execute as: Me</b> and <b>Who has access: Anyone</b>. Click <b>Deploy</b>.</li>
             <li>Approve the permissions when Google asks (<b>Advanced &rarr; Go to project</b>). It only needs access to this sheet.</li>
             <li>Copy the <b>Web app URL</b> (ends in <code>/exec</code>), paste it above, tick <b>Send new enquiries to the sheet</b> and save.</li>
-            <li>Press <b>Add a test row</b>. The header row is created automatically.</li>
+            <li>Press <b>Add a test row</b>. It creates a Test tab. Header rows are created automatically on each tab and you can delete the Test tab afterwards.</li>
         </ol>
         <p class="mt-4 text-sm font-bold">Script to paste (contains your private token, keep it to yourself):</p>
         <textarea readonly rows="14" x-ref="code" class="mt-2 w-full rounded-lg border border-slate-300 bg-slate-50 p-3 font-mono text-xs" @focus="$el.select()">{{ $script }}</textarea>
