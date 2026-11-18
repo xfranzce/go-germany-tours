@@ -34,7 +34,7 @@
         </div>
     </section>
     @if($members->isNotEmpty())
-    <section class="bg-brand-custard-light pb-16 pt-4 sm:pb-24" aria-label="Team members" x-data="{ open: null }" @keydown.escape.window="open = null" x-effect="document.body.classList.toggle('overflow-hidden', open !== null)">
+    <section class="bg-brand-custard-light pb-16 pt-10 sm:pb-24" aria-label="Team members" x-data="{ open: null }" @keydown.escape.window="open = null" x-effect="document.body.classList.toggle('overflow-hidden', open !== null)">
         <div class="container-x">
             <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
                 @foreach($members as $m)
