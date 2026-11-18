@@ -211,4 +211,44 @@ function initCarousels() {
 }
 document.addEventListener('DOMContentLoaded', initCarousels);
 
+/** Mouse drag-to-scroll for [data-drag-scroll] rows (touch already scrolls natively). */
+function initDragScroll() {
+    document.querySelectorAll('[data-drag-scroll]').forEach((el) => {
+        let down = false, moved = false, startX = 0, startLeft = 0;
+        el.classList.add('cursor-grab');
+        el.addEventListener('dragstart', (e) => e.preventDefault());
+        el.addEventListener('pointerdown', (e) => {
+            if (e.pointerType !== 'mouse' || e.button !== 0) return;
+            down = true; moved = false; startX = e.clientX; startLeft = el.scrollLeft;
+        });
+        window.addEventListener('pointermove', (e) => {
+            if (!down) return;
+            const dx = e.clientX - startX;
+            if (!moved && Math.abs(dx) > 5) {
+                moved = true;
+                el.classList.remove('snap-mandatory', 'cursor-grab');
+                el.classList.add('cursor-grabbing', 'select-none');
+                el.style.scrollSnapType = 'none';
+            }
+            if (moved) el.scrollLeft = startLeft - dx;
+        });
+        const end = () => {
+            if (!down) return;
+            down = false;
+            if (moved) {
+                el.classList.remove('cursor-grabbing', 'select-none');
+                el.classList.add('cursor-grab');
+                el.style.scrollSnapType = '';
+                el.classList.add('snap-mandatory');
+            }
+        };
+        window.addEventListener('pointerup', end);
+        window.addEventListener('pointercancel', end);
+        // a drag must not count as a click on a card link
+        el.addEventListener('click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+    });
+}
+document.addEventListener('DOMContentLoaded', initDragScroll);
+
+
 Alpine.start();

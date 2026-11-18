@@ -412,7 +412,7 @@
             </div>
             <p class="mt-6"><x-button :href="route('blog.index')" variant="outline" size="sm">All travel guides</x-button></p>
         </div>
-        <div x-ref="jtrack" class="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 pr-4 [scrollbar-width:none] sm:pr-6 lg:mt-0 lg:-mr-[max(0px,calc((100vw-1390px)/2))] lg:pr-10 [&::-webkit-scrollbar]:hidden" tabindex="0" role="region" aria-label="Travel guides">
+        <div x-ref="jtrack" data-drag-scroll class="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 pr-4 [scrollbar-width:none] sm:pr-6 lg:mt-0 lg:-mr-[max(0px,calc((100vw-1390px)/2))] lg:pr-10 [&::-webkit-scrollbar]:hidden" tabindex="0" role="region" aria-label="Travel guides">
             @foreach($posts as $post)
                 <article class="group flex w-[78%] shrink-0 snap-start flex-col overflow-hidden rounded-xl bg-white text-brand-navy shadow-lg shadow-brand-navy/10 sm:w-80">
                     <a href="{{ route('blog.show', $post->slug) }}" class="relative block aspect-[4/3] overflow-hidden bg-brand-custard" tabindex="-1" aria-hidden="true">
