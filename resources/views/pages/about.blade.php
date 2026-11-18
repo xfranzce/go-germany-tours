@@ -19,8 +19,8 @@
         </div>
     </section>
     {{-- the team page shares this view --}}
-    @include('partials.sections.banner')
     @include('partials.sections.why')
+    @include('partials.sections.banner')
     @include('partials.sections.partners')
 @else
     <div class="container-x py-12"><div class="prose-ggt text-lg">{!! $content !!}</div>
