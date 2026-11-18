@@ -171,7 +171,7 @@
 @php
     $tabs = $featured->groupBy(fn ($p) => $p->tourType->slug)->map(fn ($g) => ['name' => $g->first()->tourType->name, 'packages' => $g->take(6)]);
 @endphp
-<section class="bg-fachwerk py-16 sm:py-24" aria-labelledby="featured-title" x-data="{ tab: '{{ $tabs->keys()->first() }}' }">
+<section class="py-16 sm:py-24" aria-labelledby="featured-title" x-data="{ tab: '{{ $tabs->keys()->first() }}' }">
     <div class="container-x">
         <div class="mb-12 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <x-section-heading id="featured-title" align="left" eyebrow="Signature journeys" :title="$page->text('featured_title', 'Popular ways to see Germany')" emphasis="Planned around you."
