@@ -417,10 +417,12 @@
                 <article class="group flex w-[78%] shrink-0 snap-start flex-col overflow-hidden rounded-xl bg-white text-brand-navy shadow-lg shadow-brand-navy/10 sm:w-80">
                     <a href="{{ route('blog.show', $post->slug) }}" class="relative block aspect-[4/3] overflow-hidden bg-brand-custard" tabindex="-1" aria-hidden="true">
                         <x-picture :path="$post->image" sizes="(min-width: 640px) 20rem, 78vw" class="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-105"/>
+                        @if($post->category)<span class="absolute left-4 top-4 rounded-full bg-brand-gold px-3 py-1 text-[0.7rem] font-extrabold uppercase tracking-wider text-brand-navy shadow">{{ $post->category }}</span>@endif
                     </a>
                     <div class="flex flex-1 flex-col p-5">
                         <h3 class="text-lg leading-snug"><a class="transition hover:text-brand-red" href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a></h3>
                         <p class="mt-2 text-sm font-semibold text-ink-soft">{{ $post->published_at->format('M j, Y') }} <span aria-hidden="true">&middot;</span> {{ $post->readingMinutes() }} min read</p>
+                        @if($post->excerpt)<p class="mt-3 line-clamp-3 flex-1 text-sm text-ink-soft">{{ $post->excerpt }}</p>@endif
                     </div>
                 </article>
             @endforeach

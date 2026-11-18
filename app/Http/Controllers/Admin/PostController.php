@@ -48,7 +48,7 @@ class PostController extends AdminController
     {
         $d = $request->validate([
             'title' => ['required', 'string', 'max:150'], 'slug' => ['nullable', 'string', 'max:150'],
-            'excerpt' => ['nullable', 'string', 'max:500'], 'body' => ['nullable', 'string', 'max:100000'],
+            'excerpt' => ['nullable', 'string', 'max:500'], 'category' => ['nullable', 'in:'.implode(',', Post::CATEGORIES)], 'body' => ['nullable', 'string', 'max:100000'],
             'published_at' => ['nullable', 'date'],
             'seo_title' => ['nullable', 'string', 'max:70'], 'meta_description' => ['nullable', 'string', 'max:320'],
         ] + $this->imageRules());
@@ -56,7 +56,7 @@ class PostController extends AdminController
         $published = $request->boolean('is_published');
         $post->fill([
             'title' => $d['title'], 'slug' => $this->slug(Post::class, $d['slug'] ?? null, $d['title'], $post->id),
-            'excerpt' => $d['excerpt'] ?? null, 'body' => $this->clean($d['body'] ?? null),
+            'excerpt' => $d['excerpt'] ?? null, 'category' => $d['category'] ?? null, 'body' => $this->clean($d['body'] ?? null),
             'is_published' => $published, 'noindex' => $request->boolean('noindex'),
             'published_at' => $published ? ($d['published_at'] ?? $post->published_at ?? now()) : ($d['published_at'] ?? null),
             'seo_title' => $d['seo_title'] ?? null, 'meta_description' => $d['meta_description'] ?? null,

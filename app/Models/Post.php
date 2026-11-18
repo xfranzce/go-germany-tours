@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    public const CATEGORIES = ['Self Drive', 'Chauffeur Driven', 'Coach Tours'];
+
     protected $guarded = [];
 
     protected $casts = ['is_published' => 'boolean', 'published_at' => 'datetime', 'noindex' => 'boolean'];
