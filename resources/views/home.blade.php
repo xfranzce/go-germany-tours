@@ -224,8 +224,16 @@
                     <div class="p-7 flex flex-col flex-1">
                         <p class="eyebrow text-brand-red-dark">{{ sprintf('%02d', $loop->iteration) }}</p>
                         <h3 class="mt-2"><a href="{{ route('tours.show', $t->slug) }}" class="hover:underline">{{ $t->name }}</a></h3>
-                        <p class="mt-3 text-ink-soft flex-1">{{ $t->summary }}</p>
-                        <div class="mt-6 grid gap-2 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2">
+                        <p class="mt-3 text-ink-soft">{{ $t->summary }}</p>
+                        @php $incl = array_values(array_filter(array_map('trim', preg_split('/\R/', (string) $t->inclusions)))); @endphp
+                        @if($incl)
+                            <ul class="mt-5 grid grid-cols-2 gap-x-3 gap-y-2 text-sm font-semibold text-brand-navy" aria-label="Included">
+                                @foreach($incl as $i)
+                                    <li class="flex items-start gap-2"><x-icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-brand-red"/><span>{{ $i }}</span></li>
+                                @endforeach
+                            </ul>
+                        @endif
+                        <div class="mt-auto grid pt-6 gap-2 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2">
                             <x-button size="sm" data-title="Get a quote: {{ $t->name }}" data-prefill="Interested in: {{ $t->name }} tours."
                                       @click="$store.modal.show({form:'package_quote', ...$el.dataset})">Get a Quote</x-button>
                             <x-button variant="outline" size="sm" data-title="Ask us a question" data-subtitle="{{ $t->name }} tours" data-prefill="Question about {{ $t->name }} tours: "

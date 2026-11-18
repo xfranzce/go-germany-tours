@@ -70,6 +70,7 @@ abstract class TaxonomyController extends AdminController
             'sort' => ['nullable', 'integer', 'min:0'],
             'icon' => ['nullable', 'string', 'max:30'],
             'highlights' => ['nullable', 'string', 'max:2000'],
+            'inclusions' => ['nullable', 'string', 'max:1000'],
             'seo_title' => ['nullable', 'string', 'max:70'],
             'meta_description' => ['nullable', 'string', 'max:320'],
         ] + $this->imageRules());
@@ -88,6 +89,7 @@ abstract class TaxonomyController extends AdminController
         if ($this->hasIcon) {
             $item->icon = $data['icon'] ?? null;
             $item->highlights = $data['highlights'] ?? null;
+            $item->inclusions = $data['inclusions'] ?? null;
         }
         $item->save();
     }
