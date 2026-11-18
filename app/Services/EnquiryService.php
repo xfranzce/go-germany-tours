@@ -151,7 +151,7 @@ class EnquiryService
         try {
             if (app(SheetsService::class)->enabled()) {
                 $enquiry->update(['sheet_status' => 'pending']);
-                SyncEnquiryToSheet::dispatch($enquiry->id);
+                SyncEnquiryToSheet::dispatchAfterResponse($enquiry->id);
             }
         } catch (\Throwable $e) {
             Log::error('Google Sheets dispatch failed: '.$e->getMessage(), ['enquiry' => $enquiry->id]);

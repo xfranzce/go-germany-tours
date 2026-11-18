@@ -43,6 +43,27 @@ class EnquiryFormTest extends TestCase
         $this->assertSame('GB', Enquiry::latest('id')->first()->country_code);
     }
 
+    public function test_enquiry_succeeds_and_row_is_sent_when_google_sheets_is_on(): void
+    {
+        $url = 'https://script.google.com/a/macros/example.com/s/AKfycbyTEST/exec';
+        Setting::put('sheets_webhook_url_enc', \Illuminate\Support\Facades\Crypt::encryptString($url));
+        Setting::put('sheets_enabled', '1');
+        Setting::flush();
+
+        Http::fake([
+            'www.google.com/recaptcha/api/siteverify' => Http::response(['success' => true]),
+            'script.google.com/*' => Http::sequence()->push(['ok' => true])->push('<html>Sign in</html>', 200),
+        ]);
+        $this->postJson('/enquiry', $this->payload())->assertSuccessful();
+        $this->assertSame('synced', Enquiry::latest('id')->first()->sheet_status);
+
+        // Google answering with a login page must never break the enquiry
+        $this->postJson('/enquiry', $this->payload(['email' => 'b@example.com']))->assertSuccessful();
+        $e = Enquiry::latest('id')->first();
+        $this->assertSame('failed', $e->sheet_status);
+        $this->assertNotNull($e->sheet_error);
+    }
+
     public function test_travel_date_must_be_a_real_date_that_is_not_in_the_past(): void
     {
         $this->captcha(true);

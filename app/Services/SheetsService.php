@@ -73,7 +73,7 @@ class SheetsService
             throw new \RuntimeException('No Google Sheets web app URL is saved.');
         }
 
-        $res = Http::timeout(20)->asJson()->post($url, ['token' => $this->token(), 'headers' => self::HEADERS, 'row' => array_map(fn ($v) => (string) ($v ?? ''), $row)]);
+        $res = Http::timeout(15)->asJson()->post($url, ['token' => $this->token(), 'headers' => self::HEADERS, 'row' => array_map(fn ($v) => (string) ($v ?? ''), $row)]);
         $json = $res->json();
         if (! $res->successful() || ! is_array($json)) {
             throw new \RuntimeException('Google did not return a valid answer (HTTP '.$res->status().'). Check the web app is deployed with access set to "Anyone".');
