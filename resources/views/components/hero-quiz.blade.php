@@ -31,7 +31,7 @@
                                 class="group flex flex-col items-center justify-center gap-2 text-center rounded-2xl border bg-white/10 p-3 min-h-28 font-bold text-white transition duration-200 hover:-translate-y-0.5 hover:border-brand-gold hover:bg-white/20 focus-visible:border-brand-gold"
                                 :class="answers[step.key] === o.label ? 'border-brand-gold bg-brand-gold/25 ring-1 ring-brand-gold' : 'border-white/25'"
                                 :aria-pressed="answers[step.key] === o.label">
-                            <span class="grid size-14 place-items-center rounded-full border border-brand-gold/60 bg-brand-navy-dark/40 text-3xl leading-none transition duration-200 group-hover:scale-110 group-hover:bg-brand-navy-dark/60 [filter:grayscale(1)_sepia(1)_saturate(4)_brightness(1.15)]" x-text="o.icon" aria-hidden="true"></span>
+                            <span class="text-4xl leading-none transition duration-200 group-hover:scale-110 [filter:grayscale(1)_sepia(1)_saturate(4)_brightness(1.15)]" x-text="o.icon" aria-hidden="true"></span>
                             <span class="text-sm text-white" x-text="o.label"></span>
                         </button>
                     </template>
