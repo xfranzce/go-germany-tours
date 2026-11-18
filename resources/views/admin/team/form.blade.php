@@ -10,6 +10,7 @@
     <x-admin.field name="name" label="Name" :value="$item->name" required maxlength="120"/>
     <x-admin.field name="role" label="Role" :value="$item->role" maxlength="120"/>
     <x-admin.field name="bio" label="Short bio (plain text)" type="textarea" :rows="3" :value="$item->bio" maxlength="600"/>
+    <x-admin.field name="profile" label="Full profile (shown in the pop-up when the card is clicked; blank line = new paragraph)" type="textarea" :rows="8" :value="$item->profile" maxlength="4000" help="If left empty, the pop-up shows the short bio."/>
     <x-admin.image :current="$item->image" label="Photo (square or portrait works best)"/>
     <div class="grid gap-4 sm:grid-cols-2"><x-admin.field name="sort" label="Order" type="number" :value="$item->sort"/><x-admin.field name="is_active" label="Show on the site" type="checkbox" :value="$item->is_active"/></div>
     <div><button class="btn btn-primary">Save</button></div>

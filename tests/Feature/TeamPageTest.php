@@ -18,7 +18,7 @@ class TeamPageTest extends TestCase
         TeamMember::create(['name' => 'Hidden Person', 'sort' => 2, 'is_active' => false]);
 
         $this->get('/meet-our-team')->assertOk()
-            ->assertSee('The people behind your trip')->assertSee('Alex Example')->assertSee('Trip planner')
+            ->assertSee('The people behind your trip')->assertSee('Alex Example')->assertSee('Trip planner')->assertSee('Close profile')->assertSee('Plans routes.')
             ->assertDontSee('Hidden Person');
     }
 

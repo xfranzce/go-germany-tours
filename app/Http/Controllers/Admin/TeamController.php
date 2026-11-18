@@ -48,11 +48,11 @@ class TeamController extends AdminController
     {
         $d = $request->validate([
             'name' => ['required', 'string', 'max:120'], 'role' => ['nullable', 'string', 'max:120'],
-            'bio' => ['nullable', 'string', 'max:600'], 'sort' => ['nullable', 'integer', 'min:0'],
+            'bio' => ['nullable', 'string', 'max:600'], 'profile' => ['nullable', 'string', 'max:4000'], 'sort' => ['nullable', 'integer', 'min:0'],
         ] + $this->imageRules());
 
         $m->fill([
-            'name' => $d['name'], 'role' => $d['role'] ?? null, 'bio' => $d['bio'] ?? null, 'sort' => $d['sort'] ?? 0,
+            'name' => $d['name'], 'role' => $d['role'] ?? null, 'bio' => $d['bio'] ?? null, 'profile' => $d['profile'] ?? null, 'sort' => $d['sort'] ?? 0,
             'is_active' => $request->boolean('is_active'), 'image' => $this->handleImage($request, 'image', $m->image),
         ])->save();
     }
