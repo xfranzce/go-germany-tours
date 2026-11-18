@@ -19,7 +19,9 @@
         </div>
     </section>
     {{-- the team page shares this view --}}
+    @include('partials.sections.banner')
     @include('partials.sections.why')
+    @include('partials.sections.partners')
 @else
     <div class="container-x py-12"><div class="prose-ggt text-lg">{!! $content !!}</div>
         <p class="mt-8"><x-button @click="$store.modal.show()">Get a Free Quote</x-button></p>
