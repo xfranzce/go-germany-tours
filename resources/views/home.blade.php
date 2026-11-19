@@ -288,13 +288,13 @@
             <span class="flag-rule centered" aria-hidden="true"></span>
             <p class="mt-5 text-base text-white/85 sm:text-lg">Enjoy a stress-free journey with every detail expertly arranged.</p>
         </div>
-        <ol class="grid gap-6 md:grid-cols-3">
+        <ol class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden" data-carousel="md" data-carousel-light aria-label="How it works">
             @foreach([
                 ['document', 'Get your free quote', 'Share your travel preferences and a member of the team will reply with your quote.'],
                 ['pin', 'Review your itinerary', 'Review your itinerary and pricing, and make any final adjustments with our team.'],
                 ['shield', 'Travel with confidence', 'We organise hotels, transport and experiences, so you can simply arrive and enjoy Germany.'],
             ] as $i => [$ic, $t, $d])
-                <li class="rounded-2xl border border-white/15 bg-white/5 p-8 backdrop-blur">
+                <li class="w-[82%] shrink-0 snap-center md:w-auto md:shrink rounded-2xl border border-white/15 bg-white/5 p-8 backdrop-blur">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-gold">Step 0{{ $i + 1 }}/03</span>
                         <span class="grid size-12 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-black/30" aria-hidden="true"><x-icon :name="$ic" class="h-6 w-6"/></span>
