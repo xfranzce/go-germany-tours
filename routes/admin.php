@@ -58,6 +58,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('recaptcha', [Admin\RecaptchaController::class, 'update'])->name('recaptcha.update');
         Route::post('recaptcha/test', [Admin\RecaptchaController::class, 'test'])->name('recaptcha.test');
         Route::put('settings', [Admin\SettingController::class, 'update'])->name('settings.update');
+        Route::resource('snippets', Admin\SnippetController::class)->except('show'); // Header & Footer code (administrators only)
         Route::resource('users', Admin\AdminUserController::class)->except('show');
         Route::get('media', [Admin\MediaController::class, 'index'])->name('media.index');
         Route::post('media', [Admin\MediaController::class, 'store'])->name('media.store');
