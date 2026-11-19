@@ -117,21 +117,23 @@
 </section>
 
 {{-- 5. DISCOUNT BLOCK (white to tint to white); uses our real early bird offer --}}
-<section class="bg-gradient-to-b from-white via-brand-custard-light to-white py-16 sm:py-24" aria-labelledby="offer-title">
-    <div class="container-x grid items-center gap-8 text-center lg:gap-14 lg:text-left lg:grid-cols-[auto_1fr_minmax(0,0.8fr)]">
-        <div class="mx-auto grid size-36 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-xl shadow-brand-navy/20 sm:size-44 lg:mx-0" aria-hidden="true">
+<section class="bg-gradient-to-b from-white via-brand-custard-light to-white py-10 sm:py-24" aria-labelledby="offer-title">
+    <div class="container-x grid items-center gap-5 text-center sm:gap-8 lg:gap-14 lg:text-left lg:grid-cols-[auto_1fr_minmax(0,0.8fr)]">
+        <div class="mx-auto hidden size-36 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-xl shadow-brand-navy/20 sm:grid sm:size-44 lg:mx-0" aria-hidden="true">
             <span class="text-center font-display font-extrabold leading-none"><span class="block text-6xl">25%</span><span class="mt-1 block text-sm uppercase tracking-[0.2em]">off</span></span>
         </div>
         <div>
-            <p class="eyebrow text-brand-red-dark">Early bird offer</p>
-            <h2 id="offer-title" class="mt-4">Start planning &amp; claim your discount.</h2>
+            {{-- phones: a compact pill instead of the big badge --}}
+            <span class="mb-4 inline-flex items-center gap-2 rounded-full bg-brand-gold px-5 py-2 font-display font-extrabold leading-none text-brand-navy shadow-lg shadow-brand-navy/15 sm:hidden" aria-hidden="true"><span class="text-2xl">25%</span><span class="text-xs uppercase tracking-[0.2em]">off</span></span>
+            <p class="eyebrow block text-brand-red-dark sm:inline-flex">Early bird offer</p>
+            <h2 id="offer-title" class="mt-3 sm:mt-4">Start planning &amp; claim your discount.</h2>
             <p class="mt-4 max-w-2xl text-base text-ink-soft sm:text-lg">Plan ahead and book early. Ask for a free, no-obligation quote for {{ $ebMonth }} and we will include your early bird discount.</p>
-            <ul class="mt-5 flex flex-wrap justify-center gap-3 lg:justify-start">
+            <ul class="mt-4 flex flex-wrap justify-center gap-2 sm:mt-5 sm:gap-3 lg:justify-start">
                 @foreach(['Free consultation', 'No-obligation quote', 'Itineraries built around you'] as $chip)
-                    <li class="rounded-full border border-brand-navy/15 bg-white px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-brand-navy">{{ $chip }}</li>
+                    <li class="rounded-full border border-brand-navy/15 bg-white px-3 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-brand-navy max-sm:last:hidden sm:px-4 sm:py-1.5 sm:text-xs">{{ $chip }}</li>
                 @endforeach
             </ul>
-            <x-button class="mt-7" data-title="Early bird offer: {{ $ebMonth }}" data-prefill="Early bird offer: 25% off, travelling in {{ $ebMonth }}."
+            <x-button class="mt-5 w-full sm:mt-7 sm:w-auto" data-title="Early bird offer: {{ $ebMonth }}" data-prefill="Early bird offer: 25% off, travelling in {{ $ebMonth }}."
                       @click="$store.modal.show({form:'package_quote', ...$el.dataset})">Claim your discount <x-icon name="arrow-right" class="h-5 w-5"/></x-button>
         </div>
         {{-- Germany symbol: dashed map with route on a navy panel, gold offset frame, floating tag --}}
