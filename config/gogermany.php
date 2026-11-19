@@ -57,7 +57,7 @@ return [
         'recaptcha_site_key' => '',
         'recaptcha_secret_key' => '',
         'modal_discount_percent' => '',
-        'footer_text' => 'Tailor-made Germany vacations for US travelers.',
+        'footer_text' => 'Tailor-made Germany vacations for US travelers. Choose a self-drive, chauffeur-driven or small-group coach tour of fairytale towns, river valleys and the Baltic coast, planned around your dates, group and budget. Get a free, no-obligation quote in under a minute.',
         'default_meta_title' => 'Go Germany Tours | Self Drive, Chauffeur and Coach Tours of Germany',
         'default_meta_description' => 'Self drive, chauffeur driven and coach tours of Quedlinburg, Saxon Switzerland, Cochem, Hiddensee and Gengenbach. Get a free quote in 30 seconds.',
         'default_og_image' => '',
