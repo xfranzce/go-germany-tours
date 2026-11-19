@@ -38,7 +38,7 @@
 </section>
 
 {{-- 2. PROMISES (dark band, four columns divided by thin lines) + at-a-glance counts --}}
-<section class="bg-brand-navy-dark text-white" aria-label="Why book with us">
+<section class="hidden bg-brand-navy-dark text-white sm:block" aria-label="Why book with us">
     <ul class="mx-auto grid max-w-[1390px] sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-white/15">
         @foreach([
             ['No hidden fees', 'What you see is what you pay. No surprises, just great value.'],
