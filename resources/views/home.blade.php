@@ -84,11 +84,11 @@
             <span class="flag-rule centered" aria-hidden="true"></span>
             <p class="mt-5 text-base text-ink-soft sm:text-lg">Choose the travel style that suits you. Each is designed for comfort, ease and memorable experiences.</p>
         </div>
-        <div class="grid gap-8 md:grid-cols-3">
+        <div class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden" data-carousel="md" aria-label="Ways to travel">
             @foreach($tourTypes as $t)
                 @php $incl = array_slice(array_values(array_filter(array_map('trim', preg_split('/\R/', (string) $t->inclusions)))), 0, 3); @endphp
                 {{-- photo card: photo fills the card, dark fade, icon + title + copy over it --}}
-                <article class="group relative isolate flex min-h-[30rem] flex-col justify-end overflow-hidden rounded-2xl bg-brand-navy-dark text-white shadow-card">
+                <article class="group relative isolate flex min-h-[30rem] w-[82%] shrink-0 snap-center flex-col md:w-auto md:shrink justify-end overflow-hidden rounded-2xl bg-brand-navy-dark text-white shadow-card">
                     <x-picture :path="$t->image" sizes="(min-width: 768px) 24rem, 92vw" class="absolute inset-0 -z-20 h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105"/>
                     <div class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-dark via-brand-navy-dark/75 to-brand-navy-dark/10" aria-hidden="true"></div>
                     <div class="p-6 pt-40">
