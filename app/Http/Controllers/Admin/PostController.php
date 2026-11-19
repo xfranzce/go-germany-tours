@@ -46,6 +46,7 @@ class PostController extends AdminController
 
     private function save(Request $request, Post $post): void
     {
+        $this->stripBrandFromSeoTitle($request);
         $d = $request->validate([
             'title' => ['required', 'string', 'max:150'], 'slug' => ['nullable', 'string', 'max:150'],
             'excerpt' => ['nullable', 'string', 'max:500'], 'category' => ['nullable', 'in:'.implode(',', Post::CATEGORIES)], 'body' => ['nullable', 'string', 'max:100000'],

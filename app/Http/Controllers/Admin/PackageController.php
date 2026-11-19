@@ -158,6 +158,7 @@ class PackageController extends AdminController
             'new_images.*.file' => ['nullable', 'file', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192', 'dimensions:min_width=400,min_height=300'],
             'new_images.*.alt' => ['required_with:new_images.*.file', 'nullable', 'string', 'max:200'],
         ];
+        $this->stripBrandFromSeoTitle($request);
         $data = $request->validate($rules);
 
         $package->fill([

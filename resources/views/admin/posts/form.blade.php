@@ -17,7 +17,7 @@
         <x-admin.image :current="$item->image" label="Featured image (shown on blog cards, the home page and the top of the post; also used when the post is shared)" class="sm:col-span-2"/>
         <x-admin.field name="is_published" label="Published" type="checkbox" :value="$item->is_published"/>
         <x-admin.field name="noindex" label="Hide from search engines" type="checkbox" :value="$item->noindex"/>
-        <x-admin.field name="seo_title" label="SEO title (max 70)" :value="$item->seo_title" maxlength="70"/>
+        <x-admin.field name="seo_title" label="SEO title (max 70)" :value="$item->seo_title" maxlength="70" help="Do not add the site name: it is added automatically."/>
         <x-admin.field name="meta_description" label="Meta description (max 320)" :value="$item->meta_description" maxlength="320"/>
     </section>
     <button class="btn btn-primary">Save guide</button>

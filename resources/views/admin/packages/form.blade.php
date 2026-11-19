@@ -121,7 +121,7 @@
 
     <section class="bg-white rounded-xl shadow p-5 grid gap-4 sm:grid-cols-2">
         <h2 class="text-xl sm:col-span-2">SEO and sharing</h2>
-        <x-admin.field name="seo_title" label="SEO title (max 70)" :value="$package->seo_title" maxlength="70" help="Blank uses the package title."/>
+        <x-admin.field name="seo_title" label="SEO title (max 70)" :value="$package->seo_title" maxlength="70" help="Blank uses the package title. Do not add the site name: it is added automatically."/>
         <x-admin.field name="og_image" label="Social share image" type="select" :options="['' => 'First gallery image'] + ($package->exists ? $package->images->pluck('alt', 'path')->all() : [])" :value="$package->og_image"/>
         <x-admin.field name="meta_description" label="Meta description (max 320)" type="textarea" :rows="3" :value="$package->meta_description" maxlength="320" class="sm:col-span-2" help="Blank uses the short summary."/>
         <x-admin.field name="noindex" label="Hide from search engines (noindex)" type="checkbox" :value="$package->noindex"/>

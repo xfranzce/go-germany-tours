@@ -36,6 +36,7 @@ class PageController extends AdminController
 
     public function update(Request $request, Page $page)
     {
+        $this->stripBrandFromSeoTitle($request);
         $data = $request->validate([
             'title' => ['required', 'string', 'max:150'],
             'content' => ['nullable', 'string', 'max:100000'],

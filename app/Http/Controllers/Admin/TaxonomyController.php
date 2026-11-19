@@ -62,6 +62,7 @@ abstract class TaxonomyController extends AdminController
 
     private function save(Request $request, Model $item): void
     {
+        $this->stripBrandFromSeoTitle($request);
         $data = $request->validate([
             'name' => ['required', 'string', 'max:100'],
             'slug' => ['nullable', 'string', 'max:100'],

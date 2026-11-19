@@ -17,7 +17,7 @@
         @if($hasIcon)<x-admin.field name="highlights" label="What to expect (one point per line)" type="textarea" :rows="6" :value="$item->highlights" maxlength="2000" class="sm:col-span-2" help="Shown as a checklist under the About text on the tour type page."/>@endif
         <div class="sm:col-span-2"><x-admin.rich name="description" label="Page text" :value="$item->description"/></div>
         <x-admin.image :current="$item->image" label="Picture" class="sm:col-span-2"/>
-        <x-admin.field name="seo_title" label="SEO title (max 70)" :value="$item->seo_title" maxlength="70"/>
+        <x-admin.field name="seo_title" label="SEO title (max 70)" :value="$item->seo_title" maxlength="70" help="Do not add the site name: it is added automatically."/>
         <x-admin.field name="meta_description" label="Meta description (max 320)" :value="$item->meta_description" maxlength="320"/>
         <x-admin.field name="is_active" label="Active (shown on the site)" type="checkbox" :value="$item->is_active"/>
     </section>

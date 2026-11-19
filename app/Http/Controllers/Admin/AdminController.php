@@ -11,6 +11,18 @@ use Illuminate\Support\Str;
 
 abstract class AdminController extends Controller
 {
+    /** The site name is added to every page title automatically, so drop it if someone typed it into an SEO title (it would also use up the 70 characters). */
+    protected function stripBrandFromSeoTitle(Request $request): void
+    {
+        $title = $request->input('seo_title');
+        $brand = trim((string) \App\Models\Setting::get('brand_name'));
+        if (! is_string($title) || $brand === '') {
+            return;
+        }
+        $clean = preg_replace('/\s*[|\-\x{2013}\x{2014}:]\s*'.preg_quote($brand, '/').'\s*$/iu', '', trim($title));
+        $request->merge(['seo_title' => $clean]);
+    }
+
     /** Validation rules for an <x-admin.image name="..."> field. */
     protected function imageRules(string $name = 'image'): array
     {
