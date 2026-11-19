@@ -31,7 +31,7 @@
         <div class="mt-5 w-full max-w-xl"><x-hero-quiz/></div>
     </div>
     <ul class="container-x hidden flex-wrap items-center justify-center gap-x-10 gap-y-3 border-t border-white/20 py-5 text-xs font-bold uppercase tracking-[0.16em] sm:flex">
-        @foreach([['star', 'Excellent reviews'], ['lock', 'Private tours'], ['pin', 'Local Germany experts']] as [$ic, $t])
+        @foreach([['check', 'Free, no-obligation quote'], ['lock', 'Private tours'], ['pin', 'Local Germany experts']] as [$ic, $t])
             <li class="flex items-center gap-2.5"><x-icon :name="$ic" class="h-4 w-4 text-brand-gold"/>{{ $t }}</li>
         @endforeach
     </ul>

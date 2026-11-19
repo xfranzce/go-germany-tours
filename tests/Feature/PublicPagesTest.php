@@ -88,10 +88,10 @@ class PublicPagesTest extends TestCase
         $this->get('/faqs')->assertOk()->assertSee('"@type":"FAQPage"', false);
     }
 
-    public function test_home_has_faq_structured_data_and_the_hero_quiz_without_a_destination_dropdown(): void
+    public function test_home_has_the_hero_quiz_without_a_destination_dropdown_and_no_faq_markup(): void
     {
         $html = $this->get('/')->assertOk()->getContent();
-        $this->assertStringContainsString('"@type":"FAQPage"', $html);
+        $this->assertStringNotContainsString('"@type":"FAQPage"', $html); // the home page shows no FAQs, so it must not declare FAQ markup
         $this->assertStringContainsString('"@type":"TravelAgency"', $html);
         $this->assertStringContainsString('id="quiz-title"', $html); // the quote quiz sits in the hero
         $this->assertStringNotContainsString('id="hero-dest"', $html); // destination dropdown and ticker were removed
