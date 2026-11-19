@@ -116,8 +116,9 @@
 </section>
 
 {{-- 5. DISCOUNT BLOCK (white to tint to white); uses our real early bird offer --}}
+@php $offerImg = $media('couple-rhine-vineyard') ?? $media('mosel-vineyard'); @endphp
 <section class="bg-gradient-to-b from-white via-brand-custard-light to-white py-16 sm:py-24" aria-labelledby="offer-title">
-    <div class="container-x grid items-center gap-8 text-center lg:grid-cols-[auto_1fr] lg:gap-14 lg:text-left">
+    <div class="container-x grid items-center gap-8 text-center lg:gap-14 lg:text-left {{ $offerImg ? 'lg:grid-cols-[auto_1fr_minmax(0,0.8fr)]' : 'lg:grid-cols-[auto_1fr]' }}">
         <div class="mx-auto grid size-36 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-xl shadow-brand-navy/20 sm:size-44 lg:mx-0" aria-hidden="true">
             <span class="text-center font-display font-extrabold leading-none"><span class="block text-6xl">25%</span><span class="mt-1 block text-sm uppercase tracking-[0.2em]">off</span></span>
         </div>
@@ -133,6 +134,20 @@
             <x-button class="mt-7" data-title="Early bird offer: {{ $ebMonth }}" data-prefill="Early bird offer: 25% off, travelling in {{ $ebMonth }}."
                       @click="$store.modal.show({form:'package_quote', ...$el.dataset})">Claim your discount <x-icon name="arrow-right" class="h-5 w-5"/></x-button>
         </div>
+        @if($offerImg)
+            {{-- photo with gold offset frame and a floating "early bird" tag --}}
+            <div class="relative mx-auto hidden w-full max-w-md pb-6 pr-6 md:block lg:max-w-none">
+                <span class="absolute bottom-0 right-0 top-6 left-6 rounded-2xl border-2 border-brand-gold/70" aria-hidden="true"></span>
+                <div class="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-card">
+                    <x-picture :path="$offerImg->path" hires sizes="(min-width: 1024px) 30vw, 60vw" class="absolute inset-0 h-full w-full object-cover"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-navy-dark/40 to-transparent" aria-hidden="true"></div>
+                </div>
+                <div class="absolute -left-4 bottom-12 flex items-center gap-3 rounded-full bg-brand-navy py-2 pl-2 pr-5 text-white shadow-xl">
+                    <span class="grid size-9 place-items-center rounded-full bg-brand-gold text-brand-navy"><x-icon name="check" class="h-4 w-4"/></span>
+                    <span class="text-xs font-extrabold uppercase leading-tight tracking-wider">Travelling in<br>{{ $ebMonth }}</span>
+                </div>
+            </div>
+        @endif
     </div>
 </section>
 
