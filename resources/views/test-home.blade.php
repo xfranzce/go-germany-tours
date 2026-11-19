@@ -251,18 +251,30 @@
         <span class="flag-rule centered" aria-hidden="true"></span>
         <p class="mt-5 text-base text-ink-soft sm:text-lg">A closer look at the landscapes, culture and moments that await on our journeys.</p>
     </div>
-    <div class="flex snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] md:grid md:grid-cols-6 md:overflow-visible [&::-webkit-scrollbar]:hidden" tabindex="0" role="region" aria-label="Places in Germany">
-        @foreach($places as [$stem, $label])
-            @php $m = $media($stem); @endphp
-            @continue(! $m)
-            <figure class="group relative h-72 w-[60vw] shrink-0 snap-center overflow-hidden md:h-80 md:w-auto md:shrink">
-                <x-picture :path="$m->path" sizes="(min-width: 640px) 18rem, 72vw" class="h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-brand-navy-dark/85 via-transparent to-transparent" aria-hidden="true"></div>
-                <figcaption class="absolute inset-x-0 bottom-0 p-5 font-display text-2xl text-white">{{ $label }}<span class="mt-2 block h-[3px] w-10 bg-brand-gold transition-all duration-500 group-hover:w-20" aria-hidden="true"></span></figcaption>
-            </figure>
-        @endforeach
-    </div>
-</section>
+    {{-- slow endless scroll: the row is rendered twice and slides left by exactly one copy, then loops seamlessly. Pauses on hover; static and swipeable when reduced motion is on. --}}
+    <style>
+        .places-track{display:flex;width:max-content;animation:places-scroll 80s linear infinite}
+        .places-marquee:hover .places-track,.places-marquee:focus-within .places-track{animation-play-state:paused}
+        @keyframes places-scroll{to{transform:translateX(-50%)}}
+        @media (prefers-reduced-motion:reduce){.places-marquee{overflow-x:auto}.places-track{animation:none}.places-track>[aria-hidden=true]{display:none}}
+    </style>
+    <div class="places-marquee overflow-hidden" role="region" aria-label="Places in Germany">
+        <div class="places-track">
+            @foreach([false, true] as $dup)
+                <div class="flex shrink-0" @if($dup) aria-hidden="true" @endif>
+                    @foreach($places as [$stem, $label])
+                        @php $m = $media($stem); @endphp
+                        @continue(! $m)
+                        <figure class="group relative h-72 w-[68vw] shrink-0 overflow-hidden sm:w-[20rem] md:h-80 md:w-[22rem]">
+                            <x-picture :path="$m->path" sizes="(min-width: 768px) 22rem, 68vw" class="h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105"/>
+                            <div class="absolute inset-0 bg-gradient-to-t from-brand-navy-dark/85 via-transparent to-transparent" aria-hidden="true"></div>
+                            <figcaption class="absolute inset-x-0 bottom-0 p-5 font-display text-2xl text-white">{{ $label }}<span class="mt-2 block h-[3px] w-10 bg-brand-gold transition-all duration-500 group-hover:w-20" aria-hidden="true"></span></figcaption>
+                        </figure>
+                    @endforeach
+                </div>
+            @endforeach
+        </div>
+    </div></section>
 
 {{-- 11. HOW IT WORKS: dark gradient, three numbered steps --}}
 <section class="relative isolate overflow-hidden bg-brand-navy-dark py-16 text-white sm:py-24" aria-labelledby="how-title">
