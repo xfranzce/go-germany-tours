@@ -223,14 +223,14 @@
             <p class="mt-4 text-base text-ink-soft sm:text-lg">Experience fairytale towns, river valleys and hidden gems without the hassle of organising every detail yourself.</p>
             <button type="button" class="btn btn-primary mt-8 px-9" @click="$store.modal.show()">Start planning your Germany adventure <x-icon name="arrow-right" class="h-5 w-5"/></button>
         </div>
-        <ul class="grid gap-4 sm:grid-cols-2">
+        <ul class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 py-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:py-0 [&::-webkit-scrollbar]:hidden" data-carousel="sm" aria-label="Why travel with confidence">
             @foreach([
                 ['shield', 'Peace of mind', 'Carefully planned routes, with support when you need it.'],
                 ['car', 'Your pace, your way', 'Self drive, chauffeur or coach: you choose how you travel.'],
                 ['adjust', 'Guided, yet unrushed', 'A structured journey with flexibility built in.'],
                 ['check', 'Seamless travel', 'Quality stays and smooth transfers throughout.'],
             ] as $i => [$ic, $t, $d])
-                <li class="rounded-xl border border-brand-navy/10 bg-brand-custard-light p-6 transition duration-700 ease-out hover:-translate-y-0.5 hover:border-brand-gold hover:shadow-xl"
+                <li class="w-[82%] shrink-0 snap-center rounded-xl border border-brand-navy/10 bg-brand-custard-light p-6 transition duration-700 ease-out hover:-translate-y-0.5 hover:border-brand-gold hover:shadow-xl sm:w-auto sm:shrink"
                     :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'" style="transition-delay: {{ $i * 120 }}ms">
                     <span class="grid size-12 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-brand-gold/30"><x-icon :name="$ic" class="h-5 w-5"/></span>
                     <h3 class="mt-4 text-lg">{{ $t }}</h3>
