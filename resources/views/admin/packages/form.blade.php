@@ -33,7 +33,7 @@
         <x-admin.field name="destination_id" label="Destination" type="select" :options="$destinations" :value="$package->destination_id" required/>
         <x-admin.field name="nights" label="Nights" type="number" :value="$package->nights" required/>
         <div class="grid grid-cols-[1fr_1fr_6rem] gap-3">
-            <x-admin.field name="price_was" label="'From' price per person (optional, shown crossed out; must be higher than the current price)" type="number" step="0.01" :value="$package->price_was"/>
+            <x-admin.field name="price_was" label="'From' price per person (optional, shown crossed out; must be higher than the current price)" type="number" step="0.01" :value="$package->price_was" help="When this is filled in, the current price is shown without the word From. If this is higher than the current price it is shown crossed out as the old price."/>
             <x-admin.field name="price_from" label="Current price per person" type="number" step="0.01" :value="$package->price_from"/>
             <x-admin.field name="currency" label="Currency" type="select" :options="['USD' => 'USD', 'EUR' => 'EUR', 'GBP' => 'GBP', 'CAD' => 'CAD', 'AUD' => 'AUD']" :value="$package->currency"/>
         </div>

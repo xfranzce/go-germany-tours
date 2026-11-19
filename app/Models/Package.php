@@ -67,10 +67,15 @@ class Package extends Model
         return $this->hasSale() ? 'From '.($this->currency === 'USD' ? '$' : $this->currency.' ').number_format((float) $this->price_was).' pp' : null;
     }
 
+    /**
+     * The price line. "From" is only used for a plain starting price. As soon as a "From" (was) price has been entered, the
+     * current price is shown exactly as it is, without "From": either it is a sale (was price higher, shown crossed out)
+     * or the entered price is not higher, so there is nothing to compare and the price is a fixed one.
+     */
     public function priceLabel(): string
     {
         return $this->price_from
-            ? ($this->hasSale() ? '' : 'From ').($this->currency === 'USD' ? '$' : $this->currency.' ').number_format((float) $this->price_from).' pp'
+            ? (filled($this->price_was) ? '' : 'From ').($this->currency === 'USD' ? '$' : $this->currency.' ').number_format((float) $this->price_from).' pp'
             : 'Price on request';
     }
 }
