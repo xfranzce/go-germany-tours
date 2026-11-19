@@ -58,10 +58,8 @@
 <section class="bg-brand-custard-light py-16 sm:py-24" aria-labelledby="intro-title">
     <div class="container-x grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
         @if($aboutImg)
-            <div class="mx-auto w-full max-w-md lg:max-w-none">
-                <div class="relative aspect-[4/5] overflow-hidden rounded-2xl shadow-card lg:max-w-sm">
-                    <x-picture :path="$aboutImg->path" hires sizes="(min-width: 1024px) 24rem, 90vw" class="h-full w-full object-cover"/>
-                </div>
+            <div class="relative aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-card sm:aspect-[5/4] lg:aspect-auto lg:h-full lg:min-h-[34rem]">
+                <x-picture :path="$aboutImg->path" hires sizes="(min-width: 1536px) 1000px, (min-width: 1024px) 50vw, 100vw" class="absolute inset-0 h-full w-full object-cover"/>
             </div>
         @endif
         <div>
