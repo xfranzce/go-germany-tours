@@ -3,30 +3,51 @@
 ## Built in (verify, don't rebuild)
 - Fully server-rendered HTML, one `<h1>` per page (a test enforces it), semantic landmarks (`header`, `nav`, `main`, `footer`), skip link, descriptive link text.
 - Unique `<title>` and meta description per page (edit in Admin), canonical URL, Open Graph + Twitter cards, per-page `noindex` toggle.
-- JSON-LD: `TravelAgency` (all pages), `BreadcrumbList`, `FAQPage` (home + packages with FAQs), `TouristTrip` (packages; **no price Offer is emitted while a package is flagged Sample**), `Article` (guides).
+- JSON-LD: `TravelAgency` (all pages), `BreadcrumbList`, `FAQPage` (tour type pages, `/faqs` and packages with FAQs; the home page shows no FAQs so it has none), `TouristTrip` (packages; **no price Offer is emitted while a package is flagged Sample**), `Article` (guides).
 - `/sitemap.xml` auto-generated (excludes drafts, noindex, thank-you, admin); `/robots.txt` blocks `/admin`, `/thank-you`, `/enquiry` and lists the sitemap. Filtered package listings (`?type=`/`?destination=`) are `noindex`.
-- Images: WebP, `srcset`, width/height set (no layout shift), lazy below the fold, hero preloaded, alt text mandatory in admin. Fonts self-hosted, `font-display: swap`, preloaded. About 30 KB gzipped JS and 7 KB CSS on public pages. reCAPTCHA loads only when a form is used.
+- Images: WebP, `srcset`, width/height set (no layout shift), lazy below the fold, hero preloaded, alt text mandatory in admin. Fonts self-hosted, `font-display: swap`, preloaded. About 30 KB gzipped JS and 15 KB CSS (brotli) on public pages. reCAPTCHA loads only when a form is used.
 - Security headers, HTTPS HSTS header when served over HTTPS, `.htaccess` compression and long caching for `/build`.
 
-## Lighthouse (mobile, run 2026-11-11 against `php artisan serve`)
-| Page | Perf | A11y | Best practices | SEO |
-|---|---|---|---|---|
-| `/` | 90-94 (varies per run) | 100 | 100 | 100 |
-| `/packages` | 95-96 | 100 | 100 | 100 |
-| `/packages/quedlinburg-and-the-harz-self-drive` | 91-93 | 100 | 100 | 100 |
-| `/contact` | 97-98 | 100 | 100 | 100 |
+## Lighthouse (run 2026-11-19, Lighthouse 13.6, Chrome headless)
+Pages: the home page `/` and one package page `/packages/germany-fairytale-towns-coach-tour`, each at **mobile** (412x823, simulated slow 4G, 4x CPU) and **desktop**. Every category is now 90 or above.
 
-Home and package pages sit only just above 90 (LCP about 3 s on simulated slow 4G; the hero image is the LCP element). Dev-server numbers; no gzip/HTTP caching, so production on Hostinger should be the same or better. Re-run on the live site (Chrome DevTools > Lighthouse > Mobile).
+| Page | Size | Perf | A11y | Best practices | SEO | LCP |
+|---|---|---|---|---|---|---|
+| `/` | Mobile | 99-100 | 100 | 100 | 100 | 1.0 s |
+| `/` | Desktop | 100 | 100 | 100 | 100 | 0.3 s |
+| `/packages/germany-fairytale-towns-coach-tour` | Mobile | 95-97 | 100 | 100 | 100 | 2.5 s |
+| `/packages/germany-fairytale-towns-coach-tour` | Desktop | 100 | 100 | 100 | 100 | 0.6 s |
+
+CLS is 0 and TBT 0-180 ms everywhere. Package mobile LCP is the first gallery photo (preloaded; it sits just under the page header).
+
+**How it was measured.** The live host (Hostinger CDN) answers Lighthouse with `403`, so the live site cannot be audited with it (use PageSpeed Insights or Chrome DevTools on the live site instead). The numbers above are from a local copy behind `scripts/lighthouse-proxy.mjs`, which serves `public/` files directly with brotli and the production cache headers (`php artisan serve` alone is single-threaded and uncompressed: it scored 77 and 86 on mobile purely because of that). Best practices reads 96 if you test through the proxy because assets are linked to `APP_URL` (:8000) and Chrome logs CORS errors; test `php artisan serve` directly for that category, or set `APP_URL=http://127.0.0.1:8001`.
+```
+php artisan serve                      # terminal 1
+node scripts/lighthouse-proxy.mjs      # terminal 2 (project root)
+npx lighthouse http://127.0.0.1:8001/ --preset=desktop --view      # or omit --preset for mobile
+```
+Run each mobile test a couple of times and ignore a first run straight after editing a Blade file (view recompile makes FCP spike to about 4.5 s).
+
+**What was fixed (everything that scored under 90 or lost points):**
+- Accessibility (home 96): the "Itineraries" and counter blocks were `<dl>`s with the `<dd>` before the `<dt>`. Now `<dt>` then `<dd>`, shown value-over-label with `flex-col-reverse`.
+- SEO (home 92): 21 "More info" links had no descriptive text. They now read "Explore Self Drive" (tour types) and "View details" (packages).
+- Header logo link: `aria-label` ("Go Germany Tours home") did not contain the visible text; it is now the plain brand name.
+- Signature cards: image `sizes` match the new mobile carousel width.
+- Package page: preload for the first gallery photo.
+- Gotcha found on the way: do **not** put `sr-only` (absolutely positioned) text inside the home page carousels. It made Chrome report an off-screen card photo as the LCP element and the mobile score fell to 61-88. Use visible descriptive text or `aria-label` for names instead (but Lighthouse `link-text` only reads visible text).
+
+**Not covered:** other pages (about, contact, guides, tour types) were not re-run this time; the 2026-11-11 results were 97-98 for `/contact` and 95-96 for `/packages`. The photos are served with 7-day cache headers (`/build` is immutable for a year); long-lived caching for `/storage` is a possible later gain.
 
 ## Before launch
 - [ ] Replace every `[CONFIRM: ...]`, SAMPLE and PLACEHOLDER item (CONTENT_TO_CONFIRM.md).
 - [ ] Real **reCAPTCHA keys** (domain registered), test keys removed.
-- [ ] Legal company name set (it appears in the consent text). Terms and Privacy **reviewed by a lawyer**; bump the terms version.
+- [x] Legal company name set ("Go German Tours"; it appears in the consent text).
+- [ ] Terms and Privacy **reviewed by a lawyer**; bump the terms version.
 - [ ] Phone/email/address set; notification emails set and a real enquiry email received.
 - [ ] GTM ID set; conversion fires once on `/thank-you` (Tag Assistant). GHL: `ghl:setup`, `ghl:test`, one live enquiry appears with UTMs.
 - [ ] `APP_ENV=production`, `APP_DEBUG=false`, HTTPS forced, `www`/non-www redirect chosen, canonical host matches.
 - [ ] Search Console: verify domain, submit `sitemap.xml`; check Coverage/Enhancements for structured data.
-- [ ] Rich Results Test on home (FAQ) and one package.
+- [ ] Rich Results Test on `/faqs` (FAQ) and one package.
 - [ ] Titles <= 60-70 chars, descriptions 120-160 chars, unique; share image set; favicon set.
 - [ ] Every image has meaningful alt text; photo credits page still linked (CC BY).
 - [ ] Mobile check at 360, 768, 1280: no horizontal scroll, tap targets, sticky header, modal, quiz.

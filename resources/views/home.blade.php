@@ -89,7 +89,7 @@
                 @php $incl = array_slice(array_values(array_filter(array_map('trim', preg_split('/\R/', (string) $t->inclusions)))), 0, 3); @endphp
                 {{-- photo card: photo fills the card, dark fade, icon + title + copy over it --}}
                 <article class="group relative isolate flex min-h-[30rem] w-[82%] shrink-0 snap-center flex-col md:w-auto md:shrink justify-end overflow-hidden rounded-2xl bg-brand-navy-dark text-white shadow-card">
-                    <x-picture :path="$t->image" sizes="(min-width: 768px) 24rem, 92vw" class="absolute inset-0 -z-20 h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105"/>
+                    <x-picture :path="$t->image" sizes="(min-width: 768px) 24rem, 82vw" class="absolute inset-0 -z-20 h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105"/>
                     <div class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-dark via-brand-navy-dark/75 to-brand-navy-dark/10" aria-hidden="true"></div>
                     <div class="p-6 pt-40">
                         <div class="flex items-center gap-3">
@@ -102,7 +102,7 @@
                                 @foreach($incl as $i)<li class="flex items-start gap-2"><x-icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-brand-gold"/>{{ $i }}</li>@endforeach
                             </ul>
                         @endif
-                        <a href="{{ route('tours.show', $t->slug) }}" class="mt-4 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-[0.16em] text-brand-gold hover:underline">More info <x-icon name="arrow-right" class="h-4 w-4"/></a>
+                        <a href="{{ route('tours.show', $t->slug) }}" class="mt-4 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-[0.16em] text-brand-gold hover:underline">Explore {{ $t->name }} <x-icon name="arrow-right" class="h-4 w-4"/></a>
                         <div class="mt-5 grid grid-cols-2 gap-2">
                             <x-button size="sm" data-title="Get a quote: {{ $t->name }}" data-prefill="Interested in: {{ $t->name }} tours."
                                       @click="$store.modal.show({form:'package_quote', ...$el.dataset})">Get a quote</x-button>
@@ -163,7 +163,7 @@
                     <p class="eyebrow flex items-center gap-2 text-brand-red-dark"><x-icon :name="$icons[$t->slug] ?? 'pin'" class="h-5 w-5"/>{{ $t->name }}</p>
                     <h2 id="pk-{{ $t->slug }}" class="mt-3">{{ $t->name }} <em class="font-medium italic text-brand-red">packages</em></h2>
                 </div>
-                <dl class="shrink-0 text-center"><dd class="font-display text-4xl text-brand-navy">{{ $all->count() }}</dd><dt class="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-ink-soft">Itineraries</dt></dl>
+                <dl class="flex shrink-0 flex-col-reverse text-center"><dt class="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-ink-soft">Itineraries</dt><dd class="font-display text-4xl text-brand-navy">{{ $all->count() }}</dd></dl>
             </div>
             {{-- navy cards, swipe row --}}
             <div class="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:mx-0 sm:px-0 md:grid md:grid-cols-3 md:overflow-visible [&::-webkit-scrollbar]:hidden" data-carousel="md" aria-label="{{ $t->name }} packages">
@@ -185,7 +185,7 @@
                             <div class="mt-4 grid grid-cols-2 gap-2">
                                 <x-button size="sm" data-title="Get a quote" data-subtitle="{{ $package->title }}"
                                           @click="$store.modal.show({form:'package_quote', packageId: {{ $package->id }}, ...$el.dataset})">Get a quote</x-button>
-                                <x-button :href="$package->url()" variant="outline-light" size="sm">More info</x-button>
+                                <x-button :href="$package->url()" variant="outline-light" size="sm">View details</x-button>
                             </div>
                         </div>
                     </article>
@@ -206,7 +206,7 @@
             <em class="block font-medium italic text-brand-gold">Book your dream tour today!</em></h2>
         <dl class="mx-auto mt-10 grid max-w-2xl grid-cols-3 gap-3 sm:gap-4">
             @foreach([[$destCount, 'Destinations'], [$packages->count(), 'Germany tours'], [$tourTypes->count(), 'Ways to travel']] as [$n, $l])
-                <div class="rounded-xl border border-white/25 bg-white/10 px-2 py-5 backdrop-blur"><dd class="font-display text-4xl text-brand-gold sm:text-5xl">{{ $n }}</dd><dt class="mt-2 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-white/85 sm:text-xs">{{ $l }}</dt></div>
+                <div class="flex flex-col-reverse rounded-xl border border-white/25 bg-white/10 px-2 py-5 backdrop-blur"><dt class="mt-2 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-white/85 sm:text-xs">{{ $l }}</dt><dd class="font-display text-4xl text-brand-gold sm:text-5xl">{{ $n }}</dd></div>
             @endforeach
         </dl>
         <button type="button" class="btn btn-primary mt-10 px-10 shadow-lg shadow-black/30" @click="$store.modal.show()">Get quote now! <x-icon name="arrow-right" class="h-5 w-5"/></button>

@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@php $lcpMedia = \App\Models\Media::forPath($package->images->first()?->path); @endphp
+@if($lcpMedia)
+    @push('head')
+        {{-- the first gallery photo is the largest thing above the fold: start fetching it straight away --}}
+        <link rel="preload" as="image" href="{{ $lcpMedia->url(1280) }}" imagesrcset="{{ $lcpMedia->srcset() }}" imagesizes="(min-width: 1024px) 46rem, 100vw" fetchpriority="high">
+    @endpush
+@endif
+
 @section('content')
 @include('partials.page-header', [
     'title' => $package->title,

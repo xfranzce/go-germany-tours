@@ -57,6 +57,7 @@ Live site (Hostinger) is updated with `GGT_SSH_PASSWORD=... bash scripts/deploy.
 - Mobile carousels: add `data-carousel="md|sm"` (breakpoint where it stops being a carousel; `data-carousel-light` on dark backgrounds) to a snap-scroll row and `app.js` adds arrows + dots under it.
 
 ## Gotchas
+- Lighthouse: the live host returns 403 to it. Audit a local copy through `node scripts/lighthouse-proxy.mjs` (see `docs/reference/SEO_CHECKLIST.md`); all categories are 90+ on the home and package pages. Do not put `sr-only` text inside the home carousels (it makes Chrome report an off-screen photo as the LCP element).
 - `Setting` values are cached (`settings.all`) and memoised per process: tests call `Setting::flush()`.
 - `php artisan migrate:fresh --seed` does not delete files in `storage/app/public/media`; clear it by hand if you reseed repeatedly.
 - `public/robots.txt` must not exist (robots is a route).
