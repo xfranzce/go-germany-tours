@@ -5,7 +5,7 @@ Nothing below was invented as fact. Each item is a placeholder (`[CONFIRM: ...]`
 ## Business details (Admin > Site settings)
 | Item | Now | Where it shows |
 |---|---|---|
-| **Legal company name** | `[CONFIRM: legal company name]` | **Consent text beside every form (also stored as evidence)**, footer, legal pages |
+| ~~Legal company name~~ | Done: "Go German Tours" (Admin > Site settings > company name) | Consent text, footer, legal pages |
 | Phone and display format | empty (hidden everywhere) | top bar, footer, contact page, CTA |
 | Public email | empty (hidden) | top bar, footer, contact page |
 | Address | empty (hidden) | footer, contact, structured data |

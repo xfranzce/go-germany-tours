@@ -43,7 +43,7 @@ return [
     // Default site settings (override in admin).
     'defaults' => [
         'brand_name' => 'Go Germany Tours',
-        'company_name' => '[CONFIRM: legal company name]',
+        'company_name' => 'Go German Tours',
         'tagline' => 'Fairytale towns, castles and river valleys, planned for you',
         'phone' => '',
         'phone_display' => '',
