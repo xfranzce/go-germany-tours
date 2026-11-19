@@ -20,6 +20,7 @@
 {{-- 1. HERO: full-height photo, eyebrow, headline, intro, "complete the survey" with the quiz centred, trust row at the bottom --}}
 <section class="relative isolate flex flex-col items-center overflow-hidden bg-brand-navy-dark text-center text-white lg:min-h-[44rem]" aria-labelledby="hero-title">
     @if($heroMedia)<x-picture :path="$heroPath" priority hires sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover"/>@endif
+    <x-video-bg src="hero.mp4" class="absolute inset-0 -z-[15] h-full w-full object-cover"/>
     <div class="absolute inset-0 -z-10 bg-gradient-to-b from-brand-navy-dark/85 via-brand-navy-dark/55 to-brand-navy-dark/90" aria-hidden="true"></div>
     <div class="container-x flex max-w-3xl flex-1 flex-col items-center pt-32 pb-8 sm:pt-36">
         <p class="eyebrow centered text-brand-gold">Authentic Germany experiences</p>
