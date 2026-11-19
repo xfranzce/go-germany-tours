@@ -16,6 +16,7 @@ class TestHomeController extends Controller
 
         return view('test-home', [
             'page' => $page,
+            'testimonials' => \App\Models\Testimonial::active()->get(),
             'tourTypes' => TourType::active()->get(),
             'packages' => Package::published()->orderByDesc('is_featured')->orderBy('sort')->with(['tourType', 'destination', 'images'])->get(),
             'seo' => Seo::make('Design test page', 'Design test page.', ['noindex' => true, 'canonical' => route('test-home')]),
