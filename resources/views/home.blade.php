@@ -63,11 +63,11 @@
                 <x-picture :path="$aboutImg->path" hires sizes="(min-width: 1536px) 1000px, (min-width: 1024px) 50vw, 100vw" class="absolute inset-0 h-full w-full object-cover"/>
             </div>
         @endif
-        <div>
-            <p class="eyebrow text-brand-red-dark">Discover Germany</p>
+        <div class="text-center lg:text-left">
+            <p class="eyebrow text-brand-red-dark after:h-px after:w-7 after:bg-current after:content-[''] lg:after:hidden">Discover Germany</p>
             <h2 id="intro-title" class="mt-4">A <em class="font-medium italic text-brand-red">Germany trip</em>
                 <span class="block">that is truly yours</span></h2>
-            <span class="flag-rule" aria-hidden="true"></span>
+            <span class="flag-rule max-lg:mx-auto" aria-hidden="true"></span>
             <p class="mt-6 text-base text-ink-soft sm:text-lg">Expertly planned Germany vacation packages, including self-drive, chauffeur-driven and coach tours.</p>
             <p class="mt-4 text-base text-ink-soft sm:text-lg">Perfect for families, couples, friends and special occasions, with every detail shaped around how you like to travel.</p>
             <button type="button" class="btn btn-primary mt-8 px-9" @click="$store.modal.show()">Get instant quote <x-icon name="arrow-right" class="h-5 w-5"/></button>
