@@ -277,13 +277,16 @@
         </div>
         <ol class="grid gap-6 md:grid-cols-3">
             @foreach([
-                ['Get your free quote', 'Share your travel preferences and a member of the team will reply with your quote.'],
-                ['Review your itinerary', 'Review your itinerary and pricing, and make any final adjustments with our team.'],
-                ['Travel with confidence', 'We organise hotels, transport and experiences, so you can simply arrive and enjoy Germany.'],
-            ] as $i => [$t, $d])
+                ['document', 'Get your free quote', 'Share your travel preferences and a member of the team will reply with your quote.'],
+                ['pin', 'Review your itinerary', 'Review your itinerary and pricing, and make any final adjustments with our team.'],
+                ['shield', 'Travel with confidence', 'We organise hotels, transport and experiences, so you can simply arrive and enjoy Germany.'],
+            ] as $i => [$ic, $t, $d])
                 <li class="rounded-2xl border border-white/15 bg-white/5 p-8 backdrop-blur">
-                    <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-gold">Step 0{{ $i + 1 }}/03</span>
-                    <h3 class="mt-3 text-white">{{ $t }}</h3>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-gold">Step 0{{ $i + 1 }}/03</span>
+                        <span class="grid size-12 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-black/30" aria-hidden="true"><x-icon :name="$ic" class="h-6 w-6"/></span>
+                    </div>
+                    <h3 class="mt-5 text-white">{{ $t }}</h3>
                     <p class="mt-3 text-white/80">{{ $d }}</p>
                 </li>
             @endforeach
