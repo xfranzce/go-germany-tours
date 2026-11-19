@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 
+// Unlisted design test page: no menu link, noindex, not in the sitemap.
+Route::get('/test-home', \App\Http\Controllers\TestHomeController::class)->name('test-home');
+
 Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
 Route::get('/packages/{package:slug}', [PackageController::class, 'show'])->name('packages.show');
 Route::get('/destinations/{slug}', [DestinationController::class, 'show'])->name('destinations.show');
