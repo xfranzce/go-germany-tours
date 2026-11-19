@@ -13,7 +13,7 @@
         ['admin.dashboard', 'Dashboard', 'dashboard'], ['admin.enquiries.index', 'Enquiries', 'inbox'], ['admin.packages.index', 'Packages', 'cube'],
         ['admin.tour-types.index', 'Tour types', 'tag'], ['admin.destinations.index', 'Destinations', 'pin'], ['admin.quiz.index', 'Hero quiz', 'adjust'],
         ['admin.pages.index', 'Pages', 'document'], ['admin.testimonials.index', 'Testimonials', 'star'], ['admin.faqs.index', 'FAQs', 'question'], ['admin.team.index', 'Team', 'users'],
-        ['admin.posts.index', 'Travel guides', 'book'], ['admin.media.index', 'Media', 'photo'], ['admin.settings.edit', 'Site settings', 'cog'], ['admin.snippets.index', 'Header & Footer', 'document'], ['admin.ghl.edit', 'GoHighLevel', 'bolt'], ['admin.sheets.edit', 'Google Sheets', 'table'], ['admin.recaptcha.edit', 'reCAPTCHA', 'shield'], ['admin.users.index', 'Admin users', 'users'],
+        ['admin.posts.index', 'Travel guides', 'book'], ['admin.media.index', 'Media', 'photo'], ['admin.settings.edit', 'Site settings', 'cog'], ['admin.snippets.index', 'Header & Footer', 'document'], ['admin.maintenance.edit', 'Maintenance mode', 'clock'],['admin.ghl.edit', 'GoHighLevel', 'bolt'], ['admin.sheets.edit', 'Google Sheets', 'table'], ['admin.recaptcha.edit', 'reCAPTCHA', 'shield'], ['admin.users.index', 'Admin users', 'users'],
     ];
     $adminUser = auth('admin')->user();
     $links = array_values(array_filter($links, fn ($l) => $adminUser->canAccessRoute($l[0]) && ! ($adminUser->isEditor() && $l[0] === 'admin.dashboard')));
@@ -42,6 +42,7 @@
             <div class="flex gap-2 flex-wrap">@yield('actions')</div>
         </div>
 
+        @if(\App\Http\Middleware\MaintenanceMode::enabled() && ! $adminUser->isEditor())<a href="{{ route('admin.maintenance.edit') }}" class="mb-4 block rounded-lg border border-brand-red bg-red-50 p-3 font-bold text-brand-red-dark" role="status">Maintenance mode is ON: visitors see the maintenance page. Click here to turn it off.</a>@endif
         @if(session('status'))<div class="mb-4 rounded-lg bg-green-100 border border-green-600 text-green-900 font-bold p-3" role="status">{{ session('status') }}</div>@endif
         @if($errors->any())
             <div class="mb-4 rounded-lg bg-red-50 border border-brand-red text-brand-red-dark p-3" role="alert">

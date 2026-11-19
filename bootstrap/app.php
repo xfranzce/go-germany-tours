@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\CaptureTracking;
 use App\Http\Middleware\EnsureAdminRole;
+use App\Http\Middleware\MaintenanceMode;
 use App\Http\Middleware\SecurityHeaders;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -14,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->web(append: [SecurityHeaders::class, CaptureTracking::class]);
+        $middleware->web(append: [SecurityHeaders::class, MaintenanceMode::class, CaptureTracking::class]);
         $middleware->redirectGuestsTo(fn () => route('admin.login'));
         $middleware->redirectUsersTo(fn () => route('admin.dashboard'));
         $middleware->alias(['admin.role' => EnsureAdminRole::class]);
