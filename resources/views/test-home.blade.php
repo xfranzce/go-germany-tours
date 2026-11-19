@@ -320,10 +320,11 @@
 
 {{-- 13. EARLY-BIRD BAND: photo with left-to-right navy fade --}}
 @php $eb = $media('coach-tour-cochem'); @endphp
-<section class="relative isolate overflow-hidden bg-brand-navy-dark flex min-h-[34rem] items-center py-16 text-white sm:min-h-[40rem] lg:min-h-[46rem] sm:py-24" aria-labelledby="lock-title">
-    @if($eb)<x-picture :path="$eb->path" hires sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover object-[75%_100%]"/>@endif
+<section class="relative isolate overflow-hidden bg-brand-navy-dark py-16 text-white sm:py-24" aria-labelledby="lock-title">
+    {{-- phones: photo fills the band. lg+: the whole photo (3:2) sits on the right at the band height, fading into the navy on its left, so group and bus both show without making the band taller --}}
+    @if($eb)<div class="absolute inset-y-0 right-0 -z-20 w-full lg:aspect-[3/2] lg:w-auto lg:[mask-image:linear-gradient(to_right,transparent,#000_30%)]"><x-picture :path="$eb->path" hires sizes="(min-width: 1024px) 60vw, 100vw" class="h-full w-full object-cover object-[75%_100%] lg:object-center"/></div>@endif
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/95 via-brand-navy-dark/65 to-brand-navy-dark/15" aria-hidden="true"></div>
-    <div class="container-x w-full">
+    <div class="container-x">
         <div class="max-w-xl">
             <p class="eyebrow text-brand-gold">Early-bird pricing</p>
             <h2 id="lock-title" class="mt-4 text-white">Lock in your next adventure.</h2>
