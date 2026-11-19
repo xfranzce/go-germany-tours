@@ -165,3 +165,17 @@
 @keyframes banner-zoom { from { transform: scale(1); } to { transform: scale(1.12); } }
 .banner-zoom { animation: banner-zoom 28s ease-in-out infinite alternate; transform-origin: 60% 55%; }
 @media (prefers-reduced-motion: reduce) { .banner-zoom { animation: none; } }
+
+/* Scroll reveal (see initReveal in app.js): hidden state, then the section gets .rv-in when it scrolls into view */
+@media (prefers-reduced-motion: no-preference) {
+    [data-reveal] { overflow-x: clip; }
+    .rv { opacity: 0; transition: opacity .85s cubic-bezier(.22, .7, .2, 1) var(--rv-d, 0ms), transform .85s cubic-bezier(.22, .7, .2, 1) var(--rv-d, 0ms), filter .85s ease var(--rv-d, 0ms); will-change: opacity, transform; }
+    .rv-up { transform: translateY(2.5rem); }
+    .rv-rise { transform: translateY(4rem) scale(.96); }
+    .rv-left { transform: translateX(-2.5rem); }
+    .rv-right { transform: translateX(2.5rem); }
+    .rv-zoom { transform: scale(.92); }
+    .rv-blur { transform: translateY(1.5rem); filter: blur(10px); }
+    .rv-pop { transform: scale(.6) rotate(-8deg); transition-timing-function: cubic-bezier(.34, 1.56, .64, 1); }
+    .rv-in .rv { opacity: 1; transform: none; filter: none; }
+}

@@ -9,7 +9,6 @@
     $icons = ['self-drive' => 'car', 'chauffeur-driven' => 'chauffeur', 'coach-tours' => 'bus'];
     $media = fn (string $stem) => \App\Models\Media::query()->where('path', 'like', "media/{$stem}-%")->first();
     $destCount = \App\Models\Destination::active()->count();
-    $reveal = "x-data=\"{ shown: false }\" x-init=\"const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { shown = true; o.disconnect() } }, { threshold: 0.12 }); o.observe(\$el)\"";
     $places = [
         ['quedlinburg-lane', 'Quedlinburg'], ['neuschwanstein-castle', 'Neuschwanstein'], ['cochem-mosel', 'Cochem'],
         ['saxon-switzerland-bastei', 'Saxon Switzerland'], ['hiddensee-beach', 'Hiddensee'], ['bacharach-rhine', 'Bacharach'],
@@ -38,8 +37,8 @@
 </section>
 
 {{-- 2. PROMISES (dark band, four columns divided by thin lines) + at-a-glance counts --}}
-<section class="hidden bg-brand-navy-dark text-white sm:block" aria-label="Why book with us">
-    <ul class="mx-auto grid max-w-[1390px] sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-white/15">
+<section class="hidden bg-brand-navy-dark text-white sm:block" aria-label="Why book with us" data-reveal="up">
+    <ul class="mx-auto grid max-w-[1390px] sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-white/15" data-reveal-stagger>
         @foreach([
             ['No hidden fees', 'What you see is what you pay. No surprises, just great value.'],
             ['Clear, honest pricing', 'Know what is included before you decide.'],
@@ -56,7 +55,7 @@
 
 {{-- 3. ABOUT INTRO (soft tinted, centred) --}}
 @php $aboutImg = $media('quedlinburg-lane') ?? $media('saxon-switzerland-bastei'); @endphp
-<section class="bg-brand-custard-light py-16 sm:py-24" aria-labelledby="intro-title">
+<section class="bg-brand-custard-light py-16 sm:py-24" aria-labelledby="intro-title" data-reveal="split">
     <div class="container-x grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
         @if($aboutImg)
             <div class="relative aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-card sm:aspect-[5/4] lg:aspect-auto lg:h-full lg:min-h-[34rem]">
@@ -76,7 +75,7 @@
 </section>
 
 {{-- 4. SIGNATURE VACATION: three cards (icon, tagline, summary, three ticks, three buttons) --}}
-<section class="bg-white py-14 sm:py-20" aria-labelledby="sig-title" id="tours">
+<section class="bg-white py-14 sm:py-20" aria-labelledby="sig-title" id="tours" data-reveal="rise">
     <div class="container-x">
         <div class="mx-auto mb-12 max-w-3xl text-center">
             <p class="eyebrow centered text-brand-red-dark">Signature vacation</p>
@@ -84,7 +83,7 @@
             <span class="flag-rule centered" aria-hidden="true"></span>
             <p class="mt-5 text-base text-ink-soft sm:text-lg">Choose the travel style that suits you. Each is designed for comfort, ease and memorable experiences.</p>
         </div>
-        <div class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden" data-carousel="md" aria-label="Ways to travel">
+        <div class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden" data-carousel="md" aria-label="Ways to travel" data-reveal-stagger>
             @foreach($tourTypes as $t)
                 @php $incl = array_slice(array_values(array_filter(array_map('trim', preg_split('/\R/', (string) $t->inclusions)))), 0, 3); @endphp
                 {{-- photo card: photo fills the card, dark fade, icon + title + copy over it --}}
@@ -117,7 +116,7 @@
 </section>
 
 {{-- 5. DISCOUNT BLOCK (white to tint to white); uses our real early bird offer --}}
-<section class="bg-gradient-to-b from-white via-brand-custard-light to-white py-10 sm:py-24" aria-labelledby="offer-title">
+<section class="bg-gradient-to-b from-white via-brand-custard-light to-white py-10 sm:py-24" aria-labelledby="offer-title" data-reveal="pop">
     <div class="container-x grid items-center gap-5 text-center sm:gap-8 lg:gap-14 lg:text-left lg:grid-cols-[auto_1fr_minmax(0,0.8fr)]">
         <div class="mx-auto hidden size-36 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-xl shadow-brand-navy/20 sm:grid sm:size-44 lg:mx-0" aria-hidden="true">
             <span class="text-center font-display font-extrabold leading-none"><span class="block text-6xl">25%</span><span class="mt-1 block text-sm uppercase tracking-[0.2em]">off</span></span>
@@ -166,7 +165,7 @@
                 <dl class="flex shrink-0 flex-col-reverse text-center"><dt class="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-ink-soft">Itineraries</dt><dd class="font-display text-4xl text-brand-navy">{{ $all->count() }}</dd></dl>
             </div>
             {{-- navy cards, swipe row --}}
-            <div class="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:mx-0 sm:px-0 md:grid md:grid-cols-3 md:overflow-visible [&::-webkit-scrollbar]:hidden" data-carousel="md" aria-label="{{ $t->name }} packages">
+            <div class="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:mx-0 sm:px-0 md:grid md:grid-cols-3 md:overflow-visible [&::-webkit-scrollbar]:hidden" data-carousel="md" aria-label="{{ $t->name }} packages" data-reveal-stagger>
                 @foreach($list as $package)
                     <article class="flex w-[82%] shrink-0 snap-center flex-col overflow-hidden rounded-2xl bg-brand-navy text-white shadow-card sm:w-[22rem] md:w-auto md:shrink">
                         <a href="{{ $package->url() }}" class="relative block aspect-[3/2] overflow-hidden bg-brand-navy-dark" tabindex="-1" aria-hidden="true">
@@ -197,7 +196,7 @@
 
 {{-- 7. "START YOUR ADVENTURE" photo band with counters --}}
 @php $cta = $media('neuschwanstein-castle'); @endphp
-<section class="relative isolate overflow-hidden bg-brand-navy-dark py-16 text-center text-white sm:py-24" aria-labelledby="adv-title">
+<section class="relative isolate overflow-hidden bg-brand-navy-dark py-16 text-center text-white sm:py-24" aria-labelledby="adv-title" data-reveal="zoom">
     @if($cta)<x-picture :path="$cta->path" hires sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover"/>@endif
     <div class="absolute inset-0 -z-10 bg-brand-navy-dark/70" aria-hidden="true"></div>
     <div class="container-x max-w-4xl">
@@ -214,7 +213,7 @@
 </section>
 
 {{-- 8. TRAVEL WITH CONFIDENCE: copy left, four cards right --}}
-<section class="bg-white py-16 sm:py-24" aria-labelledby="conf-title" {!! $reveal !!}>
+<section class="bg-white py-16 sm:py-24" aria-labelledby="conf-title" data-reveal="split">
     <div class="container-x grid gap-12 lg:grid-cols-2 lg:gap-20">
         <div class="text-center lg:text-left">
             <p class="eyebrow text-brand-red-dark after:h-px after:w-7 after:bg-current after:content-[''] lg:after:hidden">Travel with confidence</p>
@@ -225,7 +224,7 @@
             <p class="mt-4 text-base text-ink-soft sm:text-lg">Experience fairytale towns, river valleys and hidden gems without the hassle of organising every detail yourself.</p>
             <button type="button" class="btn btn-primary mt-8 px-9" @click="$store.modal.show()">Start planning your Germany adventure <x-icon name="arrow-right" class="h-5 w-5"/></button>
         </div>
-        <ul class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 py-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:py-0 [&::-webkit-scrollbar]:hidden" data-carousel="sm" aria-label="Why travel with confidence">
+        <ul class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 py-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:py-0 [&::-webkit-scrollbar]:hidden" data-carousel="sm" aria-label="Why travel with confidence" data-reveal-stagger>
             @foreach([
                 ['shield', 'Peace of mind', 'Carefully planned routes, with support when you need it.'],
                 ['car', 'Your pace, your way', 'Self drive, chauffeur or coach: you choose how you travel.'],
@@ -233,7 +232,7 @@
                 ['check', 'Seamless travel', 'Quality stays and smooth transfers throughout.'],
             ] as $i => [$ic, $t, $d])
                 <li class="w-[82%] shrink-0 snap-center rounded-xl border border-brand-navy/10 bg-brand-custard-light p-6 transition duration-700 ease-out hover:-translate-y-0.5 hover:border-brand-gold hover:shadow-xl sm:w-auto sm:shrink"
-                    :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'" style="transition-delay: {{ $i * 120 }}ms">
+                   >
                     <span class="grid size-12 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-brand-gold/30"><x-icon :name="$ic" class="h-5 w-5"/></span>
                     <h3 class="mt-4 text-lg">{{ $t }}</h3>
                     <p class="mt-2 text-sm text-ink-soft">{{ $d }}</p>
@@ -244,10 +243,10 @@
 </section>
 
 {{-- 9. REVIEWS (shared home section; only shows real testimonials) --}}
-@include('partials.sections.reviews')
+<div data-reveal="fade">@include('partials.sections.reviews')</div>
 
 {{-- 10. BEGIN YOUR JOURNEY: strip of places --}}
-<section class="bg-white py-14 sm:py-20" aria-labelledby="places-title">
+<section class="bg-white py-14 sm:py-20" aria-labelledby="places-title" data-reveal="blur">
     <div class="container-x mb-10 max-w-3xl text-center">
         <p class="eyebrow centered text-brand-red-dark">Begin your journey</p>
         <h2 id="places-title" class="mt-4">Discover the best of Germany</h2>
@@ -280,7 +279,7 @@
     </div></section>
 
 {{-- 11. HOW IT WORKS: dark gradient, three numbered steps --}}
-<section class="relative isolate overflow-hidden bg-brand-navy-dark py-16 text-white sm:py-24" aria-labelledby="how-title">
+<section class="relative isolate overflow-hidden bg-brand-navy-dark py-16 text-white sm:py-24" aria-labelledby="how-title" data-reveal="rise">
     <div class="pointer-events-none absolute -z-10 -top-32 -left-32 size-[30rem] rounded-full bg-brand-gold/15 blur-[120px]" aria-hidden="true"></div>
     <div class="pointer-events-none absolute -z-10 -bottom-32 -right-32 size-[26rem] rounded-full bg-brand-red/20 blur-[120px]" aria-hidden="true"></div>
     <div class="container-x">
@@ -290,7 +289,7 @@
             <span class="flag-rule centered" aria-hidden="true"></span>
             <p class="mt-5 text-base text-white/85 sm:text-lg">Enjoy a stress-free journey with every detail expertly arranged.</p>
         </div>
-        <ol class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden" data-carousel="md" data-carousel-light aria-label="How it works">
+        <ol class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden" data-carousel="md" data-carousel-light aria-label="How it works" data-reveal-stagger>
             @foreach([
                 ['document', 'Get your free quote', 'Share your travel preferences and a member of the team will reply with your quote.'],
                 ['pin', 'Review your itinerary', 'Review your itinerary and pricing, and make any final adjustments with our team.'],
@@ -311,7 +310,7 @@
 </section>
 
 {{-- 12. LET'S PLAN YOUR JOURNEY (tinted band) --}}
-<section class="bg-brand-custard-light py-14 text-center sm:py-20" aria-labelledby="plan-title">
+<section class="bg-brand-custard-light py-14 text-center sm:py-20" aria-labelledby="plan-title" data-reveal="zoom">
     <div class="container-x max-w-3xl">
         <p class="eyebrow centered text-brand-red-dark">Begin your journey</p>
         <h2 id="plan-title" class="mt-4">Let's plan your <em class="font-medium italic text-brand-red">Germany journey.</em></h2>
@@ -328,7 +327,7 @@
 
 {{-- 13. EARLY-BIRD BAND: photo with left-to-right navy fade --}}
 @php $eb = $media('coach-tour-cochem'); @endphp
-<section class="relative isolate overflow-hidden bg-brand-navy-dark py-16 text-white sm:py-24" aria-labelledby="lock-title">
+<section class="relative isolate overflow-hidden bg-brand-navy-dark py-16 text-white sm:py-24" aria-labelledby="lock-title" data-reveal="left">
     {{-- phones: photo fills the band. lg+: the whole photo (3:2) sits on the right at the band height, fading into the navy on its left, so group and bus both show without making the band taller --}}
     @if($eb)<div class="absolute inset-y-0 right-0 -z-20 w-full lg:aspect-[3/2] lg:w-auto lg:[mask-image:linear-gradient(to_right,transparent,#000_30%)]"><x-picture :path="$eb->path" hires sizes="(min-width: 1024px) 60vw, 100vw" class="h-full w-full object-cover object-[75%_100%] lg:object-center"/></div>@endif
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/95 via-brand-navy-dark/65 to-brand-navy-dark/15 max-lg:from-brand-navy-dark/80 max-lg:via-brand-navy-dark/75 max-lg:to-brand-navy-dark/70" aria-hidden="true"></div>

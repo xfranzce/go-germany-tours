@@ -253,5 +253,53 @@ function initDragScroll() {
 }
 document.addEventListener('DOMContentLoaded', initDragScroll);
 
+/* ------------------------------------------------------------------
+ | Scroll reveal: a section marked data-reveal="<effect>" animates its
+ | content in when it scrolls into view. Effects: up, rise, left, split
+ | (first block from the left, last from the right), pop, zoom, blur,
+ | fade. Rows marked data-reveal-stagger animate card by card. Nothing
+ | is hidden for visitors who prefer reduced motion or without
+ | IntersectionObserver, and the helper classes are removed once the
+ | animation is done so hover effects on the cards work as normal.
+ * ------------------------------------------------------------------ */
+function initReveal() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    const sections = [...document.querySelectorAll('[data-reveal]')];
+    if (!sections.length) return;
+
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const sec = entry.target;
+            io.unobserve(sec);
+            sec.classList.add('rv-in');
+            const items = sec._rvItems || [];
+            setTimeout(() => items.forEach((el) => {
+                el.classList.remove('rv', 'rv-up', 'rv-rise', 'rv-left', 'rv-right', 'rv-pop', 'rv-zoom', 'rv-blur', 'rv-fade');
+                el.style.removeProperty('--rv-d');
+            }), 650 + Math.min(items.length, 7) * 110 + 300);
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    sections.forEach((sec) => {
+        const effect = sec.dataset.reveal || 'up';
+        // content blocks: the section's visible children (skip decorative backgrounds), or what is inside a lone wrapper
+        let kids = [...sec.children].filter((c) => !c.matches('.absolute, [aria-hidden="true"], script, style'));
+        if (kids.length === 1) kids = [...kids[0].children].filter((c) => !c.matches('.absolute, script, style'));
+        if (!kids.length) return;
+        const items = [];
+        kids.forEach((k) => (k.hasAttribute('data-reveal-stagger') ? items.push(...k.children) : items.push(k)));
+        items.forEach((el, i) => {
+            let fx = effect;
+            if (effect === 'split') fx = i === 0 ? 'left' : i === items.length - 1 ? 'right' : 'up';
+            el.classList.add('rv', `rv-${fx}`);
+            el.style.setProperty('--rv-d', `${Math.min(i, 6) * 110}ms`);
+        });
+        sec._rvItems = items;
+        io.observe(sec);
+    });
+}
+document.addEventListener('DOMContentLoaded', initReveal);
+
 
 Alpine.start();
