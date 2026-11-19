@@ -1,8 +1,8 @@
 @php $tel = preg_replace('/[^+\d]/', '', $site['phone'] ?? ''); @endphp
 <footer class="bg-brand-navy text-white {{ trim(View::yieldContent('flush_footer')) ? '' : 'mt-16' }}">
     <div class="h-1.5 flex" aria-hidden="true"><span class="flex-1 bg-brand-navy-dark"></span><span class="flex-1 bg-brand-red"></span><span class="flex-1 bg-brand-gold"></span></div>
-    <div class="container-x py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-        <div class="lg:col-span-2">
+    <div class="container-x py-12 grid grid-cols-2 gap-x-6 gap-y-10 sm:gap-10 lg:grid-cols-4">
+        <div class="col-span-2 sm:col-span-1 lg:col-span-2">
             <p class="flex items-center gap-3 font-display text-2xl font-semibold"><x-logo-mark class="size-12 shrink-0"/><span class="flex flex-col leading-none"><span class="text-3xl">Go Germany</span><span class="mt-1.5 flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.42em]"><span class="h-px w-5 bg-brand-gold"></span>Tours</span></span></p>
             <p class="mt-3 max-w-md text-white/85">{{ $site['footer_text'] }}</p>
             <ul class="mt-5 space-y-2 text-white/90">
