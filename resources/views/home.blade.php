@@ -318,6 +318,11 @@
         <p class="mt-5 text-base text-ink-soft sm:text-lg">Tell us how you would like to travel and we will create a journey tailored to your interests, pace and budget.</p>
         <button type="button" class="btn btn-primary mt-8 px-9" data-title="Ask us a question" data-prefill="Question about a Germany tour: "
                 @click="$store.modal.show({form:'package_question', ...$el.dataset})">Ask a question <x-icon name="arrow-right" class="h-5 w-5"/></button>
+        <ul class="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-brand-navy/10 pt-6" aria-label="What to expect">
+            @foreach([['lock', 'Secure booking'], ['check', 'Free quote'], ['shield', 'No obligation']] as [$ic, $t])
+                <li class="flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-brand-navy sm:text-sm"><span class="grid size-8 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy" aria-hidden="true"><x-icon :name="$ic" class="h-4 w-4"/></span>{{ $t }}</li>
+            @endforeach
+        </ul>
     </div>
 </section>
 
