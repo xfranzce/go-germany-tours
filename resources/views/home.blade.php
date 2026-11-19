@@ -324,12 +324,12 @@
 <section class="relative isolate overflow-hidden bg-brand-navy-dark py-16 text-white sm:py-24" aria-labelledby="lock-title">
     {{-- phones: photo fills the band. lg+: the whole photo (3:2) sits on the right at the band height, fading into the navy on its left, so group and bus both show without making the band taller --}}
     @if($eb)<div class="absolute inset-y-0 right-0 -z-20 w-full lg:aspect-[3/2] lg:w-auto lg:[mask-image:linear-gradient(to_right,transparent,#000_30%)]"><x-picture :path="$eb->path" hires sizes="(min-width: 1024px) 60vw, 100vw" class="h-full w-full object-cover object-[75%_100%] lg:object-center"/></div>@endif
-    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/95 via-brand-navy-dark/65 to-brand-navy-dark/15" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/95 via-brand-navy-dark/65 to-brand-navy-dark/15 max-lg:from-brand-navy-dark/80 max-lg:via-brand-navy-dark/75 max-lg:to-brand-navy-dark/70" aria-hidden="true"></div>
     <div class="container-x">
-        <div class="max-w-xl">
-            <p class="eyebrow text-brand-gold">Early-bird pricing</p>
+        <div class="max-w-xl text-center max-lg:mx-auto lg:text-left">
+            <p class="eyebrow text-brand-gold after:h-px after:w-7 after:bg-current after:content-[''] lg:after:hidden">Early-bird pricing</p>
             <h2 id="lock-title" class="mt-4 text-white">Lock in your next adventure.</h2>
-            <span class="flag-rule" aria-hidden="true"></span>
+            <span class="flag-rule max-lg:mx-auto" aria-hidden="true"></span>
             <p class="mt-5 text-base text-white/90 sm:text-lg">Secure your dream Germany journey early and experience premium, stress-free travel for considerably less.</p>
             <x-button class="mt-8" data-title="Early bird offer: {{ $ebMonth }}" data-prefill="Early bird offer: 25% off, travelling in {{ $ebMonth }}."
                       @click="$store.modal.show({form:'package_quote', ...$el.dataset})">Learn how to save up to 25% <x-icon name="arrow-right" class="h-5 w-5"/></x-button>
