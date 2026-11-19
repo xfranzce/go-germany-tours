@@ -95,6 +95,9 @@ Alpine.data('enquiryForm', (opts = {}) => ({
         const render = () => captcha.render(el);
         if (opts.eager) {
             this.$nextTick(render);
+        } else if (opts.modal) {
+            // The modal form exists on every page but stays hidden: show the captcha as soon as the modal opens, so people see it without having to click a field first.
+            this.$watch('$store.modal.open', (open) => { if (open) this.$nextTick(render); });
         } else {
             // Only load Google's script once the visitor starts using the form (keeps pages fast and cookie-free until then).
             ['focusin', 'pointerdown', 'touchstart'].forEach((ev) => this.$el.addEventListener(ev, render, { once: true, passive: true }));

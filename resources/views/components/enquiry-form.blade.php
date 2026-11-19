@@ -25,7 +25,7 @@
     $compact = ($quiz || $modal) && ! $inNoscript;   // shorter layout: tighter spacing, paired fields, optional request box
 @endphp
 <form method="POST" action="{{ route('enquiry.store') }}" id="{{ $formId }}"
-      x-data="enquiryForm({ eager: {{ $eager ? 'true' : 'false' }}, formName: @js($formName) })" @submit.prevent="submit($event)" class="{{ $compact ? 'space-y-3 [&_.field-input]:!min-h-11 [&_.field-input]:!py-2 [&_.field-label]:!mb-0.5' : 'space-y-4' }}" aria-labelledby="{{ $formId }}-legend">
+      x-data="enquiryForm({ eager: {{ $eager ? 'true' : 'false' }}, modal: {{ $modal ? 'true' : 'false' }}, formName: @js($formName) })" @submit.prevent="submit($event)" class="{{ $compact ? 'space-y-3 [&_.field-input]:!min-h-11 [&_.field-input]:!py-2 [&_.field-label]:!mb-0.5' : 'space-y-4' }}" aria-labelledby="{{ $formId }}-legend">
     @csrf
     <span id="{{ $formId }}-legend" class="sr-only">Enquiry form</span>
     <input type="hidden" name="form_id" value="{{ $formId }}">
