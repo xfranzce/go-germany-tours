@@ -319,9 +319,9 @@
 </section>
 
 {{-- 13. EARLY-BIRD BAND: photo with left-to-right navy fade --}}
-@php $eb = $media('saxon-switzerland-bastei'); @endphp
+@php $eb = $media('coach-tour-cochem'); @endphp
 <section class="relative isolate overflow-hidden bg-brand-navy-dark py-16 text-white sm:py-24" aria-labelledby="lock-title">
-    @if($eb)<x-picture :path="$eb->path" hires sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover object-bottom"/>@endif
+    @if($eb)<x-picture :path="$eb->path" hires sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover object-[70%_50%]"/>@endif
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/95 via-brand-navy-dark/65 to-brand-navy-dark/15" aria-hidden="true"></div>
     <div class="container-x">
         <div class="max-w-xl">
