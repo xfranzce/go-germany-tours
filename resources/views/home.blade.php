@@ -214,11 +214,11 @@
 {{-- 8. TRAVEL WITH CONFIDENCE: copy left, four cards right --}}
 <section class="bg-white py-16 sm:py-24" aria-labelledby="conf-title" {!! $reveal !!}>
     <div class="container-x grid gap-12 lg:grid-cols-2 lg:gap-20">
-        <div>
-            <p class="eyebrow text-brand-red-dark">Travel with confidence</p>
+        <div class="text-center lg:text-left">
+            <p class="eyebrow text-brand-red-dark after:h-px after:w-7 after:bg-current after:content-[''] lg:after:hidden">Travel with confidence</p>
             <h2 id="conf-title" class="mt-4">Discover Germany,
                 <em class="block font-medium italic text-brand-red">stress-free &amp; unforgettable.</em></h2>
-            <span class="flag-rule" aria-hidden="true"></span>
+            <span class="flag-rule max-lg:mx-auto" aria-hidden="true"></span>
             <p class="mt-5 text-base text-ink-soft sm:text-lg">Everything is taken care of, from local expertise and comfortable transport to carefully selected accommodation and seamless daily planning. Simply relax and enjoy the journey.</p>
             <p class="mt-4 text-base text-ink-soft sm:text-lg">Experience fairytale towns, river valleys and hidden gems without the hassle of organising every detail yourself.</p>
             <button type="button" class="btn btn-primary mt-8 px-9" @click="$store.modal.show()">Start planning your Germany adventure <x-icon name="arrow-right" class="h-5 w-5"/></button>
