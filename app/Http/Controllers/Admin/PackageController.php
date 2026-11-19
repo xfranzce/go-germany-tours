@@ -15,13 +15,17 @@ class PackageController extends AdminController
     public function index(Request $request)
     {
         $view = $request->input('view') === 'trash' ? 'trash' : 'all';
+        $types = TourType::orderBy('sort')->get();
+        $type = $types->firstWhere('slug', $request->input('type'));   // optional filter: show one tour type only
+        $typeCounts = Package::query()->when($view === 'trash', fn ($q) => $q->onlyTrashed())->selectRaw('tour_type_id, count(*) as n')->groupBy('tour_type_id')->pluck('n', 'tour_type_id');
         $packages = Package::with(['tourType', 'destination'])
             ->when($view === 'trash', fn ($q) => $q->onlyTrashed())
+            ->when($type, fn ($q) => $q->where('tour_type_id', $type->id))
             ->when($request->filled('q'), fn ($q) => $q->where('title', 'like', '%'.$request->input('q').'%'))
             ->orderBy('sort')->orderBy('title')->get();
         $trashCount = Package::onlyTrashed()->count();
 
-        return view('admin.packages.index', compact('packages', 'view', 'trashCount'));
+        return view('admin.packages.index', compact('packages', 'view', 'trashCount', 'types', 'type', 'typeCounts'));
     }
 
     public function create()

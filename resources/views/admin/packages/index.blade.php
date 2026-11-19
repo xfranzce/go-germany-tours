@@ -8,9 +8,19 @@
     $bulk = fn (string $action) => route('admin.packages.bulk', $action);
     $btn = 'btn btn-outline btn-sm disabled:opacity-40 disabled:cursor-not-allowed';
 @endphp
+@php $keep = array_filter(['type' => $type?->slug]); @endphp
 <nav class="mb-4 flex gap-2" aria-label="Package views">
-    <a href="{{ route('admin.packages.index') }}" class="btn btn-sm {{ $view === 'all' ? 'btn-primary' : 'btn-outline' }}">All packages</a>
-    <a href="{{ route('admin.packages.index', ['view' => 'trash']) }}" class="btn btn-sm {{ $view === 'trash' ? 'btn-primary' : 'btn-outline' }}">Trash ({{ $trashCount }})</a>
+    <a href="{{ route('admin.packages.index', $keep) }}" class="btn btn-sm {{ $view === 'all' ? 'btn-primary' : 'btn-outline' }}">All packages</a>
+    <a href="{{ route('admin.packages.index', ['view' => 'trash'] + $keep) }}" class="btn btn-sm {{ $view === 'trash' ? 'btn-primary' : 'btn-outline' }}">Trash ({{ $trashCount }})</a>
+</nav>
+{{-- Filter by tour type: click one to see only its packages --}}
+@php $viewKeep = $view === 'trash' ? ['view' => 'trash'] : []; @endphp
+<nav class="mb-4 flex flex-wrap items-center gap-2" aria-label="Filter by tour type">
+    <span class="text-sm font-bold">Tour type:</span>
+    <a href="{{ route('admin.packages.index', $viewKeep) }}" class="btn btn-sm {{ ! $type ? 'btn-primary' : 'btn-outline' }}" @if(! $type) aria-current="true" @endif>All ({{ $typeCounts->sum() }})</a>
+    @foreach($types as $t)
+        <a href="{{ route('admin.packages.index', ['type' => $t->slug] + $viewKeep) }}" class="btn btn-sm {{ $type?->id === $t->id ? 'btn-primary' : 'btn-outline' }}" @if($type?->id === $t->id) aria-current="true" @endif>{{ $t->name }} ({{ $typeCounts[$t->id] ?? 0 }})</a>
+    @endforeach
 </nav>
 
 <form method="POST" action="{{ route('admin.packages.reorder') }}" class="bg-white rounded-xl shadow overflow-x-auto"
