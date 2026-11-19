@@ -136,7 +136,12 @@ class PackageController extends AdminController
             'destination_id' => ['required', 'exists:destinations,id'],
             'nights' => ['required', 'integer', 'min:1', 'max:60'],
             'price_from' => ['nullable', 'numeric', 'min:0', 'max:1000000'],
-            'price_was' => ['nullable', 'numeric', 'min:0', 'max:1000000'],
+            'price_was' => ['nullable', 'numeric', 'min:0', 'max:1000000', function ($attr, $value, $fail) use ($request) {
+                $current = $request->input('price_from');
+                if (filled($value) && (! is_numeric($current) || (float) $value <= (float) $current)) {
+                    $fail('The From price is the old price shown crossed out, so it must be higher than the current price (and the current price must be filled in). To show a discount, put the higher price here and the lower price in Current price per person. Otherwise leave this empty.');
+                }
+            }],
             'rating' => ['nullable', 'numeric', 'min:0', 'max:5'],
             'review_count' => ['nullable', 'integer', 'min:0', 'max:1000000'],
             'currency' => ['required', 'in:USD,EUR,GBP,CAD,AUD'],
