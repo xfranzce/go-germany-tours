@@ -22,7 +22,7 @@ Google Ads landing-page site for one GoTour brand. Server-rendered Laravel 12 (P
 - Home "Early bird offer" band (after the blog, in `home.blade.php`): 25% off, month is computed as now + 3 months on every request; opens the package_quote modal. Offer terms are in `docs/reference/CONTENT_TO_CONFIRM.md`.
 - `database/seeders/*`, `database/seed-images/*` (licensed photos + `credits.json`)
 - `public/images/partners/*` sister-brand logos for the home "Our Partners" strip (copied from gobritaintrips.com; edit the `$partners` array in `partials/sections/partners.blade.php`, also used on About)
-- `docs/reference/*` guides; `tests/Feature/*`
+- `docs/reference/*` guides (`CLONE_PROMPT.md` = prompt + checklist for building a sister site for another country; update it when features change); `tests/Feature/*`
 
 ## Business rules that are NOT obvious from the code
 1. **Every enquiry form** posts to `POST /enquiry` (`EnquiryController` -> `EnquiryService`). Forms: hero quiz (`<x-hero-quiz>`, in the home hero on the right, headline and copy on the left; the destination dropdown and ticker were removed, as were the Destinations menu in the header and the footer column; destination pages/admin still exist), hero quiz also on each tour type page hero, modal (also used for tour-type/package/"Ask us a question" buttons), package sidebar, contact. One Blade component `<x-enquiry-form>`. Never create a second submission path.
