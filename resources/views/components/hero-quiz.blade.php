@@ -39,11 +39,12 @@
 
                 <div x-show="step.type === 'dropdown'" class="mt-4">
                     <label class="sr-only" :for="'q-' + step.key" x-text="step.question"></label>
-                    <select :id="'q-' + step.key" class="field-input" x-model="answers[step.key]" data-autofocus>
+                    <select :id="'q-' + step.key" class="field-input" x-model="answers[step.key]" @change="$nextTick(() => next())" data-autofocus>
                         <option value="">Select...</option>
                         <template x-for="o in step.options" :key="o.label"><option :value="o.label" x-text="o.label"></option></template>
                     </select>
-                    <button type="button" class="btn btn-primary w-full mt-4" :disabled="!answers[step.key]" @click="next()">Next</button>
+                    {{-- Choosing an option advances automatically; Next only shows when returning to an already answered step --}}
+                    <button type="button" x-show="answers[step.key]" class="btn btn-primary w-full mt-4" @click="next()">Next</button>
                 </div>
 
                 <button type="button" x-show="i > 0" @click="back()" class="mt-4 text-sm font-bold text-white/90 underline underline-offset-2 hover:text-brand-gold">&larr; Back</button>
