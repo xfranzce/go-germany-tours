@@ -18,12 +18,12 @@
 
 @section('content')
 {{-- 1. HERO: full-height photo, eyebrow, headline, intro, "complete the survey" with the quiz centred, trust row at the bottom --}}
-<section class="relative isolate flex min-h-svh flex-col items-center overflow-hidden bg-brand-navy-dark text-center text-white" aria-labelledby="hero-title">
+<section class="relative isolate flex flex-col items-center overflow-hidden bg-brand-navy-dark text-center text-white lg:min-h-[44rem]" aria-labelledby="hero-title">
     @if($heroMedia)<x-picture :path="$heroPath" priority hires sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover"/>@endif
     <div class="absolute inset-0 -z-10 bg-gradient-to-b from-brand-navy-dark/85 via-brand-navy-dark/55 to-brand-navy-dark/90" aria-hidden="true"></div>
     <div class="container-x flex max-w-3xl flex-1 flex-col items-center pt-32 pb-8 sm:pt-36">
         <p class="eyebrow centered text-brand-gold">Authentic Germany experiences</p>
-        <h1 id="hero-title" class="mt-5 leading-[1.08]">Find the best value vacation
+        <h1 id="hero-title" class="mt-5 uppercase leading-[1.08] tracking-wide !text-3xl sm:!text-4xl lg:!text-[2.6rem]">Find the best value vacation
             <em class="mt-2 block font-medium italic text-brand-gold">trip to Germany</em></h1>
         <p class="mt-5 hidden max-w-2xl text-base text-white/90 sm:block sm:text-lg">Discover Germany via self-drive, chauffeur-driven or small-group coach tours, planned around you with local insight and carefully chosen stays.</p>
         <p class="mt-8 font-display text-xl text-white sm:text-2xl">Complete the quiz below for your <span class="text-brand-gold">free quote</span></p>
@@ -51,24 +51,28 @@
             </li>
         @endforeach
     </ul>
-    <ul class="border-t border-white/15 bg-brand-navy">
-        <li class="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-12 gap-y-3 px-4 py-5 text-xs font-bold uppercase tracking-[0.16em] text-white/90">
-            <span><b class="mr-2 font-display text-2xl text-brand-gold">{{ $packages->count() }}</b>Germany tours</span>
-            <span><b class="mr-2 font-display text-2xl text-brand-gold">{{ $destCount }}</b>Destinations</span>
-            <span><b class="mr-2 font-display text-2xl text-brand-gold">{{ $tourTypes->count() }}</b>Ways to travel</span>
-        </li>
-    </ul>
 </section>
 
 {{-- 3. ABOUT INTRO (soft tinted, centred) --}}
-<section class="bg-brand-custard-light py-16 text-center sm:py-24" aria-labelledby="intro-title">
-    <div class="container-x max-w-3xl">
-        <p class="eyebrow centered text-brand-red-dark">Discover Germany</p>
-        <h2 id="intro-title" class="mt-4">A Germany trip that is
-            <em class="block font-medium italic text-brand-red">truly yours.</em></h2>
-        <span class="flag-rule centered" aria-hidden="true"></span>
-        <p class="mt-6 text-base text-ink-soft sm:text-lg">Expertly planned Germany vacation packages, including self-drive, chauffeur-driven and coach tours. Perfect for families, couples, friends and special occasions, with every detail shaped around how you like to travel.</p>
-        <button type="button" class="btn btn-primary mt-8 px-9" @click="$store.modal.show()">Get instant quote <x-icon name="arrow-right" class="h-5 w-5"/></button>
+@php $aboutImg = $media('quedlinburg-lane') ?? $media('saxon-switzerland-bastei'); @endphp
+<section class="bg-brand-custard-light py-16 sm:py-24" aria-labelledby="intro-title">
+    <div class="container-x grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
+        @if($aboutImg)
+            <div class="mx-auto w-full max-w-md lg:max-w-none">
+                <div class="relative aspect-[4/5] overflow-hidden rounded-2xl shadow-card lg:max-w-sm">
+                    <x-picture :path="$aboutImg->path" hires sizes="(min-width: 1024px) 24rem, 90vw" class="h-full w-full object-cover"/>
+                </div>
+            </div>
+        @endif
+        <div>
+            <p class="eyebrow text-brand-red-dark">Discover Germany</p>
+            <h2 id="intro-title" class="mt-4">A <em class="font-medium italic text-brand-red">Germany trip</em>
+                <span class="block">that is truly yours</span></h2>
+            <span class="flag-rule" aria-hidden="true"></span>
+            <p class="mt-6 text-base text-ink-soft sm:text-lg">Expertly planned Germany vacation packages, including self-drive, chauffeur-driven and coach tours.</p>
+            <p class="mt-4 text-base text-ink-soft sm:text-lg">Perfect for families, couples, friends and special occasions, with every detail shaped around how you like to travel.</p>
+            <button type="button" class="btn btn-primary mt-8 px-9" @click="$store.modal.show()">Get instant quote <x-icon name="arrow-right" class="h-5 w-5"/></button>
+        </div>
     </div>
 </section>
 
@@ -84,24 +88,26 @@
         <div class="grid gap-8 md:grid-cols-3">
             @foreach($tourTypes as $t)
                 @php $incl = array_slice(array_values(array_filter(array_map('trim', preg_split('/\R/', (string) $t->inclusions)))), 0, 3); @endphp
-                <article class="card flex flex-col text-center">
-                    <a href="{{ route('tours.show', $t->slug) }}" class="block aspect-[4/3] overflow-hidden bg-brand-custard" tabindex="-1" aria-hidden="true">
-                        <x-picture :path="$t->image" sizes="(min-width: 768px) 24rem, 92vw" class="h-full w-full object-cover transition duration-700 hover:scale-105"/>
-                    </a>
-                    <div class="flex flex-1 flex-col items-center p-7">
-                        <span class="-mt-14 grid size-14 place-items-center rounded-full border-4 border-white bg-brand-gold text-brand-navy shadow-lg" aria-hidden="true"><x-icon :name="$icons[$t->slug] ?? 'pin'" class="h-6 w-6"/></span>
-                        <h3 class="mt-4"><a href="{{ route('tours.show', $t->slug) }}" class="hover:underline">{{ $t->name }}</a></h3>
-                        <p class="mt-3 text-ink-soft">{{ $t->summary }}</p>
+                {{-- photo card: photo fills the card, dark fade, icon + title + copy over it --}}
+                <article class="group relative isolate flex min-h-[30rem] flex-col justify-end overflow-hidden rounded-2xl bg-brand-navy-dark text-white shadow-card">
+                    <x-picture :path="$t->image" sizes="(min-width: 768px) 24rem, 92vw" class="absolute inset-0 -z-20 h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105"/>
+                    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-dark via-brand-navy-dark/75 to-brand-navy-dark/10" aria-hidden="true"></div>
+                    <div class="p-6 pt-40">
+                        <div class="flex items-center gap-3">
+                            <span class="grid size-10 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy" aria-hidden="true"><x-icon :name="$icons[$t->slug] ?? 'pin'" class="h-5 w-5"/></span>
+                            <h3 class="text-white"><a href="{{ route('tours.show', $t->slug) }}" class="hover:underline">{{ $t->name }}</a></h3>
+                        </div>
+                        <p class="mt-3 text-sm text-white/85">{{ $t->summary }}</p>
                         @if($incl)
-                            <ul class="mt-5 space-y-2 text-left text-sm font-semibold text-brand-navy">
-                                @foreach($incl as $i)<li class="flex items-start gap-2"><x-icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-brand-red"/>{{ $i }}</li>@endforeach
+                            <ul class="mt-4 space-y-1.5 text-sm font-semibold">
+                                @foreach($incl as $i)<li class="flex items-start gap-2"><x-icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-brand-gold"/>{{ $i }}</li>@endforeach
                             </ul>
                         @endif
-                        <div class="mt-auto grid w-full gap-2 pt-6">
-                            <x-button :href="route('tours.show', $t->slug)" variant="outline" size="sm">More info</x-button>
+                        <a href="{{ route('tours.show', $t->slug) }}" class="mt-4 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-[0.16em] text-brand-gold hover:underline">More info <x-icon name="arrow-right" class="h-4 w-4"/></a>
+                        <div class="mt-5 grid grid-cols-2 gap-2">
                             <x-button size="sm" data-title="Get a quote: {{ $t->name }}" data-prefill="Interested in: {{ $t->name }} tours."
                                       @click="$store.modal.show({form:'package_quote', ...$el.dataset})">Get a quote</x-button>
-                            <x-button variant="outline" size="sm" data-title="Ask us a question" data-subtitle="{{ $t->name }} tours" data-prefill="Question about {{ $t->name }} tours: "
+                            <x-button variant="outline-light" size="sm" data-title="Ask us a question" data-subtitle="{{ $t->name }} tours" data-prefill="Question about {{ $t->name }} tours: "
                                       @click="$store.modal.show({form:'package_question', ...$el.dataset})">Ask us a question</x-button>
                         </div>
                     </div>
@@ -136,19 +142,42 @@
 @foreach($tourTypes as $t)
     @php $all = $byType[$t->slug] ?? collect(); $list = $all->take(6); @endphp
     @continue($list->isEmpty())
-    <section class="py-14 sm:py-20 {{ $loop->even ? 'bg-brand-custard-light' : 'bg-white' }}" aria-labelledby="pk-{{ $t->slug }}">
+    <section class="bg-white py-12 sm:py-16" aria-labelledby="pk-{{ $t->slug }}">
         <div class="container-x">
-            <div class="mx-auto mb-12 max-w-3xl text-center">
-                <p class="eyebrow centered flex items-center justify-center gap-2 text-brand-red-dark"><x-icon :name="$icons[$t->slug] ?? 'pin'" class="h-5 w-5"/>{{ $t->name }}</p>
-                <h2 id="pk-{{ $t->slug }}" class="mt-4">{{ $t->name }} packages</h2>
-                <span class="flag-rule centered" aria-hidden="true"></span>
-                <p class="mt-5 text-base text-ink-soft sm:text-lg">{{ $t->summary }}</p>
-                <p class="mt-6 inline-flex rounded-full bg-brand-navy px-6 py-2 text-xs font-bold uppercase tracking-[0.16em] text-white"><span class="mr-2 text-brand-gold">{{ $all->count() }}</span> itineraries</p>
+            {{-- heading left, count right --}}
+            <div class="mb-8 flex items-end justify-between gap-6">
+                <div>
+                    <p class="eyebrow flex items-center gap-2 text-brand-red-dark"><x-icon :name="$icons[$t->slug] ?? 'pin'" class="h-5 w-5"/>{{ $t->name }}</p>
+                    <h2 id="pk-{{ $t->slug }}" class="mt-3">{{ $t->name }} <em class="font-medium italic text-brand-red">packages</em></h2>
+                </div>
+                <dl class="shrink-0 text-center"><dd class="font-display text-4xl text-brand-navy">{{ $all->count() }}</dd><dt class="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-ink-soft">Itineraries</dt></dl>
             </div>
-            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                @foreach($list as $package)<x-package-card :package="$package"/>@endforeach
+            {{-- navy cards, swipe row --}}
+            <div class="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:mx-0 sm:px-0 md:grid md:grid-cols-3 md:overflow-visible [&::-webkit-scrollbar]:hidden" data-carousel="md" aria-label="{{ $t->name }} packages">
+                @foreach($list as $package)
+                    <article class="flex w-[82%] shrink-0 snap-center flex-col overflow-hidden rounded-2xl bg-brand-navy text-white shadow-card sm:w-[22rem] md:w-auto md:shrink">
+                        <a href="{{ $package->url() }}" class="relative block aspect-[3/2] overflow-hidden bg-brand-navy-dark" tabindex="-1" aria-hidden="true">
+                            <x-picture :path="$package->coverPath()" sizes="(min-width: 1024px) 22rem, 82vw" class="h-full w-full object-cover"/>
+                            <div class="absolute inset-0 bg-gradient-to-t from-brand-navy/80 to-transparent" aria-hidden="true"></div>
+                            @if($package->is_sample)<span class="absolute left-3 top-3 rounded-full bg-brand-gold px-2.5 py-1 text-xs font-extrabold text-brand-navy">SAMPLE</span>@endif
+                            <span class="absolute bottom-3 left-4 text-xs font-bold uppercase tracking-wider text-brand-gold">{{ $package->destination->name }} &middot; {{ $package->nights }} nights</span>
+                        </a>
+                        <div class="flex flex-1 flex-col p-5">
+                            <h3 class="text-lg leading-snug text-white"><a href="{{ $package->url() }}" class="hover:underline">{{ $package->title }}</a></h3>
+                            <p class="mt-2 flex-1 text-sm text-white/80">{{ $package->summary }}</p>
+                            <p class="mt-4 flex items-baseline gap-3 border-t border-white/15 pt-4 font-sans text-2xl font-extrabold">
+                                @if($package->hasSale())<s class="text-sm font-semibold text-white/60">{{ $package->wasLabel() }}</s>@endif{{ $package->priceLabel() }}
+                                @if($package->is_sample)<span class="text-xs font-normal text-white/70">sample price</span>@endif
+                            </p>
+                            <div class="mt-4 grid grid-cols-2 gap-2">
+                                <x-button size="sm" data-title="Get a quote" data-subtitle="{{ $package->title }}"
+                                          @click="$store.modal.show({form:'package_quote', packageId: {{ $package->id }}, ...$el.dataset})">Get a quote</x-button>
+                                <x-button :href="$package->url()" variant="outline-light" size="sm">More info</x-button>
+                            </div>
+                        </div>
+                    </article>
+                @endforeach
             </div>
-            <p class="mt-12 text-center"><x-button :href="route('tours.show', $t->slug)" variant="outline">See all {{ strtolower($t->name) }} packages <x-icon name="arrow-right" class="h-5 w-5"/></x-button></p>
         </div>
     </section>
 @endforeach
@@ -162,9 +191,9 @@
         <p class="eyebrow centered text-brand-gold">Germany · Your next adventure awaits</p>
         <h2 id="adv-title" class="mt-4 text-white">Start your Germany adventure
             <em class="block font-medium italic text-brand-gold">Book your dream tour today!</em></h2>
-        <dl class="mt-10 grid grid-cols-3 gap-4">
+        <dl class="mx-auto mt-10 grid max-w-2xl grid-cols-3 gap-3 sm:gap-4">
             @foreach([[$destCount, 'Destinations'], [$packages->count(), 'Germany tours'], [$tourTypes->count(), 'Ways to travel']] as [$n, $l])
-                <div><dd class="font-display text-5xl text-brand-gold sm:text-6xl">{{ $n }}</dd><dt class="mt-2 text-xs font-bold uppercase tracking-[0.18em] text-white/85">{{ $l }}</dt></div>
+                <div class="rounded-xl border border-white/25 bg-white/10 px-2 py-5 backdrop-blur"><dd class="font-display text-4xl text-brand-gold sm:text-5xl">{{ $n }}</dd><dt class="mt-2 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-white/85 sm:text-xs">{{ $l }}</dt></div>
             @endforeach
         </dl>
         <button type="button" class="btn btn-primary mt-10 px-10 shadow-lg shadow-black/30" @click="$store.modal.show()">Get quote now! <x-icon name="arrow-right" class="h-5 w-5"/></button>
@@ -212,11 +241,11 @@
         <span class="flag-rule centered" aria-hidden="true"></span>
         <p class="mt-5 text-base text-ink-soft sm:text-lg">A closer look at the landscapes, culture and moments that await on our journeys.</p>
     </div>
-    <div class="flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:px-6 [&::-webkit-scrollbar]:hidden" tabindex="0" role="region" aria-label="Places in Germany">
+    <div class="flex snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] md:grid md:grid-cols-6 md:overflow-visible [&::-webkit-scrollbar]:hidden" tabindex="0" role="region" aria-label="Places in Germany">
         @foreach($places as [$stem, $label])
             @php $m = $media($stem); @endphp
             @continue(! $m)
-            <figure class="group relative h-80 w-[72vw] shrink-0 snap-center overflow-hidden rounded-2xl shadow-card sm:h-96 sm:w-72">
+            <figure class="group relative h-72 w-[60vw] shrink-0 snap-center overflow-hidden md:h-80 md:w-auto md:shrink">
                 <x-picture :path="$m->path" sizes="(min-width: 640px) 18rem, 72vw" class="h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105"/>
                 <div class="absolute inset-0 bg-gradient-to-t from-brand-navy-dark/85 via-transparent to-transparent" aria-hidden="true"></div>
                 <figcaption class="absolute inset-x-0 bottom-0 p-5 font-display text-2xl text-white">{{ $label }}<span class="mt-2 block h-[3px] w-10 bg-brand-gold transition-all duration-500 group-hover:w-20" aria-hidden="true"></span></figcaption>
