@@ -16,7 +16,7 @@
             <p class="mt-1 text-ink-soft" x-text="$store.modal.subtitle"></p>
             <template x-if="$store.modal.open">
                 <div class="mt-5">
-                    <x-enquiry-form form-id="modal" form-name="header_modal" :extras="true" modal="true"/>
+                    <x-enquiry-form form-id="modal" form-name="header_modal" :extras="true" modal="true" :eager="true"/>
                 </div>
             </template>
         </div>
