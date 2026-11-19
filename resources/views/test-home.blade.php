@@ -244,7 +244,7 @@
 @include('partials.sections.reviews')
 
 {{-- 10. BEGIN YOUR JOURNEY: strip of places --}}
-<section class="bg-brand-custard-light py-14 sm:py-20" aria-labelledby="places-title">
+<section class="bg-white py-14 sm:py-20" aria-labelledby="places-title">
     <div class="container-x mb-10 max-w-3xl text-center">
         <p class="eyebrow centered text-brand-red-dark">Begin your journey</p>
         <h2 id="places-title" class="mt-4">Discover the best of Germany</h2>
