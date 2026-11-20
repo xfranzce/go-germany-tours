@@ -54,6 +54,9 @@ return [
         'youtube_url' => '',
         'notification_emails' => '',
         'gtm_id' => '',
+        'google_rating_enabled' => '0',   // Google rating badge in the home hero: OFF until the real rating is entered
+        'google_rating' => '',
+        'google_reviews_url' => '',
         'recaptcha_site_key' => '',
         'recaptcha_secret_key' => '',
         'modal_discount_percent' => '',

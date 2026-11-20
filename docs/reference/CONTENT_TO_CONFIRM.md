@@ -6,6 +6,7 @@ Nothing below was invented as fact. Each item is a placeholder (`[CONFIRM: ...]`
 | Item | Now | Where it shows |
 |---|---|---|
 | ~~Legal company name~~ | Done: "Go German Tours" (Admin > Site settings > company name) | Consent text, footer, legal pages |
+| Google rating badge ("Google ★★★★★ 4.9/5 Traveler Rating") | OFF and empty. Only turn on with the **real** rating from the Google Business Profile (Admin > Site settings > Google rating badge) | home page hero |
 | Phone and display format | empty (hidden everywhere) | top bar, footer, contact page, CTA |
 | Public email | empty (hidden) | top bar, footer, contact page |
 | Address | empty (hidden) | footer, contact, structured data |

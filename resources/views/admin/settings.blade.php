@@ -30,6 +30,14 @@
     </section>
 
     <section class="bg-white rounded-xl shadow p-5 grid gap-4 sm:grid-cols-2">
+        <h2 class="text-xl sm:col-span-2">Google rating badge (home page hero)</h2>
+        <p class="text-sm text-ink-soft sm:col-span-2">Only enter your <strong>real</strong> Google rating, as shown on your Google Business Profile. The badge stays hidden until you tick the box and enter a rating.</p>
+        <x-admin.field name="google_rating_enabled" label="Show the Google rating badge" type="checkbox" :value="($site['google_rating_enabled'] ?? '0') === '1'" class="sm:col-span-2"/>
+        <x-admin.field name="google_rating" label="Rating out of 5" type="number" step="0.1" :value="$site['google_rating']" placeholder="e.g. 4.9"/>
+        <x-admin.field name="google_reviews_url" label="Link to your Google reviews (optional)" :value="$site['google_reviews_url']" placeholder="https://g.page/..." help="If set, the badge links there."/>
+    </section>
+
+    <section class="bg-white rounded-xl shadow p-5 grid gap-4 sm:grid-cols-2">
         <h2 class="text-xl sm:col-span-2">Enquiries, tracking and security</h2>
         <x-admin.field name="notification_emails" label="Send new-enquiry emails to" :value="$site['notification_emails']" class="sm:col-span-2" help="One or more addresses separated by commas. If empty, no staff email is sent."/>
         <x-admin.field name="gtm_id" label="Google Tag Manager ID" :value="$site['gtm_id']" placeholder="GTM-XXXXXXX" help="The GTM snippet is only added to pages when this is filled in."/>
