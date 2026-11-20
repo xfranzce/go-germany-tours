@@ -8,7 +8,7 @@ Dangerous buttons (delete) ask you to **click twice**.
 Enquiries this week, how many are still **New**, how many have been New for over 24 hours, and failed CRM syncs. Below: the latest enquiries and quick links.
 
 ## Enquiries (your inbox)
-- **Filter** by name/email/phone/package, status, source (where they came from), date. **Export CSV** downloads the filtered list.
+- **Filter** by name/email/phone/package, status, source (where they came from), form, date. **Export CSV** opens an export panel: pick the **from/to dates** (inclusive, empty = no limit) and tick the **forms** to include (Hero quiz, Header modal, Package quote, Ask a question, Contact page; all ticked = every form), optionally a status and source, then **Download CSV**. The file name includes the date range. If nothing matches you get a message instead of an empty file.
 - Open an enquiry to see everything they sent, their quiz answers, the **consent evidence** (the exact consent wording they saw, when, their IP address, browser and page) and **tracking** (the ad campaign, keyword and Google click ID that brought them, first and latest visit).
 - Set the **status** (New, Contacted, Quoted, Won, Lost) and add **internal notes** that only staff see. Press Save.
 - **GoHighLevel** box: shows whether the contact reached your CRM. If it says *failed*, read the error, fix the cause (usually the token) and press **Retry sync**.

@@ -20,7 +20,7 @@ class EnquiryController extends Controller
             })
             ->when($request->filled('status'), fn ($q) => $q->where('status', $request->input('status')))
             ->when($request->filled('source'), fn ($q) => $q->where('source', $request->input('source')))
-            ->when($request->filled('form'), fn ($q) => $q->where('form_name', $request->input('form')))
+            ->when(array_filter((array) $request->input('form')), fn ($q) => $q->whereIn('form_name', array_filter((array) $request->input('form'))))
             ->when($request->filled('from'), fn ($q) => $q->whereDate('created_at', '>=', $request->input('from')))
             ->when($request->filled('to'), fn ($q) => $q->whereDate('created_at', '<=', $request->input('to')))
             ->latest();
@@ -31,6 +31,7 @@ class EnquiryController extends Controller
         return view('admin.enquiries.index', [
             'enquiries' => $this->filtered($request)->paginate(25)->withQueryString(),
             'sources' => Enquiry::whereNotNull('source')->distinct()->orderBy('source')->pluck('source'),
+            'forms' => $this->formOptions(),
         ]);
     }
 
@@ -90,8 +91,30 @@ class EnquiryController extends Controller
         return back()->with('status', 'Row added to the Google Sheet.');
     }
 
+    /** form_name => label, for every form that is configured or already has enquiries. */
+    private function formOptions(): array
+    {
+        $forms = config('gogermany.form_names');
+        foreach (Enquiry::query()->distinct()->pluck('form_name') as $name) {
+            $forms[$name] ??= $name;
+        }
+
+        return $forms;
+    }
+
     public function export(Request $request)
     {
+        $request->validate([
+            'from' => ['nullable', 'date'], 'to' => ['nullable', 'date', 'after_or_equal:from'],
+            'form' => ['nullable', 'array'], 'form.*' => ['string', 'max:60'],
+            'status' => ['nullable', 'string', 'max:30'], 'source' => ['nullable', 'string', 'max:100'], 'q' => ['nullable', 'string', 'max:100'],
+        ], ['to.after_or_equal' => 'The end date must be on or after the start date.']);
+
+        if (! $this->filtered($request)->exists()) {
+            return back()->withInput()->with('export_error', 'No enquiries match those dates and forms, so there is nothing to export.');
+        }
+
+        $range = ($request->filled('from') ? '-from-'.$request->input('from') : '').($request->filled('to') ? '-to-'.$request->input('to') : '');
         $cols = ['id', 'created_at', 'status', 'form_name', 'first_name', 'last_name', 'email', 'phone_e164', 'package_name', 'travel_date',
             'time_of_year', 'group_size', 'nights', 'second_quote', 'special_request', 'source', 'ghl_status', 'consent_given', 'consented_at', 'terms_version', 'ip_address', 'page_url'];
         $safe = fn ($v) => is_string($v) && preg_match('/^[=+\-@\t\r]/', $v) ? "'".$v : $v; // stop spreadsheet formula injection
@@ -111,6 +134,6 @@ class EnquiryController extends Controller
                 }
             });
             fclose($out);
-        }, 'enquiries-'.now()->format('Y-m-d').'.csv', ['Content-Type' => 'text/csv']);
+        }, 'enquiries-'.now()->format('Y-m-d').$range.'.csv', ['Content-Type' => 'text/csv']);
     }
 }
