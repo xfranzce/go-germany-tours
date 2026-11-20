@@ -1,7 +1,7 @@
 {{-- PREVIOUS HOME HERO (dark): photo + video background, headline left, quiz right.
      Not shown right now. To bring it back, in home.blade.php replace @include('partials.home.hero-fairytale') with @include('partials.home.hero-dark')
      and remove @section('solid_header', '1') (this hero is dark, so the header must start transparent). --}}
-@php $heroPhoto = \App\Models\Media::byStem('neuschwanstein-centered') ?? $heroMedia; @endphp
+@php $heroPhoto = \App\Models\Media::byStem('neuschwanstein-autumn') ?? $heroMedia; @endphp
 @if($heroPhoto)
     @push('head')
         <link rel="preload" as="image" href="{{ $heroPhoto->url(1280) }}" imagesrcset="{{ $heroPhoto->srcset() }}" imagesizes="(min-width: 1024px) 80vw, 100vw" fetchpriority="high">
@@ -11,7 +11,7 @@
 {{-- 1. HERO: video background; headline and copy on the left, the quote quiz on the right --}}
 <section class="relative isolate flex min-h-svh flex-col bg-brand-navy-dark text-white overflow-hidden" aria-labelledby="hero-title">
     @if($heroPhoto)
-        <x-picture :path="$heroPhoto->path" priority sizes="(min-width: 1024px) 80vw, 100vw" class="absolute inset-0 -z-20 w-full h-full object-cover object-center"/>
+        <x-picture :path="$heroPhoto->path" priority sizes="(min-width: 1024px) 80vw, 100vw" class="absolute inset-0 -z-20 w-full h-full object-cover object-[68%_50%] lg:object-center"/>
     @endif
     <x-video-bg src="hero.mp4" class="absolute inset-0 -z-[15] w-full h-full object-cover"/>
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/75 via-brand-navy-dark/30 to-transparent" aria-hidden="true"></div>

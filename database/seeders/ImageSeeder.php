@@ -34,7 +34,7 @@ class ImageSeeder extends Seeder
         'couple-rhine-vineyard' => 'A couple holding hands on a vineyard path above the Rhine river with a castle on the far hillside at golden hour',
         'family-old-town' => 'A family with two young children walking along a cobbled street lined with half-timbered houses',
         'medieval-castle-path' => 'A cobbled path leading up to a medieval stone castle with towers on a forested hill at sunset',
-        'neuschwanstein-centered' => 'Neuschwanstein Castle glowing in golden light above an autumn forest in the Bavarian Alps',
+        'neuschwanstein-autumn' => 'Neuschwanstein Castle glowing in golden light above an autumn forest in the Bavarian Alps',
         'anniversary-dinner-terrace' => 'A group raising champagne glasses at a candle-lit terrace dinner with a fairytale castle and mountains behind',
         'allgau-alps' => 'Autumn larches and a sunlit peak in the Allgäu Alps of Bavaria',
         'bacharach-rhine' => 'The Rhine valley town of Bacharach with its church tower, vineyards and castle',
