@@ -8,7 +8,7 @@
     </a>
     <div class="p-5 flex flex-col flex-1">
         <p class="text-xs font-extrabold uppercase tracking-wider text-brand-red-dark">{{ $package->tourType->name }} &middot; {{ $package->destination->name }}</p>
-        <h{{ $level }} class="mt-2 text-[1.65rem] font-bold leading-tight tracking-tight sm:text-[1.75rem]"><a href="{{ $package->url() }}" class="hover:underline">{{ $package->title }}</a></h{{ $level }}>
+        <h{{ $level }} class="mt-2 text-[1.35rem] font-bold leading-tight tracking-tight sm:text-[1.45rem]"><a href="{{ $package->url() }}" class="hover:underline">{{ $package->title }}</a></h{{ $level }}>
         <span class="mt-3 block h-0.5 w-12 rounded-full bg-brand-gold" aria-hidden="true"></span>
         @if($package->rating)<x-stars :rating="$package->rating" :count="$package->review_count" :sample="$package->is_sample" class="mt-2"/>@endif
         <p class="mt-2 text-ink-soft text-sm flex-1">{{ $package->summary }}</p>
