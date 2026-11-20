@@ -85,5 +85,9 @@
             </div>
         </template>
     </div>
+    @if(trim((string) $slot) !== '')
+        {{-- optional extra content inside the card, under the quiz (the home page puts its highlights row here) --}}
+        {{ $slot }}
+    @endif
     </div>
 </section>

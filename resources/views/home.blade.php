@@ -62,14 +62,14 @@
         </div>
 
         <div class="mx-auto w-full max-w-xl lg:mx-0 lg:ml-auto">
-            <x-hero-quiz/>
-
-            {{-- highlights under the quiz card --}}
-            <ul class="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 border-t border-white/20 pt-4 text-[0.66rem] font-bold uppercase tracking-[0.08em] text-white sm:text-[0.7rem]" aria-label="Highlights">
+            <x-hero-quiz>
+                {{-- highlights, inside the quiz card --}}
+                <ul class="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 border-t border-white/20 pt-4 text-[0.66rem] font-bold uppercase tracking-[0.08em] text-white sm:text-[0.7rem]" aria-label="Highlights">
                 @foreach([['check', 'Free, no-obligation quote'], ['lock', 'Private tours'], ['pin', 'Local Germany experts']] as [$ic, $txt])
                     <li class="flex items-center gap-2"><x-icon :name="$ic" class="h-4 w-4 shrink-0 text-brand-gold"/>{{ $txt }}</li>
                 @endforeach
             </ul>
+            </x-hero-quiz>
         </div>
     </div>
 
