@@ -16,26 +16,69 @@
 @endphp
 
 @section('content')
-{{-- 1. HERO: full-height photo, eyebrow, headline, intro, "complete the survey" with the quiz centred, trust row at the bottom --}}
-<section class="relative isolate flex flex-col items-center overflow-hidden bg-brand-navy-dark text-center text-white lg:min-h-[44rem]" aria-labelledby="hero-title">
-    @if($heroMedia)<x-picture :path="$heroPath" priority hires sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover"/>@endif
-    <x-video-bg src="hero.mp4" class="absolute inset-0 -z-[15] h-full w-full object-cover"/>
-    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-brand-navy-dark/85 via-brand-navy-dark/55 to-brand-navy-dark/90" aria-hidden="true"></div>
-    <div class="container-x flex max-w-3xl flex-1 flex-col items-center pt-32 pb-8 sm:pt-36">
-        <p class="eyebrow centered text-brand-gold">Authentic Germany experiences</p>
-        <h1 id="hero-title" class="mt-5 uppercase leading-[1.08] tracking-wide !text-3xl sm:!text-4xl lg:!text-[2.6rem]">Find the best value vacation
-            <em class="mt-2 block font-medium italic text-brand-gold">trip to Germany</em></h1>
-        <p class="mt-5 hidden max-w-2xl text-base text-white/90 sm:block sm:text-lg">Discover Germany via self-drive, chauffeur-driven or small-group coach tours, planned around you with local insight and carefully chosen stays.</p>
-        <p class="mt-8 font-display text-xl text-white sm:text-2xl">Complete the quiz below for your <span class="text-brand-gold">free quote</span></p>
-        <div class="mt-5 w-full max-w-xl"><x-hero-quiz/></div>
-    </div>
-    <ul class="container-x hidden flex-wrap items-center justify-center gap-x-10 gap-y-3 border-t border-white/20 py-5 text-xs font-bold uppercase tracking-[0.16em] sm:flex">
-        @foreach([['check', 'Free, no-obligation quote'], ['lock', 'Private tours'], ['pin', 'Local Germany experts']] as [$ic, $t])
-            <li class="flex items-center gap-2.5"><x-icon :name="$ic" class="h-4 w-4 text-brand-gold"/>{{ $t }}</li>
-        @endforeach
-    </ul>
-</section>
+{{-- 1. HERO: video background; headline and copy on the left, the quote quiz on the right --}}
+<section class="relative isolate flex min-h-svh items-center bg-brand-navy-dark text-white overflow-hidden" aria-labelledby="hero-title">
+    @if($heroMedia)
+        <x-picture :path="$heroPath" priority hires sizes="100vw" class="absolute inset-0 -z-20 w-full h-full object-cover"/>
+    @endif
+    <x-video-bg src="hero.mp4" class="absolute inset-0 -z-[15] w-full h-full object-cover"/>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/85 via-brand-navy-dark/50 to-brand-navy-dark/30" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-dark/70 via-transparent to-brand-navy-dark/30" aria-hidden="true"></div>
 
+    <div class="container-x grid items-center gap-8 pt-32 pb-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:pt-32 lg:pb-10 [@media(max-height:820px)]:lg:pt-28 [@media(max-height:820px)]:lg:pb-6">
+        <div class="text-center lg:text-left">
+            <p class="eyebrow text-brand-gold">The Germany Collection</p>
+            @php
+            // Highlighted words: wrap them in *stars* in Admin > Pages > Home; otherwise the last three words are highlighted.
+            $h1 = trim($page->text('hero_h1', 'Tailor-Made Tours of *Germany\'s Fairytale Towns*'));
+            if (preg_match('/^(.*?)\*(.+?)\*(.*)$/s', $h1, $m)) {
+                [$h1a, $h1b, $h1c] = [trim($m[1]), trim($m[2]), trim($m[3])];
+            } else {
+                $w = preg_split('/\s+/', $h1);
+                $n = count($w) > 4 ? 3 : (count($w) > 1 ? 1 : 0);
+                [$h1a, $h1b, $h1c] = [implode(' ', array_slice($w, 0, count($w) - $n)), implode(' ', array_slice($w, count($w) - $n)), ''];
+            }
+            @endphp
+            <h1 id="hero-title" class="mt-6 max-w-3xl text-[1.75rem] sm:text-5xl lg:text-[3.25rem] xl:text-[3.5rem] 2xl:text-6xl [@media(max-height:820px)]:lg:!text-[2.75rem] leading-[1.08] mx-auto lg:mx-0">
+                <span class="block">{{ $h1a }}</span>
+                @if($h1b)
+                    <em class="relative mx-auto lg:mx-0 mt-2 block w-fit whitespace-nowrap not-italic sm:mt-3"><span class="italic font-medium text-brand-gold">{{ $h1b }}</span>
+                        <svg class="hl-underline absolute left-0 -bottom-2 sm:-bottom-3 w-full h-3 sm:h-4 text-brand-gold" viewBox="0 0 300 12" preserveAspectRatio="none" fill="none" aria-hidden="true">
+                            <path d="M2 8 C 60 2, 110 11, 170 6 S 260 3, 298 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" pathLength="1"/>
+                        </svg></em>
+                @endif
+                @if($h1c)<span class="block">{{ $h1c }}</span>@endif
+            </h1>
+            <p class="mx-auto lg:mx-0 mt-5 max-w-xl text-base sm:text-lg text-white/90 [@media(max-height:820px)]:lg:text-base">{{ $page->text('hero_sub', 'Self drive, chauffeur driven or small-group coach. Explore Quedlinburg, Saxon Switzerland, Cochem, Hiddensee and Gengenbach, planned around you.') }}</p>
+
+            <ul class="mx-auto lg:mx-0 mt-6 hidden lg:grid max-w-xl grid-cols-2 gap-x-6 gap-y-3 border-t border-white/25 pt-5 text-left [@media(max-height:820px)]:lg:mt-4" aria-label="Why travel with us">
+                @foreach([['pin', 'Germany locations'], ['lock', 'Private tours'], ['chat', 'Professional guides'], ['star', 'Excellent reviews']] as [$ic, $txt])
+                    <li class="flex items-center gap-3">
+                        <span class="grid size-10 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-black/20" aria-hidden="true"><x-icon :name="$ic" class="h-5 w-5"/></span>
+                        <span class="text-sm font-bold uppercase tracking-[0.12em] text-white sm:text-[0.8rem]">{{ $txt }}</span>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+
+        <div class="mx-auto w-full max-w-xl lg:mx-0 lg:ml-auto">
+            <x-hero-quiz/>
+
+            <ul class="mt-6 grid grid-cols-4 gap-x-2 border-t border-white/25 pt-5 lg:hidden" aria-label="Why travel with us">
+                @foreach([['pin', 'Germany locations'], ['lock', 'Private tours'], ['chat', 'Professional guides'], ['star', 'Excellent reviews']] as [$ic, $txt])
+                    <li class="flex flex-col items-center gap-2 text-center">
+                        <span class="grid size-8 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-black/20" aria-hidden="true"><x-icon :name="$ic" class="h-4 w-4"/></span>
+                        <span class="text-[0.55rem] font-bold uppercase leading-tight tracking-[0.06em] text-white">{{ $txt }}</span>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+
+    <a href="#tours" class="absolute bottom-6 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 text-[0.65rem] font-bold uppercase tracking-[0.3em] text-white/70 hover:text-brand-gold">
+        Scroll <span class="block w-px h-10 bg-gradient-to-b from-brand-gold to-transparent" aria-hidden="true"></span>
+    </a>
+</section>
 {{-- 2. PROMISES (dark band, four columns divided by thin lines) + at-a-glance counts --}}
 <section class="hidden bg-brand-navy-dark text-white sm:block" aria-label="Why book with us" data-reveal="up">
     <ul class="mx-auto grid max-w-[1390px] sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-white/15" data-reveal-stagger>
