@@ -42,6 +42,7 @@
 
     /* Derived tones */
     --color-brand-custard-light: #f7f3df;
+    --color-brand-cream: #fffbf4;   /* section background (cards keep custard-light) */
     --color-brand-navy-dark: #001f30;
     --color-brand-navy-soft: #1c4a63;
     --color-brand-red-dark: #b01e21;

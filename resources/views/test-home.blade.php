@@ -52,7 +52,7 @@
 </section>
 
 {{-- 2. TRUST STRIP --}}
-<section class="bg-brand-custard-light text-brand-navy border-b border-brand-custard" aria-label="Why book with us">
+<section class="bg-brand-cream text-brand-navy border-b border-brand-custard" aria-label="Why book with us">
     <ul class="container-x grid gap-3 sm:grid-cols-3 py-5 text-center font-semibold text-xs uppercase tracking-[0.16em]">
         @foreach([['check', 'Free, no-obligation quote'], ['shield', 'Self drive, chauffeur or coach'], ['adjust', 'Itineraries built around you']] as [$ic, $txt])
             <li class="flex items-center justify-center gap-2.5"><x-icon :name="$ic" class="w-4 h-4 text-brand-red"/>{{ $txt }}</li>
@@ -66,7 +66,7 @@
     $whyImg = $whyFind('neuschwanstein-castle') ?? $galleryItems->first(fn ($g) => str_contains($g['path'], 'quedlinburg-lane')) ?? $galleryItems->first();
     $whyImg2 = $whyFind('bacharach-rhine') ?? $galleryItems->first(fn ($g) => str_contains($g['path'], 'cochem')) ?? $galleryItems->skip(1)->first();
 @endphp
-<section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-custard-light to-white text-brand-navy py-20 sm:py-28" aria-labelledby="book-title"
+<section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-cream to-white text-brand-navy py-20 sm:py-28" aria-labelledby="book-title"
          x-data="{ shown: false }" x-init="const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { shown = true; o.disconnect() } }, { threshold: 0.15 }); o.observe($el)">
     <div class="pointer-events-none absolute -z-10 -top-40 -left-40 size-[34rem] rounded-full bg-brand-gold/25 blur-[120px]" aria-hidden="true"></div>
     <div class="pointer-events-none absolute -z-10 -bottom-40 -right-32 size-[30rem] rounded-full bg-brand-custard blur-[100px]" aria-hidden="true"></div>
@@ -206,7 +206,7 @@
 @include('partials.sections.why')
 
 {{-- 6b. BY TRAVELER --}}
-<section class="py-16 sm:py-24 bg-brand-custard-light" aria-labelledby="trav-title">
+<section class="py-16 sm:py-24 bg-brand-cream" aria-labelledby="trav-title">
     <div class="container-x">
         <x-section-heading id="trav-title" eyebrow="By traveler" title="Journeys for every" emphasis="travel style."
             intro="Whoever is coming along, we shape the trip to suit."/>
@@ -311,7 +311,7 @@
     $storyA = \App\Models\Media::query()->where('path', 'like', 'media/quedlinburg-lane-%')->first();
     $storyB = \App\Models\Media::query()->where('path', 'like', 'media/mosel-vineyard-%')->first();
 @endphp
-<section class="relative overflow-hidden py-16 sm:py-24 bg-brand-custard-light" aria-labelledby="story-title">
+<section class="relative overflow-hidden py-16 sm:py-24 bg-brand-cream" aria-labelledby="story-title">
     <span class="pointer-events-none absolute -right-24 -top-24 size-96 rounded-full border-2 border-dashed border-brand-gold/50" aria-hidden="true"></span>
     <span class="pointer-events-none absolute -bottom-32 -left-24 size-[28rem] rounded-full bg-brand-gold/10" aria-hidden="true"></span>
     <div class="container-x relative grid gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-20">
@@ -358,9 +358,9 @@
 
 {{-- 11b. JOURNAL: heading + arrows on the left, cards scroll off the right edge --}}
 @if($posts->isNotEmpty())
-<section class="relative isolate overflow-hidden bg-brand-custard-light py-16 text-brand-navy sm:py-24" aria-labelledby="journal-title" x-data>
+<section class="relative isolate overflow-hidden bg-brand-cream py-16 text-brand-navy sm:py-24" aria-labelledby="journal-title" x-data>
     @if($posts->first()->image)<x-picture :path="$posts->first()->image" sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover opacity-10"/>@endif
-    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-custard-light via-brand-custard-light/90 to-brand-custard-light/70" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-cream via-brand-cream/90 to-brand-cream/70" aria-hidden="true"></div>
     <div class="mx-auto max-w-[1390px] pl-4 sm:pl-6 lg:grid lg:grid-cols-[21rem_minmax(0,1fr)] lg:items-center lg:gap-10">
         <div class="pr-4 sm:pr-6 lg:pr-0">
             <p class="eyebrow text-brand-red-dark">Travel journal</p>
@@ -433,7 +433,7 @@
 @endif
 {{-- 12. CLOSING CTA band (light, so it separates from the dark sections around it) --}}
 @php $tel = preg_replace('/[^+\d]/', '', $site['phone'] ?? ''); @endphp
-<section class="relative overflow-hidden bg-brand-custard-light py-16 sm:py-24" aria-labelledby="cta-title">
+<section class="relative overflow-hidden bg-brand-cream py-16 sm:py-24" aria-labelledby="cta-title">
     <div class="container-x grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
         <div>
             <p class="eyebrow text-brand-red-dark">Start planning</p>

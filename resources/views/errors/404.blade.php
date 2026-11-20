@@ -2,7 +2,7 @@
 
 @section('solid_header', '1')
 @section('content')
-<section class="py-24 bg-brand-custard-light">
+<section class="py-24 bg-brand-cream">
     <div class="container-x max-w-xl text-center">
         <p class="font-display font-extrabold text-7xl text-brand-red">404</p>
         <h1 class="text-4xl sm:text-5xl mt-2">We could not find that page</h1>

@@ -4,7 +4,7 @@
     $tCount = $testimonials->count();
     $tGrid = $tCount === 1 ? 'md:max-w-2xl md:mx-auto' : ($tCount === 2 ? 'md:grid-cols-2 md:max-w-4xl md:mx-auto' : 'md:grid-cols-2 lg:grid-cols-3');
 @endphp
-<section class="relative overflow-hidden py-16 sm:py-24 bg-brand-custard-light" aria-labelledby="reviews-title">
+<section class="relative overflow-hidden py-16 sm:py-24 bg-brand-cream" aria-labelledby="reviews-title">
     <span class="pointer-events-none absolute -top-10 left-4 font-display text-[22rem] leading-none text-brand-gold/20 select-none" aria-hidden="true">&ldquo;</span>
     <div class="container-x relative">
         <x-section-heading id="reviews-title" eyebrow="Guest reviews" :title="$page->text('testimonials_title', 'What travelers say')"/>

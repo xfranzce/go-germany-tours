@@ -2,7 +2,7 @@
 
 @section('solid_header', '1')
 @section('content')
-<section class="py-20 bg-brand-custard-light">
+<section class="py-20 bg-brand-cream">
     <div class="container-x max-w-2xl text-center">
         <span class="mx-auto grid place-items-center w-16 h-16 rounded-full bg-brand-gold text-brand-navy"><x-icon name="check" class="w-9 h-9"/></span>
         <h1 class="text-4xl sm:text-5xl mt-5">Thank you, we have your enquiry</h1>

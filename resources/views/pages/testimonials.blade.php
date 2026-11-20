@@ -3,7 +3,7 @@
 @section('content')
 @include('partials.page-header', ['title' => 'What our travelers say', 'lead' => 'Real words from the people we plan trips for.', 'crumbs' => [['Home', route('home')], ['About Us', route('about')], ['Testimonials', null]]])
 
-<section class="bg-brand-custard-light py-14 sm:py-20" aria-label="Testimonials">
+<section class="bg-brand-cream py-14 sm:py-20" aria-label="Testimonials">
     <div class="container-x">
         @if($testimonials->isEmpty())
             <p class="mx-auto max-w-xl text-center text-lg text-ink-soft">Traveler reviews will appear here soon. In the meantime, tell us about your trip and we will plan it around you.</p>

@@ -96,7 +96,7 @@
 
 {{-- 3. ABOUT INTRO (soft tinted, centred) --}}
 @php $aboutImg = $media('couple-rhine-vineyard') ?? $media('quedlinburg-lane'); @endphp
-<section class="bg-brand-custard-light py-16 sm:py-24" aria-labelledby="intro-title" data-reveal="split">
+<section class="bg-brand-cream py-16 sm:py-24" aria-labelledby="intro-title" data-reveal="split">
     <div class="container-x grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
         @if($aboutImg)
             <div class="relative aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-card sm:aspect-[5/4] lg:aspect-auto lg:h-full lg:min-h-[34rem]">
@@ -157,7 +157,7 @@
 </section>
 
 {{-- 5. DISCOUNT BLOCK (white to tint to white); uses our real early bird offer --}}
-<section class="bg-gradient-to-b from-white via-brand-custard-light to-white py-10 sm:py-24" aria-labelledby="offer-title" data-reveal="pop">
+<section class="bg-gradient-to-b from-white via-brand-cream to-white py-10 sm:py-24" aria-labelledby="offer-title" data-reveal="pop">
     <div class="container-x grid items-center gap-5 text-center sm:gap-8 lg:gap-14 lg:text-left lg:grid-cols-[auto_1fr_minmax(0,0.8fr)]">
         <div class="mx-auto hidden size-36 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-xl shadow-brand-navy/20 sm:grid sm:size-44 lg:mx-0" aria-hidden="true">
             <span class="text-center font-display font-extrabold leading-none"><span class="block text-6xl">25%</span><span class="mt-1 block text-sm uppercase tracking-[0.2em]">off</span></span>
@@ -355,7 +355,7 @@
 <div data-reveal="fade">@include('partials.sections.partners', ['bg' => 'bg-brand-navy-dark border-t border-white/10'])</div>
 
 {{-- 12. LET'S PLAN YOUR JOURNEY (tinted band) --}}
-<section class="bg-brand-custard-light py-14 text-center sm:py-20" aria-labelledby="plan-title" data-reveal="zoom">
+<section class="bg-brand-cream py-14 text-center sm:py-20" aria-labelledby="plan-title" data-reveal="zoom">
     <div class="container-x max-w-3xl">
         <p class="eyebrow centered text-brand-red-dark">Begin your journey</p>
         <h2 id="plan-title" class="mt-4">Let's plan your <em class="font-medium italic text-brand-red">Germany journey.</em></h2>
