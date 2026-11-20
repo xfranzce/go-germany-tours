@@ -17,7 +17,7 @@
 
 @section('content')
 {{-- 1. HERO: video background; headline and copy on the left, the quote quiz on the right --}}
-<section class="relative isolate flex min-h-svh items-center bg-brand-navy-dark text-white overflow-hidden" aria-labelledby="hero-title">
+<section class="relative isolate flex min-h-svh flex-col bg-brand-navy-dark text-white overflow-hidden" aria-labelledby="hero-title">
     @if($heroMedia)
         <x-picture :path="$heroPath" priority hires sizes="100vw" class="absolute inset-0 -z-20 w-full h-full object-cover"/>
     @endif
@@ -25,7 +25,7 @@
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/85 via-brand-navy-dark/50 to-brand-navy-dark/30" aria-hidden="true"></div>
     <div class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-dark/70 via-transparent to-brand-navy-dark/30" aria-hidden="true"></div>
 
-    <div class="container-x grid items-center gap-8 pt-32 pb-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:pt-32 lg:pb-10 [@media(max-height:820px)]:lg:pt-28 [@media(max-height:820px)]:lg:pb-6">
+    <div class="container-x my-auto grid items-center gap-8 pt-32 pb-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:pt-32 lg:pb-10 [@media(max-height:820px)]:lg:pt-28 [@media(max-height:820px)]:lg:pb-6">
         <div class="text-center lg:text-left">
             <p class="eyebrow text-brand-gold">The Germany Collection</p>
             @php
@@ -75,7 +75,14 @@
         </div>
     </div>
 
-    <a href="#tours" class="absolute bottom-6 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 text-[0.65rem] font-bold uppercase tracking-[0.3em] text-white/70 hover:text-brand-gold">
+    {{-- bottom row of the hero --}}
+    <ul class="container-x hidden shrink-0 flex-wrap items-center justify-center gap-x-10 gap-y-3 border-t border-white/20 py-5 text-xs font-bold uppercase tracking-[0.16em] sm:flex" aria-label="Highlights">
+        @foreach([['check', 'Free, no-obligation quote'], ['lock', 'Private tours'], ['pin', 'Local Germany experts']] as [$ic, $txt])
+            <li class="flex items-center gap-2.5"><x-icon :name="$ic" class="h-4 w-4 text-brand-gold"/>{{ $txt }}</li>
+        @endforeach
+    </ul>
+
+    <a href="#tours" class="absolute bottom-24 left-1/2 -translate-x-1/2 hidden xl:flex flex-col items-center gap-2 text-[0.65rem] font-bold uppercase tracking-[0.3em] text-white/70 hover:text-brand-gold">
         Scroll <span class="block w-px h-10 bg-gradient-to-b from-brand-gold to-transparent" aria-hidden="true"></span>
     </a>
 </section>
