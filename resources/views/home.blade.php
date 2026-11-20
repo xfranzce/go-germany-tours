@@ -96,14 +96,6 @@
     </ul>
 </section>
 
-{{-- 2b. TRUST STRIP (after the promises band) --}}
-<section class="border-b border-brand-custard bg-brand-custard-light text-brand-navy" aria-label="Quote highlights">
-    <ul class="container-x grid gap-3 py-5 text-center text-xs font-semibold uppercase tracking-[0.16em] sm:grid-cols-3">
-        @foreach([['check', 'Free, no-obligation quote'], ['shield', 'Self drive, chauffeur or coach'], ['adjust', 'Itineraries built around you']] as [$ic, $txt])
-            <li class="flex items-center justify-center gap-2.5"><x-icon :name="$ic" class="h-4 w-4 text-brand-red"/>{{ $txt }}</li>
-        @endforeach
-    </ul>
-</section>
 {{-- 3. ABOUT INTRO (soft tinted, centred) --}}
 @php $aboutImg = $media('quedlinburg-lane') ?? $media('saxon-switzerland-bastei'); @endphp
 <section class="bg-brand-custard-light py-16 sm:py-24" aria-labelledby="intro-title" data-reveal="split">
