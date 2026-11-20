@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Schema;
 /** Key/value site settings with config('gogermany.defaults') fallbacks. */
 class Setting extends Model
 {
+    use \App\Concerns\LogsActivity;
+
     protected $guarded = [];
 
     private static ?array $memo = null;

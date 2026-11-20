@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Storage;
 
 class Media extends Model
 {
+    use \App\Concerns\LogsActivity;
+
     protected $guarded = [];
 
     protected $casts = ['widths' => 'array'];

@@ -61,6 +61,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('snippets', Admin\SnippetController::class)->except('show'); // Header & Footer code (administrators only)
         Route::get('maintenance', [Admin\MaintenanceController::class, 'edit'])->name('maintenance.edit');   // maintenance mode on/off (administrators only)
         Route::put('maintenance', [Admin\MaintenanceController::class, 'update'])->name('maintenance.update');
+        Route::get('history', [Admin\HistoryController::class, 'index'])->name('history.index');   // who changed what and when (administrators only)
         Route::resource('users', Admin\AdminUserController::class)->except('show');
         Route::get('media', [Admin\MediaController::class, 'index'])->name('media.index');
         Route::post('media', [Admin\MediaController::class, 'store'])->name('media.store');

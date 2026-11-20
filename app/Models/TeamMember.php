@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class TeamMember extends Model
 {
+    use \App\Concerns\LogsActivity;
+
     protected $guarded = [];
 
     protected $casts = ['is_active' => 'boolean'];

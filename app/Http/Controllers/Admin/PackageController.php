@@ -78,7 +78,7 @@ class PackageController extends AdminController
             $count = $packages->onlyTrashed()->get()->each->restore()->count();
             $done = 'restored';
         } else {
-            $count = Package::whereIn('id', $ids)->update($changes[$action]);
+            $count = Package::whereIn('id', $ids)->get()->each->update($changes[$action])->count();   // one by one, so each change is recorded in the History
             $done = ['publish' => 'published', 'unpublish' => 'unpublished', 'sample' => 'marked as sample', 'unsample' => 'marked as not sample', 'feature' => 'featured on the home page', 'unfeature' => 'unfeatured'][$action];
         }
 
@@ -115,6 +115,7 @@ class PackageController extends AdminController
         foreach ((array) $request->input('sort', []) as $id => $n) {
             Package::whereKey($id)->update(['sort' => (int) $n]);
         }
+        \App\Models\ActivityLog::record('updated', null, null, 'Changed the order of the packages');
 
         return back()->with('status', 'Order saved.');
     }

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Testimonial extends Model
 {
+    use \App\Concerns\LogsActivity;
+
     protected $guarded = [];
 
     protected $casts = ['is_active' => 'boolean', 'is_placeholder' => 'boolean'];

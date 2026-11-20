@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Cache;
 /** A script, style or HTML block an administrator injects into the public pages (Admin > Header & Footer). */
 class CodeSnippet extends Model
 {
+    use \App\Concerns\LogsActivity;
+
     public const CACHE_KEY = 'code_snippets.active';
 
     public const TYPES = ['script' => 'Script (JavaScript)', 'style' => 'Style (CSS)', 'html' => 'HTML / tag (pasted as is)'];

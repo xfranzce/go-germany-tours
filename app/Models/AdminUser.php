@@ -6,6 +6,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class AdminUser extends Authenticatable
 {
+    use \App\Concerns\LogsActivity;
+
     public const ROLE_ADMIN = 'admin';
 
     public const ROLE_EDITOR = 'editor';

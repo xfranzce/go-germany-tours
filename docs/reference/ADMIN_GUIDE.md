@@ -59,3 +59,6 @@ Admin > Admin users > Add admin (or Edit) has a **Role** field.
 - **Editor**: only Packages, Pages, Travel guides (posts), Media, and the categories/tags (Tour types and Destinations). Enquiries, Hero quiz, Testimonials, FAQs, Site settings and Admin users are hidden and blocked (403). Editors land on Packages after signing in.
 - At least one Administrator must always exist. Existing users were set to Administrator.
 Permissions live in `AdminUser::EDITOR_AREAS` and are enforced by the `admin.role` middleware (`EnsureAdminRole`).
+
+## History (Administrators only)
+**Admin > History** lists everything done in the admin: who (name and email), what they added, updated, deleted or restored, the date and time, and for edits the old and new values. Filter by person, action, area or date. Logins and failed logins are shown too. Passwords, keys and tokens are never shown. It starts recording from the day this feature went live.

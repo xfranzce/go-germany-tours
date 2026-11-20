@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Package extends Model
 {
+    use \App\Concerns\LogsActivity;
+
     use SoftDeletes;
 
     protected $guarded = [];
