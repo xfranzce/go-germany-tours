@@ -11,7 +11,7 @@
         ['stagit', 'Stagit.ie', 204, 75]
     ];
 @endphp
-<section class="relative bg-brand-navy text-white py-14 sm:py-16" aria-labelledby="partners-title">
+<section class="relative {{ $bg ?? 'bg-brand-navy' }} text-white py-14 sm:py-16" aria-labelledby="partners-title">
     <div class="container-x grid gap-10 lg:grid-cols-[minmax(0,26rem)_1fr] lg:items-center">
         <div class="lg:border-r lg:border-white/15 lg:pr-10">
             <p class="eyebrow text-brand-gold">Our trusted global travel partners</p>
