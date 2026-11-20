@@ -361,6 +361,9 @@
     </div>
 </section>
 
+{{-- 11b. OUR PARTNERS (shared partial; also on About) --}}
+<div data-reveal="fade">@include('partials.sections.partners')</div>
+
 {{-- 12. LET'S PLAN YOUR JOURNEY (tinted band) --}}
 <section class="bg-brand-custard-light py-14 text-center sm:py-20" aria-labelledby="plan-title" data-reveal="zoom">
     <div class="container-x max-w-3xl">
