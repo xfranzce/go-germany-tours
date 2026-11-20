@@ -37,10 +37,14 @@
 
             {{-- TOURS: full-width mega menu, one column per tour type --}}
             <div @mouseenter="hover('tours')" @mouseleave="menu === 'tours' && (menu = null)">
-                <button type="button" class="px-3 py-2 rounded-lg hover:bg-current/10 inline-flex items-center gap-1 uppercase" :aria-expanded="menu === 'tours'" aria-controls="mega-tours"
-                        @click="menu = menu === 'tours' ? null : 'tours'">
-                    Tours <span class="inline-flex transition" :class="menu === 'tours' && 'rotate-180'"><x-icon name="chevron-down" class="w-4 h-4"/></span>
-                </button>
+                {{-- "Tours" is a link to the Packages page; hovering (or the arrow button, for keyboard and touch) opens the mega menu --}}
+                <span class="inline-flex items-center rounded-lg uppercase hover:bg-current/10">
+                    <a href="{{ route('packages.index') }}" class="py-2 pl-3 pr-1" @if(request()->routeIs('packages.*', 'tours.*')) aria-current="page" @endif>Tours</a>
+                    <button type="button" class="py-2 pl-1 pr-3" :aria-expanded="menu === 'tours'" aria-controls="mega-tours" aria-label="Show the tours menu"
+                            @click="menu = menu === 'tours' ? null : 'tours'">
+                        <span class="inline-flex transition" :class="menu === 'tours' && 'rotate-180'"><x-icon name="chevron-down" class="w-4 h-4"/></span>
+                    </button>
+                </span>
                 <div id="mega-tours" x-show="menu === 'tours'" x-cloak x-transition.opacity.duration.200ms
                      class="absolute inset-x-0 top-full normal-case tracking-normal before:absolute before:inset-x-0 before:-top-4 before:h-4">
                     <div class="border-t-4 border-brand-gold bg-white text-brand-navy shadow-[0_30px_60px_-20px_rgb(0_48_73/0.45)]">
