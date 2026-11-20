@@ -47,10 +47,10 @@
 
         </div>
 
-        <div class="mx-auto w-full max-w-xl lg:mx-0 lg:ml-auto lg:max-w-[26rem]">
+        <div class="mx-auto w-full max-w-xl lg:mx-0 lg:ml-auto lg:max-w-[574px]">
             <x-hero-quiz>
                 {{-- highlights, inside the quiz card --}}
-                <ul class="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 border-t border-white/20 pt-4 text-[0.66rem] font-bold uppercase tracking-[0.04em] text-white sm:text-[0.62rem]" aria-label="Highlights">
+                <ul class="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 border-t border-white/20 pt-4 text-[0.66rem] font-bold uppercase tracking-[0.04em] text-white sm:flex-nowrap sm:text-[0.62rem] lg:flex-wrap xl:flex-nowrap" aria-label="Highlights">
                 @foreach([['check', 'Free, no-obligation quote'], ['lock', 'Private tours'], ['pin', 'Local Germany experts']] as [$ic, $txt])
                     <li class="flex items-center gap-1.5 whitespace-nowrap"><x-icon :name="$ic" class="h-3.5 w-3.5 shrink-0 text-brand-gold"/>{{ $txt }}</li>
                 @endforeach
