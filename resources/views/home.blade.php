@@ -59,27 +59,11 @@
 
             <x-google-rating class="mt-6 flex-wrap justify-center lg:justify-start"/>
 
-            <ul class="mx-auto lg:mx-0 mt-6 hidden lg:grid max-w-xl grid-cols-2 gap-x-6 gap-y-3 border-t border-white/25 pt-5 text-left [@media(max-height:820px)]:lg:mt-4" aria-label="Why travel with us">
-                @foreach([['pin', 'Germany locations'], ['lock', 'Private tours'], ['chat', 'Professional guides'], ['star', 'Excellent reviews']] as [$ic, $txt])
-                    <li class="flex items-center gap-3">
-                        <span class="grid size-10 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-black/20" aria-hidden="true"><x-icon :name="$ic" class="h-5 w-5"/></span>
-                        <span class="text-sm font-bold uppercase tracking-[0.12em] text-white sm:text-[0.8rem]">{{ $txt }}</span>
-                    </li>
-                @endforeach
-            </ul>
         </div>
 
         <div class="mx-auto w-full max-w-xl lg:mx-0 lg:ml-auto">
             <x-hero-quiz/>
 
-            <ul class="mt-6 grid grid-cols-4 gap-x-2 border-t border-white/25 pt-5 lg:hidden" aria-label="Why travel with us">
-                @foreach([['pin', 'Germany locations'], ['lock', 'Private tours'], ['chat', 'Professional guides'], ['star', 'Excellent reviews']] as [$ic, $txt])
-                    <li class="flex flex-col items-center gap-2 text-center">
-                        <span class="grid size-8 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-lg shadow-black/20" aria-hidden="true"><x-icon :name="$ic" class="h-4 w-4"/></span>
-                        <span class="text-[0.55rem] font-bold uppercase leading-tight tracking-[0.06em] text-white">{{ $txt }}</span>
-                    </li>
-                @endforeach
-            </ul>
         </div>
     </div>
 
