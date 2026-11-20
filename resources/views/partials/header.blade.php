@@ -33,6 +33,8 @@
         </a>
 
         <nav class="hidden lg:flex items-center gap-1 font-bold text-sm uppercase tracking-wider" aria-label="Main">
+            <a href="{{ route('home') }}" class="px-3 py-2 rounded-lg hover:bg-current/10" @if(request()->routeIs('home')) aria-current="page" @endif>Home</a>
+
             {{-- TOURS: full-width mega menu, one column per tour type --}}
             <div @mouseenter="hover('tours')" @mouseleave="menu === 'tours' && (menu = null)">
                 <button type="button" class="px-3 py-2 rounded-lg hover:bg-current/10 inline-flex items-center gap-1 uppercase" :aria-expanded="menu === 'tours'" aria-controls="mega-tours"
@@ -76,8 +78,6 @@
                     </div>
                 </div>
             </div>
-
-            <a href="{{ route('packages.index') }}" class="px-3 py-2 rounded-lg hover:bg-current/10">Packages</a>
 
             {{-- ABOUT US: full-width mega menu, an image card for each company page plus a quote promo --}}
             <div @mouseenter="hover('about')" @mouseleave="menu === 'about' && (menu = null)">
@@ -127,6 +127,7 @@
     <nav id="mobile-menu" class="lg:hidden border-t border-brand-custard bg-white text-brand-navy" x-show="mobile" x-cloak aria-label="Mobile"
          x-data="{ sec: 'tours' }">
         <div class="container-x max-h-[calc(100svh-4.5rem)] overflow-y-auto py-3 font-bold">
+            <a class="block border-b border-brand-custard py-3.5 text-sm uppercase tracking-wider" href="{{ route('home') }}" @if(request()->routeIs('home')) aria-current="page" @endif>Home</a>
             {{-- TOURS --}}
             <div class="border-b border-brand-custard">
                 <button type="button" class="flex w-full items-center justify-between py-3.5 text-sm uppercase tracking-wider" :aria-expanded="sec === 'tours'" aria-controls="m-tours" @click="sec = sec === 'tours' ? null : 'tours'">
@@ -164,7 +165,6 @@
                 </div>
             </div>
 
-            <a class="block border-b border-brand-custard py-3.5 text-sm uppercase tracking-wider" href="{{ route('packages.index') }}">Packages</a>
             <a class="block border-b border-brand-custard py-3.5 text-sm uppercase tracking-wider" href="{{ route('contact') }}">Contact</a>
             <button type="button" class="btn btn-primary mt-4 w-full" @click="mobile = false; $store.modal.show()">Get a Free Quote</button>
         </div>
