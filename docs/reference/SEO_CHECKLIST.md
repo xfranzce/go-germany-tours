@@ -8,25 +8,27 @@
 - Images: WebP, `srcset`, width/height set (no layout shift), lazy below the fold, hero preloaded, alt text mandatory in admin. Fonts self-hosted, `font-display: swap`, preloaded. About 30 KB gzipped JS and 15 KB CSS (brotli) on public pages. reCAPTCHA loads only when a form is used.
 - Security headers, HTTPS HSTS header when served over HTTPS, `.htaccess` compression and long caching for `/build`.
 
-## Lighthouse (run 2026-11-19, Lighthouse 13.6, Chrome headless)
-Pages: the home page `/` and one package page `/packages/germany-fairytale-towns-coach-tour`, each at **mobile** (412x823, simulated slow 4G, 4x CPU) and **desktop**. Every category is now 90 or above.
+## Lighthouse (latest run 2026-11-20, Lighthouse 13.6, Chrome headless)
+Pages: the home page `/` and one package page `/packages/germany-fairytale-towns-coach-tour`, each at **mobile** (412x823, simulated slow 4G, 4x CPU) and **desktop**. **Nothing is below 90; every category is 95-100.** Re-run after the later home page changes (hero swap, scroll-reveal animations, Our Partners band, trust row, Google badge code, new menu, Tours link).
 
 | Page | Size | Perf | A11y | Best practices | SEO | LCP |
 |---|---|---|---|---|---|---|
-| `/` | Mobile | 99-100 | 100 | 100 | 100 | 1.0 s |
-| `/` | Desktop | 100 | 100 | 100 | 100 | 0.3 s |
-| `/packages/germany-fairytale-towns-coach-tour` | Mobile | 95-97 | 100 | 100 | 100 | 2.5 s |
-| `/packages/germany-fairytale-towns-coach-tour` | Desktop | 100 | 100 | 100 | 100 | 0.6 s |
+| `/` | Mobile | 100 | 100 | 100* | 100 | 1.0 s |
+| `/` | Desktop | 100 | 100 | 100* | 100 | 0.3 s |
+| `/packages/germany-fairytale-towns-coach-tour` | Mobile | 97 | 100 | 100* | 100 | 2.6 s |
+| `/packages/germany-fairytale-towns-coach-tour` | Desktop | 100 | 100 | 100* | 100 | 0.6 s |
 
-CLS is 0 and TBT 0-180 ms everywhere. Package mobile LCP is the first gallery photo (preloaded; it sits just under the page header).
+CLS 0 and TBT 0 ms on all four (a direct run of the home page on desktop showed CLS 0.016, still green). The only audit below full marks in performance is package mobile LCP (2.6 s, score 0.87; the first gallery photo, already preloaded; the category still scores 97).
+\* Best practices reads 96 through the proxy (see below) and 100 when `php artisan serve` is tested directly: the 96 is only Chrome logging CORS errors for assets linked to `APP_URL` (:8000) from the :8001 proxy, not a site problem.
 
+Earlier run, 2026-11-19 (before the later changes above): home mobile 99-100, package mobile 95-97, desktop 100, and the fixes listed under "What was fixed" below.
 **How it was measured.** The live host (Hostinger CDN) answers Lighthouse with `403`, so the live site cannot be audited with it (use PageSpeed Insights or Chrome DevTools on the live site instead). The numbers above are from a local copy behind `scripts/lighthouse-proxy.mjs`, which serves `public/` files directly with brotli and the production cache headers (`php artisan serve` alone is single-threaded and uncompressed: it scored 77 and 86 on mobile purely because of that). Best practices reads 96 if you test through the proxy because assets are linked to `APP_URL` (:8000) and Chrome logs CORS errors; test `php artisan serve` directly for that category, or set `APP_URL=http://127.0.0.1:8001`.
 ```
 php artisan serve                      # terminal 1
 node scripts/lighthouse-proxy.mjs      # terminal 2 (project root)
 npx lighthouse http://127.0.0.1:8001/ --preset=desktop --view      # or omit --preset for mobile
 ```
-Run each mobile test a couple of times and ignore a first run straight after editing a Blade file (view recompile makes FCP spike to about 4.5 s).
+MySQL must be running (XAMPP) for the local copy to render. Run each mobile test a couple of times and ignore a first run straight after editing a Blade file (view recompile makes FCP spike to about 4.5 s).
 
 **What was fixed (everything that scored under 90 or lost points):**
 - Accessibility (home 96): the "Itineraries" and counter blocks were `<dl>`s with the `<dd>` before the `<dt>`. Now `<dt>` then `<dd>`, shown value-over-label with `flex-col-reverse`.
