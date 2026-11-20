@@ -12,7 +12,7 @@ class Enquiry extends Model
     protected $casts = [
         'quiz_answers' => 'array', 'first_touch' => 'array', 'last_touch' => 'array',
         'consent_given' => 'boolean', 'consented_at' => 'datetime', 'email_sent_at' => 'datetime',
-        'ghl_synced_at' => 'datetime',
+        'ghl_synced_at' => 'datetime', 'sheet_synced_at' => 'datetime',
     ];
 
     public function package(): BelongsTo
