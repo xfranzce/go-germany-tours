@@ -79,6 +79,14 @@
         Scroll <span class="block w-px h-10 bg-gradient-to-b from-brand-gold to-transparent" aria-hidden="true"></span>
     </a>
 </section>
+{{-- 1b. TRUST STRIP under the hero --}}
+<section class="border-b border-brand-custard bg-brand-custard-light text-brand-navy" aria-label="Quote highlights">
+    <ul class="container-x grid gap-3 py-5 text-center text-xs font-semibold uppercase tracking-[0.16em] sm:grid-cols-3">
+        @foreach([['check', 'Free, no-obligation quote'], ['shield', 'Self drive, chauffeur or coach'], ['adjust', 'Itineraries built around you']] as [$ic, $txt])
+            <li class="flex items-center justify-center gap-2.5"><x-icon :name="$ic" class="h-4 w-4 text-brand-red"/>{{ $txt }}</li>
+        @endforeach
+    </ul>
+</section>
 {{-- 2. PROMISES (dark band, four columns divided by thin lines) + at-a-glance counts --}}
 <section class="hidden bg-brand-navy-dark text-white sm:block" aria-label="Why book with us" data-reveal="up">
     <ul class="mx-auto grid max-w-[1390px] sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-white/15" data-reveal-stagger>
