@@ -180,3 +180,10 @@
     .rv-pop { transform: scale(.6) rotate(-8deg); transition-timing-function: cubic-bezier(.34, 1.56, .64, 1); }
     .rv-in .rv { opacity: 1; transform: none; filter: none; }
 }
+
+/* Hero sparkles: small gold four-point stars that fade in and out (home fairytale hero) */
+.sparkle { position: absolute; width: 1rem; height: 1rem; background: var(--color-brand-gold-dark); opacity: 0;
+    clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
+@media (prefers-reduced-motion: no-preference) { .sparkle { animation: twinkle 4.8s ease-in-out infinite; } }
+@media (prefers-reduced-motion: reduce) { .sparkle { opacity: .55; } }
+@keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(.4) rotate(0deg); } 45%, 55% { opacity: .9; transform: scale(1) rotate(20deg); } }

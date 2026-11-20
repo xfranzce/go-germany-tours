@@ -151,7 +151,8 @@ Alpine.data('heroQuiz', (steps) => ({
     answers: {},
     ready: false,     // true once Alpine has taken over from the server-rendered first question
     touched: false,   // true after the first click, so only later steps animate in
-    init() { this.ready = true; },
+    holdH: 0,         // height of the server-rendered first question, kept for the interactive one so the card does not jump
+    init() { this.holdH = this.$refs.ssr ? Math.ceil(this.$refs.ssr.getBoundingClientRect().height) : 0; this.ready = true; },
     get total() { return this.steps.length; },
     get onForm() { return this.i >= this.total; },
     get step() { return this.steps[this.i] || null; },

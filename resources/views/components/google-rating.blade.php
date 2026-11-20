@@ -17,7 +17,7 @@
         </span>
         <span class="h-6 w-px bg-current opacity-30" aria-hidden="true"></span>
         <span class="relative inline-flex" aria-hidden="true">
-            <span class="flex gap-0.5 text-white/25">@for($i = 0; $i < 5; $i++)<svg viewBox="0 0 24 24" class="size-4 fill-current"><path d="{{ $star }}"/></svg>@endfor</span>
+            <span class="flex gap-0.5 opacity-30">@for($i = 0; $i < 5; $i++)<svg viewBox="0 0 24 24" class="size-4 fill-current"><path d="{{ $star }}"/></svg>@endfor</span>
             <span class="absolute inset-y-0 left-0 overflow-hidden" style="width: {{ $r / 5 * 100 }}%"><span class="flex w-max gap-0.5 text-brand-gold">@for($i = 0; $i < 5; $i++)<svg viewBox="0 0 24 24" class="size-4 fill-current"><path d="{{ $star }}"/></svg>@endfor</span></span>
         </span>
         <span aria-hidden="true"><b class="font-extrabold">{{ rtrim(rtrim(number_format($r, 1), '0'), '.') }}/5</b> <span class="font-normal opacity-90">Traveler Rating</span></span>

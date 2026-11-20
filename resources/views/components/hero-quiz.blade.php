@@ -1,6 +1,7 @@
+@props(['solid' => false])
 @php $steps = \App\Models\QuizStep::forQuiz(); @endphp
 <section id="quote" aria-labelledby="quiz-title"
-         class="relative overflow-hidden rounded-2xl border border-white/25 bg-brand-navy-dark/45 text-white shadow-2xl shadow-black/40 backdrop-blur-xl min-h-[26rem] scroll-mt-28 supports-[not(backdrop-filter:blur(1px))]:bg-brand-navy-dark/85"
+         class="relative overflow-hidden rounded-2xl border border-white/25 {{ $solid ? 'bg-brand-navy-dark/95 shadow-brand-navy-dark/40' : 'bg-brand-navy-dark/45 shadow-black/40 backdrop-blur-xl' }} text-white shadow-2xl min-h-[26rem] scroll-mt-28 supports-[not(backdrop-filter:blur(1px))]:bg-brand-navy-dark/85"
          x-data="heroQuiz(@js($steps))" x-ref="card">
     <span class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold to-transparent" aria-hidden="true"></span>
     <div class="p-5 sm:p-7">
@@ -22,7 +23,7 @@
          Alpine hides this copy as soon as the interactive version below is ready; it looks the same, so nothing jumps. --}}
     @php $first = $steps[0] ?? null; @endphp
     @if($first)
-        <div class="mt-6" x-show="!ready" inert aria-hidden="true">
+        <div class="mt-6" x-show="!ready" x-ref="ssr" inert aria-hidden="true">
             <p class="text-[0.7rem] font-extrabold uppercase tracking-[0.16em] text-brand-gold">Question 1 of {{ count($steps) }}</p>
             <p class="mt-1 font-display text-2xl font-bold leading-snug text-white">{{ $first['question'] }}</p>
             @if($first['type'] === 'tiles')
@@ -40,7 +41,7 @@
         </div>
     @endif
 
-    <div x-cloak class="mt-6">
+    <div x-cloak class="mt-6" :style="!touched && holdH ? 'min-height:' + holdH + 'px' : ''">
         {{-- Question steps --}}
         <template x-if="!onForm && step">
             <fieldset :class="touched && 'animate-fade-up'" :key="i">
