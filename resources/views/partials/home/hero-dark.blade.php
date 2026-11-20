@@ -1,20 +1,21 @@
 {{-- PREVIOUS HOME HERO (dark): photo + video background, headline left, quiz right.
      Not shown right now. To bring it back, in home.blade.php replace @include('partials.home.hero-fairytale') with @include('partials.home.hero-dark')
      and remove @section('solid_header', '1') (this hero is dark, so the header must start transparent). --}}
-@if($heroMedia)
+@php $heroPhoto = \App\Models\Media::byStem('neuschwanstein-autumn') ?? $heroMedia; @endphp
+@if($heroPhoto)
     @push('head')
-        <link rel="preload" as="image" href="{{ $heroMedia->url(1280) }}" imagesrcset="{{ $heroMedia->srcset() }}" imagesizes="100vw" fetchpriority="high">
+        <link rel="preload" as="image" href="{{ $heroPhoto->url(1280) }}" imagesrcset="{{ $heroPhoto->srcset() }}" imagesizes="(min-width: 1024px) 80vw, 100vw" fetchpriority="high">
     @endpush
 @endif
 
 {{-- 1. HERO: video background; headline and copy on the left, the quote quiz on the right --}}
 <section class="relative isolate flex min-h-svh flex-col bg-brand-navy-dark text-white overflow-hidden" aria-labelledby="hero-title">
-    @if($heroMedia)
-        <x-picture :path="$heroPath" priority hires sizes="100vw" class="absolute inset-0 -z-20 w-full h-full object-cover"/>
+    @if($heroPhoto)
+        <x-picture :path="$heroPhoto->path" priority sizes="(min-width: 1024px) 80vw, 100vw" class="absolute inset-0 -z-20 w-full h-full object-cover object-[68%_50%] lg:object-center"/>
     @endif
     <x-video-bg src="hero.mp4" class="absolute inset-0 -z-[15] w-full h-full object-cover"/>
-    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/85 via-brand-navy-dark/50 to-brand-navy-dark/30" aria-hidden="true"></div>
-    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-dark/70 via-transparent to-brand-navy-dark/30" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/75 via-brand-navy-dark/30 to-transparent" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-dark/55 via-transparent to-brand-navy-dark/20" aria-hidden="true"></div>
 
     <div class="container-x my-auto grid items-center gap-8 pt-32 pb-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:pt-32 lg:pb-10 [@media(max-height:820px)]:lg:pt-28 [@media(max-height:820px)]:lg:pb-6">
         <div class="text-center lg:text-left">
@@ -46,10 +47,10 @@
 
         </div>
 
-        <div class="mx-auto w-full max-w-xl lg:mx-0 lg:ml-auto">
+        <div class="mx-auto w-full max-w-xl lg:mx-0 lg:ml-auto lg:max-w-[26rem]">
             <x-hero-quiz>
                 {{-- highlights, inside the quiz card --}}
-                <ul class="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 border-t border-white/20 pt-4 text-[0.66rem] font-bold uppercase tracking-[0.04em] text-white sm:flex-nowrap sm:text-[0.62rem] lg:flex-wrap xl:flex-nowrap" aria-label="Highlights">
+                <ul class="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 border-t border-white/20 pt-4 text-[0.66rem] font-bold uppercase tracking-[0.04em] text-white sm:text-[0.62rem]" aria-label="Highlights">
                 @foreach([['check', 'Free, no-obligation quote'], ['lock', 'Private tours'], ['pin', 'Local Germany experts']] as [$ic, $txt])
                     <li class="flex items-center gap-1.5 whitespace-nowrap"><x-icon :name="$ic" class="h-3.5 w-3.5 shrink-0 text-brand-gold"/>{{ $txt }}</li>
                 @endforeach

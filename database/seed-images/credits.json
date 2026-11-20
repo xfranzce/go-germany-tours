@@ -128,5 +128,11 @@
         "type": "ai",
         "title": "Celebration dinner on a terrace below a castle (illustration)",
         "tool": "Higgsfield (Nano Banana 2)"
+    },
+    {
+        "slug": "neuschwanstein-autumn",
+        "type": "ai",
+        "title": "Neuschwanstein Castle in golden autumn light (illustration)",
+        "tool": "Google Gemini"
     }
 ]

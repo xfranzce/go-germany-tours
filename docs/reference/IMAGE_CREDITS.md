@@ -33,7 +33,8 @@ Four more "By traveler" card images (`couple-rhine-vineyard`, `family-old-town`,
 
 Upload in **Admin > Media** (or inside a package, page or settings screen). Alt text is mandatory. Then add a row to this table and to `database/seed-images/credits.json` if it needs a credit.
 ## Video
-- `public/videos/hero.mp4`: AI-generated (Higgsfield, Seedance 2.5, prompt: aerial drift over a half-timbered German hillside town at golden hour). No third-party footage; replace with licensed real footage if preferred.
+- `public/videos/hero.mp4`: AI-generated (Higgsfield, Seedance 2.5, image-to-video from the Neuschwanstein autumn image below; 720p, 6 s, re-encoded to a 5 s seamless loop with ffmpeg, about 0.5 MB, no audio). The scene is an AI rendering of Neuschwanstein Castle, not real footage. Replaced the earlier AI clip of a half-timbered hillside town (still in git history). Replace with licensed real footage if preferred.
+- `database/seed-images/neuschwanstein-autumn.jpg` (home hero photo): AI-generated with Google Gemini ("Neuschwanstein Castle in golden autumn light"), shrunk to 1920 px wide; imported as WebP by `images:import-seed` and labelled as AI-generated on /photo-credits.
 - `public/videos/banner.mp4`: AI-generated (Higgsfield, Seedance 2.5, prompt: aerial flight over autumn Bavarian Alps with drifting clouds). Plays over the Alps banner photo.
 
 New seed photos are imported on deploy by `php artisan images:import-seed` (add the file to `database/seed-images`, an entry to `ImageSeeder::ALT` and `credits.json`). Originals are stored at max 3840px wide.
