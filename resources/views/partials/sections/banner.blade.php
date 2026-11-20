@@ -1,5 +1,5 @@
 {{-- 4b. ALPS STATEMENT BANNER: full-bleed mountain photo, slow zoom, frosted panel, reveal on scroll --}}
-@php $alps = \App\Models\Media::query()->where('path', 'like', 'media/allgau-alps-%')->first(); @endphp
+@php $alps = \App\Models\Media::byStem('allgau-alps'); @endphp
 @if($alps)
 <section class="relative isolate overflow-hidden flex items-center min-h-[36rem] sm:min-h-[46rem] text-white text-center" aria-labelledby="banner-title"
          x-data="{ shown: false }" x-init="const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { shown = true; o.disconnect() } }, { threshold: 0.2 }); o.observe($el)">

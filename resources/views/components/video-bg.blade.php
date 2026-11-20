@@ -6,7 +6,7 @@
            @if($poster) poster="{{ $poster }}" @endif
            data-src="{{ asset('videos/'.$src).'?v='.filemtime(public_path('videos/'.$src)) }}"
            x-data x-init="
-               if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || (navigator.connection && navigator.connection.saveData)) return;
+               if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.matchMedia('(max-width: 767px)').matches || (navigator.connection && navigator.connection.saveData)) return;
                const go = () => { new IntersectionObserver((e, o) => { if (e[0].isIntersecting) { o.disconnect(); $el.src = $el.dataset.src; $el.play().catch(() => {}) } }, { rootMargin: '300px' }).observe($el) };
                document.readyState === 'complete' ? setTimeout(go, 400) : addEventListener('load', () => setTimeout(go, 400), { once: true })"></video>
 @endif

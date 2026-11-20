@@ -7,13 +7,19 @@
     $byType = $packages->groupBy(fn ($p) => $p->tourType->slug);
     $ebMonth = now()->addMonthsNoOverflow(3)->format('F Y');
     $icons = ['self-drive' => 'car', 'chauffeur-driven' => 'chauffeur', 'coach-tours' => 'bus'];
-    $media = fn (string $stem) => \App\Models\Media::query()->where('path', 'like', "media/{$stem}-%")->first();
+    $media = fn (string $stem) => \App\Models\Media::byStem($stem);   // one shared query instead of one per photo
     $destCount = \App\Models\Destination::active()->count();
     $places = [
         ['quedlinburg-lane', 'Quedlinburg'], ['neuschwanstein-castle', 'Neuschwanstein'], ['cochem-mosel', 'Cochem'],
         ['saxon-switzerland-bastei', 'Saxon Switzerland'], ['hiddensee-beach', 'Hiddensee'], ['bacharach-rhine', 'Bacharach'],
     ];
 @endphp
+
+@if($heroMedia)
+    @push('head')
+        <link rel="preload" as="image" href="{{ $heroMedia->url(1280) }}" imagesrcset="{{ $heroMedia->srcset() }}" imagesizes="100vw" fetchpriority="high">
+    @endpush
+@endif
 
 @section('content')
 {{-- 1. HERO: video background; headline and copy on the left, the quote quiz on the right --}}

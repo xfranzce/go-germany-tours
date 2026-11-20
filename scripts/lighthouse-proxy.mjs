@@ -10,16 +10,19 @@ const send = (req, res, status, h, stream) => {
   if (br) { delete h['content-length']; h['content-encoding'] = 'br'; h['vary'] = 'Accept-Encoding'; res.writeHead(status, h); stream.pipe(zlib.createBrotliCompress({ params: { [zlib.constants.BROTLI_PARAM_QUALITY]: 5 } })).pipe(res); }
   else { res.writeHead(status, h); stream.pipe(res); }
 };
-http.createServer((req, res) => {
+const DELAY_HTML = +(process.env.LH_DELAY_HTML || 0), DELAY_STATIC = +(process.env.LH_DELAY_STATIC || 0);   // optional: mimic a slow host
+http.createServer((req, res0) => {
+  const res = res0;
+  const later = (ms, fn) => (ms ? setTimeout(fn, ms) : fn());
   const url = decodeURI(req.url.split('?')[0]);
   if (/^\/(build|storage|images|videos)\//.test(url)) {
     const file = path.join(ROOT, url);
     if (file.startsWith(ROOT) && fs.existsSync(file) && fs.statSync(file).isFile()) {
       const s = fs.statSync(file);
-      return send(req, res, 200, { 'content-type': MIME[path.extname(file)] || 'application/octet-stream', 'content-length': s.size, 'cache-control': 'public, max-age=31536000, immutable' }, fs.createReadStream(file));
+      return later(DELAY_STATIC, () => send(req, res, 200, { 'content-type': MIME[path.extname(file)] || 'application/octet-stream', 'content-length': s.size, 'cache-control': 'public, max-age=31536000, immutable' }, fs.createReadStream(file)));
     }
   }
   const headers = { ...req.headers, host: '127.0.0.1:8000' }; delete headers['accept-encoding'];
-  const up = http.request({ host: '127.0.0.1', port: 8000, path: req.url, method: req.method, headers }, (u) => send(req, res, u.statusCode, { ...u.headers }, u));
+  const up = http.request({ host: '127.0.0.1', port: 8000, path: req.url, method: req.method, headers }, (u) => later(DELAY_HTML, () => send(req, res, u.statusCode, { ...u.headers }, u)));
   up.on('error', () => { res.writeHead(502); res.end(); }); req.pipe(up);
 }).listen(8001, '127.0.0.1', () => console.log('proxy up'));

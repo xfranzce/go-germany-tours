@@ -149,6 +149,9 @@ Alpine.data('heroQuiz', (steps) => ({
     steps,
     i: 0,
     answers: {},
+    ready: false,     // true once Alpine has taken over from the server-rendered first question
+    touched: false,   // true after the first click, so only later steps animate in
+    init() { this.ready = true; },
     get total() { return this.steps.length; },
     get onForm() { return this.i >= this.total; },
     get step() { return this.steps[this.i] || null; },
@@ -158,11 +161,12 @@ Alpine.data('heroQuiz', (steps) => ({
         setTimeout(() => this.advance(), 180);
     },
     advance() {
+        this.touched = true;
         if (this.i < this.total) this.i++;
         this.$nextTick(() => this.$refs.card?.querySelector('[data-autofocus]')?.focus({ preventScroll: true }));
     },
     next() { if (this.answers[this.step.key]) this.advance(); },
-    back() { if (this.i > 0) this.i--; },
+    back() { this.touched = true; if (this.i > 0) this.i--; },
     summary() {
         return this.steps.filter((s) => this.answers[s.key]).map((s) => this.answers[s.key]).join(' · ');
     },

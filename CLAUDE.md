@@ -60,6 +60,7 @@ Live site (Hostinger) is updated with `GGT_SSH_PASSWORD=... bash scripts/deploy.
 
 ## Gotchas
 - Lighthouse: the live host returns 403 to it. Audit a local copy through `node scripts/lighthouse-proxy.mjs` (see `docs/reference/SEO_CHECKLIST.md`); all categories are 90+ on the home and package pages. Do not put `sr-only` text inside the home carousels (it makes Chrome report an off-screen photo as the LCP element).
+- First-paint speed (mobile Speed Index is about 1.4x the real, unthrottled paint time): the public layout **inlines the compiled CSS** (`App\Support\Assets::inlineCss()`, falls back to the linked file under `npm run dev`; the maintenance page still links it), the home hero photo is preloaded (`@push('head')` in `home.blade.php`), the hero quiz's first question is **also rendered on the server** (`hero-quiz.blade.php`, hidden by Alpine's `ready` flag) so the card is not empty until JS runs, background videos (`x-video-bg`) are not loaded on phones, below-the-fold `<x-picture>` images are `fetchpriority="low"`, and homepage photos come from `Media::byStem()` (one query, not one per photo). Keep these when editing. `LH_DELAY_HTML` / `LH_DELAY_STATIC` (ms) make `scripts/lighthouse-proxy.mjs` mimic a slow host.
 - `Setting` values are cached (`settings.all`) and memoised per process: tests call `Setting::flush()`.
 - `php artisan migrate:fresh --seed` does not delete files in `storage/app/public/media`; clear it by hand if you reseed repeatedly.
 - `public/robots.txt` must not exist (robots is a route).

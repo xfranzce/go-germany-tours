@@ -18,10 +18,32 @@
         <div class="mt-4 rounded-xl border border-white/60 bg-white/90 p-4 text-brand-navy shadow-lg backdrop-blur-md"><x-enquiry-form form-id="hero-plain" form-name="hero_quiz" :extras="true" :in-noscript="true"/></div>
     </noscript>
 
+    {{-- The first question is also rendered on the server, so the card is not an empty box until JavaScript has started (much faster first paint).
+         Alpine hides this copy as soon as the interactive version below is ready; it looks the same, so nothing jumps. --}}
+    @php $first = $steps[0] ?? null; @endphp
+    @if($first)
+        <div class="mt-6" x-show="!ready" inert aria-hidden="true">
+            <p class="text-[0.7rem] font-extrabold uppercase tracking-[0.16em] text-brand-gold">Question 1 of {{ count($steps) }}</p>
+            <p class="mt-1 font-display text-2xl font-bold leading-snug text-white">{{ $first['question'] }}</p>
+            @if($first['type'] === 'tiles')
+                <div class="mt-4 grid grid-cols-2 gap-3">
+                    @foreach($first['options'] as $o)
+                        <span class="flex min-h-28 flex-col items-center justify-center gap-2 rounded-2xl border border-white/25 bg-white/10 p-3 text-center font-bold text-white">
+                            <span class="text-4xl leading-none [filter:grayscale(1)_sepia(1)_saturate(4)_brightness(1.15)]">{{ $o['icon'] }}</span>
+                            <span class="text-sm text-white">{{ $o['label'] }}</span>
+                        </span>
+                    @endforeach
+                </div>
+            @else
+                <div class="mt-4"><span class="field-input block">Select...</span></div>
+            @endif
+        </div>
+    @endif
+
     <div x-cloak class="mt-6">
         {{-- Question steps --}}
         <template x-if="!onForm && step">
-            <fieldset class="animate-fade-up" :key="i">
+            <fieldset :class="touched && 'animate-fade-up'" :key="i">
                 <p class="text-[0.7rem] font-extrabold uppercase tracking-[0.16em] text-brand-gold" x-text="'Question ' + (i + 1) + ' of ' + total"></p>
                 <legend class="mt-1 font-display text-2xl font-bold leading-snug text-white" x-text="step.question"></legend>
 
@@ -53,7 +75,7 @@
 
         {{-- Final step: contact details --}}
         <template x-if="onForm">
-            <div class="animate-fade-up">
+            <div :class="touched && 'animate-fade-up'">
                 <p class="font-display text-2xl font-bold text-white">Where should we send your quote?</p>
                 <details class="mt-1 text-xs text-white/80" x-show="summary()"><summary class="cursor-pointer font-bold">Your answers &#10003; <span class="font-normal underline">show</span></summary><span class="mt-1 block" x-text="summary()"></span></details>
                 <div class="mt-3 rounded-xl border border-white/60 bg-white/90 p-4 text-brand-navy shadow-lg backdrop-blur-md">
