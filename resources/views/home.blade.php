@@ -64,17 +64,16 @@
         <div class="mx-auto w-full max-w-xl lg:mx-0 lg:ml-auto">
             <x-hero-quiz/>
 
+            {{-- highlights under the quiz card --}}
+            <ul class="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-white/20 pt-4 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-white sm:text-xs" aria-label="Highlights">
+                @foreach([['check', 'Free, no-obligation quote'], ['lock', 'Private tours'], ['pin', 'Local Germany experts']] as [$ic, $txt])
+                    <li class="flex items-center gap-2"><x-icon :name="$ic" class="h-4 w-4 shrink-0 text-brand-gold"/>{{ $txt }}</li>
+                @endforeach
+            </ul>
         </div>
     </div>
 
-    {{-- bottom row of the hero --}}
-    <ul class="container-x hidden shrink-0 flex-wrap items-center justify-center gap-x-10 gap-y-3 border-t border-white/20 py-5 text-xs font-bold uppercase tracking-[0.16em] sm:flex" aria-label="Highlights">
-        @foreach([['check', 'Free, no-obligation quote'], ['lock', 'Private tours'], ['pin', 'Local Germany experts']] as [$ic, $txt])
-            <li class="flex items-center gap-2.5"><x-icon :name="$ic" class="h-4 w-4 text-brand-gold"/>{{ $txt }}</li>
-        @endforeach
-    </ul>
-
-    <a href="#tours" class="absolute bottom-24 left-1/2 -translate-x-1/2 hidden 2xl:flex flex-col items-center gap-2 text-[0.65rem] font-bold uppercase tracking-[0.3em] text-white/70 hover:text-brand-gold">
+    <a href="#tours" class="absolute bottom-6 left-1/2 -translate-x-1/2 hidden 2xl:flex flex-col items-center gap-2 text-[0.65rem] font-bold uppercase tracking-[0.3em] text-white/70 hover:text-brand-gold">
         Scroll <span class="block w-px h-10 bg-gradient-to-b from-brand-gold to-transparent" aria-hidden="true"></span>
     </a>
 </section>
