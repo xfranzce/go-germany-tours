@@ -55,7 +55,7 @@
         <div class="overflow-hidden rounded-2xl shadow-card"><x-picture :path="$type->image" sizes="(min-width: 1024px) 46rem, 100vw" class="w-full max-h-[32rem] object-cover"/></div>
     @endif
 </div>
-<section class="bg-brand-custard py-14" aria-labelledby="type-pkgs">
+<section class="bg-brand-cream py-14" aria-labelledby="type-pkgs">
     <div class="container-x">
         <x-section-heading id="type-pkgs" eyebrow="{{ $type->name }} packages" title="Popular {{ strtolower($base) }} journeys" emphasis="Planned around you."
             intro="A few ideas to start from. Every trip can be adjusted to suit your dates, group size and budget."/>
