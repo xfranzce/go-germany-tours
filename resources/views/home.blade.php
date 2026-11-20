@@ -82,7 +82,7 @@
         @endforeach
     </ul>
 
-    <a href="#tours" class="absolute bottom-24 left-1/2 -translate-x-1/2 hidden xl:flex flex-col items-center gap-2 text-[0.65rem] font-bold uppercase tracking-[0.3em] text-white/70 hover:text-brand-gold">
+    <a href="#tours" class="absolute bottom-24 left-1/2 -translate-x-1/2 hidden 2xl:flex flex-col items-center gap-2 text-[0.65rem] font-bold uppercase tracking-[0.3em] text-white/70 hover:text-brand-gold">
         Scroll <span class="block w-px h-10 bg-gradient-to-b from-brand-gold to-transparent" aria-hidden="true"></span>
     </a>
 </section>
