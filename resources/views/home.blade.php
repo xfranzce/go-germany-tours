@@ -159,7 +159,8 @@
                             <span class="absolute bottom-3 left-4 text-xs font-bold uppercase tracking-wider text-brand-gold">{{ $package->destination->name }} &middot; {{ $package->nights }} nights</span>
                         </a>
                         <div class="flex flex-1 flex-col p-5">
-                            <h3 class="text-lg leading-snug text-white"><a href="{{ $package->url() }}" class="hover:underline">{{ $package->title }}</a></h3>
+                            <h3 class="text-[1.65rem] font-bold leading-tight tracking-tight text-white sm:text-[1.75rem]"><a href="{{ $package->url() }}" class="hover:underline">{{ $package->title }}</a></h3>
+                            <span class="mt-3 block h-0.5 w-12 rounded-full bg-brand-gold" aria-hidden="true"></span>
                             <p class="mt-2 flex-1 text-sm text-white/80">{{ $package->summary }}</p>
                             <p class="mt-4 flex items-baseline gap-3 border-t border-white/15 pt-4 font-sans text-2xl font-extrabold">
                                 @if($package->hasSale())<s class="text-sm font-semibold text-white/60">{{ $package->wasLabel() }}</s>@endif{{ $package->priceLabel() }}
