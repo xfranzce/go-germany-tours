@@ -134,5 +134,11 @@
         "type": "ai",
         "title": "Neuschwanstein Castle in golden autumn light (illustration)",
         "tool": "Google Gemini"
+    },
+    {
+        "slug": "bavaria-village",
+        "type": "ai",
+        "title": "Bavarian Alpine village in spring sunshine (illustration)",
+        "tool": "Google Gemini"
     }
 ]

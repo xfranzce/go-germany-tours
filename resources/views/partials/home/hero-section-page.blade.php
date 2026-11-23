@@ -1,5 +1,5 @@
 {{-- Standalone COPY of the home hero (partials/home/hero-dark), shown only on the unlisted /hero-section page so it can be edited and tried out without touching the live home page. --}}
-@php $heroPhoto = \App\Models\Media::byStem('neuschwanstein-autumn') ?? $heroMedia; @endphp
+@php $heroPhoto = \App\Models\Media::byStem('bavaria-village') ?? $heroMedia; @endphp
 @if($heroPhoto)
     @push('head')
         <link rel="preload" as="image" href="{{ $heroPhoto->url(1280) }}" imagesrcset="{{ $heroPhoto->srcset() }}" imagesizes="(min-width: 1024px) 80vw, 100vw" fetchpriority="high">
@@ -11,9 +11,9 @@
     @if($heroPhoto)
         <x-picture :path="$heroPhoto->path" priority sizes="(min-width: 1024px) 80vw, 100vw" class="absolute inset-0 -z-20 w-full h-full object-cover object-[68%_50%] lg:object-center"/>
     @endif
-    <x-video-bg src="hero.mp4" class="absolute inset-0 -z-[15] w-full h-full object-cover"/>
-    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/60 via-brand-navy-dark/15 to-transparent" aria-hidden="true"></div>
-    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-dark/15 via-transparent to-brand-navy-dark/10" aria-hidden="true"></div>
+    <x-video-bg src="hero-section.mp4" class="absolute inset-0 -z-[15] w-full h-full object-cover"/>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/45 via-brand-navy-dark/10 to-transparent" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-dark/10 via-transparent to-transparent" aria-hidden="true"></div>
 
     <div class="container-x my-auto grid items-center gap-8 pt-32 pb-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:pt-32 lg:pb-10 [@media(max-height:820px)]:lg:pt-28 [@media(max-height:820px)]:lg:pb-6">
         <div class="text-center lg:text-left">
@@ -29,7 +29,7 @@
                 [$h1a, $h1b, $h1c] = [implode(' ', array_slice($w, 0, count($w) - $n)), implode(' ', array_slice($w, count($w) - $n)), ''];
             }
             @endphp
-            <h1 id="hero-title" class="mt-6 max-w-3xl text-[1.75rem] sm:text-5xl lg:text-[3.25rem] xl:text-[3.5rem] 2xl:text-6xl [@media(max-height:820px)]:lg:!text-[2.75rem] leading-[1.08] mx-auto lg:mx-0">
+            <h1 id="hero-title" class="mt-6 max-w-3xl [text-shadow:0_2px_14px_rgb(0_0_0/0.4)] text-[1.75rem] sm:text-5xl lg:text-[3.25rem] xl:text-[3.5rem] 2xl:text-6xl [@media(max-height:820px)]:lg:!text-[2.75rem] leading-[1.08] mx-auto lg:mx-0">
                 <span class="block">{{ $h1a }}</span>
                 @if($h1b)
                     <em class="relative mx-auto lg:mx-0 mt-2 block w-fit whitespace-nowrap not-italic sm:mt-3"><span class="italic font-medium text-brand-gold">{{ $h1b }}</span>
@@ -39,7 +39,7 @@
                 @endif
                 @if($h1c)<span class="block">{{ $h1c }}</span>@endif
             </h1>
-            <p class="mx-auto lg:mx-0 mt-5 max-w-xl text-base sm:text-lg text-white/90 [@media(max-height:820px)]:lg:text-base">{{ $page->text('hero_sub', 'Self drive, chauffeur driven or small-group coach. Explore Quedlinburg, Saxon Switzerland, Cochem, Hiddensee and Gengenbach, planned around you.') }}</p>
+            <p class="mx-auto lg:mx-0 mt-5 max-w-xl [text-shadow:0_1px_10px_rgb(0_0_0/0.45)] text-base sm:text-lg text-white [@media(max-height:820px)]:lg:text-base">{{ $page->text('hero_sub', 'Self drive, chauffeur driven or small-group coach. Explore Quedlinburg, Saxon Switzerland, Cochem, Hiddensee and Gengenbach, planned around you.') }}</p>
 
             <x-google-rating class="mt-6 flex-wrap justify-center lg:justify-start"/>
 
