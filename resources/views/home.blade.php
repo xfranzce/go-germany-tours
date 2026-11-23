@@ -138,7 +138,7 @@
 @foreach($tourTypes as $t)
     @php $all = $byType[$t->slug] ?? collect(); $list = $all->take(6); @endphp
     @continue($list->isEmpty())
-    <section class="bg-white py-12 sm:py-16" aria-labelledby="pk-{{ $t->slug }}">
+    <section class="bg-brand-cream py-12 sm:py-16" aria-labelledby="pk-{{ $t->slug }}">
         <div class="container-x">
             {{-- heading left, count right --}}
             <div class="mb-8 flex items-end justify-between gap-6">
@@ -148,28 +148,27 @@
                 </div>
                 <dl class="flex shrink-0 flex-col-reverse text-center"><dt class="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-ink-soft">Itineraries</dt><dd class="font-display text-4xl text-brand-navy">{{ $all->count() }}</dd></dl>
             </div>
-            {{-- navy cards, swipe row --}}
+            {{-- bright white cards, swipe row --}}
             <div class="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:mx-0 sm:px-0 md:grid md:grid-cols-3 md:overflow-visible [&::-webkit-scrollbar]:hidden" data-carousel="md" aria-label="{{ $t->name }} packages" data-reveal-stagger>
                 @foreach($list as $package)
-                    <article class="flex w-[82%] shrink-0 snap-center flex-col overflow-hidden rounded-2xl bg-brand-navy text-white shadow-card sm:w-[22rem] md:w-auto md:shrink">
-                        <a href="{{ $package->url() }}" class="relative block aspect-[3/2] overflow-hidden bg-brand-navy-dark" tabindex="-1" aria-hidden="true">
-                            <x-picture :path="$package->coverPath()" sizes="(min-width: 1024px) 22rem, 82vw" class="h-full w-full object-cover"/>
-                            <div class="absolute inset-0 bg-gradient-to-t from-brand-navy/80 to-transparent" aria-hidden="true"></div>
+                    <article class="flex w-[82%] shrink-0 snap-center flex-col overflow-hidden rounded-2xl border border-brand-custard bg-white text-brand-navy shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-xl sm:w-[22rem] md:w-auto md:shrink">
+                        <a href="{{ $package->url() }}" class="group relative block aspect-[3/2] overflow-hidden bg-brand-custard" tabindex="-1" aria-hidden="true">
+                            <x-picture :path="$package->coverPath()" sizes="(min-width: 1024px) 22rem, 82vw" class="h-full w-full object-cover transition duration-500 group-hover:scale-105"/>
                             @if($package->is_sample)<span class="absolute left-3 top-3 rounded-full bg-brand-gold px-2.5 py-1 text-xs font-extrabold text-brand-navy">SAMPLE</span>@endif
-                            <span class="absolute bottom-3 left-4 text-xs font-bold uppercase tracking-wider text-brand-gold">{{ $package->destination->name }} &middot; {{ $package->nights }} nights</span>
+                            <span class="absolute bottom-3 left-3 rounded-full bg-white/95 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-brand-navy shadow">{{ $package->destination->name }} &middot; {{ $package->nights }} nights</span>
                         </a>
                         <div class="flex flex-1 flex-col p-5">
-                            <h3 class="text-[1.35rem] font-bold leading-tight tracking-tight text-white sm:text-[1.45rem]"><a href="{{ $package->url() }}" class="hover:underline">{{ $package->title }}</a></h3>
+                            <h3 class="text-[1.35rem] font-bold leading-tight tracking-tight text-brand-navy sm:text-[1.45rem]"><a href="{{ $package->url() }}" class="hover:underline">{{ $package->title }}</a></h3>
                             <span class="mt-3 block h-0.5 w-12 rounded-full bg-brand-gold" aria-hidden="true"></span>
-                            <p class="mt-2 flex-1 text-sm text-white/80">{{ $package->summary }}</p>
-                            <p class="mt-4 flex items-baseline gap-3 border-t border-white/15 pt-4 font-sans text-2xl font-extrabold">
-                                @if($package->hasSale())<s class="text-sm font-semibold text-white/60">{{ $package->wasLabel() }}</s>@endif{{ $package->priceLabel() }}
-                                @if($package->is_sample)<span class="text-xs font-normal text-white/70">sample price</span>@endif
+                            <p class="mt-2 flex-1 text-sm text-ink-soft">{{ $package->summary }}</p>
+                            <p class="mt-4 flex items-baseline gap-3 border-t border-brand-custard pt-4 font-sans text-2xl font-extrabold text-brand-navy">
+                                @if($package->hasSale())<s class="text-sm font-semibold text-ink-soft decoration-brand-red">{{ $package->wasLabel() }}</s>@endif{{ $package->priceLabel() }}
+                                @if($package->is_sample)<span class="text-xs font-normal text-ink-soft">sample price</span>@endif
                             </p>
                             <div class="mt-4 grid grid-cols-2 gap-2">
                                 <x-button size="sm" data-title="Get a quote" data-subtitle="{{ $package->title }}"
                                           @click="$store.modal.show({form:'package_quote', packageId: {{ $package->id }}, ...$el.dataset})">Get a quote</x-button>
-                                <x-button :href="$package->url()" variant="outline-light" size="sm">View details</x-button>
+                                <x-button :href="$package->url()" variant="outline" size="sm">View details</x-button>
                             </div>
                         </div>
                     </article>
