@@ -57,6 +57,7 @@ Live site (Hostinger) is updated with `GGT_SSH_PASSWORD=... bash scripts/deploy.
 - Write files UTF-8 **without BOM** (a BOM corrupts JSON responses). Don't use `Set-Content -Encoding utf8` on Windows PowerShell 5.1 for PHP.
 - Keep JS small; no SPA. Update docs when behaviour changes.
 
+- Number counters: add `data-count-to="N"` to an element that already contains N; `app.js` (`initCounters`) counts it up from 0 once when it scrolls into view (skipped for reduced motion).
 - Mobile carousels: add `data-carousel="md|sm"` (breakpoint where it stops being a carousel; `data-carousel-light` on dark backgrounds) to a snap-scroll row and `app.js` adds arrows + dots under it.
 
 ## Gotchas

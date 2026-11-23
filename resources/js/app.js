@@ -306,5 +306,28 @@ function initReveal() {
 }
 document.addEventListener('DOMContentLoaded', initReveal);
 
+// Number counters: <dd data-count-to="18"> counts up from 0 the first time it scrolls into view.
+// The real number is already in the HTML (no-JS, search engines, reduced motion), so nothing is lost if this does not run.
+function initCounters() {
+    const els = document.querySelectorAll('[data-count-to]');
+    if (!els.length || !('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const run = (el) => {
+        const to = parseInt(el.dataset.countTo, 10);
+        if (!Number.isFinite(to) || to <= 0) return;
+        const dur = 1600, t0 = performance.now();
+        const tick = (now) => {
+            const p = Math.min((now - t0) / dur, 1);
+            el.textContent = String(Math.round(to * (1 - Math.pow(1 - p, 3))));   // ease-out
+            if (p < 1) requestAnimationFrame(tick);
+        };
+        el.textContent = '0';
+        requestAnimationFrame(tick);
+    };
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { io.unobserve(e.target); run(e.target); } });
+    }, { threshold: 0.6 });
+    els.forEach((el) => io.observe(el));
+}
+document.addEventListener('DOMContentLoaded', initCounters);
 
 Alpine.start();

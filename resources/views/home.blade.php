@@ -194,7 +194,7 @@
             <em class="block font-medium italic text-brand-gold">Book your dream tour today!</em></h2>
         <dl class="mx-auto mt-10 grid max-w-2xl grid-cols-3 gap-3 sm:gap-4">
             @foreach([[$destCount, 'Destinations'], [$packages->count(), 'Germany tours'], [$tourTypes->count(), 'Ways to travel']] as [$n, $l])
-                <div class="flex flex-col-reverse rounded-xl border border-white/25 bg-white/10 px-2 py-5 backdrop-blur"><dt class="mt-2 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-white/85 sm:text-xs">{{ $l }}</dt><dd class="font-display text-4xl text-brand-gold sm:text-5xl">{{ $n }}</dd></div>
+                <div class="flex flex-col-reverse rounded-xl border border-white/25 bg-white/10 px-2 py-5 backdrop-blur"><dt class="mt-2 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-white/85 sm:text-xs">{{ $l }}</dt><dd class="font-display text-4xl text-brand-gold tabular-nums sm:text-5xl" data-count-to="{{ $n }}">{{ $n }}</dd></div>
             @endforeach
         </dl>
         <button type="button" class="btn btn-primary mt-10 px-10 shadow-lg shadow-black/30" @click="$store.modal.show()">Get quote now! <x-icon name="arrow-right" class="h-5 w-5"/></button>
