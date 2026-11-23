@@ -106,7 +106,7 @@
         transition: background-color .2s, color .2s, border-color .2s; cursor: pointer; text-align: center;
         line-height: 1.2;
     }
-    .btn-primary { background: var(--color-brand-red); color: #fff; }
+    .btn-primary { background: #d62828; color: #fff; } /* CTA red (chosen by the client) */
     .btn-primary:hover { background: var(--color-brand-red-dark); }
     .btn-gold { background: var(--color-brand-gold); color: var(--color-brand-navy); }
     .btn-gold:hover { background: var(--color-brand-gold-dark); }
