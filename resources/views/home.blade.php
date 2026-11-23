@@ -20,23 +20,25 @@
      to use it, swap this @include and add @section('solid_header', '1') (it is a light hero, so the header must start solid). --}}
 @include('partials.home.hero-bavaria')
 
-{{-- 2. PROMISES (dark band, four columns divided by thin lines) + at-a-glance counts --}}
-<section class="hidden bg-brand-navy-dark text-white sm:block" aria-label="Why book with us" data-reveal="up">
-    <ul class="mx-auto grid max-w-[1390px] sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-white/15" data-reveal-stagger>
+{{-- 2. PROMISES (bright band under the hero: four columns with gold icons, thin dividers) --}}
+<section class="hidden border-b border-brand-custard bg-white sm:block" aria-label="Why book with us" data-reveal="up">
+    <ul class="mx-auto grid max-w-[1390px] sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-brand-custard" data-reveal-stagger>
         @foreach([
-            ['No hidden fees', 'What you see is what you pay. No surprises, just great value.'],
-            ['Clear, honest pricing', 'Know what is included before you decide.'],
-            ['Locally crafted itineraries', 'Designed around the places you want to see.'],
-            ['Real support', 'A member of the team replies to you.'],
-        ] as [$t, $d])
-            <li class="px-8 py-8 text-center lg:py-10">
-                <h3 class="text-lg text-brand-gold">{{ $t }}</h3>
-                <p class="mt-2 text-sm text-white/80">{{ $d }}</p>
+            ['No hidden fees', 'What you see is what you pay. No surprises, just great value.', 'check'],
+            ['Clear, honest pricing', 'Know what is included before you decide.', 'document'],
+            ['Locally crafted itineraries', 'Designed around the places you want to see.', 'pin'],
+            ['Real support', 'A member of the team replies to you.', 'chat'],
+        ] as [$t, $d, $ic])
+            <li class="flex items-start gap-4 px-8 py-8 lg:py-10">
+                <span class="grid size-11 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-sm" aria-hidden="true"><x-icon :name="$ic" class="h-5 w-5"/></span>
+                <div>
+                    <h3 class="text-lg font-bold text-brand-navy">{{ $t }}</h3>
+                    <p class="mt-1.5 text-sm text-ink-soft">{{ $d }}</p>
+                </div>
             </li>
         @endforeach
     </ul>
 </section>
-
 {{-- 3. ABOUT INTRO (soft tinted, centred) --}}
 @php $aboutImg = $media('couple-rhine-vineyard') ?? $media('quedlinburg-lane'); @endphp
 <section class="bg-brand-cream py-16 sm:py-24" aria-labelledby="intro-title" data-reveal="split">
