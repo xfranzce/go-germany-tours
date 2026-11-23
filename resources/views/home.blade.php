@@ -79,7 +79,7 @@
                         <x-picture :path="$t->image" sizes="(min-width: 768px) 24rem, 82vw" class="h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105"/>
                         <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent" aria-hidden="true"></div>
                     </div>
-                    <div class="-mt-6 flex flex-1 flex-col p-6 pt-0">
+                    <div class="relative -mt-6 flex flex-1 flex-col p-6 pt-0">
                         <div class="flex items-center gap-3">
                             <span class="grid size-10 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy" aria-hidden="true"><x-icon :name="$icons[$t->slug] ?? 'pin'" class="h-5 w-5"/></span>
                             <h3 class="text-brand-navy"><a href="{{ route('tours.show', $t->slug) }}" class="hover:underline">{{ $t->name }}</a></h3>
