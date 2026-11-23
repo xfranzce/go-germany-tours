@@ -73,10 +73,13 @@
             @foreach($tourTypes as $t)
                 @php $incl = array_slice(array_values(array_filter(array_map('trim', preg_split('/\R/', (string) $t->inclusions)))), 0, 3); @endphp
                 {{-- photo card: bright photo on top, fading into white where the icon, title and copy sit --}}
-                <article class="group relative isolate flex min-h-[30rem] w-[82%] shrink-0 snap-center flex-col md:w-auto md:shrink justify-end overflow-hidden rounded-2xl bg-white text-brand-navy shadow-card">
-                    <x-picture :path="$t->image" sizes="(min-width: 768px) 24rem, 82vw" class="absolute inset-0 -z-20 h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105"/>
-                    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-white from-[52%] via-white/85 via-[66%] to-transparent to-[88%]" aria-hidden="true"></div>
-                    <div class="p-6 pt-48">
+                <article class="group flex w-[82%] shrink-0 snap-center flex-col overflow-hidden rounded-2xl bg-white text-brand-navy shadow-card md:w-auto md:shrink">
+                    {{-- clear, bright photo on top, melting softly into the white panel below --}}
+                    <div class="relative h-56 shrink-0 overflow-hidden">
+                        <x-picture :path="$t->image" sizes="(min-width: 768px) 24rem, 82vw" class="h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105"/>
+                        <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent" aria-hidden="true"></div>
+                    </div>
+                    <div class="-mt-6 flex flex-1 flex-col p-6 pt-0">
                         <div class="flex items-center gap-3">
                             <span class="grid size-10 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy" aria-hidden="true"><x-icon :name="$icons[$t->slug] ?? 'pin'" class="h-5 w-5"/></span>
                             <h3 class="text-brand-navy"><a href="{{ route('tours.show', $t->slug) }}" class="hover:underline">{{ $t->name }}</a></h3>
@@ -88,7 +91,7 @@
                             </ul>
                         @endif
                         <a href="{{ route('tours.show', $t->slug) }}" class="mt-4 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-[0.16em] text-brand-red-dark hover:underline">Explore {{ $t->name }} <x-icon name="arrow-right" class="h-4 w-4"/></a>
-                        <div class="mt-5 grid grid-cols-2 gap-2">
+                        <div class="mt-auto grid grid-cols-2 gap-2 pt-5">
                             <x-button size="sm" data-title="Get a quote: {{ $t->name }}" data-prefill="Interested in: {{ $t->name }} tours."
                                       @click="$store.modal.show({form:'package_quote', ...$el.dataset})">Get a quote</x-button>
                             <x-button variant="outline" size="sm" data-title="Ask us a question" data-subtitle="{{ $t->name }} tours" data-prefill="Question about {{ $t->name }} tours: "
