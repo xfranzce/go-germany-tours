@@ -8,18 +8,20 @@
 - Images: WebP, `srcset`, width/height set (no layout shift), lazy below the fold, hero preloaded, alt text mandatory in admin. Fonts self-hosted, `font-display: swap`, preloaded. About 30 KB gzipped JS and 15 KB CSS (brotli) on public pages. reCAPTCHA loads only when a form is used.
 - Security headers, HTTPS HSTS header when served over HTTPS, `.htaccess` compression and long caching for `/build`.
 
-## Lighthouse (latest run 2026-11-20, Lighthouse 13.6, Chrome headless)
-Pages: the home page `/` and one package page `/packages/germany-fairytale-towns-coach-tour`, each at **mobile** (412x823, simulated slow 4G, 4x CPU) and **desktop**. **Nothing is below 90; every category is 95-100.** Re-run after the later home page changes (hero swap, scroll-reveal animations, Our Partners band, trust row, Google badge code, new menu, Tours link).
+## Lighthouse (latest run 2026-11-24, Lighthouse 13, Chrome headless)
+Pages: the home page `/` and one package page `/packages/germany-fairytale-towns-coach-tour`, each at **mobile** (412x823, simulated slow 4G, 4x CPU) and **desktop**. Run after the Bavarian video hero, the bright home sections, the blog section, the count-up numbers and the fixed-background adventure band. **Nothing is below 90 after one fix (below).**
 
 | Page | Size | Perf | A11y | Best practices | SEO | LCP |
 |---|---|---|---|---|---|---|
-| `/` | Mobile | 100 | 100 | 100* | 100 | 1.0 s |
-| `/` | Desktop | 100 | 100 | 100* | 100 | 0.3 s |
-| `/packages/germany-fairytale-towns-coach-tour` | Mobile | 97 | 100 | 100* | 100 | 2.6 s |
-| `/packages/germany-fairytale-towns-coach-tour` | Desktop | 100 | 100 | 100* | 100 | 0.6 s |
+| `/` | Mobile | 97 (93-97) | 100 | 96* | 100 | 1.3 s |
+| `/` | Desktop | 100 | 100 | 96* | 100 | 0.4 s |
+| `/packages/germany-fairytale-towns-coach-tour` | Mobile | 97 | 100 | 96* | 100 | 2.4 s |
+| `/packages/germany-fairytale-towns-coach-tour` | Desktop | 100 | 100 | 96* | 100 | 0.7 s |
 
-CLS 0 and TBT 0 ms on all four (a direct run of the home page on desktop showed CLS 0.016, still green). The only audit below full marks in performance is package mobile LCP (2.6 s, score 0.87; the first gallery photo, already preloaded; the category still scores 97).
-\* Best practices reads 96 through the proxy (see below) and 100 when `php artisan serve` is tested directly: the 96 is only Chrome logging CORS errors for assets linked to `APP_URL` (:8000) from the :8001 proxy, not a site problem.
+CLS 0 on mobile, 0.038 on the home page desktop (green); TBT 0-180 ms. Mobile Speed Index varies between runs (a run straight after editing a Blade file showed 5.9 s and a score of 93; re-run it).
+\* Best practices reads 96 through the proxy (see below): Chrome logging CORS errors for assets linked to `APP_URL` (:8000) from the :8001 proxy, not a site problem.
+
+**What was below 90 and the fix (2026-11-24).** The home page scored **63 mobile / 64 desktop** (TBT 10 s): the "Start your Germany adventure" band got a `position: fixed` (parallax) background, and the lazy video loader (`x-video-bg`) uses an IntersectionObserver, which treats a fixed element as always on screen, so the 1080p `adventure.mp4` started downloading and decoding at page load next to the hero video. Fix: the band carries `data-video-root` and `x-video-bg` watches that section instead of the video itself. Rule: **any `x-video-bg` that is `position: fixed` needs `data-video-root` on its section.** Blocking either video individually also restored 99, which is how it was traced.
 
 After the **bright "fairytale" home hero** (2026-11-20, later the same day): home mobile 96-97 (LCP 2.6 s, Speed Index 1.2-1.3 s), home desktop 99 (CLS 0.03), accessibility/SEO 100. The hero photo is deliberately served from the 480w (phones) / 1280w (desktop) files via `sizes`, because the full-width variants of that photo are large; keep that in mind if the hero image is changed.
 
