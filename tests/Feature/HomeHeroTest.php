@@ -33,4 +33,16 @@ class HomeHeroTest extends TestCase
         $this->assertStringNotContainsString('/hero-section', $this->get('/sitemap.xml')->getContent());
         $this->assertStringContainsString('Disallow: /hero-section', $this->get('/robots.txt')->getContent());
     }
+
+    public function test_hero_old_page_is_an_unlisted_snapshot_of_the_home_page(): void
+    {
+        $this->seedContent();
+
+        $old = $this->get('/hero-old')->assertOk()->assertSee('The Germany Collection')->getContent();
+        $this->assertSame(1, preg_match_all('/<h1[\s>]/', $old));
+        $this->assertStringContainsString('id="quiz-title"', $old);
+        $this->assertStringContainsString('noindex', $old);
+        $this->assertStringNotContainsString('/hero-old', $this->get('/sitemap.xml')->getContent());
+        $this->assertStringContainsString('Disallow: /hero-old', $this->get('/robots.txt')->getContent());
+    }
 }

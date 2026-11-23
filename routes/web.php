@@ -14,6 +14,7 @@ Route::get('/', HomeController::class)->name('home');
 
 // Unlisted design test page: no menu link, noindex, not in the sitemap.
 Route::get('/test-home', \App\Http\Controllers\TestHomeController::class)->name('test-home');
+Route::get('/hero-old', \App\Http\Controllers\HeroOldController::class)->name('hero-old');
 Route::get('/hero-section', \App\Http\Controllers\HeroSectionController::class)->name('hero-section');
 
 Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
