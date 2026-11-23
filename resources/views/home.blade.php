@@ -299,7 +299,8 @@
 
 {{-- 12. LET'S PLAN YOUR JOURNEY (white band, last section: the footer sits flush against it) --}}
 @section('flush_footer', '1')
-<section class="bg-white py-14 text-center sm:py-20" aria-labelledby="plan-title" data-reveal="zoom">
+<section class="relative isolate overflow-hidden bg-white py-14 text-center sm:py-20" aria-labelledby="plan-title" data-reveal="zoom">
+    <x-map-decor/>
     <div class="container-x max-w-3xl">
         <p class="eyebrow centered text-brand-red-dark">Begin your journey</p>
         <h2 id="plan-title" class="mt-4">Let's plan your <em class="font-medium italic text-brand-red">Germany journey.</em></h2>
