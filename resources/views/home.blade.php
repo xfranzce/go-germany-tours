@@ -186,8 +186,11 @@
 {{-- 7. "START YOUR ADVENTURE" band: Königssee photo + looping video (AI), counters --}}
 @php $cta = $media('koenigssee') ?? $media('neuschwanstein-castle'); @endphp
 <section class="relative isolate overflow-hidden bg-brand-navy-dark py-16 text-center text-white sm:py-24" aria-labelledby="adv-title" data-reveal="zoom">
-    @if($cta)<x-picture :path="$cta->path" hires sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover"/>@endif
-    <x-video-bg src="adventure.mp4" class="absolute inset-0 -z-[15] h-full w-full object-cover"/>
+    {{-- fixed background: the media is position:fixed to the screen and clipped to this section, so the page scrolls over it --}}
+    <div class="absolute inset-0 -z-20 [clip-path:inset(0)]" aria-hidden="true">
+        @if($cta)<x-picture :path="$cta->path" hires sizes="100vw" class="fixed inset-0 h-screen w-full object-cover"/>@endif
+        <x-video-bg src="adventure.mp4" class="fixed inset-0 h-screen w-full object-cover"/>
+    </div>
     <div class="absolute inset-0 -z-10 bg-brand-navy-dark/45" aria-hidden="true"></div>
     <div class="container-x max-w-4xl">
         <p class="eyebrow centered text-brand-gold">Germany · Your next adventure awaits</p>
