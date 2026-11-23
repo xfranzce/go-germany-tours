@@ -183,14 +183,15 @@
     </section>
 @endforeach
 
-{{-- 7. "START YOUR ADVENTURE" photo band with counters --}}
-@php $cta = $media('neuschwanstein-castle'); @endphp
+{{-- 7. "START YOUR ADVENTURE" band: Königssee photo + looping video (AI), counters --}}
+@php $cta = $media('koenigssee') ?? $media('neuschwanstein-castle'); @endphp
 <section class="relative isolate overflow-hidden bg-brand-navy-dark py-16 text-center text-white sm:py-24" aria-labelledby="adv-title" data-reveal="zoom">
     @if($cta)<x-picture :path="$cta->path" hires sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover"/>@endif
-    <div class="absolute inset-0 -z-10 bg-brand-navy-dark/70" aria-hidden="true"></div>
+    <x-video-bg src="adventure.mp4" class="absolute inset-0 -z-[15] h-full w-full object-cover"/>
+    <div class="absolute inset-0 -z-10 bg-brand-navy-dark/45" aria-hidden="true"></div>
     <div class="container-x max-w-4xl">
         <p class="eyebrow centered text-brand-gold">Germany · Your next adventure awaits</p>
-        <h2 id="adv-title" class="mt-4 text-white">Start your Germany adventure
+        <h2 id="adv-title" class="mt-4 text-white [text-shadow:0_2px_14px_rgb(0_0_0/0.4)]">Start your Germany adventure
             <em class="block font-medium italic text-brand-gold">Book your dream tour today!</em></h2>
         <dl class="mx-auto mt-10 grid max-w-2xl grid-cols-3 gap-3 sm:gap-4">
             @foreach([[$destCount, 'Destinations'], [$packages->count(), 'Germany tours'], [$tourTypes->count(), 'Ways to travel']] as [$n, $l])

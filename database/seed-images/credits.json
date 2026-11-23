@@ -140,5 +140,11 @@
         "type": "ai",
         "title": "Bavarian Alpine village in spring sunshine (illustration)",
         "tool": "Google Gemini"
+    },
+    {
+        "slug": "koenigssee",
+        "type": "ai",
+        "title": "Königssee and St. Bartholomä in summer sunshine (illustration)",
+        "tool": "Google Gemini"
     }
 ]
