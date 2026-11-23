@@ -16,9 +16,9 @@
 @endphp
 
 @section('content')
-{{-- 1. HERO (dark: photo + video, quiz on the right). The bright "fairytale" hero is kept, unused, in partials/home/hero-fairytale.blade.php:
+{{-- 1. HERO (bright Bavarian village: photo + video, quiz on the right). The previous castle hero is kept, unused, in partials/home/hero-dark.blade.php. The bright "fairytale" hero is kept, unused, in partials/home/hero-fairytale.blade.php:
      to use it, swap this @include and add @section('solid_header', '1') (it is a light hero, so the header must start solid). --}}
-@include('partials.home.hero-dark')
+@include('partials.home.hero-bavaria')
 
 {{-- 2. PROMISES (dark band, four columns divided by thin lines) + at-a-glance counts --}}
 <section class="hidden bg-brand-navy-dark text-white sm:block" aria-label="Why book with us" data-reveal="up">
