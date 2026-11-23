@@ -43,7 +43,7 @@ class SitemapController extends Controller
 
     public function robots()
     {
-        $body = "User-agent: *\nDisallow: /admin\nDisallow: /thank-you\nDisallow: /enquiry\nDisallow: /test-home\n\nSitemap: ".url('/sitemap.xml')."\n";
+        $body = "User-agent: *\nDisallow: /admin\nDisallow: /thank-you\nDisallow: /enquiry\nDisallow: /test-home\nDisallow: /hero-section\n\nSitemap: ".url('/sitemap.xml')."\n";
 
         return response($body, 200, ['Content-Type' => 'text/plain; charset=utf-8']);
     }
