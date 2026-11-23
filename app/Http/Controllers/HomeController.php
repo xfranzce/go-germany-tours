@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Package;
 use App\Models\Page;
+use App\Models\Post;
 use App\Models\Testimonial;
 use App\Models\TourType;
 use App\Support\Seo;
@@ -16,6 +17,7 @@ class HomeController extends Controller
 
         return view('home', [
             'page' => $page,
+            'posts' => Post::published()->take(6)->get(),
             'testimonials' => Testimonial::active()->get(),
             'tourTypes' => TourType::active()->get(),
             'packages' => Package::published()->orderByDesc('is_featured')->orderBy('sort')->with(['tourType', 'destination', 'images'])->get(),

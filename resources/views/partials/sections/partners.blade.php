@@ -12,7 +12,7 @@
     ];
 @endphp
 @php $light = $light ?? false; @endphp
-<section class="relative {{ $light ? 'bg-brand-cream text-brand-navy' : ($bg ?? 'bg-brand-navy').' text-white' }} py-14 sm:py-16" aria-labelledby="partners-title">
+<section class="relative {{ $light ? 'bg-white text-brand-navy' : ($bg ?? 'bg-brand-navy').' text-white' }} py-14 sm:py-16" aria-labelledby="partners-title">
     <div class="container-x grid gap-10 lg:grid-cols-[minmax(0,26rem)_1fr] lg:items-center">
         <div class="lg:border-r {{ $light ? 'lg:border-brand-navy/15' : 'lg:border-white/15' }} lg:pr-10">
             <p class="eyebrow {{ $light ? 'text-brand-red-dark' : 'text-brand-gold' }}">Our trusted global travel partners</p>

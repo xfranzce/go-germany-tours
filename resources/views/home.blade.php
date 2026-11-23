@@ -299,8 +299,47 @@
 </section>
 
 {{-- 11b. OUR PARTNERS (shared partial; also on About) --}}
-{{-- same deep navy as "How it works" above, so the two read as one dark block before the cream band --}}
 <div data-reveal="fade">@include('partials.sections.partners', ['light' => true])</div>
+
+{{-- 11c. TRAVEL JOURNAL: heading + arrows on the left, blog cards scroll off the right edge (copied from the /test-home page) --}}
+@if($posts->isNotEmpty())
+<section class="relative isolate overflow-hidden bg-brand-cream py-16 text-brand-navy sm:py-24" aria-labelledby="journal-title" x-data>
+    @if($posts->first()->image)<x-picture :path="$posts->first()->image" sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover opacity-10"/>@endif
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-cream via-brand-cream/90 to-brand-cream/70" aria-hidden="true"></div>
+    <div class="mx-auto max-w-[1390px] pl-4 sm:pl-6 lg:grid lg:grid-cols-[21rem_minmax(0,1fr)] lg:items-center lg:gap-10">
+        <div class="pr-4 sm:pr-6 lg:pr-0">
+            <p class="eyebrow text-brand-red-dark">Travel journal</p>
+            <h2 id="journal-title" class="mt-4">Ideas for planning <em class="block font-medium italic text-brand-red">your Germany trip.</em></h2>
+            <span class="flag-rule" aria-hidden="true"></span>
+            <p class="mt-5 text-base text-ink-soft sm:text-lg">Guides, routes and local tips to help you shape the trip.</p>
+            <div class="mt-7 flex items-center gap-3">
+                @foreach([-1 => 'Previous guides', 1 => 'Next guides'] as $dir => $lbl)
+                    <button type="button" aria-label="{{ $lbl }}" data-dir="{{ $dir }}" @click="$refs.jtrack.scrollBy({ left: $el.dataset.dir * 360, behavior: 'smooth' })"
+                            class="grid size-11 place-items-center rounded-full border-2 border-brand-navy text-brand-navy transition hover:bg-brand-navy hover:text-white">
+                        <x-icon name="arrow-right" class="h-5 w-5 {{ $dir < 0 ? 'rotate-180' : '' }}"/>
+                    </button>
+                @endforeach
+            </div>
+            <p class="mt-6"><x-button :href="route('blog.index')" variant="outline" size="sm">All travel guides</x-button></p>
+        </div>
+        <div x-ref="jtrack" data-drag-scroll class="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 pr-4 [scrollbar-width:none] sm:pr-6 lg:mt-0 lg:-mr-[max(0px,calc((100vw-1390px)/2))] lg:pr-10 [&::-webkit-scrollbar]:hidden" tabindex="0" role="region" aria-label="Travel guides">
+            @foreach($posts as $post)
+                <article class="group flex w-[78%] shrink-0 snap-start flex-col overflow-hidden rounded-xl bg-white text-brand-navy shadow-lg shadow-brand-navy/10 sm:w-80">
+                    <a href="{{ route('blog.show', $post->slug) }}" class="relative block aspect-[4/3] overflow-hidden bg-brand-custard" tabindex="-1" aria-hidden="true">
+                        <x-picture :path="$post->image" sizes="(min-width: 640px) 20rem, 78vw" class="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-105"/>
+                        @if($post->category)<span class="absolute left-4 top-4 rounded-full bg-brand-gold px-3 py-1 text-[0.7rem] font-extrabold uppercase tracking-wider text-brand-navy shadow">{{ $post->category }}</span>@endif
+                    </a>
+                    <div class="flex flex-1 flex-col p-5">
+                        <h3 class="text-lg leading-snug"><a class="transition hover:text-brand-red" href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a></h3>
+                        <p class="mt-2 text-sm font-semibold text-ink-soft">{{ $post->published_at->format('M j, Y') }} <span aria-hidden="true">&middot;</span> {{ $post->readingMinutes() }} min read</p>
+                        @if($post->excerpt)<p class="mt-3 line-clamp-3 flex-1 text-sm text-ink-soft">{{ $post->excerpt }}</p>@endif
+                    </div>
+                </article>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
 
 {{-- 12. LET'S PLAN YOUR JOURNEY (white band, last section: the footer sits flush against it) --}}
 @section('flush_footer', '1')
