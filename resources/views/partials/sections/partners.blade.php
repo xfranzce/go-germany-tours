@@ -11,14 +11,16 @@
         ['stagit', 'Stagit.ie', 204, 75]
     ];
 @endphp
-<section class="relative {{ $bg ?? 'bg-brand-navy' }} text-white py-14 sm:py-16" aria-labelledby="partners-title">
+@php $light = $light ?? false; @endphp
+<section class="relative {{ $light ? 'bg-brand-cream text-brand-navy' : ($bg ?? 'bg-brand-navy').' text-white' }} py-14 sm:py-16" aria-labelledby="partners-title">
     <div class="container-x grid gap-10 lg:grid-cols-[minmax(0,26rem)_1fr] lg:items-center">
-        <div class="lg:border-r lg:border-white/15 lg:pr-10">
-            <p class="eyebrow text-brand-gold">Our trusted global travel partners</p>
-            <h2 id="partners-title" class="mt-4 text-white">Our Partners</h2>
+        <div class="lg:border-r {{ $light ? 'lg:border-brand-navy/15' : 'lg:border-white/15' }} lg:pr-10">
+            <p class="eyebrow {{ $light ? 'text-brand-red-dark' : 'text-brand-gold' }}">Our trusted global travel partners</p>
+            <h2 id="partners-title" class="mt-4 {{ $light ? 'text-brand-navy' : 'text-white' }}">Our Partners</h2>
             <span class="flag-rule" aria-hidden="true"></span>
-            <p class="mt-5 text-base sm:text-lg text-white/85">Specialist travel brands, each an expert in its own region, working together to craft journeys worth remembering.</p>
+            <p class="mt-5 text-base sm:text-lg {{ $light ? 'text-ink-soft' : 'text-white/85' }}">Specialist travel brands, each an expert in its own region, working together to craft journeys worth remembering.</p>
         </div>
+        <div class="{{ $light ? 'rounded-2xl bg-brand-navy px-6 py-6 shadow-card' : '' }}">
         <div class="marquee [mask-image:linear-gradient(to_right,transparent,#000_8%,#000_92%,transparent)]" aria-label="Our partner travel brands">
             <div class="marquee-track items-center gap-14 pr-14" style="animation-duration: 40s">
                 @foreach([false, true] as $dup)
@@ -28,6 +30,7 @@
                     @endforeach
                 @endforeach
             </div>
+        </div>
         </div>
     </div>
 </section>

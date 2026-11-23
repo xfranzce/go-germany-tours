@@ -295,7 +295,7 @@
 
 {{-- 11b. OUR PARTNERS (shared partial; also on About) --}}
 {{-- same deep navy as "How it works" above, so the two read as one dark block before the cream band --}}
-<div data-reveal="fade">@include('partials.sections.partners', ['bg' => 'bg-brand-navy-dark border-t border-white/10'])</div>
+<div data-reveal="fade">@include('partials.sections.partners', ['light' => true])</div>
 
 {{-- 12. LET'S PLAN YOUR JOURNEY (tinted band) --}}
 <section class="bg-brand-cream py-14 text-center sm:py-20" aria-labelledby="plan-title" data-reveal="zoom">
