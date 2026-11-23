@@ -20,13 +20,13 @@
             <span class="flag-rule" aria-hidden="true"></span>
             <p class="mt-5 text-base sm:text-lg {{ $light ? 'text-ink-soft' : 'text-white/85' }}">Specialist travel brands, each an expert in its own region, working together to craft journeys worth remembering.</p>
         </div>
-        <div class="min-w-0 overflow-hidden {{ $light ? 'rounded-2xl bg-brand-navy px-6 py-6 shadow-card' : '' }}">
+        <div class="min-w-0 overflow-hidden ">
         <div class="marquee [mask-image:linear-gradient(to_right,transparent,#000_8%,#000_92%,transparent)]" aria-label="Our partner travel brands">
             <div class="marquee-track items-center gap-14 pr-14" style="animation-duration: 40s">
                 @foreach([false, true] as $dup)
                     @foreach($partners as [$file, $name, $w, $h])
                         <img src="{{ asset('images/partners/'.$file.'.png') }}" width="{{ $w }}" height="{{ $h }}" alt="{{ $dup ? '' : $name }}" @if($dup) aria-hidden="true" @endif
-                             loading="lazy" decoding="async" class="h-12 sm:h-14 w-auto max-w-none shrink-0 opacity-80 hover:opacity-100 transition">
+                             loading="lazy" decoding="async" class="h-12 sm:h-14 w-auto max-w-none shrink-0 {{ $light ? 'brightness-0 opacity-70' : 'opacity-80' }} hover:opacity-100 transition">
                     @endforeach
                 @endforeach
             </div>
