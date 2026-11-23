@@ -26,7 +26,7 @@
                 @foreach([false, true] as $dup)
                     @foreach($partners as [$file, $name, $w, $h])
                         <img src="{{ asset('images/partners/'.$file.'.png') }}" width="{{ $w }}" height="{{ $h }}" alt="{{ $dup ? '' : $name }}" @if($dup) aria-hidden="true" @endif
-                             loading="lazy" decoding="async" class="h-12 sm:h-14 w-auto max-w-none shrink-0 {{ $light ? 'brightness-0 opacity-70' : 'opacity-80' }} hover:opacity-100 transition">
+                             loading="lazy" decoding="async" class="h-12 sm:h-14 w-auto max-w-none shrink-0 {{ $light ? 'invert opacity-75' : 'opacity-80' }} hover:opacity-100 transition">
                     @endforeach
                 @endforeach
             </div>
