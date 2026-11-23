@@ -73,11 +73,11 @@
             @foreach($tourTypes as $t)
                 @php $incl = array_slice(array_values(array_filter(array_map('trim', preg_split('/\R/', (string) $t->inclusions)))), 0, 3); @endphp
                 {{-- photo card: bright photo on top, fading into white where the icon, title and copy sit --}}
-                <article class="group flex w-[82%] shrink-0 snap-center flex-col overflow-hidden rounded-2xl bg-white text-brand-navy shadow-card md:w-auto md:shrink">
+                <article class="group flex w-[82%] shrink-0 snap-center flex-col overflow-hidden rounded-2xl border border-brand-custard bg-brand-cream text-brand-navy shadow-card md:w-auto md:shrink">
                     {{-- clear, bright photo on top, melting softly into the white panel below --}}
                     <div class="relative h-56 shrink-0 overflow-hidden">
                         <x-picture :path="$t->image" sizes="(min-width: 768px) 24rem, 82vw" class="h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105"/>
-                        <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent" aria-hidden="true"></div>
+                        <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-brand-cream to-transparent" aria-hidden="true"></div>
                     </div>
                     <div class="relative -mt-6 flex flex-1 flex-col p-6 pt-0">
                         <div class="flex items-center gap-3">
