@@ -14,8 +14,8 @@
         <x-picture :path="$heroPhoto->path" priority sizes="(min-width: 1024px) 80vw, 100vw" class="absolute inset-0 -z-20 w-full h-full object-cover object-[68%_50%] lg:object-center"/>
     @endif
     <x-video-bg src="hero.mp4" class="absolute inset-0 -z-[15] w-full h-full object-cover"/>
-    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/75 via-brand-navy-dark/30 to-transparent" aria-hidden="true"></div>
-    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-dark/55 via-transparent to-brand-navy-dark/20" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/60 via-brand-navy-dark/15 to-transparent" aria-hidden="true"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-dark/15 via-transparent to-brand-navy-dark/10" aria-hidden="true"></div>
 
     <div class="container-x my-auto grid items-center gap-8 pt-32 pb-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:pt-32 lg:pb-10 [@media(max-height:820px)]:lg:pt-28 [@media(max-height:820px)]:lg:pb-6">
         <div class="text-center lg:text-left">
