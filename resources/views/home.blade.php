@@ -72,26 +72,26 @@
         <div class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden" data-carousel="md" aria-label="Ways to travel" data-reveal-stagger>
             @foreach($tourTypes as $t)
                 @php $incl = array_slice(array_values(array_filter(array_map('trim', preg_split('/\R/', (string) $t->inclusions)))), 0, 3); @endphp
-                {{-- photo card: photo fills the card, dark fade, icon + title + copy over it --}}
-                <article class="group relative isolate flex min-h-[30rem] w-[82%] shrink-0 snap-center flex-col md:w-auto md:shrink justify-end overflow-hidden rounded-2xl bg-brand-navy-dark text-white shadow-card">
+                {{-- photo card: bright photo on top, fading into white where the icon, title and copy sit --}}
+                <article class="group relative isolate flex min-h-[30rem] w-[82%] shrink-0 snap-center flex-col md:w-auto md:shrink justify-end overflow-hidden rounded-2xl bg-white text-brand-navy shadow-card">
                     <x-picture :path="$t->image" sizes="(min-width: 768px) 24rem, 82vw" class="absolute inset-0 -z-20 h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105"/>
-                    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-dark via-brand-navy-dark/75 to-brand-navy-dark/10" aria-hidden="true"></div>
-                    <div class="p-6 pt-40">
+                    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-white from-[52%] via-white/85 via-[66%] to-transparent to-[88%]" aria-hidden="true"></div>
+                    <div class="p-6 pt-48">
                         <div class="flex items-center gap-3">
                             <span class="grid size-10 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy" aria-hidden="true"><x-icon :name="$icons[$t->slug] ?? 'pin'" class="h-5 w-5"/></span>
-                            <h3 class="text-white"><a href="{{ route('tours.show', $t->slug) }}" class="hover:underline">{{ $t->name }}</a></h3>
+                            <h3 class="text-brand-navy"><a href="{{ route('tours.show', $t->slug) }}" class="hover:underline">{{ $t->name }}</a></h3>
                         </div>
-                        <p class="mt-3 text-sm text-white/85">{{ $t->summary }}</p>
+                        <p class="mt-3 text-sm text-ink-soft">{{ $t->summary }}</p>
                         @if($incl)
-                            <ul class="mt-4 space-y-1.5 text-sm font-semibold">
-                                @foreach($incl as $i)<li class="flex items-start gap-2"><x-icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-brand-gold"/>{{ $i }}</li>@endforeach
+                            <ul class="mt-4 space-y-1.5 text-sm font-semibold text-brand-navy">
+                                @foreach($incl as $i)<li class="flex items-start gap-2"><x-icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-brand-red"/>{{ $i }}</li>@endforeach
                             </ul>
                         @endif
-                        <a href="{{ route('tours.show', $t->slug) }}" class="mt-4 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-[0.16em] text-brand-gold hover:underline">Explore {{ $t->name }} <x-icon name="arrow-right" class="h-4 w-4"/></a>
+                        <a href="{{ route('tours.show', $t->slug) }}" class="mt-4 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-[0.16em] text-brand-red-dark hover:underline">Explore {{ $t->name }} <x-icon name="arrow-right" class="h-4 w-4"/></a>
                         <div class="mt-5 grid grid-cols-2 gap-2">
                             <x-button size="sm" data-title="Get a quote: {{ $t->name }}" data-prefill="Interested in: {{ $t->name }} tours."
                                       @click="$store.modal.show({form:'package_quote', ...$el.dataset})">Get a quote</x-button>
-                            <x-button variant="outline-light" size="sm" data-title="Ask us a question" data-subtitle="{{ $t->name }} tours" data-prefill="Question about {{ $t->name }} tours: "
+                            <x-button variant="outline" size="sm" data-title="Ask us a question" data-subtitle="{{ $t->name }} tours" data-prefill="Question about {{ $t->name }} tours: "
                                       @click="$store.modal.show({form:'package_question', ...$el.dataset})">Ask us a question</x-button>
                         </div>
                     </div>
