@@ -29,10 +29,10 @@
             ['Locally crafted itineraries', 'Designed around the places you want to see.', 'pin'],
             ['Real support', 'A member of the team replies to you.', 'chat'],
         ] as [$t, $d, $ic])
-            <li class="flex items-start gap-4 px-8 py-8 lg:py-10">
+            <li class="flex items-start gap-3 px-5 py-8 lg:py-10">
                 <span class="grid size-11 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-sm" aria-hidden="true"><x-icon :name="$ic" class="h-5 w-5"/></span>
                 <div>
-                    <h3 class="text-lg font-bold text-brand-navy">{{ $t }}</h3>
+                    <h3 class="text-base font-bold text-brand-navy lg:whitespace-nowrap lg:text-[clamp(.8rem,1.1vw,1rem)]">{{ $t }}</h3>
                     <p class="mt-1.5 text-sm text-ink-soft">{{ $d }}</p>
                 </div>
             </li>
