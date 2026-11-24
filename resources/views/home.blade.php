@@ -163,7 +163,7 @@
                             <span class="absolute bottom-3 left-3 rounded-full bg-white/95 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-brand-navy shadow">{{ $package->destination->name }} &middot; {{ $package->nights }} nights</span>
                         </a>
                         <div class="flex flex-1 flex-col p-5">
-                            <h3 class="text-[1.35rem] font-bold leading-tight tracking-tight text-brand-navy sm:text-[1.45rem]"><a href="{{ $package->url() }}" class="hover:underline">{{ $package->title }}</a></h3>
+                            <h3 class="text-[1.2rem] font-bold leading-tight tracking-tight text-brand-navy"><a href="{{ $package->url() }}" class="hover:underline">{{ $package->title }}</a></h3>
                             <span class="mt-3 block h-0.5 w-12 rounded-full bg-brand-gold" aria-hidden="true"></span>
                             <p class="mt-2 flex-1 text-sm text-ink-soft">{{ $package->summary }}</p>
                             <p class="mt-4 flex items-baseline gap-3 border-t border-brand-custard pt-4 font-sans text-2xl font-extrabold text-brand-navy">
