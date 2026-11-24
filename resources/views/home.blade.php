@@ -188,8 +188,9 @@
 <section class="home-sec relative isolate overflow-hidden bg-brand-navy-dark py-16 text-center text-white sm:py-24" aria-labelledby="adv-title" data-reveal="zoom" data-video-root>
     {{-- fixed background: the media is position:fixed to the screen and clipped to this section, so the page scrolls over it --}}
     <div class="absolute inset-0 -z-20 [clip-path:inset(0)]" aria-hidden="true">
-        @if($cta)<x-picture :path="$cta->path" hires sizes="100vw" class="fixed inset-0 h-screen w-full object-cover"/>@endif
-        <x-video-bg src="adventure.mp4" class="fixed inset-0 h-screen w-full object-cover"/>
+        @php $advPhoto = \App\Models\Media::byStem('bavaria-village') ?? $cta; @endphp
+        @if($advPhoto)<x-picture :path="$advPhoto->path" hires sizes="100vw" class="fixed inset-0 h-screen w-full object-cover"/>@endif
+        <x-video-bg src="hero-bavaria.mp4" class="fixed inset-0 h-screen w-full object-cover"/>
     </div>
     <div class="absolute inset-0 -z-10 bg-brand-navy-dark/45" aria-hidden="true"></div>
     <div class="container-x max-w-4xl">
