@@ -30,7 +30,7 @@ class QuizStep extends Model
             ->filter(fn ($s) => $s->activeOptions->isNotEmpty())
             ->map(fn ($s) => [
                 'key' => $s->key, 'question' => $s->question, 'type' => $s->type,
-                'options' => $s->activeOptions->map(fn ($o) => ['label' => $o->label, 'icon' => $o->icon])->values()->all(),
+                'options' => $s->activeOptions->map(fn ($o) => ['label' => $o->label, 'icon' => $o->icon, 'svg' => \App\Support\QuizIcons::svg($o->icon)])->values()->all(),
             ])->values()->all();
     }
 }

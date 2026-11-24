@@ -30,7 +30,7 @@
                 <div class="mt-4 grid grid-cols-2 gap-3">
                     @foreach($first['options'] as $o)
                         <span class="flex min-h-28 flex-col items-center justify-center gap-2 rounded-2xl border border-white/25 bg-white/10 p-3 text-center font-bold text-white">
-                            <span class="text-4xl leading-none [filter:grayscale(1)_sepia(1)_saturate(4)_brightness(1.15)]">{{ $o['icon'] }}</span>
+                            @if($o['svg'])<span class="text-brand-gold leading-none">{!! $o['svg'] !!}</span>@else<span class="text-4xl leading-none [filter:grayscale(1)_sepia(1)_saturate(4)_brightness(1.15)]">{{ $o['icon'] }}</span>@endif
                             <span class="text-sm text-white">{{ $o['label'] }}</span>
                         </span>
                     @endforeach
@@ -54,7 +54,8 @@
                                 class="group flex flex-col items-center justify-center gap-2 text-center rounded-2xl border bg-white/10 p-3 min-h-28 font-bold text-white transition duration-200 hover:-translate-y-0.5 hover:border-brand-gold hover:bg-white/20 focus-visible:border-brand-gold"
                                 :class="answers[step.key] === o.label ? 'border-brand-gold bg-brand-gold/25 ring-1 ring-brand-gold' : 'border-white/25'"
                                 :aria-pressed="answers[step.key] === o.label">
-                            <span class="text-4xl leading-none transition duration-200 group-hover:scale-110 [filter:grayscale(1)_sepia(1)_saturate(4)_brightness(1.15)]" x-text="o.icon" aria-hidden="true"></span>
+                            <span x-show="o.svg" class="text-brand-gold leading-none transition duration-200 group-hover:scale-110" x-html="o.svg" aria-hidden="true"></span>
+                            <span x-show="!o.svg" class="text-4xl leading-none transition duration-200 group-hover:scale-110 [filter:grayscale(1)_sepia(1)_saturate(4)_brightness(1.15)]" x-text="o.icon" aria-hidden="true"></span>
                             <span class="text-sm text-white" x-text="o.label"></span>
                         </button>
                     </template>
