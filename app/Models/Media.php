@@ -44,7 +44,8 @@ class Media extends Model
     {
         $width ??= max($this->widths);
 
-        return Storage::disk('public')->url("{$this->path}-{$width}.webp");
+        // ?v= changes when the image is re-encoded in place (images:import-seed), so visitors never keep a stale cached photo
+        return Storage::disk('public')->url("{$this->path}-{$width}.webp").'?v='.($this->updated_at?->timestamp ?? 0);
     }
 
     public function srcset(): string
