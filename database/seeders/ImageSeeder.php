@@ -31,6 +31,7 @@ class ImageSeeder extends Seeder
         'selfdrive-road' => 'A car driving along a winding road through vineyards above the Mosel river, with a village and castle in the distance',
         'chauffeur-private-driver' => 'A chauffeur holding the door of a black sedan on a cobbled square beside a pink baroque town hall',
         'coach-tour-cochem' => 'A touring coach on the Mosel riverside in Cochem with a group of travelers and the hilltop castle behind',
+        'bacharach-view' => 'The Rhine river, vineyards and the church tower of Bacharach under a summer sky',
         'couple-rhine-vineyard' => 'A couple holding hands on a vineyard path above the Rhine river with a castle on the far hillside at golden hour',
         'family-old-town' => 'A family with two young children walking along a cobbled street lined with half-timbered houses',
         'medieval-castle-path' => 'A cobbled path leading up to a medieval stone castle with towers on a forested hill at sunset',

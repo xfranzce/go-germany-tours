@@ -40,7 +40,7 @@
     </ul>
 </section>
 {{-- 3. ABOUT INTRO (soft tinted, centred) --}}
-@php $aboutImg = $media('couple-rhine-vineyard') ?? $media('quedlinburg-lane'); @endphp
+@php $aboutImg = $media('bacharach-view') ?? $media('couple-rhine-vineyard') ?? $media('quedlinburg-lane'); @endphp
 <section class="bg-brand-cream py-16 sm:py-24" aria-labelledby="intro-title" data-reveal="split">
     <div class="container-x grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
         @if($aboutImg)

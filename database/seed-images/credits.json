@@ -1,130 +1,138 @@
 [
-  {
-    "slug": "hero-quedlinburg",
-    "type": "ai",
-    "title": "Quedlinburg old town below the Schlossberg (illustration)",
-    "tool": "Higgsfield (GPT Image 2.6)"
-  },
-  {
-    "slug": "quedlinburg-lane",
-    "type": "ai",
-    "title": "Cobbled lane in Quedlinburg below the castle hill (illustration)",
-    "tool": "Higgsfield (GPT Image 2.6)"
-  },
-  {
-    "slug": "saxon-switzerland-bastei",
-    "type": "ai",
-    "title": "Bastei rocks, Saxon Switzerland (illustration)",
-    "tool": "Higgsfield (GPT Image 2.6)"
-  },
-  {
-    "slug": "cochem-mosel",
-    "type": "ai",
-    "title": "Cochem and its castle on the Mosel (illustration)",
-    "tool": "Higgsfield (GPT Image 2.6)"
-  },
-  {
-    "slug": "mosel-vineyard",
-    "type": "ai",
-    "title": "Mosel vineyards and river bend (illustration)",
-    "tool": "Higgsfield (GPT Image 2.6)"
-  },
-  {
-    "slug": "hiddensee-lighthouse",
-    "type": "ai",
-    "title": "Dornbusch lighthouse, Hiddensee (illustration)",
-    "tool": "Higgsfield (GPT Image 2.6)"
-  },
-  {
-    "slug": "hiddensee-beach",
-    "type": "ai",
-    "title": "Fishing boat on the beach, Hiddensee (illustration)",
-    "tool": "Higgsfield (GPT Image 2.6)"
-  },
-  {
-    "slug": "gengenbach-rathaus",
-    "type": "ai",
-    "title": "Gengenbach town hall and market square (illustration)",
-    "tool": "Higgsfield (GPT Image 2.6)"
-  },
-  {
-    "slug": "neuschwanstein-castle",
-    "type": "ai",
-    "title": "Neuschwanstein Castle in Bavaria (illustration)",
-    "tool": "Higgsfield (GPT Image 2.6)"
-  },
-  {
-    "slug": "bacharach-rhine",
-    "type": "ai",
-    "title": "Bacharach on the Rhine (illustration)",
-    "tool": "Higgsfield (GPT Image 2.6)"
-  },
-  {
-    "slug": "allgau-alps",
-    "title": "Allgäu alps autumn 2017-10-13.jpg",
-    "page": "https://commons.wikimedia.org/wiki/File:Allg%C3%A4u_alps_autumn_2017-10-13.jpg",
-    "artist": "Tommy Rau",
-    "license": "CC0",
-    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
-  },
-  {
-    "slug": "selfdrive-road",
-    "type": "ai",
-    "title": "Self drive road trip through the Mosel valley (illustration)",
-    "tool": "Higgsfield (GPT Image 2.6)"
-  },
-  {
-    "slug": "chauffeur-private-driver",
-    "type": "ai",
-    "title": "Chauffeur and black sedan on a town square (illustration)",
-    "tool": "Higgsfield (GPT Image 2.6)"
-  },
-  {
-    "slug": "coach-tour-cochem",
-    "type": "ai",
-    "title": "Coach tour group on the Mosel riverside in Cochem (illustration)",
-    "tool": "Higgsfield (GPT Image 2.6)"
-  },
-  {
-    "slug": "couple-rhine-vineyard",
-    "type": "ai",
-    "title": "Couple on a vineyard path above the Rhine (illustration)",
-    "tool": "Higgsfield (GPT Image 2.6)"
-  },
-  {
-    "slug": "family-old-town",
-    "type": "ai",
-    "title": "Family strolling through a half-timbered German old town (illustration)",
-    "tool": "Higgsfield (Nano Banana 2)"
-  },
-  {
-    "slug": "medieval-castle-path",
-    "type": "ai",
-    "title": "Medieval hilltop castle at sunset (illustration)",
-    "tool": "Higgsfield (Nano Banana 2)"
-  },
-  {
-    "slug": "anniversary-dinner-terrace",
-    "type": "ai",
-    "title": "Celebration dinner on a terrace below a castle (illustration)",
-    "tool": "Higgsfield (Nano Banana 2)"
-  },
-  {
-    "slug": "neuschwanstein-autumn",
-    "type": "ai",
-    "title": "Neuschwanstein Castle in golden autumn light (illustration)",
-    "tool": "Google Gemini"
-  },
-  {
-    "slug": "bavaria-village",
-    "type": "ai",
-    "title": "Bavarian Alpine village in spring sunshine (illustration)",
-    "tool": "Google Gemini"
-  },
-  {
-    "slug": "koenigssee",
-    "type": "ai",
-    "title": "Königssee and St. Bartholomä in summer sunshine (illustration)",
-    "tool": "Google Gemini"
-  }
+    {
+        "slug": "hero-quedlinburg",
+        "type": "ai",
+        "title": "Quedlinburg old town below the Schlossberg (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "quedlinburg-lane",
+        "type": "ai",
+        "title": "Cobbled lane in Quedlinburg below the castle hill (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "saxon-switzerland-bastei",
+        "type": "ai",
+        "title": "Bastei rocks, Saxon Switzerland (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "cochem-mosel",
+        "type": "ai",
+        "title": "Cochem and its castle on the Mosel (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "mosel-vineyard",
+        "type": "ai",
+        "title": "Mosel vineyards and river bend (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hiddensee-lighthouse",
+        "type": "ai",
+        "title": "Dornbusch lighthouse, Hiddensee (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hiddensee-beach",
+        "type": "ai",
+        "title": "Fishing boat on the beach, Hiddensee (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "gengenbach-rathaus",
+        "type": "ai",
+        "title": "Gengenbach town hall and market square (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "neuschwanstein-castle",
+        "type": "ai",
+        "title": "Neuschwanstein Castle in Bavaria (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "bacharach-rhine",
+        "type": "ai",
+        "title": "Bacharach on the Rhine (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "allgau-alps",
+        "title": "Allgäu alps autumn 2017-10-13.jpg",
+        "page": "https://commons.wikimedia.org/wiki/File:Allg%C3%A4u_alps_autumn_2017-10-13.jpg",
+        "artist": "Tommy Rau",
+        "license": "CC0",
+        "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+        "slug": "selfdrive-road",
+        "type": "ai",
+        "title": "Self drive road trip through the Mosel valley (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "chauffeur-private-driver",
+        "type": "ai",
+        "title": "Chauffeur and black sedan on a town square (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "coach-tour-cochem",
+        "type": "ai",
+        "title": "Coach tour group on the Mosel riverside in Cochem (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "couple-rhine-vineyard",
+        "type": "ai",
+        "title": "Couple on a vineyard path above the Rhine (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "family-old-town",
+        "type": "ai",
+        "title": "Family strolling through a half-timbered German old town (illustration)",
+        "tool": "Higgsfield (Nano Banana 2)"
+    },
+    {
+        "slug": "medieval-castle-path",
+        "type": "ai",
+        "title": "Medieval hilltop castle at sunset (illustration)",
+        "tool": "Higgsfield (Nano Banana 2)"
+    },
+    {
+        "slug": "anniversary-dinner-terrace",
+        "type": "ai",
+        "title": "Celebration dinner on a terrace below a castle (illustration)",
+        "tool": "Higgsfield (Nano Banana 2)"
+    },
+    {
+        "slug": "neuschwanstein-autumn",
+        "type": "ai",
+        "title": "Neuschwanstein Castle in golden autumn light (illustration)",
+        "tool": "Google Gemini"
+    },
+    {
+        "slug": "bavaria-village",
+        "type": "ai",
+        "title": "Bavarian Alpine village in spring sunshine (illustration)",
+        "tool": "Google Gemini"
+    },
+    {
+        "slug": "koenigssee",
+        "type": "ai",
+        "title": "Königssee and St. Bartholomä in summer sunshine (illustration)",
+        "tool": "Google Gemini"
+    },
+    {
+        "slug": "bacharach-view",
+        "title": "Bacharach am Rhein - Flickr - abbilder.jpg",
+        "page": "https://commons.wikimedia.org/wiki/File:Bacharach_am_Rhein_-_Flickr_-_abbilder.jpg",
+        "artist": "abbilder",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0"
+    }
 ]
