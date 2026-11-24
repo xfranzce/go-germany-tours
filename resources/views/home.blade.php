@@ -239,7 +239,7 @@
 <div data-reveal="fade" class="home-secs">@include('partials.sections.reviews')</div>
 
 {{-- 10. BEGIN YOUR JOURNEY: strip of places --}}
-<section class="home-sec bg-white py-14 sm:py-20" aria-labelledby="places-title" data-reveal="blur">
+<section class="home-sec home-sec-flush bg-white py-14 sm:py-20" aria-labelledby="places-title" data-reveal="blur">
     <div class="container-x mb-10 max-w-3xl text-center">
         <p class="eyebrow centered text-brand-red-dark">Begin your journey</p>
         <h2 id="places-title" class="mt-4">Discover the best of Germany</h2>
