@@ -1,6 +1,6 @@
 {{-- HOME HERO (bright Bavarian village): photo `bavaria-village` + video hero-bavaria.mp4 (both AI-generated, credited), headline left, quiz right, light overlays + soft text shadow for contrast.
      Copied from the /hero-section trial page on 2026-11-23. The previous castle hero is partials/home/hero-dark.blade.php and the frozen old home page is /hero-old. --}}
-@php $heroPhoto = \App\Models\Media::byStem('bavaria-village') ?? $heroMedia; @endphp
+@php $heroPhoto = \App\Models\Media::byStem('koenigssee') ?? $heroMedia; @endphp
 @if($heroPhoto)
     @push('head')
         <link rel="preload" as="image" href="{{ $heroPhoto->url(1280) }}" imagesrcset="{{ $heroPhoto->srcset() }}" imagesizes="(min-width: 1024px) 80vw, 100vw" fetchpriority="high">
@@ -12,7 +12,7 @@
     @if($heroPhoto)
         <x-picture :path="$heroPhoto->path" priority sizes="(min-width: 1024px) 80vw, 100vw" class="absolute inset-0 -z-20 w-full h-full object-cover object-[68%_50%] lg:object-center"/>
     @endif
-    <x-video-bg src="hero-bavaria.mp4" class="absolute inset-0 -z-[15] w-full h-full object-cover"/>
+    <x-video-bg src="adventure.mp4" class="absolute inset-0 -z-[15] w-full h-full object-cover"/>
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy-dark/45 via-brand-navy-dark/10 to-transparent" aria-hidden="true"></div>
     <div class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-dark/10 via-transparent to-transparent" aria-hidden="true"></div>
 
