@@ -208,3 +208,6 @@
 @media (prefers-reduced-motion: no-preference) { .sparkle { animation: twinkle 4.8s ease-in-out infinite; } }
 @media (prefers-reduced-motion: reduce) { .sparkle { opacity: .55; } }
 @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(.4) rotate(0deg); } 45%, 55% { opacity: .9; transform: scale(1) rotate(20deg); } }
+
+/* Home page sections (not the hero): 90px top/bottom, 60px left/right from tablet width up (unlayered so it wins over py-* utilities) */
+@media (min-width: 40rem) { .home-sec, .home-secs > section { padding: 90px 60px; } }

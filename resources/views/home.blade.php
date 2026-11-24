@@ -41,7 +41,7 @@
 </section>
 {{-- 3. ABOUT INTRO (soft tinted, centred) --}}
 @php $aboutImg = $media('bacharach-view') ?? $media('couple-rhine-vineyard') ?? $media('quedlinburg-lane'); @endphp
-<section class="bg-brand-cream py-16 sm:py-24" aria-labelledby="intro-title" data-reveal="split">
+<section class="home-sec bg-brand-cream py-16 sm:py-24" aria-labelledby="intro-title" data-reveal="split">
     <div class="container-x grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
         @if($aboutImg)
             <div class="relative aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-card sm:aspect-[5/4] lg:aspect-auto lg:h-full lg:min-h-[34rem]">
@@ -61,7 +61,7 @@
 </section>
 
 {{-- 4. SIGNATURE VACATION: three cards (icon, tagline, summary, three ticks, three buttons) --}}
-<section class="bg-white py-14 sm:py-20" aria-labelledby="sig-title" id="tours" data-reveal="rise">
+<section class="home-sec bg-white py-14 sm:py-20" aria-labelledby="sig-title" id="tours" data-reveal="rise">
     <div class="container-x">
         <div class="mx-auto mb-12 max-w-3xl text-center">
             <p class="eyebrow centered text-brand-red-dark">Signature vacation</p>
@@ -105,7 +105,7 @@
 </section>
 
 {{-- 5. DISCOUNT BLOCK (white to tint to white); uses our real early bird offer --}}
-<section class="bg-gradient-to-b from-white via-brand-cream to-white py-10 sm:py-24" aria-labelledby="offer-title" data-reveal="pop">
+<section class="home-sec bg-gradient-to-b from-white via-brand-cream to-white py-10 sm:py-24" aria-labelledby="offer-title" data-reveal="pop">
     <div class="container-x grid items-center gap-5 text-center sm:gap-8 lg:gap-14 lg:text-left lg:grid-cols-[auto_1fr_minmax(0,0.8fr)]">
         <div class="mx-auto hidden size-36 place-items-center rounded-full bg-brand-gold text-brand-navy shadow-xl shadow-brand-navy/20 sm:grid sm:size-44 lg:mx-0" aria-hidden="true">
             <span class="text-center font-display font-extrabold leading-none"><span class="block text-6xl">25%</span><span class="mt-1 block text-sm uppercase tracking-[0.2em]">off</span></span>
@@ -143,7 +143,7 @@
 @foreach($tourTypes as $t)
     @php $all = $byType[$t->slug] ?? collect(); $list = $all->take(6); @endphp
     @continue($list->isEmpty())
-    <section class="bg-brand-cream py-12 sm:py-16" aria-labelledby="pk-{{ $t->slug }}">
+    <section class="home-sec bg-brand-cream py-12 sm:py-16" aria-labelledby="pk-{{ $t->slug }}">
         <div class="container-x">
             {{-- heading left, count right --}}
             <div class="mb-8 flex items-end justify-between gap-6">
@@ -185,7 +185,7 @@
 
 {{-- 7. "START YOUR ADVENTURE" band: Königssee photo + looping video (AI), counters --}}
 @php $cta = $media('koenigssee') ?? $media('neuschwanstein-castle'); @endphp
-<section class="relative isolate overflow-hidden bg-brand-navy-dark py-16 text-center text-white sm:py-24" aria-labelledby="adv-title" data-reveal="zoom" data-video-root>
+<section class="home-sec relative isolate overflow-hidden bg-brand-navy-dark py-16 text-center text-white sm:py-24" aria-labelledby="adv-title" data-reveal="zoom" data-video-root>
     {{-- fixed background: the media is position:fixed to the screen and clipped to this section, so the page scrolls over it --}}
     <div class="absolute inset-0 -z-20 [clip-path:inset(0)]" aria-hidden="true">
         @if($cta)<x-picture :path="$cta->path" hires sizes="100vw" class="fixed inset-0 h-screen w-full object-cover"/>@endif
@@ -206,7 +206,7 @@
 </section>
 
 {{-- 8. TRAVEL WITH CONFIDENCE: copy left, four cards right --}}
-<section class="bg-white py-16 sm:py-24" aria-labelledby="conf-title" data-reveal="split">
+<section class="home-sec bg-white py-16 sm:py-24" aria-labelledby="conf-title" data-reveal="split">
     <div class="container-x grid gap-12 lg:grid-cols-2 lg:gap-20">
         <div class="text-center lg:text-left">
             <p class="eyebrow text-brand-red-dark after:h-px after:w-7 after:bg-current after:content-[''] lg:after:hidden">Travel with confidence</p>
@@ -236,10 +236,10 @@
 </section>
 
 {{-- 9. REVIEWS (shared home section; only shows real testimonials) --}}
-<div data-reveal="fade">@include('partials.sections.reviews')</div>
+<div data-reveal="fade" class="home-secs">@include('partials.sections.reviews')</div>
 
 {{-- 10. BEGIN YOUR JOURNEY: strip of places --}}
-<section class="bg-white py-14 sm:py-20" aria-labelledby="places-title" data-reveal="blur">
+<section class="home-sec bg-white py-14 sm:py-20" aria-labelledby="places-title" data-reveal="blur">
     <div class="container-x mb-10 max-w-3xl text-center">
         <p class="eyebrow centered text-brand-red-dark">Begin your journey</p>
         <h2 id="places-title" class="mt-4">Discover the best of Germany</h2>
@@ -272,7 +272,7 @@
     </div></section>
 
 {{-- 11. HOW IT WORKS: dark gradient, three numbered steps --}}
-<section class="relative isolate overflow-hidden bg-brand-navy-dark py-16 text-white sm:py-24" aria-labelledby="how-title" data-reveal="rise">
+<section class="home-sec relative isolate overflow-hidden bg-brand-navy-dark py-16 text-white sm:py-24" aria-labelledby="how-title" data-reveal="rise">
     <div class="pointer-events-none absolute -z-10 -top-32 -left-32 size-[30rem] rounded-full bg-brand-gold/15 blur-[120px]" aria-hidden="true"></div>
     <div class="pointer-events-none absolute -z-10 -bottom-32 -right-32 size-[26rem] rounded-full bg-brand-red/20 blur-[120px]" aria-hidden="true"></div>
     <div class="container-x">
@@ -303,11 +303,11 @@
 </section>
 
 {{-- 11b. OUR PARTNERS (shared partial; also on About) --}}
-<div data-reveal="fade">@include('partials.sections.partners', ['light' => true])</div>
+<div data-reveal="fade" class="home-secs">@include('partials.sections.partners', ['light' => true])</div>
 
 {{-- 11c. TRAVEL JOURNAL: heading + arrows on the left, blog cards scroll off the right edge (copied from the /test-home page) --}}
 @if($posts->isNotEmpty())
-<section class="relative isolate overflow-hidden bg-brand-cream py-16 text-brand-navy sm:py-24" aria-labelledby="journal-title" x-data>
+<section class="home-sec relative isolate overflow-hidden bg-brand-cream py-16 text-brand-navy sm:py-24" aria-labelledby="journal-title" x-data>
     @if($posts->first()->image)<x-picture :path="$posts->first()->image" sizes="100vw" class="absolute inset-0 -z-20 h-full w-full object-cover opacity-10"/>@endif
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-brand-cream via-brand-cream/90 to-brand-cream/70" aria-hidden="true"></div>
     <div class="mx-auto max-w-[1390px] pl-4 sm:pl-6 lg:grid lg:grid-cols-[21rem_minmax(0,1fr)] lg:items-center lg:gap-10">
@@ -347,7 +347,7 @@
 
 {{-- 12. LET'S PLAN YOUR JOURNEY (white band, last section: the footer sits flush against it) --}}
 @section('flush_footer', '1')
-<section class="relative isolate overflow-hidden bg-white py-14 text-center sm:py-20" aria-labelledby="plan-title" data-reveal="zoom">
+<section class="home-sec relative isolate overflow-hidden bg-white py-14 text-center sm:py-20" aria-labelledby="plan-title" data-reveal="zoom">
     <x-map-decor/>
     <div class="container-x max-w-3xl">
         <p class="eyebrow centered text-brand-red-dark">Begin your journey</p>
