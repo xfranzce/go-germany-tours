@@ -97,7 +97,7 @@ class Seo
     public static function fontPreloads(): array
     {
         $urls = [];
-        foreach (['nunito-sans/files/nunito-sans-latin-wght-normal.woff2', 'cormorant-garamond/files/cormorant-garamond-latin-wght-normal.woff2'] as $f) {
+        foreach (['manrope/files/manrope-latin-wght-normal.woff2', 'bodoni-moda/files/bodoni-moda-latin-wght-normal.woff2'] as $f) {
             try {
                 $urls[] = Vite::asset("node_modules/@fontsource-variable/{$f}");
             } catch (\Throwable) {

@@ -55,7 +55,7 @@
     @endif
     {!! \App\Support\Snippets::render('head') !!}
 </head>
-<body class="min-h-screen flex flex-col" x-data>
+<body class="min-h-screen flex flex-col @yield('body_class')" x-data>
 @if($gtm)
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ $gtm }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 @endif

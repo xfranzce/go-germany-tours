@@ -1,6 +1,7 @@
 {{-- "HERO OLD": a frozen SNAPSHOT of the home page as it was on 2026-11-23. Its hero, reviews and partners sections are private copies (partials/home/hero-old-*) and its video is public/videos/hero-old.mp4, so later edits to the real home page do not change it. Unlisted, noindex.
      To RESTORE: copy this file over home.blade.php (the hero-old-* includes can stay as they are). --}}
 @extends('layouts.app')
+@section('body_class', 'legacy-fonts')
 
 @php
     // Layout and section order copied from goscottishtours.com, using this site's colours, fonts and components.

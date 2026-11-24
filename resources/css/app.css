@@ -16,6 +16,22 @@
     src: url('@fontsource-variable/cormorant-garamond/files/cormorant-garamond-latin-wght-normal.woff2') format('woff2-variations');
 }
 
+/* goeurotours.com fonts: Manrope (text) + Bodoni Moda (headings). */
+@font-face {
+    font-family: 'Manrope Variable';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 200 800;
+    src: url('@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2') format('woff2-variations');
+}
+@font-face {
+    font-family: 'Bodoni Moda Variable';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400 900;
+    src: url('@fontsource-variable/bodoni-moda/files/bodoni-moda-latin-wght-normal.woff2') format('woff2-variations');
+}
+
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
@@ -31,8 +47,11 @@
  | > 9:1. Tangerine is for borders and fills behind NAVY text only.
  */
 @theme {
-    --font-sans: 'Nunito Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    --font-display: 'Cormorant Garamond Variable', Georgia, 'Times New Roman', serif;
+    --font-sans: 'Manrope Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-display: 'Bodoni Moda Variable', Georgia, 'Times New Roman', serif;
+    /* Previous fonts: only the backup pages (body.legacy-fonts) still use them */
+    --font-legacy-sans: 'Nunito Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-legacy-display: 'Cormorant Garamond Variable', Georgia, 'Times New Roman', serif;
 
     --color-brand-custard: #eae2b7;
     --color-brand-gold: #fcbf49;
@@ -77,6 +96,8 @@
     /* Cormorant runs small: bump the default heading scale so it reads like the reference */
     h2 { font-size: 2.125rem; } h3 { font-size: 1.5rem; }
     @media (min-width: 40rem) { h2 { font-size: 2.75rem; } }
+    /* Backup pages keep the old fonts */
+    body.legacy-fonts { --font-sans: var(--font-legacy-sans); --font-display: var(--font-legacy-display); }
     :focus-visible { outline: 3px solid var(--color-brand-tangerine); outline-offset: 2px; border-radius: 4px; }
     img { height: auto; }
     /* Tailwind v4 no longer shows the hand cursor on buttons */

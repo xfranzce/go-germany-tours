@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('body_class', 'legacy-fonts')
 
 @php
     $heroPath = $page->data['hero_image'] ?? null;

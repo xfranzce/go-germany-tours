@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('body_class', 'legacy-fonts')
 
 @php
     // Layout and section order copied from goscottishtours.com, using this site's colours, fonts and components.

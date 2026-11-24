@@ -11,8 +11,8 @@ Hand-built with Tailwind CSS v4. **Every brand-specific value lives in one place
 | `--color-brand-custard` / `-light` | `#EAE2B7` / `#F7F3DF` Vanilla Custard | section backgrounds, cards' borders |
 | `--color-brand-tangerine` | `#F77F00` Vivid Tangerine | quiz/sidebar **border**, focus ring, progress bar. Never small text (fails contrast) |
 | derived | `navy-dark #001F30`, `navy-soft`, `red-dark #B01E21` (link/eyebrow text), `gold-dark` | hovers and text-on-light |
-| `--font-display` | Cormorant Garamond (variable, self-hosted; runs small so base `h2`/`h3` sizes are bumped in `app.css`) | headings |
-| `--font-sans` | Nunito Sans (variable, self-hosted) | body |
+| `--font-display` | Bodoni Moda (variable, self-hosted; the goeurotours.com heading font). Backup pages (`body.legacy-fonts`) keep Cormorant Garamond | headings |
+| `--font-sans` | Manrope (variable, self-hosted; the goeurotours.com body font). Backup pages keep Nunito Sans | body |
 | `--radius-card`, `--shadow-card`, `--breakpoint-xs` | | cards |
 
 Utilities are generated automatically: `bg-brand-red`, `text-brand-navy`, `border-brand-tangerine`, `font-display`, etc.
