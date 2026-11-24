@@ -29,12 +29,49 @@ class QuizIcons
         '🔎' => 'M10.5 4a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM15.2 15.2 20 20',
     ];
 
+    /** Detailed line-art icons drawn on a 48 grid (the four seasons). Raw SVG shapes, stroke only. */
+    private static function shapes(): array
+    {
+        $flower = function (float $cx, float $cy, float $k): string {
+            $o = '';
+            for ($a = 0; $a < 360; $a += 60) {
+                $o .= '<ellipse cx="'.$cx.'" cy="'.($cy - 4.2 * $k).'" rx="'.(2.2 * $k).'" ry="'.(3.2 * $k).'" transform="rotate('.$a.' '.$cx.' '.$cy.')"/>';
+            }
+
+            return $o.'<circle cx="'.$cx.'" cy="'.$cy.'" r="'.(1.5 * $k).'"/>';
+        };
+        $arms = '';
+        foreach ([0, 60, 120] as $a) {
+            $arms .= '<path transform="rotate('.$a.' 24 24)" d="M24 4v40M24 9.5l-4-3.5M24 9.5l4-3.5M24 38.5l-4 3.5M24 38.5l4 3.5M24 15.5l-3-2.7M24 15.5l3-2.7M24 32.5l-3 2.7M24 32.5l3 2.7"/>';
+        }
+
+        return [
+            // spring: bouquet of three flowers
+            '🌸' => $flower(24, 11, 1).$flower(12.5, 21, .8).$flower(35.5, 21, .8)
+                .'<path d="M24 17v25M12.5 26.5c0 7 8 9 11.5 15.5M35.5 26.5c0 7-8 9-11.5 15.5M24 34c-5.5-.5-8-3.5-8-7.5 5.5 0 8 3.5 8 7.5ZM24 34c5.5-.5 8-3.5 8-7.5-5.5 0-8 3.5-8 7.5ZM20 43.5h8"/>',
+            // summer: beach umbrella, sun, sand and waves
+            '☀' => '<path d="M5 25C5 15.5 11.5 9 19.5 9S34 15.5 34 25c-2.4-2.4-4.6-2.4-7 0-2.4-2.4-4.7-2.4-7.2 0-2.4-2.4-4.6-2.4-7 0-2.3-2.4-4.6-2.4-7.8 0ZM19.5 9v16M12.5 25c0-8 3-13.5 7-16M27 25c0-8-3-13.5-7.5-16M19.5 25l-3.5 15"/>'
+                .'<circle cx="38" cy="9" r="3.6"/><path d="M38 1.6v2M38 14.4v2M30.6 9h2M43.4 9h2M32.8 3.8l1.4 1.4M41.8 12.8l1.4 1.4M32.8 14.2l1.4-1.4M41.8 5.2l1.4-1.4"/>'
+                .'<path d="M4 38.5c3.5-3 7-3 10.5 0s7 3 10.5 0 7-3 10.5 0 5.5 2.4 8.5 0M4 44c3.5-3 7-3 10.5 0s7 3 10.5 0 7-3 10.5 0 5.5 2.4 8.5 0"/>',
+            // autumn: maple leaf, two falling leaves, wind
+            '🍂' => '<path d="M26 14l3 6 5-3-2 7 6 1-4 4 3 5-8-1-2 3-2-3-8 1 3-5-4-4 6-1-2-7 5 3Z"/><path d="M26 36v8M26 36V22M26 30l-6-4M26 30l6-4"/>'
+                .'<path d="M7 13c0-4.5 4-7 9.5-6 0 4.5-3.5 7.5-9.5 6ZM7 13l6.5-3.5M27 8c0-3 2.5-4.5 6-4 0 3-2.2 5-6 4ZM27 8l4.2-2.3"/><path d="M3 22h9a2.5 2.5 0 1 0-2.5-2.5M3 28h6.5a2 2 0 1 1-2 2"/>',
+            // winter: snowflake
+            '❄' => $arms.'<path d="M24 20.5l3.1 1.75v3.5L24 27.5l-3.1-1.75v-3.5Z"/>',
+        ];
+    }
+
     /** Inline SVG for an emoji, or null when we have no thin icon for it. */
     public static function svg(?string $emoji): ?string
     {
         $key = str_replace(["\u{FE0F}", "\u{FE0E}"], '', trim((string) $emoji));
+        $attrs = 'style="width:2.75rem;height:2.75rem" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"';
+
+        if ($shape = self::shapes()[$key] ?? null) {
+            return '<svg '.$attrs.' viewBox="0 0 48 48" stroke-width="1.5">'.$shape.'</svg>';
+        }
         $d = self::PATHS[$key] ?? null;
 
-        return $d ? '<svg style="width:2.75rem;height:2.75rem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="'.$d.'"/></svg>' : null;
+        return $d ? '<svg '.$attrs.' viewBox="2.5 2.5 19 19" stroke-width=".7"><path d="'.$d.'"/></svg>' : null;
     }
 }
