@@ -120,16 +120,14 @@ Alpine.data('enquiryForm', (opts = {}) => ({
             input.value = `${d} ${rest}`;
             if (this.errors.phone) this.checkPhone();
         };
-        // Compact forms show the label as a placeholder, so there the dial code is only added once the visitor uses the box.
-        const compact = input.labels?.[0]?.classList.contains('sr-only');
         const onlyDial = () => input.value.replace(/\D/g, '') === dial().replace(/\D/g, '');
-        if (!input.value.trim() && !compact) input.value = `${dial()} `;
-        if (compact) input.addEventListener('focus', () => { if (!input.value.trim()) input.value = `${dial()} `; });
-        sel.addEventListener('change', () => { if (compact && !input.value.trim()) return; apply(); });
-        input.addEventListener('blur', () => {
-            if (onlyDial()) { if (compact) input.value = ''; return; }
-            this.checkPhone();
-        });
+        // Every form starts with the default country's dial code in the box (compact forms included).
+        if (!input.value.trim()) input.value = `${dial()} `;
+        sel.addEventListener('change', apply);
+        // Re-picking the country that is already selected fires no "change", so also fill an emptied box when the select is used.
+        ['focus', 'click'].forEach((ev) => sel.addEventListener(ev, () => { if (!input.value.trim()) input.value = `${dial()} `; }));
+        input.addEventListener('focus', () => { if (!input.value.trim()) input.value = `${dial()} `; });
+        input.addEventListener('blur', () => { if (!onlyDial()) this.checkPhone(); });
         input.addEventListener('input', () => { if (this.errors.phone) this.checkPhone(); });
         this.checkPhone = () => {
             const [d, min, max] = table[sel.value] || ['', 4, 14];
