@@ -21,7 +21,7 @@
     {{-- the team page shares this view --}}
     @include('partials.sections.why')
     @include('partials.sections.banner')
-    @include('partials.sections.partners')
+    @include('partials.sections.partners', ['light' => true])
 @elseif(request()->routeIs('team'))
     <section class="py-14 sm:py-20" aria-labelledby="team-title">
         <div class="container-x">
