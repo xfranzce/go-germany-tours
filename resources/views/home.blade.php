@@ -215,7 +215,7 @@
                 <em class="block font-medium italic text-brand-red">stress-free &amp; unforgettable.</em></h2>
             <span class="flag-rule max-lg:mx-auto" aria-hidden="true"></span>
             <p class="mt-5 text-base text-ink-soft sm:text-lg">Everything is taken care of, from local expertise and comfortable transport to carefully selected accommodation and seamless daily planning. Simply relax and enjoy the journey.</p>
-            <p class="mt-4 text-base text-ink-soft sm:text-lg">Experience fairytale towns, river valleys and hidden gems without the hassle of organising every detail yourself.</p>
+            <p class="mt-4 text-base text-ink-soft sm:text-lg">Experience fairytale towns, river valleys and hidden gems without the hassle of organizing every detail yourself.</p>
             <button type="button" class="btn btn-primary mt-8 px-9" @click="$store.modal.show()">Start planning your Germany adventure <x-icon name="arrow-right" class="h-5 w-5"/></button>
         </div>
         <ul class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 py-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:py-0 [&::-webkit-scrollbar]:hidden" data-carousel="sm" aria-label="Why travel with confidence" data-reveal-stagger>
@@ -287,7 +287,7 @@
             @foreach([
                 ['document', 'Get your free quote', 'Share your travel preferences and a member of the team will reply with your quote.'],
                 ['pin', 'Review your itinerary', 'Review your itinerary and pricing, and make any final adjustments with our team.'],
-                ['shield', 'Travel with confidence', 'We organise hotels, transport and experiences, so you can simply arrive and enjoy Germany.'],
+                ['shield', 'Travel with confidence', 'We organize hotels, transport and experiences, so you can simply arrive and enjoy Germany.'],
             ] as $i => [$ic, $t, $d])
                 <li class="w-[82%] shrink-0 snap-center md:w-auto md:shrink rounded-2xl border border-white/15 bg-white/5 p-8 backdrop-blur">
                     <div class="flex items-center justify-between">
