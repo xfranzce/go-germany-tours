@@ -1,6 +1,6 @@
 {{-- HOME HERO (bright Bavarian village): photo `bavaria-village` + video hero-bavaria.mp4 (both AI-generated, credited), headline left, quiz right, light overlays + soft text shadow for contrast.
      Copied from the /hero-section trial page on 2026-11-23. The previous castle hero is partials/home/hero-dark.blade.php and the frozen old home page is /hero-old. --}}
-@php $heroPhoto = \App\Models\Media::byStem('koenigssee') ?? $heroMedia; @endphp
+@php $heroPhoto = \App\Models\Media::byStem('koenigssee-hero') ?? \App\Models\Media::byStem('koenigssee') ?? $heroMedia; @endphp
 @if($heroPhoto)
     @push('head')
         <link rel="preload" as="image" href="{{ $heroPhoto->url(1280) }}" imagesrcset="{{ $heroPhoto->srcset() }}" imagesizes="(min-width: 1024px) 80vw, 100vw" fetchpriority="high">

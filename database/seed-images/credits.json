@@ -134,5 +134,11 @@
         "artist": "abbilder",
         "license": "CC BY 2.0",
         "license_url": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+        "slug": "koenigssee-hero",
+        "type": "ai",
+        "title": "Königssee and St. Bartholomä, home hero photo (illustration)",
+        "tool": "Google Gemini"
     }
 ]

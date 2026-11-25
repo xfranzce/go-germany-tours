@@ -8,7 +8,9 @@
 - Images: WebP, `srcset`, width/height set (no layout shift), lazy below the fold, hero preloaded, alt text mandatory in admin. Fonts self-hosted, `font-display: swap`, preloaded. About 30 KB gzipped JS and 15 KB CSS (brotli) on public pages. reCAPTCHA loads only when a form is used.
 - Security headers, HTTPS HSTS header when served over HTTPS, `.htaccess` compression and long caching for `/build`.
 
-## Lighthouse (latest run 2026-11-24, Lighthouse 13, Chrome headless)
+## Lighthouse (latest run 2026-11-24, evening, Lighthouse 13, Chrome headless)
+**Latest run (after the font change to Manrope/Bodoni Moda, the AI photo refresh, the swapped hero/adventure videos, the 90/60px section padding and the hero overlay change): nothing below 90.** Home mobile 100 (LCP 1.2 s, TBT 10 ms, CLS 0), home desktop 100, package mobile 97 (LCP 2.5 s), package desktop 100; accessibility 100 and SEO 100 on all four; best practices 96 (proxy artefact, see below). No fixes were needed. The detailed table below is from the earlier run the same day.
+
 Pages: the home page `/` and one package page `/packages/germany-fairytale-towns-coach-tour`, each at **mobile** (412x823, simulated slow 4G, 4x CPU) and **desktop**. Run after the Bavarian video hero, the bright home sections, the blog section, the count-up numbers and the fixed-background adventure band. **Nothing is below 90 after one fix (below).**
 
 | Page | Size | Perf | A11y | Best practices | SEO | LCP |

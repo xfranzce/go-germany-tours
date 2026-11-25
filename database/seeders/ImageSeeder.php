@@ -35,6 +35,7 @@ class ImageSeeder extends Seeder
         'couple-rhine-vineyard' => 'A couple holding hands on a vineyard path above the Rhine river with a castle on the far hillside at golden hour',
         'family-old-town' => 'A family with two young children walking along a cobbled street lined with half-timbered houses',
         'medieval-castle-path' => 'A cobbled path leading up to a medieval stone castle with towers on a forested hill at sunset',
+        'koenigssee-hero' => 'Königssee in the Bavarian Alps with the red-domed St. Bartholomä chapel, a wooden tour boat and the Watzmann mountains',
         'koenigssee' => 'Bright green Königssee in the Bavarian Alps with the red-domed St. Bartholomä chapel, a wooden tour boat and the Watzmann mountains',
         'bavaria-village' => 'A sunny Bavarian village with a white onion-domed church, painted farmhouses and flower meadows below the snow-capped Alps',
         'neuschwanstein-autumn' => 'Neuschwanstein Castle glowing in golden light above an autumn forest in the Bavarian Alps',
