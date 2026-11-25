@@ -26,6 +26,11 @@ class EnquiryController extends Controller
 
         // Verify reCAPTCHA only once everything else is valid (tokens are single-use). Fails closed.
         $validator->after(function ($v) use ($request, $captcha) {
+            // Phone length must fit the chosen country (too short / too long).
+            $iso = (string) $request->input('phone_country');
+            if (! $v->errors()->has('phone') && ! $v->errors()->has('phone_country') && ($problem = \App\Support\Countries::problem($iso, (string) $request->input('phone')))) {
+                $v->errors()->add('phone', $problem);
+            }
             if ($v->errors()->isEmpty() && ! $captcha->verify($request->input('g-recaptcha-response'), $request->ip())) {
                 $v->errors()->add('g-recaptcha-response', 'We could not verify you are human. Please tick the box again.');
             }

@@ -61,10 +61,10 @@ class EnquiryService
 
     public function create(array $data, Request $request): Enquiry
     {
-        $e164 = Countries::e164($data['phone_country'], $data['phone']);
-        if (! $e164) {
-            throw \Illuminate\Validation\ValidationException::withMessages(['phone' => 'Please enter a valid phone number.']);
+        if ($problem = Countries::problem($data['phone_country'], $data['phone'])) {
+            throw \Illuminate\Validation\ValidationException::withMessages(['phone' => $problem]);
         }
+        $e164 = Countries::e164($data['phone_country'], $data['phone']);
 
         $package = ! empty($data['package_id']) ? Package::find($data['package_id']) : null;
         $touch = CaptureTracking::read($request);

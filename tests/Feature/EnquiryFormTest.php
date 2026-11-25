@@ -193,6 +193,18 @@ class EnquiryFormTest extends TestCase
         $this->postJson('/enquiry', $this->payload(['phone' => '12', 'email' => 'nope']))->assertStatus(422)->assertJsonValidationErrors(['phone', 'email']);
     }
 
+    public function test_phone_length_is_checked_for_the_chosen_country(): void
+    {
+        $this->captcha(true);
+        $this->postJson('/enquiry', $this->payload(['phone_country' => 'US', 'phone' => '+1 555 123 456']))
+            ->assertStatus(422)->assertJsonFragment(['phone' => ['This number is too short. Numbers in United States have 10 digits after +1.']]);
+        $this->postJson('/enquiry', $this->payload(['phone_country' => 'US', 'phone' => '555 123 45678']))
+            ->assertStatus(422)->assertJsonFragment(['phone' => ['This number is too long. Numbers in United States have 10 digits after +1.']]);
+        // the dial code the form pre-fills is not counted as part of the number
+        $this->postJson('/enquiry', $this->payload(['phone_country' => 'GB', 'phone' => '+44 7911 123456']))->assertSuccessful();
+        $this->assertSame('+447911123456', Enquiry::latest('id')->first()->phone_e164);
+    }
+
     public function test_non_js_submission_redirects_to_thank_you_and_errors_return_to_the_form(): void
     {
         $this->captcha(true);

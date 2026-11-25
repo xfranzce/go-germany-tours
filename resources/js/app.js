@@ -90,6 +90,7 @@ Alpine.data('enquiryForm', (opts = {}) => ({
     generalError: '',
 
     init() {
+        this.initPhone();
         // $refs only exist once Alpine has built the form's children, so look the captcha box up after that.
         this.$nextTick(() => {
             const el = this.$refs.captcha;
@@ -104,10 +105,56 @@ Alpine.data('enquiryForm', (opts = {}) => ({
         });
     },
 
+    /** Phone: the chosen country's dial code is written into the phone box, and the length is checked per country (same table as the server, Countries::LENGTHS). */
+    initPhone() {
+        const form = this.$el, sel = form.querySelector('[name="phone_country"]'), input = form.querySelector('[name="phone"]');
+        let table = {};
+        try { table = JSON.parse(form.dataset.phones || '{}'); } catch { return; }
+        if (!sel || !input) return;
+        const dial = () => (table[sel.value] || [])[0] || '';
+        // Put the new dial code in front, replacing a dial code that is already there ("+44 7911..." -> "+1 7911...").
+        const apply = () => {
+            const d = dial();
+            if (!d) return;
+            const rest = input.value.trim().replace(/^\+\d{0,4}\s*/, '');
+            input.value = `${d} ${rest}`;
+            if (this.errors.phone) this.checkPhone();
+        };
+        // Compact forms show the label as a placeholder, so there the dial code is only added once the visitor uses the box.
+        const compact = input.labels?.[0]?.classList.contains('sr-only');
+        const onlyDial = () => input.value.replace(/\D/g, '') === dial().replace(/\D/g, '');
+        if (!input.value.trim() && !compact) input.value = `${dial()} `;
+        if (compact) input.addEventListener('focus', () => { if (!input.value.trim()) input.value = `${dial()} `; });
+        sel.addEventListener('change', () => { if (compact && !input.value.trim()) return; apply(); });
+        input.addEventListener('blur', () => {
+            if (onlyDial()) { if (compact) input.value = ''; return; }
+            this.checkPhone();
+        });
+        input.addEventListener('input', () => { if (this.errors.phone) this.checkPhone(); });
+        this.checkPhone = () => {
+            const [d, min, max] = table[sel.value] || ['', 4, 14];
+            const country = (sel.options[sel.selectedIndex]?.text || '').replace(/\s*\(.*$/, '');
+            let digits = input.value.replace(/\D/g, '');
+            const dd = d.replace(/\D/g, '');
+            if (input.value.trim().startsWith('+') && digits.startsWith(dd)) digits = digits.slice(dd.length);
+            if (sel.value !== 'IT') digits = digits.replace(/^0+/, '');
+            const expect = min === max ? `${min} digits` : `${min} to ${max} digits`;
+            let msg = '';
+            if (!digits.length) msg = 'Please enter your phone number.';
+            else if (digits.length < min) msg = `This number is too short. Numbers in ${country} have ${expect} after ${d}.`;
+            else if (digits.length > max) msg = `This number is too long. Numbers in ${country} have ${expect} after ${d}.`;
+            const { phone, ...others } = this.errors;
+            this.errors = msg ? { ...others, phone: [msg] } : others;
+            return !msg;
+        };
+    },
+    checkPhone() { return true; },
+
     async submit(event) {
         const form = event.target;
         this.generalError = '';
         if (!form.reportValidity()) return;
+        if (!this.checkPhone()) { form.querySelector('[name="phone"]')?.focus(); return; }
         this.sending = true;
         this.errors = {};
         try {
