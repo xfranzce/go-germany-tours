@@ -59,7 +59,7 @@ Live site (Hostinger) is updated with `GGT_SSH_PASSWORD=... bash scripts/deploy.
 - Keep JS small; no SPA. Update docs when behaviour changes.
 
 - Number counters: add `data-count-to="N"` to an element that already contains N; `app.js` (`initCounters`) counts it up from 0 once when it scrolls into view (skipped for reduced motion).
-- Mobile carousels: add `data-carousel="md|sm"` (breakpoint where it stops being a carousel; `data-carousel-light` on dark backgrounds) to a snap-scroll row and `app.js` adds arrows + dots under it.
+- Mobile carousels: add `data-carousel="md|sm|all"` (breakpoint where it stops being a carousel, `all` = carousel at every size, used by the home package rows; `data-carousel-light` on dark backgrounds) to a snap-scroll row and `app.js` adds arrows + dots under it.
 
 ## Gotchas
 - **Fonts** (copied from goeurotours.com, 2026-11-24): Manrope (`--font-sans`) for text, Bodoni Moda (`--font-display`) for headings. The frozen backup pages `/hero-old`, `/home-old-2`, `/test-home` set `@section('body_class', 'legacy-fonts')`, which restores the old Nunito Sans / Cormorant Garamond via `--font-legacy-*`; keep that line if you restore one of them over `home.blade.php` and want the new fonts (then delete it).

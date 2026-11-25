@@ -141,7 +141,7 @@
 
 {{-- 6. PACKAGES PER TRAVEL STYLE --}}
 @foreach($tourTypes as $t)
-    @php $all = $byType[$t->slug] ?? collect(); $list = $all->take(6); @endphp
+    @php $all = $byType[$t->slug] ?? collect(); $list = $all; @endphp
     @continue($list->isEmpty())
     <section class="home-sec bg-brand-cream py-12 sm:py-16" aria-labelledby="pk-{{ $t->slug }}">
         <div class="container-x">
@@ -153,10 +153,10 @@
                 </div>
                 <dl class="flex shrink-0 flex-col-reverse text-center"><dt class="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-ink-soft">Itineraries</dt><dd class="font-display text-4xl text-brand-navy">{{ $all->count() }}</dd></dl>
             </div>
-            {{-- bright white cards, swipe row --}}
-            <div class="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:mx-0 sm:px-0 md:grid md:grid-cols-3 md:overflow-visible [&::-webkit-scrollbar]:hidden" data-carousel="md" aria-label="{{ $t->name }} packages" data-reveal-stagger>
+            {{-- bright white cards: carousel at every size (3 visible on desktop), arrows + dots added by app.js --}}
+            <div class="relative -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pt-2 pb-4 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden" data-carousel="all" data-drag-scroll aria-label="{{ $t->name }} packages" data-reveal-stagger>
                 @foreach($list as $package)
-                    <article class="flex w-[82%] shrink-0 snap-center flex-col overflow-hidden rounded-2xl border border-brand-custard bg-white text-brand-navy shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-xl sm:w-[22rem] md:w-auto md:shrink">
+                    <article class="flex w-[82%] shrink-0 snap-center flex-col overflow-hidden rounded-2xl border border-brand-custard bg-white text-brand-navy shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-xl sm:w-[22rem] md:w-[calc((100%-2.5rem)/3)] md:snap-start">
                         <a href="{{ $package->url() }}" class="group relative block aspect-[3/2] overflow-hidden bg-brand-custard" tabindex="-1" aria-hidden="true">
                             <x-picture :path="$package->coverPath()" sizes="(min-width: 1024px) 22rem, 82vw" class="h-full w-full object-cover transition duration-500 group-hover:scale-105"/>
                             @if($package->is_sample)<span class="absolute left-3 top-3 rounded-full bg-brand-gold px-2.5 py-1 text-xs font-extrabold text-brand-navy">SAMPLE</span>@endif

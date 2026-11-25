@@ -185,7 +185,7 @@ function initCarousels() {
         if (items.length < 2) return;
         const bp = track.dataset.carousel || 'md';
         const light = track.hasAttribute('data-carousel-light');
-        const hide = bp === 'sm' ? 'sm:hidden' : 'md:hidden';
+        const hide = bp === 'all' ? '' : bp === 'sm' ? 'sm:hidden' : 'md:hidden';
         const arrow = (dir) => `<button type="button" data-dir="${dir}" aria-label="${dir < 0 ? 'Previous' : 'Next'}" class="grid size-10 place-items-center rounded-full border-2 transition ${light ? 'border-white text-white hover:bg-white hover:text-brand-navy' : 'border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white'}"><svg viewBox="0 0 24 24" class="size-4 ${dir < 0 ? 'rotate-180' : ''}" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>`;
         const nav = document.createElement('div');
         nav.className = `mt-4 flex items-center justify-center gap-4 ${hide}`;
