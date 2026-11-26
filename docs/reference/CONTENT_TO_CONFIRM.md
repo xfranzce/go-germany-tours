@@ -46,7 +46,7 @@ Terms and Conditions and Privacy Policy contain `[CONFIRM: ...]` blocks (pricing
 Three dummy testimonials (badge "PLACEHOLDER", source "Sample review: replace before launch") are shown on the home page. Replace them in Admin > Testimonials with real, permissioned reviews (name, town, source) and untick "placeholder" before running ads.
 
 ## Sample packages
-There are 18 SAMPLE packages (6 per tour type; names, nights, prices and 5.0 "sample rating" are placeholders). The last 12 come from `MoreSamplePackagesSeeder` (`php artisan db:seed --class=MoreSamplePackagesSeeder`, safe to re-run). Replace or delete them in Admin > Packages and untick "Sample / placeholder" for real ones.
+There are 25 SAMPLE packages (5 per destination; names, nights, prices and 5.0 "sample rating" are placeholders). Each now has a starter overview, 4 highlights with AI photos, a day-by-day itinerary and Included / Not included lists (PackageContentSeeder, 2026-11-26): the stops are real places, but the hotels, the exact inclusions (breakfast, rental car terms, driver hours, tickets, welcome dinner, group size) and the prices must be confirmed before launch. The last 12 come from `MoreSamplePackagesSeeder` (`php artisan db:seed --class=MoreSamplePackagesSeeder`, safe to re-run). Replace or delete them in Admin > Packages and untick "Sample / placeholder" for real ones.
 
 ## Meet Our Team page
 `/meet-our-team` holds three PLACEHOLDER team members. Replace them in Admin > Pages > Meet Our Team with the real people (name, role, short bio) or remove the section. Do not publish placeholders.

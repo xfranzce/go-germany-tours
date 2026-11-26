@@ -19,6 +19,7 @@
 @section('content')
 @php
     $itinerary = old('itinerary', $package->itinerary ?? []);
+    $highlightRows = old('highlights', $package->highlightItems());
     $faqs = old('faqs', $package->exists ? $package->faqs->map(fn ($f) => ['question' => $f->question, 'answer' => $f->answer])->all() : []);
 @endphp
 <form id="package-form" method="POST" enctype="multipart/form-data" action="{{ $isNew ? route('admin.packages.store') : route('admin.packages.update', $package) }}" class="space-y-6">
@@ -77,11 +78,36 @@
     <section class="bg-white rounded-xl shadow p-5 space-y-4">
         <h2 class="text-xl">Content</h2>
         <x-admin.rich name="description" label="Full description" :value="$package->description"/>
-        <x-admin.field name="highlights" label="Highlights (one per line)" type="textarea" :rows="5" :value="implode(PHP_EOL, $package->highlights ?? [])"/>
         <div class="grid gap-4 sm:grid-cols-2">
             <x-admin.field name="inclusions" label="Included (one per line)" type="textarea" :rows="5" :value="implode(PHP_EOL, $package->inclusions ?? [])"/>
             <x-admin.field name="exclusions" label="Not included (one per line)" type="textarea" :rows="5" :value="implode(PHP_EOL, $package->exclusions ?? [])"/>
         </div>
+    </section>
+
+    {{-- Highlights: title, short text and a photo from the Media library (shown as photo cards on the package page) --}}
+    <section class="bg-white rounded-xl shadow p-5" x-data="{ ...repeater(@js(array_values($highlightRows))), media: @js($mediaOptions), thumb(p) { return (this.media.find(m => m.path === p) || {}).thumb } }">
+        <h2 class="text-xl">Highlights</h2>
+        <p class="mb-3 text-sm text-ink-soft">Shown as photo cards on the package page (4 works best). Pick a photo from the Media library; upload new photos in Media first.</p>
+        <template x-for="(h, i) in items" :key="i">
+            <div class="mb-3 grid gap-3 rounded-lg border p-3 sm:grid-cols-[7rem_1fr]">
+                <div class="aspect-[3/2] overflow-hidden rounded-md bg-gray-100"><img x-show="thumb(h.image)" :src="thumb(h.image)" alt="" class="h-full w-full object-cover"></div>
+                <div class="grid gap-2">
+                    <div class="flex items-end gap-2">
+                        <div class="flex-1"><label class="field-label" :for="'hl-t-' + i">Title</label><input :id="'hl-t-' + i" class="field-input" :name="'highlights[' + i + '][title]'" x-model="h.title" maxlength="150"></div>
+                        <button type="button" class="btn btn-outline btn-sm" @click="up(i)" aria-label="Move up">&uarr;</button>
+                        <button type="button" class="btn btn-outline btn-sm" @click="down(i)" aria-label="Move down">&darr;</button>
+                        <button type="button" class="btn btn-outline btn-sm" @click="remove(i)">Remove</button>
+                    </div>
+                    <div><label class="field-label" :for="'hl-x-' + i">Short text</label><input :id="'hl-x-' + i" class="field-input" :name="'highlights[' + i + '][text]'" x-model="h.text" maxlength="500"></div>
+                    <div><label class="field-label" :for="'hl-i-' + i">Photo</label>
+                        <select :id="'hl-i-' + i" class="field-input" :name="'highlights[' + i + '][image]'" x-model="h.image">
+                            <option value="">No photo</option>
+                            <template x-for="m in media" :key="m.path"><option :value="m.path" x-text="m.alt" :selected="m.path === h.image"></option></template>
+                        </select></div>
+                </div>
+            </div>
+        </template>
+        <button type="button" class="btn btn-outline btn-sm" @click="add({title: '', text: '', image: ''})">+ Add a highlight</button>
     </section>
 
     <section class="bg-white rounded-xl shadow p-5" x-data="repeater(@js(array_values($itinerary)))">

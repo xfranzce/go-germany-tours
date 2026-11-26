@@ -33,6 +33,17 @@ class Package extends Model
         return $this->belongsTo(Destination::class);
     }
 
+    /**
+     * Highlights as [title, text, image] items. Older packages store plain strings (title only, no photo);
+     * newer ones store ['title' => .., 'text' => .., 'image' => media path].
+     */
+    public function highlightItems(): array
+    {
+        return collect($this->highlights ?? [])->map(fn ($h) => is_array($h)
+            ? ['title' => (string) ($h['title'] ?? ''), 'text' => (string) ($h['text'] ?? ''), 'image' => ($h['image'] ?? null) ?: null]
+            : ['title' => (string) $h, 'text' => '', 'image' => null])->filter(fn ($h) => $h['title'] !== '')->values()->all();
+    }
+
     /** Extra destinations this package is also featured on (besides its main destination_id). */
     public function featuredDestinations(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {

@@ -140,5 +140,173 @@
         "type": "ai",
         "title": "Königssee and St. Bartholomä, home hero photo (illustration)",
         "tool": "Google Gemini"
+    },
+    {
+        "slug": "hl-quedlinburg-market",
+        "type": "ai",
+        "title": "Market square of Quedlinburg with the ivy-covered Renaissance town hall and half-timbered houses (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-wernigerode-castle",
+        "type": "ai",
+        "title": "Wernigerode Castle on a wooded hill above the town in autumn (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-brocken-railway",
+        "type": "ai",
+        "title": "Narrow-gauge Harz steam train climbing through spruce forest towards the Brocken (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-bode-gorge",
+        "type": "ai",
+        "title": "Riverside hiking path through the granite Bode gorge near Thale (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-goslar",
+        "type": "ai",
+        "title": "Market square of Goslar with slate-roofed half-timbered houses and a fountain (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-harz-trail",
+        "type": "ai",
+        "title": "Hiking trail with a wooden signpost through mossy spruce forest in the Harz (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-koenigstein",
+        "type": "ai",
+        "title": "Königstein Fortress on its sandstone plateau above a bend of the Elbe (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-dresden",
+        "type": "ai",
+        "title": "Dresden skyline with the Frauenkirche dome lit up over the Elbe at blue hour (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-meissen",
+        "type": "ai",
+        "title": "Albrechtsburg castle and Meissen cathedral above the Elbe at sunset (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-schrammsteine",
+        "type": "ai",
+        "title": "Sandstone rock towers rising from forest at the Schrammsteine in Saxon Switzerland (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-elbe-steamer",
+        "type": "ai",
+        "title": "Historic paddle steamer cruising the Elbe below sandstone cliffs (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-burg-eltz",
+        "type": "ai",
+        "title": "Burg Eltz castle with its turrets in a forested valley in autumn (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-beilstein",
+        "type": "ai",
+        "title": "Wine village of Beilstein on the Mosel below a castle ruin and vineyards (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-bernkastel",
+        "type": "ai",
+        "title": "Half-timbered market square of Bernkastel-Kues with a fountain and cafe tables (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-wine-cellar",
+        "type": "ai",
+        "title": "Riesling tasting by candlelight on an oak barrel in a vaulted Mosel wine cellar (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-rhine-loreley",
+        "type": "ai",
+        "title": "The Rhine bending past the Loreley rock, vineyards and a hilltop castle (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-trier",
+        "type": "ai",
+        "title": "The Roman Porta Nigra city gate in Trier with cafes in front (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-hiddensee-cycling",
+        "type": "ai",
+        "title": "Two cyclists on a sandy path through dunes and heather on Hiddensee, lighthouse in the distance (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-ruegen-cliffs",
+        "type": "ai",
+        "title": "White chalk cliffs of Rügen above the turquoise Baltic Sea framed by beech trees (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-stralsund",
+        "type": "ai",
+        "title": "Red-brick Gothic gables and a sailing ship in the harbour of Stralsund at sunset (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-binz",
+        "type": "ai",
+        "title": "Seaside promenade of Binz with white resort villas and the pier (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-beach-chairs",
+        "type": "ai",
+        "title": "Striped wicker beach chairs on a sandy Baltic Sea beach (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-triberg",
+        "type": "ai",
+        "title": "Triberg waterfalls cascading over mossy rocks in a Black Forest fir forest (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-titisee",
+        "type": "ai",
+        "title": "Rowing boats at a wooden jetty on Lake Titisee in the Black Forest (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-freiburg",
+        "type": "ai",
+        "title": "Freiburg minster above the market on the cathedral square (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-baden-baden",
+        "type": "ai",
+        "title": "The Kurhaus of Baden-Baden with its columns and flower gardens (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-schiltach",
+        "type": "ai",
+        "title": "Half-timbered houses on the sloping market square of Schiltach (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
+    },
+    {
+        "slug": "hl-black-forest-cake",
+        "type": "ai",
+        "title": "A slice of Black Forest cherry cake with coffee in a Black Forest cafe (illustration)",
+        "tool": "Higgsfield (GPT Image 2.6)"
     }
 ]

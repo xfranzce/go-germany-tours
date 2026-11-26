@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             ImageSeeder::class,
             TravelStyleSeeder::class,
             FiveToursPerDestinationSeeder::class,
+            PackageContentSeeder::class,
             MoreBlogPostsSeeder::class,
         ]);
     }

@@ -1,0 +1,161 @@
+<?php
+
+/**
+ * Starter content for the sample packages (2026-11-26): overview, highlights with photos, day-by-day itinerary,
+ * included / not included. Used by PackageContentSeeder. Routes and stops are real places; prices, hotels and the
+ * exact inclusions are SAMPLE until confirmed (the package page still shows the SAMPLE note while is_sample is on).
+ *
+ * days:      pool of real stops per region, picked by key for each package's middle days (nights - 1 of them)
+ * hl:        highlight cards keyed by image stem (database/seed-images/{stem}.jpg) => [title, text]
+ * packages:  slug => [base town, intro (summary + first overview paragraph), middle day keys, 4 highlight stems, extra inclusion]
+ */
+return [
+    'days' => [
+        // Harz
+        'q-old' => ['Quedlinburg old town', 'Walk the UNESCO-listed lanes of more than a thousand half-timbered houses, then climb the castle hill to the collegiate church for views over the red roofs.'],
+        'q-thale' => ['Thale and the Bode gorge', 'Ride up above the gorge by cable car or chairlift, then follow the riverside trail between granite cliffs, one of the finest walks in the Harz.'],
+        'q-wern' => ['Wernigerode', 'Explore the colorful town hall square and the half-timbered lanes, then visit Wernigerode Castle on its wooded hill.'],
+        'q-brocken' => ['The Brocken by steam railway', 'Board the narrow-gauge Harz railway in Wernigerode and climb by steam through the forest to the Brocken, the highest summit in northern Germany.'],
+        'q-goslar' => ['Goslar', 'Discover the UNESCO-listed old town, the Imperial Palace and the slate-roofed guild houses around the market square.'],
+        'q-halb' => ['Halberstadt', 'See the Gothic cathedral and its treasury of medieval church art, then return for a relaxed evening in Quedlinburg.'],
+        'q-hike' => ['Harz forest walk', 'A free day for a marked forest trail past granite outcrops, or a slow morning in a cafe on the market square.'],
+        // Saxon Switzerland and Dresden
+        's-dresden' => ['Dresden old town', 'See the Frauenkirche, the Zwinger and the Semperoper, then walk the Brühl Terrace above the Elbe at sunset.'],
+        's-bastei' => ['The Bastei and the Swiss Gorge', 'Walk out onto the Bastei bridge between sandstone towers high above the Elbe, then continue through the rocks of the Swiss Gorge.'],
+        's-koen' => ['Königstein Fortress', 'Visit the hilltop fortress on its sandstone plateau, with sweeping views over the Elbe valley and the table mountains.'],
+        's-schramm' => ['Schrammsteine viewpoint', 'Hike from Bad Schandau up to the Schrammsteine viewpoint, using ladders and stairs for the last section to the top.'],
+        's-steamer' => ['Paddle steamer on the Elbe', 'Cruise between the sandstone cliffs on a historic paddle steamer and step off in a riverside village for lunch.'],
+        's-meissen' => ['Meissen', 'Climb the castle hill to the Albrechtsburg and the Gothic cathedral, and see how Meissen porcelain is made.'],
+        's-pirna' => ['Pirna', 'Stroll the old town on the Elbe that Canaletto painted, with its market square, town hall and St Mary\'s Church.'],
+        's-kirn' => ['Kirnitzsch valley', 'Ride the historic tram along the Kirnitzsch valley and walk to the Lichtenhain waterfall.'],
+        // Mosel and Rhine
+        'm-cochem' => ['Cochem and the Reichsburg', 'Tour the castle high above the town, then wander the riverside promenade and the narrow lanes of the old town.'],
+        'm-eltz' => ['Burg Eltz', 'Walk through the forest to Burg Eltz, a medieval castle that has stayed in the same family for more than 800 years.'],
+        'm-beil' => ['Beilstein', 'Visit the tiny wine village known as the Sleeping Beauty of the Mosel, and climb the steps to the castle ruin.'],
+        'm-bern' => ['Bernkastel-Kues', 'Admire the half-timbered market square, then taste Riesling from the steep slopes above the town.'],
+        'm-wine' => ['A day with a winemaker', 'Walk the vineyards with a local winemaker, then taste the wines in a vaulted cellar.'],
+        'm-trier' => ['Trier', 'See the Porta Nigra, the cathedral and the Roman baths in Germany\'s oldest city.'],
+        'm-trab' => ['Traben-Trarbach', 'Art Nouveau villas, old wine cellars and a riverside walk on one of the great Mosel loops.'],
+        'm-rhine' => ['Rhine gorge and the Loreley', 'Follow the Rhine past hilltop castles to the Loreley rock, or take a river boat between the wine towns.'],
+        'm-bach' => ['Bacharach', 'Walk the medieval walls and half-timbered lanes of Bacharach and climb to Stahleck Castle.'],
+        'm-cruise' => ['Mosel river cruise', 'A relaxed boat trip between wine villages, past vineyards that climb straight up from the river.'],
+        // Hiddensee and the Baltic
+        'h-stral' => ['Stralsund', 'Explore the UNESCO-listed Hanseatic old town, its red-brick Gothic gables, churches and the harbour.'],
+        'h-ferry' => ['Ferry to Hiddensee', 'Cross by ferry to the car-free island and settle into your island hotel; the evening is for a walk along the shore.'],
+        'h-bike' => ['Hiddensee by bike', 'Cycle between the villages of Neuendorf, Vitte and Kloster on quiet island paths through dunes and heath.'],
+        'h-dorn' => ['Dornbusch and the lighthouse', 'Walk the hilly north of the island to the Dornbusch lighthouse, with views across the Baltic.'],
+        'h-ruegen' => ['Rügen chalk cliffs', 'Walk through the beech forest of Jasmund National Park to the white chalk cliffs above the sea.'],
+        'h-binz' => ['Binz', 'Stroll the seaside promenade past white resort villas and walk out along the pier.'],
+        'h-beach' => ['A day at the beach', 'A slow day on the sand in a wicker beach chair, with fresh fish rolls from the harbour for lunch.'],
+        // Black Forest
+        'b-geng' => ['Gengenbach', 'Walk the half-timbered old town, its medieval gates and the market square with its fountain.'],
+        'b-schil' => ['Schiltach and the Kinzig valley', 'Visit riverside half-timbered towns where timber rafts were once floated down the valley.'],
+        'b-trib' => ['Triberg waterfalls', 'Follow the path beside some of Germany\'s highest waterfalls, then see the giant cuckoo clocks in town.'],
+        'b-titi' => ['Titisee', 'An afternoon at the forest lake: walk the shore path or take a rowing boat out on the water.'],
+        'b-frei' => ['Freiburg', 'See the minster and the market on the cathedral square, and the little streams that run through the old town.'],
+        'b-baden' => ['Baden-Baden', 'Relax in the thermal baths, then walk the Lichtentaler Allee park along the river.'],
+        'b-wine' => ['Baden wine villages', 'Taste local Pinot and Riesling in the wine villages along the edge of the Black Forest.'],
+        'b-highroad' => ['Black Forest High Road', 'Drive the panoramic road along the ridge, with stops at viewpoints and the Mummelsee lake.'],
+    ],
+
+    'hl' => [
+        'hl-quedlinburg-market' => ['Quedlinburg\'s UNESCO old town', 'More than a thousand half-timbered houses around the market square and castle hill.'],
+        'hl-wernigerode-castle' => ['Wernigerode Castle', 'A fairytale castle on a wooded hill above a colorful town.'],
+        'hl-brocken-railway' => ['Steam railway to the Brocken', 'The narrow-gauge Harz railway climbs to the top of northern Germany.'],
+        'hl-bode-gorge' => ['The Bode gorge', 'A riverside trail between granite cliffs near Thale.'],
+        'hl-goslar' => ['Goslar', 'A UNESCO-listed town of slate roofs, guild houses and an imperial palace.'],
+        'hl-harz-trail' => ['Harz forest trails', 'Marked paths through spruce forest and past granite outcrops.'],
+        'hl-koenigstein' => ['Königstein Fortress', 'A hilltop fortress with views over the Elbe valley.'],
+        'hl-dresden' => ['Baroque Dresden', 'The Frauenkirche, the Zwinger and the old town on the Elbe.'],
+        'hl-meissen' => ['Meissen', 'Castle hill, a Gothic cathedral and the home of Meissen porcelain.'],
+        'hl-schrammsteine' => ['Schrammsteine viewpoint', 'Sandstone towers and forest as far as you can see.'],
+        'hl-elbe-steamer' => ['Elbe paddle steamer', 'Cruise between sandstone cliffs on a historic paddle steamer.'],
+        'saxon-switzerland-bastei' => ['The Bastei bridge', 'A stone bridge between sandstone towers high above the Elbe.'],
+        'hl-burg-eltz' => ['Burg Eltz', 'A medieval castle hidden in a forest valley.'],
+        'cochem-mosel' => ['Cochem and its castle', 'A river town under the Reichsburg, surrounded by vineyards.'],
+        'hl-beilstein' => ['Beilstein', 'A tiny wine village under a castle ruin.'],
+        'hl-bernkastel' => ['Bernkastel-Kues', 'One of the prettiest market squares on the Mosel.'],
+        'hl-wine-cellar' => ['Riesling tasting', 'Taste with a local winemaker in a vaulted cellar.'],
+        'hl-rhine-loreley' => ['Rhine gorge and the Loreley', 'Castles, vineyards and the most famous bend of the Rhine.'],
+        'bacharach-rhine' => ['Bacharach', 'Medieval walls and half-timbered lanes on the Rhine.'],
+        'mosel-vineyard' => ['Mosel vineyards', 'Some of the steepest vineyards in Europe, right above the river.'],
+        'hl-trier' => ['Roman Trier', 'The Porta Nigra and Roman baths in Germany\'s oldest city.'],
+        'hiddensee-lighthouse' => ['Dornbusch lighthouse', 'The island\'s landmark on the hills of the north.'],
+        'hl-hiddensee-cycling' => ['Cycling car-free Hiddensee', 'Quiet paths between dunes, heath and fishing villages.'],
+        'hl-ruegen-cliffs' => ['Rügen chalk cliffs', 'White cliffs and beech forest in Jasmund National Park.'],
+        'hl-stralsund' => ['Hanseatic Stralsund', 'Red-brick Gothic gables and a harbour full of history.'],
+        'hl-binz' => ['Binz seaside resort', 'White villas, a long pier and a sandy beach.'],
+        'hl-beach-chairs' => ['Baltic beach days', 'Wicker beach chairs, soft sand and calm water.'],
+        'hiddensee-beach' => ['Hiddensee beaches', 'Long sandy beaches on the island\'s west coast.'],
+        'gengenbach-rathaus' => ['Gengenbach', 'Medieval gates and a town hall that becomes a giant Advent calendar in December.'],
+        'hl-triberg' => ['Triberg waterfalls', 'Cascades among the highest in Germany, deep in a fir forest.'],
+        'hl-titisee' => ['Lake Titisee', 'A forest lake for shore walks and rowing boats.'],
+        'hl-freiburg' => ['Freiburg', 'The minster, the market and little streams through the old town.'],
+        'hl-baden-baden' => ['Baden-Baden', 'A spa town of thermal baths and elegant parks.'],
+        'hl-schiltach' => ['Schiltach', 'A riverside half-timbered town in the Kinzig valley.'],
+        'hl-black-forest-cake' => ['Black Forest cake', 'Try the cherry cake where it comes from, in a village cafe.'],
+        'chauffeur-private-driver' => ['Your private driver', 'One driver and vehicle for the touring days, door to door.'],
+    ],
+
+    'packages' => [
+        // Quedlinburg and the Harz
+        'quedlinburg-and-the-harz-self-drive' => ['Quedlinburg', 'Half-timbered towns, castles and a steam railway to the Brocken on a self drive through the Harz.',
+            ['q-old', 'q-thale', 'q-wern', 'q-brocken', 'q-goslar'], ['hl-quedlinburg-market', 'hl-bode-gorge', 'hl-brocken-railway', 'hl-goslar'], 'Harz railway ticket to the Brocken'],
+        'harz-castles-and-steam-railway-self-drive' => ['Quedlinburg', 'A short self drive through the Harz: Quedlinburg, Wernigerode Castle and the steam railway up the Brocken.',
+            ['q-thale', 'q-brocken', 'q-goslar'], ['hl-wernigerode-castle', 'hl-brocken-railway', 'hl-bode-gorge', 'hl-goslar'], 'Harz railway ticket to the Brocken'],
+        'quedlinburg-and-the-harz-chauffeur' => ['Quedlinburg', 'Quedlinburg, Wernigerode and the Brocken railway with a private driver, at an easy pace.',
+            ['q-old', 'q-wern', 'q-brocken', 'q-halb'], ['hl-quedlinburg-market', 'hl-wernigerode-castle', 'hl-brocken-railway', 'chauffeur-private-driver'], 'Harz railway ticket to the Brocken'],
+        'harz-mountains-and-quedlinburg-coach' => ['Quedlinburg', 'A small-group tour of the Harz: UNESCO towns, the Bode gorge and the Brocken steam railway.',
+            ['q-old', 'q-thale', 'q-brocken', 'q-goslar'], ['hl-quedlinburg-market', 'hl-bode-gorge', 'hl-brocken-railway', 'hl-harz-trail'], 'Harz railway ticket to the Brocken'],
+        'germany-fairytale-towns-coach-tour' => ['Quedlinburg', 'Ten nights through Germany\'s fairytale towns: the Harz, Dresden and Saxon Switzerland, the Mosel and the Black Forest.',
+            ['q-old', 'q-wern', 's-dresden', 's-bastei', 's-meissen', 'm-cochem', 'm-eltz', 'b-geng', 'b-frei'], ['hl-quedlinburg-market', 'hl-dresden', 'hl-burg-eltz', 'gengenbach-rathaus'], 'Entry to Burg Eltz'],
+
+        // Saxon Switzerland and Dresden
+        'saxon-switzerland-and-dresden-chauffeur' => ['Dresden', 'Baroque Dresden and the sandstone towers of Saxon Switzerland, with a private driver throughout.',
+            ['s-dresden', 's-bastei', 's-koen', 's-meissen'], ['hl-dresden', 'saxon-switzerland-bastei', 'hl-koenigstein', 'chauffeur-private-driver'], 'Entry to Königstein Fortress'],
+        'dresden-meissen-and-elbe-valley-chauffeur' => ['Dresden', 'Baroque Dresden, porcelain town Meissen and the sandstone Elbe valley, with one private driver throughout.',
+            ['s-dresden', 's-meissen', 's-bastei', 's-steamer'], ['hl-dresden', 'hl-meissen', 'hl-elbe-steamer', 'saxon-switzerland-bastei'], 'Paddle steamer trip on the Elbe'],
+        'saxon-switzerland-and-dresden-coach' => ['Dresden', 'A small-group tour of Dresden and Saxon Switzerland, with the Bastei, Königstein and a paddle steamer.',
+            ['s-dresden', 's-bastei', 's-koen', 's-steamer', 's-pirna'], ['hl-dresden', 'saxon-switzerland-bastei', 'hl-koenigstein', 'hl-elbe-steamer'], 'Paddle steamer trip on the Elbe'],
+        'elbe-sandstone-hiking-self-drive' => ['Dresden', 'Hike the sandstone towers of Saxon Switzerland at your own pace, with comfortable stays near the trails.',
+            ['s-bastei', 's-schramm', 's-koen', 's-kirn', 's-pirna'], ['hl-schrammsteine', 'saxon-switzerland-bastei', 'hl-koenigstein', 'hl-dresden'], 'Hiking maps and trail notes'],
+        'saxon-switzerland-and-dresden-self-drive' => ['Dresden', 'Dresden\'s baroque old town and the rock towers of Saxon Switzerland on a self drive.',
+            ['s-dresden', 's-bastei', 's-koen', 's-schramm'], ['hl-dresden', 'saxon-switzerland-bastei', 'hl-schrammsteine', 'hl-koenigstein'], 'Entry to Königstein Fortress'],
+
+        // Cochem, the Mosel and the Rhine
+        'mosel-valley-and-cochem-chauffeur' => ['Cochem', 'Castles and wine villages of the Mosel valley, with a private driver and time for tastings.',
+            ['m-cochem', 'm-eltz', 'm-beil', 'm-bern', 'm-trier'], ['cochem-mosel', 'hl-burg-eltz', 'hl-bernkastel', 'chauffeur-private-driver'], 'Riesling tasting with a local winemaker'],
+        'rhine-and-mosel-wine-villages-chauffeur' => ['Bacharach', 'The Rhine gorge and the Mosel\'s wine villages with a private driver, so everyone can enjoy the tastings.',
+            ['m-rhine', 'm-bach', 'm-cochem', 'm-wine', 'm-bern', 'm-trab'], ['hl-rhine-loreley', 'bacharach-rhine', 'hl-wine-cellar', 'hl-bernkastel'], 'Riesling tasting with a local winemaker'],
+        'mosel-valley-and-cochem-coach' => ['Cochem', 'A small-group tour of the Mosel: Cochem, Burg Eltz, a river cruise and Roman Trier.',
+            ['m-cochem', 'm-eltz', 'm-cruise', 'm-beil', 'm-bern', 'm-trier'], ['cochem-mosel', 'hl-burg-eltz', 'hl-beilstein', 'hl-trier'], 'Mosel river cruise'],
+        'mosel-valley-and-cochem-self-drive' => ['Cochem', 'A self drive along the Mosel: castles, wine villages and a day with a local winemaker.',
+            ['m-cochem', 'm-eltz', 'm-beil', 'm-wine', 'm-bern', 'm-trier'], ['cochem-mosel', 'hl-burg-eltz', 'hl-beilstein', 'hl-wine-cellar'], 'Riesling tasting with a local winemaker'],
+        'rhine-and-mosel-wine-route-self-drive' => ['Bacharach', 'Drive from the Rhine gorge to the Mosel, with castles, steep vineyards and wine villages along the way.',
+            ['m-rhine', 'm-bach', 'm-cochem', 'm-eltz', 'm-wine', 'm-bern', 'm-trab'], ['hl-rhine-loreley', 'bacharach-rhine', 'mosel-vineyard', 'hl-wine-cellar'], 'Riesling tasting with a local winemaker'],
+
+        // Hiddensee and the Baltic coast
+        'hiddensee-baltic-coast-chauffeur' => ['Stralsund', 'Hanseatic Stralsund, Rügen\'s chalk cliffs and car-free Hiddensee, with a private driver on the mainland.',
+            ['h-stral', 'h-ruegen', 'h-ferry', 'h-bike'], ['hiddensee-lighthouse', 'hl-stralsund', 'hl-ruegen-cliffs', 'chauffeur-private-driver'], 'Ferry tickets to Hiddensee'],
+        'stralsund-and-baltic-islands-chauffeur' => ['Stralsund', 'The Baltic coast at an easy pace: Stralsund, Rügen and a day on Hiddensee, with a private driver.',
+            ['h-stral', 'h-ruegen', 'h-binz', 'h-ferry'], ['hl-stralsund', 'hl-ruegen-cliffs', 'hl-binz', 'hl-hiddensee-cycling'], 'Ferry tickets to Hiddensee'],
+        'hiddensee-baltic-coast-coach' => ['Stralsund', 'A small-group tour of the Baltic coast: Stralsund, Rügen, Binz and the car-free island of Hiddensee.',
+            ['h-stral', 'h-ruegen', 'h-binz', 'h-ferry', 'h-dorn'], ['hl-stralsund', 'hl-ruegen-cliffs', 'hl-binz', 'hiddensee-lighthouse'], 'Ferry tickets to Hiddensee'],
+        'hiddensee-island-escape-self-drive' => ['Stralsund', 'Leave the car on the mainland and slow down on Hiddensee: bikes, dunes, beaches and a lighthouse.',
+            ['h-ferry', 'h-bike', 'h-dorn', 'h-beach'], ['hl-hiddensee-cycling', 'hiddensee-lighthouse', 'hiddensee-beach', 'hl-beach-chairs'], 'Ferry tickets and bike hire on Hiddensee'],
+        'ruegen-and-hiddensee-island-hopping-self-drive' => ['Stralsund', 'Chalk cliffs on Rügen, car-free Hiddensee and Hanseatic Stralsund, with time to slow down by the sea.',
+            ['h-ruegen', 'h-binz', 'h-ferry', 'h-dorn', 'h-beach'], ['hl-ruegen-cliffs', 'hl-binz', 'hl-hiddensee-cycling', 'hl-beach-chairs'], 'Ferry tickets to Hiddensee'],
+
+        // Gengenbach and the Black Forest
+        'black-forest-and-gengenbach-chauffeur' => ['Gengenbach', 'Half-timbered towns, waterfalls and forest lakes of the Black Forest, with a private driver.',
+            ['b-geng', 'b-schil', 'b-trib', 'b-titi', 'b-frei'], ['gengenbach-rathaus', 'hl-triberg', 'hl-titisee', 'chauffeur-private-driver'], 'Black Forest cake and coffee in a village cafe'],
+        'baden-baden-and-black-forest-spa-chauffeur' => ['Baden-Baden', 'Spa town Baden-Baden, Black Forest villages and Baden wine country, with a private driver and time to unwind.',
+            ['b-baden', 'b-wine', 'b-geng', 'b-highroad', 'b-frei'], ['hl-baden-baden', 'gengenbach-rathaus', 'hl-wine-cellar', 'hl-freiburg'], 'Thermal bath entry in Baden-Baden'],
+        'black-forest-small-group-coach' => ['Gengenbach', 'A small-group tour of the Black Forest: Gengenbach, Triberg, Titisee, Freiburg and Baden-Baden.',
+            ['b-geng', 'b-schil', 'b-trib', 'b-titi', 'b-frei', 'b-baden'], ['gengenbach-rathaus', 'hl-triberg', 'hl-titisee', 'hl-black-forest-cake'], 'Black Forest cake and coffee in a village cafe'],
+        'black-forest-and-gengenbach-self-drive' => ['Gengenbach', 'A self drive through the Black Forest: half-timbered towns, waterfalls, a forest lake and Freiburg.',
+            ['b-geng', 'b-schil', 'b-trib', 'b-titi', 'b-frei'], ['gengenbach-rathaus', 'hl-schiltach', 'hl-triberg', 'hl-freiburg'], 'Black Forest cake and coffee in a village cafe'],
+        'black-forest-villages-and-waterfalls-self-drive' => ['Gengenbach', 'Half-timbered villages, forest lakes and the Triberg waterfalls on a self drive through the Black Forest.',
+            ['b-schil', 'b-trib', 'b-titi', 'b-frei'], ['hl-schiltach', 'hl-triberg', 'hl-titisee', 'hl-black-forest-cake'], 'Black Forest cake and coffee in a village cafe'],
+    ],
+];

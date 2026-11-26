@@ -129,6 +129,7 @@ class PackageController extends AdminController
             'destinations' => Destination::orderBy('sort')->pluck('name', 'id')->all(),
             'styles' => \App\Models\TravelStyle::orderBy('sort')->pluck('name', 'id')->all(),
             'styleIds' => $package->exists ? $package->travelStyles()->pluck('travel_styles.id')->all() : [],
+            'mediaOptions' => \App\Models\Media::orderBy('alt')->get()->map(fn ($m) => ['path' => $m->path, 'alt' => $m->alt ?: $m->path, 'thumb' => $m->url(480)])->all(),
             'featuredDestIds' => $package->exists ? $package->featuredDestinations()->pluck('destinations.id')->all() : [],
         ];
     }
@@ -157,7 +158,10 @@ class PackageController extends AdminController
             'currency' => ['required', 'in:USD,EUR,GBP,CAD,AUD'],
             'summary' => ['nullable', 'string', 'max:500'],
             'description' => ['nullable', 'string', 'max:50000'],
-            'highlights' => ['nullable', 'string', 'max:5000'],
+            'highlights' => ['nullable', 'array', 'max:12'],
+            'highlights.*.title' => ['nullable', 'string', 'max:150'],
+            'highlights.*.text' => ['nullable', 'string', 'max:500'],
+            'highlights.*.image' => ['nullable', 'string', 'max:255', 'exists:media,path'],
             'inclusions' => ['nullable', 'string', 'max:5000'],
             'exclusions' => ['nullable', 'string', 'max:5000'],
             'sort' => ['nullable', 'integer', 'min:0'],
@@ -187,7 +191,8 @@ class PackageController extends AdminController
             'nights' => $data['nights'], 'price_from' => $data['price_from'] ?? null, 'price_was' => $data['price_was'] ?? null, 'rating' => $data['rating'] ?? null, 'review_count' => $data['review_count'] ?? null, 'currency' => $data['currency'],
             'summary' => $data['summary'] ?? null,
             'description' => $this->clean($data['description'] ?? null),
-            'highlights' => $this->lines($data['highlights'] ?? ''),
+            'highlights' => collect($data['highlights'] ?? [])->filter(fn ($h) => filled($h['title'] ?? null))
+                ->map(fn ($h) => ['title' => trim($h['title']), 'text' => trim((string) ($h['text'] ?? '')), 'image' => ($h['image'] ?? null) ?: null])->values()->all(),
             'inclusions' => $this->lines($data['inclusions'] ?? ''),
             'exclusions' => $this->lines($data['exclusions'] ?? ''),
             'itinerary' => collect($data['itinerary'] ?? [])->filter(fn ($d) => filled($d['title'] ?? null))

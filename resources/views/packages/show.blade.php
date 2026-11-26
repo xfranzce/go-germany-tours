@@ -44,12 +44,24 @@
             <div class="prose-ggt mt-4">{!! $package->description !!}</div>
         </section>
 
-        @if($package->highlights)
+        @php $highlights = $package->highlightItems(); @endphp
+        @if($highlights)
             <section aria-labelledby="highlights">
                 <h2 id="highlights" class="text-2xl sm:text-3xl">Highlights</h2>
-                <ul class="mt-4 grid gap-2">
-                    @foreach($package->highlights as $h)
-                        <li class="flex gap-3"><span class="mt-1 grid place-items-center w-6 h-6 shrink-0 rounded-full bg-brand-gold text-brand-navy"><x-icon name="check" class="w-4 h-4"/></span>{{ $h }}</li>
+                <ul class="mt-5 grid gap-5 sm:grid-cols-2">
+                    @foreach($highlights as $h)
+                        @if($h['image'])
+                            <li class="overflow-hidden rounded-2xl bg-white shadow-card ring-1 ring-brand-custard">
+                                <x-picture :path="$h['image']" sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 100vw" class="aspect-[3/2] w-full object-cover"/>
+                                <div class="p-4">
+                                    <h3 class="text-xl">{{ $h['title'] }}</h3>
+                                    @if($h['text'])<p class="mt-1 text-sm text-ink-soft">{{ $h['text'] }}</p>@endif
+                                </div>
+                            </li>
+                        @else
+                            <li class="flex gap-3"><span class="mt-1 grid place-items-center w-6 h-6 shrink-0 rounded-full bg-brand-gold text-brand-navy"><x-icon name="check" class="w-4 h-4"/></span>
+                                <span><span class="font-semibold">{{ $h['title'] }}</span>@if($h['text'])<span class="block text-sm text-ink-soft">{{ $h['text'] }}</span>@endif</span></li>
+                        @endif
                     @endforeach
                 </ul>
             </section>
