@@ -42,8 +42,8 @@ class DestinationsAndTravelStylesTest extends TestCase
         $in = $style->packages()->published()->first();
         $out = Package::published()->whereDoesntHave('travelStyles', fn ($q) => $q->whereKey($style->id))->first();
 
-        $this->get('/travel-styles')->assertOk()->assertSee('Germany tours by travel style')->assertSee('Food &amp; Wine', false)->assertSee('Adventure');
-        $this->get('/travel-styles/food-wine')->assertOk()->assertSee('Food &amp; Wine Tours of Germany', false)
+        $this->get('/travel-styles')->assertOk()->assertSee('Travel styles for Germany')->assertSee('Not sure which')->assertSee('Food &amp; Wine', false)->assertSee('Adventure');
+        $this->get('/travel-styles/food-wine')->assertOk()->assertSee('Food &amp; Wine Tours of Germany', false)->assertSee('Other ways to see')->assertSee('Ready for a')
             ->assertSee($in->title)->assertDontSee('&amp;amp;', false)
             // (the header's Tours menu lists every package, so check the page's own list rather than the HTML)
             ->assertViewHas('packages', fn ($list) => $list->contains('id', $in->id) && ! $list->contains('id', $out->id));

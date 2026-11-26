@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+{{-- One travel style, laid out like gobelgiumtrips.com/travel-styles/{style}: quiz hero, "Germany for X" text + what to expect,
+     the trips in this style, other styles, and a "Ready for X?" closing band. --}}
 @section('content')
 @include('partials.collection-hero', [
     'heroImage' => $style->image, 'eyebrow' => $style->tagline ?: $style->name.' travel',
@@ -7,43 +9,54 @@
     'crumbs' => [['Home', route('home')], ['Travel styles', route('travel-styles.index')], [$style->name, null]],
 ])
 @php $points = $style->points(); @endphp
-@if($style->description || $points)
-<div class="container-x grid items-start gap-10 py-12 lg:grid-cols-2 lg:gap-16 lg:py-16">
-    <section aria-labelledby="about-style">
-        <p class="eyebrow text-brand-red-dark">{{ $style->name }} travel</p>
-        <h2 id="about-style" class="mt-3">Travel Germany the {{ strtolower($style->name) }} way</h2>
-        <span class="flag-rule" aria-hidden="true"></span>
-        @if($style->description)<div class="prose-ggt mt-5">{!! $style->description !!}</div>@elseif($style->summary)<p class="mt-5 text-lg text-ink-soft">{{ $style->summary }}</p>@endif
-        <x-button class="mt-8" data-title="Get a quote: {{ $style->name }} trip" data-prefill="Interested in: a {{ strtolower($style->name) }} trip."
-                  @click="$store.modal.show({form:'package_quote', ...$el.dataset})">Get a Quote <x-icon name="arrow-right" class="w-5 h-5"/></x-button>
-    </section>
-    @if($points)
-        <section class="rounded-2xl bg-white p-6 shadow-card sm:p-8" aria-labelledby="style-expect">
-            <h2 id="style-expect" class="text-2xl">What to expect</h2>
-            <ul class="mt-6 space-y-4">
+
+{{-- ABOUT --}}
+<section class="bg-white py-16 sm:py-24" aria-labelledby="about-style">
+    <div class="container-x max-w-3xl text-center">
+        <p class="eyebrow centered text-brand-red-dark">{{ $style->name }} travel</p>
+        <h2 id="about-style" class="mt-4">Germany for <em class="font-medium italic text-brand-red">{{ strtolower($style->name) }}</em> travelers</h2>
+        <span class="flag-rule centered" aria-hidden="true"></span>
+        @if($style->description)<div class="prose-ggt mx-auto mt-6 text-left sm:text-center">{!! $style->description !!}</div>
+        @elseif($style->summary)<p class="mt-6 text-lg text-ink-soft">{{ $style->summary }}</p>@endif
+        @if($points)
+            <ul class="mt-8 flex flex-wrap justify-center gap-2" aria-label="What to expect">
                 @foreach($points as $pt)
-                    <li class="flex items-start gap-3">
-                        <span class="mt-0.5 grid size-7 shrink-0 place-items-center rounded-full bg-brand-gold text-brand-navy" aria-hidden="true"><x-icon name="check" class="size-4"/></span>
-                        <span class="font-semibold text-brand-navy">{{ $pt }}</span>
-                    </li>
+                    <li class="inline-flex items-center gap-1.5 rounded-full border border-brand-custard bg-brand-custard-light px-3.5 py-1.5 text-sm font-semibold text-brand-navy">
+                        <x-icon name="check" class="size-4 text-brand-red"/>{{ $pt }}</li>
                 @endforeach
             </ul>
-        </section>
-    @endif
-</div>
-@endif
-<section class="bg-brand-cream py-14 sm:py-20" aria-labelledby="style-pkgs">
-    <div class="container-x">
-        <x-section-heading id="style-pkgs" :eyebrow="$style->name.' packages'" :title="'Signature '.strtolower($style->name).' journeys'" emphasis="Planned around you."
-            intro="Choose a ready-made trip, or use one as inspiration for a journey tailored entirely to you."/>
-        @if($packages->isEmpty())<p class="text-ink-soft">No packages listed for this style yet. Ask us for a tailored trip.</p>
-        @else<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">@foreach($packages as $p)<x-package-card :package="$p"/>@endforeach</div>@endif
-        <p class="mt-8 text-ink-soft">Other travel styles:
-            @foreach($others as $o)<a class="underline font-bold" href="{{ route('travel-styles.show', $o->slug) }}">{{ $o->name }}</a>{{ $loop->last ? '' : ', ' }}@endforeach
-        </p>
+        @endif
+        <x-button class="mt-8" data-title="Get a quote: {{ $style->name }} trip" data-prefill="Interested in: a {{ strtolower($style->name) }} trip."
+                  @click="$store.modal.show({form:'package_quote', ...$el.dataset})">Get a free quote <x-icon name="arrow-right" class="w-5 h-5"/></x-button>
     </div>
 </section>
-@include('partials.sections.how')
-@include('partials.sections.reviews')
-@include('partials.sections.faq')
+
+{{-- TRIPS --}}
+<section class="bg-brand-cream py-16 sm:py-24" aria-labelledby="style-pkgs">
+    <div class="container-x">
+        <div class="mb-10 flex flex-wrap items-end justify-between gap-6">
+            <div class="max-w-2xl">
+                <h2 id="style-pkgs">{{ $style->name }} <em class="font-medium italic text-brand-red">trips</em></h2>
+                <span class="flag-rule" aria-hidden="true"></span>
+                <p class="mt-5 text-base text-ink-soft sm:text-lg">{{ $packages->count() }} {{ Str::plural('trip', $packages->count()) }} to start from. Every one can be changed to fit your dates, pace and budget.</p>
+            </div>
+            <x-button :href="route('packages.index')" variant="outline" size="sm">All packages <x-icon name="arrow-right" class="h-4 w-4"/></x-button>
+        </div>
+        @if($packages->isEmpty())<p class="text-ink-soft">No packages listed for this style yet. Ask us for a tailored trip.</p>
+        @else<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">@foreach($packages as $p)<x-package-card :package="$p"/>@endforeach</div>@endif
+    </div>
+</section>
+
+{{-- OTHER STYLES --}}
+@if($others->isNotEmpty())
+<section class="bg-white py-16 sm:py-24" aria-labelledby="style-more">
+    <div class="container-x">
+        <h2 id="style-more">Other ways to see <em class="font-medium italic text-brand-red">Germany</em></h2>
+        <span class="flag-rule" aria-hidden="true"></span>
+        <div class="mt-10">@include('partials.collection-tiles', ['items' => $others, 'itemRoute' => 'travel-styles.show'])</div>
+    </div>
+</section>
+@endif
+
+@include('partials.ready-band', ['eyebrow' => $style->name, 'before' => 'Ready for a', 'emphasis' => strtolower($style->name).' trip?', 'subject' => 'a '.strtolower($style->name).' trip'])
 @endsection

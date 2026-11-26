@@ -28,11 +28,11 @@ class TravelStyleController extends Controller
     public function show(string $slug)
     {
         $style = TravelStyle::where('slug', $slug)->where('is_active', true)->firstOrFail();
-        $packages = $style->packages()->published()->with(['tourType', 'destination', 'images'])->get();
+        $packages = $style->packages()->published()->with(['tourType', 'destination', 'images'])->orderBy('sort')->get();
 
         return view('travel-styles.show', $this->shared() + [
             'style' => $style, 'packages' => $packages,
-            'others' => TravelStyle::active()->where('id', '!=', $style->id)->get(),
+            'others' => TravelStyle::active()->where('id', '!=', $style->id)->withCount(['packages' => fn ($q) => $q->published()])->get(),
             'seo' => Seo::make($style->seo_title ?: "{$style->name} Tours of Germany", $style->meta_description ?: $style->summary, [
                 'image' => $style->image,
                 'breadcrumbs' => [['name' => 'Home', 'url' => url('/')], ['name' => 'Travel styles', 'url' => route('travel-styles.index')], ['name' => $style->name, 'url' => route('travel-styles.show', $style->slug)]],
