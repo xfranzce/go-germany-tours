@@ -18,10 +18,21 @@ class DestinationsAndTravelStylesTest extends TestCase
         $this->seedContent();
         $d = Destination::where('slug', 'cochem')->first();
 
-        $this->get('/destinations')->assertOk()->assertSee('Find your dream destination in Germany')
-            ->assertSee('Castles, river bends &amp; vineyards', false)->assertSee('Burg Eltz')->assertSee(route('destinations.show', 'cochem'));
-        $this->get('/destinations/cochem')->assertOk()->assertSee('Highlights of the region')->assertSee('Bernkastel-Kues')
+        $this->get('/destinations')->assertOk()->assertSee('Destinations worth slowing down for')->assertSee('All our')
+            ->assertSee('Castles, river bends &amp; vineyards', false)->assertSee('Explore Cochem')->assertSee(route('destinations.show', 'cochem'));
+        $this->get('/destinations/cochem')->assertOk()->assertSee('Explore Cochem')->assertSee('Trips that visit')->assertSee('Bernkastel-Kues')
+            ->assertSee('More destinations to')->assertSee('Ready for')->assertSee(route('packages.index', ['destination' => 'cochem']), false)
             ->assertSee($d->packages()->published()->first()->title);
+    }
+
+    public function test_every_destination_has_five_sample_tours_after_a_full_seed(): void
+    {
+        $this->seedContent();
+        $this->seed([\Database\Seeders\MoreSamplePackagesSeeder::class, \Database\Seeders\FiveToursPerDestinationSeeder::class]);
+        foreach (Destination::all() as $d) {
+            $this->assertSame(5, $d->packages()->published()->count(), $d->name);
+        }
+        $this->assertTrue(Package::where('slug', 'elbe-sandstone-hiking-self-drive')->first()->travelStyles->pluck('slug')->contains('adventure'));
     }
 
     public function test_travel_style_pages_list_only_their_packages(): void

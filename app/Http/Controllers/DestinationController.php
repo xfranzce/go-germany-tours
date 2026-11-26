@@ -8,7 +8,7 @@ use App\Models\Page;
 use App\Models\Testimonial;
 use App\Support\Seo;
 
-/** /destinations overview (one block per region, like goeurotours.com) and one page per destination. */
+/** /destinations overview and one page per destination (layout modelled on gobelgiumtrips.com/destinations). */
 class DestinationController extends Controller
 {
     public function index()
@@ -32,7 +32,7 @@ class DestinationController extends Controller
 
         return view('destinations.show', $this->shared() + [
             'destination' => $destination, 'packages' => $packages,
-            'others' => Destination::active()->where('id', '!=', $destination->id)->get(),
+            'others' => Destination::active()->where('id', '!=', $destination->id)->withCount(['packages' => fn ($q) => $q->published()])->get(),
             'seo' => Seo::make($destination->seo_title ?: $destination->name.' Tours and Vacations', $destination->meta_description ?: $destination->summary, [
                 'image' => $destination->image,
                 'breadcrumbs' => [['name' => 'Home', 'url' => url('/')], ['name' => 'Destinations', 'url' => route('destinations.index')], ['name' => $destination->name, 'url' => route('destinations.show', $destination->slug)]],
