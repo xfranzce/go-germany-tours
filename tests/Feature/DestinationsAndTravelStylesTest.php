@@ -108,4 +108,29 @@ class DestinationsAndTravelStylesTest extends TestCase
         $this->assertCount(0, $p->fresh()->travelStyles);
         $this->get("/destinations/{$other->slug}")->assertViewHas('packages', fn ($l) => ! $l->contains('id', $p->id));
     }
+
+    public function test_destination_and_travel_style_forms_tick_packages_in_and_out(): void
+    {
+        $this->seedContent();
+        $admin = AdminUser::create(['name' => 'A', 'email' => 'a@example.com', 'password' => 'correct-horse-battery', 'role' => 'admin']);
+        $this->actingAs($admin, 'admin');
+
+        // travel style: the ticks are exactly its packages
+        $style = TravelStyle::where('slug', 'adventure')->first();
+        [$a, $b] = Package::orderBy('id')->take(2)->get()->all();
+        $this->get("/admin/travel-styles/{$style->id}/edit")->assertOk()->assertSee('Packages on this travel style')->assertSee($a->title);
+        $this->put("/admin/travel-styles/{$style->id}", ['name' => $style->name, 'is_active' => '1', 'package_picker' => '1', 'package_ids' => [$a->id, $b->id]])->assertSessionHasNoErrors();
+        $this->assertEqualsCanonicalizing([$a->id, $b->id], $style->fresh()->packages->pluck('id')->all());
+        $this->put("/admin/travel-styles/{$style->id}", ['name' => $style->name, 'is_active' => '1', 'package_picker' => '1'])->assertSessionHasNoErrors();
+        $this->assertCount(0, $style->fresh()->packages);
+
+        // destination: own packages are always listed; only extra ones are stored as featured
+        $dest = Destination::where('slug', 'cochem')->first();
+        $own = Package::where('destination_id', $dest->id)->first();
+        $extra = Package::where('destination_id', '!=', $dest->id)->first();
+        $this->get("/admin/destinations/{$dest->id}/edit")->assertOk()->assertSee('(main destination)');
+        $this->put("/admin/destinations/{$dest->id}", ['name' => $dest->name, 'is_active' => '1', 'package_picker' => '1', 'package_ids' => [$own->id, $extra->id]])->assertSessionHasNoErrors();
+        $this->assertSame([$extra->id], $dest->fresh()->featuredPackages->pluck('id')->all());
+        $this->get('/destinations/cochem')->assertViewHas('packages', fn ($l) => $l->contains('id', $extra->id) && $l->contains('id', $own->id));
+    }
 }

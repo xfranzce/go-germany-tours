@@ -15,6 +15,8 @@ class DestinationController extends TaxonomyController
 
     protected array $extra = ['tagline', 'places'];
 
+    protected ?string $packagePicker = 'featured';
+
     public function edit(Destination $destination) { return $this->form($destination); }
 
     public function update(Request $request, Destination $destination) { return $this->update_($request, $destination); }

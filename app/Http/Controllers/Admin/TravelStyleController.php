@@ -16,6 +16,8 @@ class TravelStyleController extends TaxonomyController
 
     protected array $extra = ['tagline', 'highlights'];
 
+    protected ?string $packagePicker = 'members';
+
     public function edit(TravelStyle $travelStyle) { return $this->form($travelStyle); }
 
     public function update(Request $request, TravelStyle $travelStyle) { return $this->update_($request, $travelStyle); }

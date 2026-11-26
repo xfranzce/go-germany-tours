@@ -20,6 +20,12 @@ abstract class TaxonomyController extends AdminController
     /** Extra text fields this taxonomy has: icon, highlights, inclusions, tagline, places. */
     protected array $extra = [];
 
+    /**
+     * Package tick list on the edit form: null (none), 'featured' (destinations: extra packages featured on the page,
+     * packages whose main destination this is are always included) or 'members' (travel styles: the style's packages).
+     */
+    protected ?string $packagePicker = null;
+
     public function index()
     {
         return view('admin.taxonomy.index', [
@@ -43,7 +49,18 @@ abstract class TaxonomyController extends AdminController
 
     protected function form(Model $item)
     {
-        return view('admin.taxonomy.form', ['item' => $item, 'routeBase' => $this->routeBase, 'label' => $this->label, 'hasIcon' => $this->hasIcon, 'extra' => $this->extraFields()]);
+        $picker = null;
+        if ($this->packagePicker) {
+            $packages = \App\Models\Package::with(['destination:id,name', 'tourType:id,name'])->orderBy('title')->get(['id', 'title', 'destination_id', 'tour_type_id', 'is_published']);
+            $relation = $this->packagePicker === 'featured' ? 'featuredPackages' : 'packages';
+            $picker = [
+                'packages' => $packages,
+                'ticked' => $item->exists ? $item->{$relation}()->pluck('packages.id')->all() : [],
+                'locked' => $this->packagePicker === 'featured' && $item->exists ? $packages->where('destination_id', $item->id)->pluck('id')->all() : [],
+            ];
+        }
+
+        return view('admin.taxonomy.form', ['item' => $item, 'routeBase' => $this->routeBase, 'label' => $this->label, 'hasIcon' => $this->hasIcon, 'extra' => $this->extraFields(), 'picker' => $picker]);
     }
 
     protected function update_(Request $request, Model $item)
@@ -82,6 +99,8 @@ abstract class TaxonomyController extends AdminController
             'inclusions' => ['nullable', 'string', 'max:1000'],
             'tagline' => ['nullable', 'string', 'max:120'],
             'places' => ['nullable', 'string', 'max:3000'],
+            'package_ids' => ['nullable', 'array'],
+            'package_ids.*' => ['integer', 'exists:packages,id'],
             'seo_title' => ['nullable', 'string', 'max:70'],
             'meta_description' => ['nullable', 'string', 'max:320'],
         ] + $this->imageRules());
@@ -101,5 +120,16 @@ abstract class TaxonomyController extends AdminController
             $item->{$field} = $data[$field] ?? null;
         }
         $item->save();
+
+        if ($this->packagePicker && $request->boolean('package_picker')) {
+            $ids = array_map('intval', $data['package_ids'] ?? []);
+            if ($this->packagePicker === 'featured') {
+                // packages whose main destination is this one are listed anyway, so only store the extra ones
+                $own = \App\Models\Package::where('destination_id', $item->id)->pluck('id')->all();
+                $item->featuredPackages()->sync(array_values(array_diff($ids, $own)));
+            } else {
+                $item->packages()->sync($ids);
+            }
+        }
     }
 }

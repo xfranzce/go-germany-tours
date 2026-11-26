@@ -23,6 +23,40 @@
         <x-admin.field name="meta_description" label="Meta description (max 320)" :value="$item->meta_description" maxlength="320"/>
         <x-admin.field name="is_active" label="Active (shown on the site)" type="checkbox" :value="$item->is_active"/>
     </section>
+    @if($picker)
+        {{-- Package tick list (destinations: featured packages; travel styles: member packages). package_picker=1 tells the controller to sync. --}}
+        <section class="bg-white rounded-xl shadow p-5" aria-labelledby="pkg-picker"
+                 x-data="{ q: '', all(on) { $el.querySelectorAll('label:not([hidden]) input[type=checkbox]:not(:disabled)').forEach(c => c.checked = on) } }">
+            <input type="hidden" name="package_picker" value="1">
+            <div class="flex flex-wrap items-end justify-between gap-3">
+                <div>
+                    <h2 id="pkg-picker" class="text-xl">Packages on this {{ strtolower($label) }}</h2>
+                    <p class="text-sm text-ink-soft">
+                        @if(! empty($picker['locked']) || ! $item->exists && $routeBase === 'admin.destinations')Packages whose main destination is {{ $item->name ?: 'this one' }} are always included (greyed out). Tick any other package to feature it here too.
+                        @else Tick every package that belongs to this {{ strtolower($label) }}. Untick to remove it; the package itself is not changed.@endif
+                    </p>
+                </div>
+                <div class="flex items-center gap-3 text-sm">
+                    <input type="search" x-model="q" placeholder="Search packages" class="field-input !min-h-9 !py-1 w-56" aria-label="Search packages">
+                    <button type="button" class="underline" @click="all(true)">Tick all shown</button>
+                    <button type="button" class="underline" @click="all(false)">Untick all shown</button>
+                </div>
+            </div>
+            @if($picker['packages']->isEmpty())<p class="mt-4 text-sm text-ink-soft">No packages yet.</p>@endif
+            <div class="mt-4 grid gap-x-6 gap-y-1 md:grid-cols-2">
+                @php $ticked = array_map('intval', (array) old('package_ids', array_merge($picker['ticked'], $picker['locked']))); @endphp
+                @foreach($picker['packages'] as $pk)
+                    @php $locked = in_array($pk->id, $picker['locked']); @endphp
+                    <label class="flex items-start gap-2 rounded-lg px-2 py-1.5 text-sm hover:bg-gray-50" data-search="{{ strtolower($pk->title.' '.$pk->destination?->name.' '.$pk->tourType?->name) }}"
+                           x-bind:hidden="q !== '' && ! $el.dataset.search.includes(q.toLowerCase())">
+                        <input type="checkbox" name="package_ids[]" value="{{ $pk->id }}" class="mt-0.5" @checked($locked || in_array($pk->id, $ticked)) @disabled($locked)>
+                        <span><span class="font-semibold">{{ $pk->title }}</span>
+                            <span class="block text-xs text-ink-soft">{{ $pk->tourType?->name }} &middot; {{ $pk->destination?->name }}@if($locked) (main destination)@endif @unless($pk->is_published)&middot; <strong>draft</strong>@endunless</span></span>
+                    </label>
+                @endforeach
+            </div>
+        </section>
+    @endif
     <button class="btn btn-primary">Save</button>
 </form>
 @unless($isNew)
