@@ -18,6 +18,23 @@ class Destination extends Model
         return $this->hasMany(Package::class);
     }
 
+    /** Packages ticked to also feature on this destination (see Package::scopeListedOn for the full list). */
+    public function featuredPackages(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Package::class);
+    }
+
+    /** Set packages_count on each destination = published packages listed on its page (main + featured). */
+    public static function withListedCounts(\Illuminate\Support\Collection $destinations): \Illuminate\Support\Collection
+    {
+        $packages = Package::published()->with('featuredDestinations:id')->get(['id', 'destination_id']);
+        foreach ($destinations as $d) {
+            $d->packages_count = $packages->filter(fn ($p) => $p->destination_id === $d->id || $p->featuredDestinations->contains('id', $d->id))->count();
+        }
+
+        return $destinations;
+    }
+
     /** Highlight places, one per line as "Name: short note", returned as [name, note] pairs. */
     public function placeList(): array
     {

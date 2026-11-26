@@ -13,7 +13,7 @@ class DestinationController extends Controller
 {
     public function index()
     {
-        $destinations = Destination::active()->withCount(['packages' => fn ($q) => $q->published()])->get();
+        $destinations = Destination::withListedCounts(Destination::active()->get());
 
         return view('destinations.index', $this->shared() + [
             'destinations' => $destinations,
@@ -28,11 +28,11 @@ class DestinationController extends Controller
     public function show(string $slug)
     {
         $destination = Destination::where('slug', $slug)->where('is_active', true)->firstOrFail();
-        $packages = $destination->packages()->published()->with(['tourType', 'destination', 'images'])->get();
+        $packages = \App\Models\Package::published()->listedOn($destination)->with(['tourType', 'destination', 'images'])->get();
 
         return view('destinations.show', $this->shared() + [
             'destination' => $destination, 'packages' => $packages,
-            'others' => Destination::active()->where('id', '!=', $destination->id)->withCount(['packages' => fn ($q) => $q->published()])->get(),
+            'others' => Destination::withListedCounts(Destination::active()->where('id', '!=', $destination->id)->get()),
             'seo' => Seo::make($destination->seo_title ?: $destination->name.' Tours and Vacations', $destination->meta_description ?: $destination->summary, [
                 'image' => $destination->image,
                 'breadcrumbs' => [['name' => 'Home', 'url' => url('/')], ['name' => 'Destinations', 'url' => route('destinations.index')], ['name' => $destination->name, 'url' => route('destinations.show', $destination->slug)]],

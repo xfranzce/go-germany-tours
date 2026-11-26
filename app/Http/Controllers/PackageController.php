@@ -22,7 +22,7 @@ class PackageController extends Controller
         $type = $types->firstWhere('slug', $request->query('type'));
         $dest = $destinations->firstWhere('slug', $request->query('destination'));
         $type && $query->where('tour_type_id', $type->id);
-        $dest && $query->where('destination_id', $dest->id);
+        $dest && $query->listedOn($dest);
 
         $filtered = $type || $dest;
 

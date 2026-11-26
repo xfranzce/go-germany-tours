@@ -33,6 +33,19 @@ class Package extends Model
         return $this->belongsTo(Destination::class);
     }
 
+    /** Extra destinations this package is also featured on (besides its main destination_id). */
+    public function featuredDestinations(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Destination::class);
+    }
+
+    /** Published packages listed on a destination's page: its own packages plus the ones ticked to feature there. */
+    public function scopeListedOn($q, Destination $destination)
+    {
+        return $q->where(fn ($w) => $w->where('destination_id', $destination->id)
+            ->orWhereHas('featuredDestinations', fn ($f) => $f->whereKey($destination->id)));
+    }
+
     public function travelStyles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(TravelStyle::class);

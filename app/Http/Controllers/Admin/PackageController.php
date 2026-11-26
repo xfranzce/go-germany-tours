@@ -101,6 +101,7 @@ class PackageController extends AdminController
         $copy->is_featured = false;
         $copy->save();
         $copy->travelStyles()->sync($package->travelStyles()->pluck('travel_styles.id'));
+        $copy->featuredDestinations()->sync($package->featuredDestinations()->pluck('destinations.id'));
         foreach ($package->images as $img) {
             PackageImage::create(['package_id' => $copy->id, 'path' => $img->path, 'alt' => $img->alt, 'sort' => $img->sort]);
         }
@@ -128,6 +129,7 @@ class PackageController extends AdminController
             'destinations' => Destination::orderBy('sort')->pluck('name', 'id')->all(),
             'styles' => \App\Models\TravelStyle::orderBy('sort')->pluck('name', 'id')->all(),
             'styleIds' => $package->exists ? $package->travelStyles()->pluck('travel_styles.id')->all() : [],
+            'featuredDestIds' => $package->exists ? $package->featuredDestinations()->pluck('destinations.id')->all() : [],
         ];
     }
 
@@ -140,6 +142,8 @@ class PackageController extends AdminController
             'destination_id' => ['required', 'exists:destinations,id'],
             'travel_styles' => ['nullable', 'array'],
             'travel_styles.*' => ['integer', 'exists:travel_styles,id'],
+            'featured_destinations' => ['nullable', 'array'],
+            'featured_destinations.*' => ['integer', 'exists:destinations,id'],
             'nights' => ['required', 'integer', 'min:1', 'max:60'],
             'price_from' => ['nullable', 'numeric', 'min:0', 'max:1000000'],
             'price_was' => ['nullable', 'numeric', 'min:0', 'max:1000000', function ($attr, $value, $fail) use ($request) {
@@ -196,6 +200,8 @@ class PackageController extends AdminController
         ])->save();
 
         $package->travelStyles()->sync($data['travel_styles'] ?? []);
+        // the main destination is always listed, so only the extra ones are stored
+        $package->featuredDestinations()->sync(array_values(array_diff(array_map('intval', $data['featured_destinations'] ?? []), [(int) $package->destination_id])));
 
         // FAQs: replaced wholesale
         $package->faqs()->delete();

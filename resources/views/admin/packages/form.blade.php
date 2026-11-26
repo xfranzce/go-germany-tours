@@ -31,17 +31,31 @@
         <x-admin.field name="sort" label="Order" type="number" :value="$package->sort" help="Lower numbers show first."/>
         <x-admin.field name="tour_type_id" label="Tour type" type="select" :options="$types" :value="$package->tour_type_id" required/>
         <x-admin.field name="destination_id" label="Destination" type="select" :options="$destinations" :value="$package->destination_id" required/>
-        @if($styles)
-            <fieldset class="sm:col-span-2">
-                <legend class="field-label">Travel styles <span class="font-normal text-ink-soft">(the package is listed on each ticked style's page)</span></legend>
-                <div class="mt-1 flex flex-wrap gap-x-5 gap-y-2">
-                    @php $ticked = old('travel_styles', $styleIds); @endphp
-                    @foreach($styles as $id => $name)
-                        <label class="inline-flex items-center gap-2 text-sm"><input type="checkbox" name="travel_styles[]" value="{{ $id }}" @checked(in_array($id, (array) $ticked))> {{ $name }}</label>
-                    @endforeach
-                </div>
-            </fieldset>
-        @endif
+        {{-- Where the package is featured: extra destination pages (the main destination above is always included) and travel style pages --}}
+        <div class="sm:col-span-2 rounded-xl border border-brand-custard bg-brand-custard-light/50 p-4"
+             x-data="{ main: {{ (int) old('destination_id', $package->destination_id) }} }"
+             x-init="$el.closest('form').querySelector('[name=destination_id]')?.addEventListener('change', e => main = +e.target.value)">
+            <h3 class="font-sans text-base font-bold">Where this package is featured</h3>
+            <p class="text-sm text-ink-soft">Tick every page this package should be listed on. Untick to remove it from that page. The package itself is not changed.</p>
+            <div class="mt-4 grid gap-6 md:grid-cols-2">
+                @foreach([['featured_destinations', 'Destinations', $destinations, old('featured_destinations', $featuredDestIds), true], ['travel_styles', 'Travel styles', $styles, old('travel_styles', $styleIds), false]] as [$field, $title, $options, $ticked, $isDest])
+                    <fieldset x-data="{ all(on) { $el.querySelectorAll('input[type=checkbox]:not(:disabled)').forEach(c => c.checked = on) } }">
+                        <legend class="field-label flex w-full items-center justify-between gap-3">{{ $title }}
+                            <span class="text-xs font-normal"><button type="button" class="underline" @click="all(true)">All</button> &middot; <button type="button" class="underline" @click="all(false)">None</button></span></legend>
+                        @if(! $options)<p class="text-sm text-ink-soft">None yet.</p>@endif
+                        <div class="mt-1 grid gap-y-1.5 sm:grid-cols-2">
+                            @foreach($options as $id => $name)
+                                <label class="inline-flex items-center gap-2 text-sm">
+                                    <input type="checkbox" name="{{ $field }}[]" value="{{ $id }}" @checked(in_array($id, array_map('intval', (array) $ticked)))
+                                           @if($isDest) x-effect="if (main === {{ $id }}) $el.checked = true" :disabled="main === {{ $id }}" @endif>
+                                    <span>{{ $name }}@if($isDest)<span x-show="main === {{ $id }}" class="ml-1 text-xs text-ink-soft">(main destination)</span>@endif</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    </fieldset>
+                @endforeach
+            </div>
+        </div>
         <x-admin.field name="nights" label="Nights" type="number" :value="$package->nights" required/>
         <div class="grid grid-cols-[1fr_1fr_6rem] gap-3">
             <x-admin.field name="price_was" label="'From' price per person (optional old price, shown crossed out; must be higher than the current price)" type="number" step="0.01" :value="$package->price_was" help="Leave empty for no discount. If you enter a higher price than the current price, it is shown crossed out with the word From as the old price."/>

@@ -82,4 +82,30 @@ class DestinationsAndTravelStylesTest extends TestCase
         $this->assertNotNull($p->fresh());
         $this->assertCount(0, $p->fresh()->travelStyles);
     }
+
+    public function test_a_package_can_be_featured_on_extra_destinations_from_the_package_form(): void
+    {
+        $this->seedContent();
+        $admin = AdminUser::create(['name' => 'A', 'email' => 'a@example.com', 'password' => 'correct-horse-battery', 'role' => 'admin']);
+        $this->actingAs($admin, 'admin');
+        $p = Package::published()->first();
+        $other = Destination::where('id', '!=', $p->destination_id)->first();
+        $style = TravelStyle::first();
+        $base = ['title' => $p->title, 'tour_type_id' => $p->tour_type_id, 'destination_id' => $p->destination_id, 'nights' => $p->nights, 'currency' => 'USD', 'is_published' => '1'];
+
+        $this->get("/admin/packages/{$p->id}/edit")->assertOk()->assertSee('Where this package is featured');
+        // the main destination is ignored if ticked; only extra ones are stored
+        $this->put("/admin/packages/{$p->id}", $base + ['featured_destinations' => [$p->destination_id, $other->id], 'travel_styles' => [$style->id]])->assertSessionHasNoErrors();
+        $this->assertSame([$other->id], $p->fresh()->featuredDestinations->pluck('id')->all());
+
+        $this->get("/destinations/{$other->slug}")->assertViewHas('packages', fn ($l) => $l->contains('id', $p->id));
+        $this->get('/packages?destination='.$other->slug)->assertViewHas('packages', fn ($l) => $l->contains('id', $p->id));
+        $this->get('/destinations')->assertViewHas('destinations', fn ($ds) => $ds->firstWhere('id', $other->id)->packages_count === Package::published()->listedOn($other)->count());
+
+        // unticking removes it again
+        $this->put("/admin/packages/{$p->id}", $base)->assertSessionHasNoErrors();
+        $this->assertCount(0, $p->fresh()->featuredDestinations);
+        $this->assertCount(0, $p->fresh()->travelStyles);
+        $this->get("/destinations/{$other->slug}")->assertViewHas('packages', fn ($l) => ! $l->contains('id', $p->id));
+    }
 }
