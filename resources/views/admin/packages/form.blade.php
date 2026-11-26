@@ -31,6 +31,17 @@
         <x-admin.field name="sort" label="Order" type="number" :value="$package->sort" help="Lower numbers show first."/>
         <x-admin.field name="tour_type_id" label="Tour type" type="select" :options="$types" :value="$package->tour_type_id" required/>
         <x-admin.field name="destination_id" label="Destination" type="select" :options="$destinations" :value="$package->destination_id" required/>
+        @if($styles)
+            <fieldset class="sm:col-span-2">
+                <legend class="field-label">Travel styles <span class="font-normal text-ink-soft">(the package is listed on each ticked style's page)</span></legend>
+                <div class="mt-1 flex flex-wrap gap-x-5 gap-y-2">
+                    @php $ticked = old('travel_styles', $styleIds); @endphp
+                    @foreach($styles as $id => $name)
+                        <label class="inline-flex items-center gap-2 text-sm"><input type="checkbox" name="travel_styles[]" value="{{ $id }}" @checked(in_array($id, (array) $ticked))> {{ $name }}</label>
+                    @endforeach
+                </div>
+            </fieldset>
+        @endif
         <x-admin.field name="nights" label="Nights" type="number" :value="$package->nights" required/>
         <div class="grid grid-cols-[1fr_1fr_6rem] gap-3">
             <x-admin.field name="price_was" label="'From' price per person (optional old price, shown crossed out; must be higher than the current price)" type="number" step="0.01" :value="$package->price_was" help="Leave empty for no discount. If you enter a higher price than the current price, it is shown crossed out with the word From as the old price."/>

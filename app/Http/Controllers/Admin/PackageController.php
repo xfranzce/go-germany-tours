@@ -100,6 +100,7 @@ class PackageController extends AdminController
         $copy->is_published = false;
         $copy->is_featured = false;
         $copy->save();
+        $copy->travelStyles()->sync($package->travelStyles()->pluck('travel_styles.id'));
         foreach ($package->images as $img) {
             PackageImage::create(['package_id' => $copy->id, 'path' => $img->path, 'alt' => $img->alt, 'sort' => $img->sort]);
         }
@@ -125,6 +126,8 @@ class PackageController extends AdminController
         return [
             'package' => $package, 'types' => TourType::orderBy('sort')->pluck('name', 'id')->all(),
             'destinations' => Destination::orderBy('sort')->pluck('name', 'id')->all(),
+            'styles' => \App\Models\TravelStyle::orderBy('sort')->pluck('name', 'id')->all(),
+            'styleIds' => $package->exists ? $package->travelStyles()->pluck('travel_styles.id')->all() : [],
         ];
     }
 
@@ -135,6 +138,8 @@ class PackageController extends AdminController
             'slug' => ['nullable', 'string', 'max:150'],
             'tour_type_id' => ['required', 'exists:tour_types,id'],
             'destination_id' => ['required', 'exists:destinations,id'],
+            'travel_styles' => ['nullable', 'array'],
+            'travel_styles.*' => ['integer', 'exists:travel_styles,id'],
             'nights' => ['required', 'integer', 'min:1', 'max:60'],
             'price_from' => ['nullable', 'numeric', 'min:0', 'max:1000000'],
             'price_was' => ['nullable', 'numeric', 'min:0', 'max:1000000', function ($attr, $value, $fail) use ($request) {
@@ -189,6 +194,8 @@ class PackageController extends AdminController
             'seo_title' => $data['seo_title'] ?? null, 'meta_description' => $data['meta_description'] ?? null,
             'og_image' => $data['og_image'] ?? null,
         ])->save();
+
+        $package->travelStyles()->sync($data['travel_styles'] ?? []);
 
         // FAQs: replaced wholesale
         $package->faqs()->delete();

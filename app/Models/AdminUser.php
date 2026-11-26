@@ -19,7 +19,7 @@ class AdminUser extends Authenticatable
      * Packages, Pages and Posts (travel guides), Media, and the Categories and Tags
      * (tour types and destinations). Everything else is administrators only.
      */
-    public const EDITOR_AREAS = ['packages', 'posts', 'pages', 'media', 'tour-types', 'destinations'];
+    public const EDITOR_AREAS = ['packages', 'posts', 'pages', 'media', 'tour-types', 'destinations', 'travel-styles'];
 
     protected $guarded = [];
 

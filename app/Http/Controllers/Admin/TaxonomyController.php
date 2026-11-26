@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 
-/** Shared CRUD for tour types and destinations (both feed the package filters and landing pages). */
+/** Shared CRUD for tour types, destinations and travel styles (they feed the package filters, menus and landing pages). */
 abstract class TaxonomyController extends AdminController
 {
     /** @var class-string<Model> */
@@ -16,6 +16,9 @@ abstract class TaxonomyController extends AdminController
     protected string $label;         // Tour type
 
     protected bool $hasIcon = false;
+
+    /** Extra text fields this taxonomy has: icon, highlights, inclusions, tagline, places. */
+    protected array $extra = [];
 
     public function index()
     {
@@ -40,7 +43,7 @@ abstract class TaxonomyController extends AdminController
 
     protected function form(Model $item)
     {
-        return view('admin.taxonomy.form', ['item' => $item, 'routeBase' => $this->routeBase, 'label' => $this->label, 'hasIcon' => $this->hasIcon]);
+        return view('admin.taxonomy.form', ['item' => $item, 'routeBase' => $this->routeBase, 'label' => $this->label, 'hasIcon' => $this->hasIcon, 'extra' => $this->extraFields()]);
     }
 
     protected function update_(Request $request, Model $item)
@@ -60,6 +63,11 @@ abstract class TaxonomyController extends AdminController
         return redirect()->route($this->routeBase.'.index')->with('status', "{$this->label} deleted.");
     }
 
+    protected function extraFields(): array
+    {
+        return $this->extra ?: ($this->hasIcon ? ['icon', 'highlights', 'inclusions'] : []);
+    }
+
     private function save(Request $request, Model $item): void
     {
         $this->stripBrandFromSeoTitle($request);
@@ -72,6 +80,8 @@ abstract class TaxonomyController extends AdminController
             'icon' => ['nullable', 'string', 'max:30'],
             'highlights' => ['nullable', 'string', 'max:2000'],
             'inclusions' => ['nullable', 'string', 'max:1000'],
+            'tagline' => ['nullable', 'string', 'max:120'],
+            'places' => ['nullable', 'string', 'max:3000'],
             'seo_title' => ['nullable', 'string', 'max:70'],
             'meta_description' => ['nullable', 'string', 'max:320'],
         ] + $this->imageRules());
@@ -87,10 +97,8 @@ abstract class TaxonomyController extends AdminController
             'meta_description' => $data['meta_description'] ?? null,
             'image' => $this->handleImage($request, 'image', $item->image),
         ]);
-        if ($this->hasIcon) {
-            $item->icon = $data['icon'] ?? null;
-            $item->highlights = $data['highlights'] ?? null;
-            $item->inclusions = $data['inclusions'] ?? null;
+        foreach ($this->extraFields() as $field) {
+            $item->{$field} = $data[$field] ?? null;
         }
         $item->save();
     }

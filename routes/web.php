@@ -20,7 +20,10 @@ Route::get('/hero-section', \App\Http\Controllers\HeroSectionController::class)-
 
 Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
 Route::get('/packages/{package:slug}', [PackageController::class, 'show'])->name('packages.show');
+Route::get('/destinations', [DestinationController::class, 'index'])->name('destinations.index');
 Route::get('/destinations/{slug}', [DestinationController::class, 'show'])->name('destinations.show');
+Route::get('/travel-styles', [\App\Http\Controllers\TravelStyleController::class, 'index'])->name('travel-styles.index');
+Route::get('/travel-styles/{slug}', [\App\Http\Controllers\TravelStyleController::class, 'show'])->name('travel-styles.show');
 Route::get('/tours/{slug}', [TourTypeController::class, 'show'])->name('tours.show');
 
 Route::get('/about', [PageController::class, 'about'])->name('about');

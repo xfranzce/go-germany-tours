@@ -13,6 +13,8 @@ class DestinationController extends TaxonomyController
 
     protected string $label = 'Destination';
 
+    protected array $extra = ['tagline', 'places'];
+
     public function edit(Destination $destination) { return $this->form($destination); }
 
     public function update(Request $request, Destination $destination) { return $this->update_($request, $destination); }

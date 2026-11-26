@@ -5,6 +5,7 @@ namespace Tests;
 use App\Models\Setting;
 use Database\Seeders\CatalogSeeder;
 use Database\Seeders\ContentSeeder;
+use Database\Seeders\TravelStyleSeeder;
 use Database\Seeders\PagesSeeder;
 use Database\Seeders\QuizSeeder;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -20,6 +21,6 @@ abstract class TestCase extends BaseTestCase
     /** Seed content without the (slow) image import. */
     protected function seedContent(): void
     {
-        $this->seed([PagesSeeder::class, CatalogSeeder::class, QuizSeeder::class, ContentSeeder::class]);
+        $this->seed([PagesSeeder::class, CatalogSeeder::class, QuizSeeder::class, ContentSeeder::class, TravelStyleSeeder::class]);
     }
 }

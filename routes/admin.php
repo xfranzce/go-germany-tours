@@ -29,6 +29,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::resource('tour-types', Admin\TourTypeController::class)->except('show')->parameters(['tour-types' => 'tour_type']);
         Route::resource('destinations', Admin\DestinationController::class)->except('show');
+        Route::resource('travel-styles', Admin\TravelStyleController::class)->except('show')->parameters(['travel-styles' => 'travel_style']);
 
         // Quiz
         Route::get('quiz', [Admin\QuizController::class, 'index'])->name('quiz.index');

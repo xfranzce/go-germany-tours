@@ -33,6 +33,11 @@ class Package extends Model
         return $this->belongsTo(Destination::class);
     }
 
+    public function travelStyles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(TravelStyle::class);
+    }
+
     public function images(): HasMany
     {
         return $this->hasMany(PackageImage::class)->orderBy('sort');

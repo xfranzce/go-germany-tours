@@ -28,6 +28,11 @@ class SitemapController extends Controller
         foreach (TourType::active()->get() as $t) {
             $urls[] = ['loc' => route('tours.show', $t->slug), 'mod' => $t->updated_at, 'pri' => '0.8'];
         }
+        $urls[] = ['loc' => route('destinations.index'), 'mod' => null, 'pri' => '0.7'];
+        $urls[] = ['loc' => route('travel-styles.index'), 'mod' => null, 'pri' => '0.7'];
+        foreach (\App\Models\TravelStyle::active()->get() as $s) {
+            $urls[] = ['loc' => route('travel-styles.show', $s->slug), 'mod' => $s->updated_at, 'pri' => '0.7'];
+        }
         foreach (Destination::active()->get() as $d) {
             $urls[] = ['loc' => route('destinations.show', $d->slug), 'mod' => $d->updated_at, 'pri' => '0.8'];
         }

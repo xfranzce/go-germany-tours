@@ -11,7 +11,7 @@
 @php
     $links = [
         ['admin.dashboard', 'Dashboard', 'dashboard'], ['admin.enquiries.index', 'Enquiries', 'inbox'], ['admin.packages.index', 'Packages', 'cube'],
-        ['admin.tour-types.index', 'Tour types', 'tag'], ['admin.destinations.index', 'Destinations', 'pin'], ['admin.quiz.index', 'Hero quiz', 'adjust'],
+        ['admin.tour-types.index', 'Tour types', 'tag'], ['admin.destinations.index', 'Destinations', 'pin'], ['admin.travel-styles.index', 'Travel styles', 'star'], ['admin.quiz.index', 'Hero quiz', 'adjust'],
         ['admin.pages.index', 'Pages', 'document'], ['admin.testimonials.index', 'Testimonials', 'star'], ['admin.faqs.index', 'FAQs', 'question'], ['admin.team.index', 'Team', 'users'],
         ['admin.posts.index', 'Travel guides', 'book'], ['admin.media.index', 'Media', 'photo'], ['admin.settings.edit', 'Site settings', 'cog'], ['admin.snippets.index', 'Header & Footer', 'document'], ['admin.maintenance.edit', 'Maintenance mode', 'clock'],['admin.ghl.edit', 'GoHighLevel', 'bolt'], ['admin.sheets.edit', 'Google Sheets', 'table'], ['admin.recaptcha.edit', 'reCAPTCHA', 'shield'], ['admin.users.index', 'Admin users', 'users'], ['admin.history.index', 'History', 'clock'],
     ];

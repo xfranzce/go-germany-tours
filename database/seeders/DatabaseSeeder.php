@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             ContentSeeder::class,
             TourTypeFaqSeeder::class,
             ImageSeeder::class,
+            TravelStyleSeeder::class,
             MoreBlogPostsSeeder::class,
         ]);
     }
