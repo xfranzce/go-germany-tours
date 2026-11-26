@@ -49,7 +49,7 @@
                     </button>
                 </span>
                 <div id="mega-tours" x-show="menu === 'tours'" x-cloak x-transition.opacity.duration.200ms
-                     class="absolute inset-x-0 top-full normal-case tracking-normal before:absolute before:inset-x-0 before:-top-4 before:h-4">
+                     class="absolute inset-x-0 top-full whitespace-normal text-sm normal-case tracking-normal before:absolute before:inset-x-0 before:-top-4 before:h-4">
                     <div class="border-t-4 border-brand-gold bg-white text-brand-navy shadow-[0_30px_60px_-20px_rgb(0_48_73/0.45)]">
                         <div class="container-x grid gap-8 py-8 lg:grid-cols-3">
                             @foreach($navTypes as $t)
@@ -100,7 +100,7 @@
                         </button>
                     </span>
                     <div id="mega-{{ $key }}" x-show="menu === '{{ $key }}'" x-cloak x-transition.opacity.duration.200ms
-                         class="absolute inset-x-0 top-full normal-case tracking-normal before:absolute before:inset-x-0 before:-top-4 before:h-4">
+                         class="absolute inset-x-0 top-full whitespace-normal text-sm normal-case tracking-normal before:absolute before:inset-x-0 before:-top-4 before:h-4">
                         <div class="border-t-4 border-brand-gold bg-white text-brand-navy shadow-[0_30px_60px_-20px_rgb(0_48_73/0.45)]">
                             <div class="container-x grid gap-5 py-8" style="grid-template-columns: repeat({{ min(6, $items->count()) }}, minmax(0, 1fr))">
                                 @foreach($items->take(6) as $it)
@@ -131,7 +131,7 @@
                     About Us <span class="inline-flex transition" :class="menu === 'about' && 'rotate-180'"><x-icon name="chevron-down" class="w-4 h-4"/></span>
                 </button>
                 <div id="mega-about" x-show="menu === 'about'" x-cloak x-transition.opacity.duration.200ms
-                     class="absolute inset-x-0 top-full normal-case tracking-normal before:absolute before:inset-x-0 before:-top-4 before:h-4">
+                     class="absolute inset-x-0 top-full whitespace-normal text-sm normal-case tracking-normal before:absolute before:inset-x-0 before:-top-4 before:h-4">
                     <div class="border-t-4 border-brand-gold bg-white text-brand-navy shadow-[0_30px_60px_-20px_rgb(0_48_73/0.45)]">
                         <div class="container-x grid gap-6 py-8 lg:grid-cols-[1fr_repeat(4,minmax(0,1fr))]">
                             <div class="flex flex-col justify-between gap-6 rounded-xl bg-brand-navy p-6 text-white">
