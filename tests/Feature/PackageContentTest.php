@@ -66,4 +66,23 @@ class PackageContentTest extends TestCase
             'highlights' => [['title' => 'X', 'image' => 'media/not-a-real-file']],
         ])->assertSessionHasErrors('highlights.0.image');
     }
+
+    public function test_every_package_gets_its_own_cover_photo_but_uploaded_galleries_are_kept(): void
+    {
+        $this->seedContent();
+        $data = require database_path('seeders/data/package-content.php');
+        foreach (array_keys($data['hl']) as $stem) {
+            $this->media($stem);
+        }
+        $custom = Package::orderBy('id')->first();
+        $custom->images()->delete();
+        $custom->images()->create(['path' => 'media/my-own-upload-zz9', 'alt' => 'Mine', 'sort' => 0]);
+
+        (new PackageContentSeeder)->run();
+        (new \Database\Seeders\UniquePackageImagesSeeder)->run();
+
+        $covers = Package::with('images')->get()->map(fn ($p) => $p->images->first()?->path)->filter();
+        $this->assertSame($covers->count(), $covers->unique()->count());
+        $this->assertSame('media/my-own-upload-zz9', $custom->fresh()->images->first()->path);
+    }
 }
