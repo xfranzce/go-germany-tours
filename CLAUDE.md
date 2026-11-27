@@ -73,4 +73,4 @@ Live site (Hostinger) is updated with `GGT_SSH_PASSWORD=... bash scripts/deploy.
 - `php artisan migrate:fresh --seed` does not delete files in `storage/app/public/media`; clear it by hand if you reseed repeatedly.
 - `public/robots.txt` must not exist (robots is a route).
 - PHP 8.5 needs `\Pdo\Mysql::ATTR_SSL_CA` (patched in `config/database.php`).
-- Git was not installed when this was generated: install Git for Windows, then `git init` and commit (`.gitignore` is ready).
+- New machine: install Git for Windows (deploy needs its `bash`), enable the php.ini extensions in `docs/reference/LOCAL_XAMPP.md` (fresh XAMPP has `gd`, `intl`, `zip`, `sqlite3` off; `composer setup` fails without `zip`), and set `ADMIN_SEED_EMAIL`/`ADMIN_SEED_PASSWORD` in `.env` before seeding or no admin login is created. `tests/Unit/.gitkeep` keeps the folder PHPUnit expects.
