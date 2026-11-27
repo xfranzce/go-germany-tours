@@ -25,6 +25,14 @@ class DestinationsAndTravelStylesTest extends TestCase
             ->assertSee($d->packages()->published()->first()->title);
     }
 
+    public function test_destinations_overview_shows_testimonials_between_how_it_works_and_faq(): void
+    {
+        $this->seedContent();
+        \App\Models\Testimonial::forceCreate(['name' => 'Test Traveler', 'quote' => 'Test quote for the destinations page.', 'is_active' => true, 'is_placeholder' => false, 'sort' => 0]);
+
+        $this->get('/destinations')->assertOk()->assertSeeInOrder(['id="how-title"', 'id="reviews-title"', 'Test quote for the destinations page.', 'id="faq-title"'], false);
+    }
+
     public function test_every_destination_has_five_sample_tours_after_a_full_seed(): void
     {
         $this->seedContent();
