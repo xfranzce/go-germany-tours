@@ -27,7 +27,7 @@ class PackageController extends Controller
         $filtered = $type || $dest;
 
         return view('packages.index', [
-            'page' => Page::byKey('home'), 'testimonials' => Testimonial::active()->get(), 'faqs' => Faq::home()->get(),
+            'page' => Page::byKey('home'), 'testimonials' => Testimonial::forPage(), 'faqs' => Faq::home()->get(),
             'packages' => $query->get(), 'types' => $types, 'destinations' => $destinations,
             'type' => $type, 'dest' => $dest,
             'seo' => Seo::make('Germany Tour Packages: Self Drive, Chauffeur and Coach',

@@ -30,7 +30,7 @@ class DestinationController extends Controller
         $destination = Destination::where('slug', $slug)->where('is_active', true)->firstOrFail();
         $packages = \App\Models\Package::published()->listedOn($destination)->with(['tourType', 'destination', 'images'])->get();
 
-        return view('destinations.show', $this->shared() + [
+        return view('destinations.show', $this->shared('destination_id', $destination->id) + [
             'destination' => $destination, 'packages' => $packages,
             'others' => Destination::withListedCounts(Destination::active()->where('id', '!=', $destination->id)->get()),
             'seo' => Seo::make($destination->seo_title ?: $destination->name.' Tours and Vacations', $destination->meta_description ?: $destination->summary, [
@@ -40,9 +40,9 @@ class DestinationController extends Controller
         ]);
     }
 
-    /** Data the shared home sections (why, how, reviews, FAQ) need. */
-    private function shared(): array
+    /** Data the shared home sections (why, how, reviews, FAQ) need. Reviews: this destination's own, else general. */
+    private function shared(?string $reviewsFor = null, ?int $id = null): array
     {
-        return ['page' => Page::byKey('home'), 'testimonials' => Testimonial::active()->get(), 'faqs' => Faq::home()->get()];
+        return ['page' => Page::byKey('home'), 'testimonials' => Testimonial::forPage($reviewsFor, $id), 'faqs' => Faq::home()->get()];
     }
 }

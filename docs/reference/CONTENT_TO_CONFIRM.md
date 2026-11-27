@@ -43,7 +43,7 @@ Terms and Conditions and Privacy Policy contain `[CONFIRM: ...]` blocks (pricing
 - Hostinger plan features (SSH, document root, cron) confirmed against the real plan.
 
 ## Testimonials
-Three dummy testimonials (badge "PLACEHOLDER", source "Sample review: replace before launch") are shown on the home page. Replace them in Admin > Testimonials with real, permissioned reviews (name, town, source) and untick "placeholder" before running ads.
+Three dummy testimonials (badge "PLACEHOLDER", source "Sample review: replace before launch") are shown on the home page. Replace them in Admin > Testimonials with real, permissioned reviews (name, town, source) and untick "placeholder" before running ads. The three are general (not tied to a page), so since 2026-11-27 they also show on every destination, tour type and travel style page until that page has real reviews of its own: tie each real review to the destination / tour type / travel style it is about ("What is this review about?").
 
 ## Sample packages
 There are 25 SAMPLE packages (5 per destination; names, nights, prices and 5.0 "sample rating" are placeholders). Each now has a starter overview, 4 highlights with AI photos, a day-by-day itinerary and Included / Not included lists (PackageContentSeeder, 2026-11-26): the stops are real places, but the hotels, the exact inclusions (breakfast, rental car terms, driver hours, tickets, welcome dinner, group size) and the prices must be confirmed before launch. The last 12 come from `MoreSamplePackagesSeeder` (`php artisan db:seed --class=MoreSamplePackagesSeeder`, safe to re-run). Replace or delete them in Admin > Packages and untick "Sample / placeholder" for real ones.

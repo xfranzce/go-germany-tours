@@ -1,4 +1,5 @@
-{{-- 8. TESTIMONIALS (only shows when at least one is active; use real, permissioned reviews with a source) --}}
+{{-- 8. TESTIMONIALS (only shows when at least one is active; use real, permissioned reviews with a source).
+     Controllers pick the list with Testimonial::forPage(); pass 'reviewsTitle' to override the heading. --}}
 @if($testimonials->isNotEmpty())
 @php
     $tCount = $testimonials->count();
@@ -7,7 +8,7 @@
 <section class="relative overflow-hidden py-16 sm:py-24 bg-brand-cream" aria-labelledby="reviews-title">
     <span class="pointer-events-none absolute -top-10 left-4 font-display text-[22rem] leading-none text-brand-gold/20 select-none" aria-hidden="true">&ldquo;</span>
     <div class="container-x relative">
-        <x-section-heading id="reviews-title" eyebrow="Guest reviews" :title="$page->text('testimonials_title', 'What travelers say')"/>
+        <x-section-heading id="reviews-title" eyebrow="Guest reviews" :title="$reviewsTitle ?? $page->text('testimonials_title', 'What travelers say')"/>
         <div data-carousel="md" class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:overflow-visible md:px-0 md:pb-0 md:grid md:gap-6 lg:gap-8 {{ $tGrid }}">
             @foreach($testimonials as $r)
                 @php $initials = \Illuminate\Support\Str::of($r->name)->replaceMatches('/[^\p{L}\s]/u', '')->explode(' ')->filter()->take(2)->map(fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)))->implode(''); @endphp

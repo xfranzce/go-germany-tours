@@ -31,6 +31,8 @@ The questions in the orange "Start your adventure" box. For each step: question,
 Home page wording (leave a box empty to use the default shown in it), hero background image, About, Contact, Terms and Conditions, Privacy Policy, plus SEO title/description per page and a "hide from search engines" tick. In legal pages `{company}` is replaced with the legal company name. **The Terms and Privacy pages are starter templates: have a lawyer review them.**
 Also here: **Testimonials** (only publish real, permissioned reviews) and **Home page FAQs** (also sent to Google as FAQ data).
 
+**Where a testimonial shows.** In the testimonial form, "What is this review about?" has three dropdowns: Destination, Tour type and Travel style. Pick the one the guest is talking about (e.g. a review of a Mosel trip: Destination = Cochem) and the review shows on that page, with a heading like "What travelers say about Cochem". Leave all three on "None" for a **general** review: general reviews show on the home page, Packages and the Destinations overview, and on any destination / tour type / travel style page that has no reviews of its own yet. The **About** column in the list shows where each one goes. The Testimonials page (`/testimonials`) always lists every active review.
+
 ## Travel guides
 Short articles for search engines. Draft until *Published* is ticked and the date has passed.
 

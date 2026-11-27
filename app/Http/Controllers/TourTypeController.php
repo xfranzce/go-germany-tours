@@ -18,7 +18,7 @@ class TourTypeController extends Controller
         $faqs = Faq::forTourType($type->id)->get();
 
         return view('tours.show', [
-            'page' => Page::byKey('home'), 'testimonials' => Testimonial::active()->get(), 'faqs' => $faqs,
+            'page' => Page::byKey('home'), 'testimonials' => Testimonial::forPage('tour_type_id', $type->id), 'faqs' => $faqs,
             'type' => $type, 'packages' => $packages, 'others' => TourType::active()->where('id', '!=', $type->id)->get(),
             'seo' => Seo::make($type->seo_title ?: "{$type->name} Tours", $type->meta_description ?: $type->summary, [
                 'image' => $type->image, 'schema' => [Seo::faqSchema($faqs)],

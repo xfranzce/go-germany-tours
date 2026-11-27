@@ -18,7 +18,7 @@ class HomeController extends Controller
         return view('home', [
             'page' => $page,
             'posts' => Post::published()->take(6)->get(),
-            'testimonials' => Testimonial::active()->get(),
+            'testimonials' => Testimonial::forPage(),
             'tourTypes' => TourType::active()->get(),
             'packages' => Package::published()->orderByDesc('is_featured')->orderBy('sort')->with(['tourType', 'destination', 'images'])->get(),
             'seo' => Seo::make($page->seo_title, $page->meta_description, [

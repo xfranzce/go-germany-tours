@@ -69,6 +69,6 @@
 @include('partials.sections.banner')
 @include('partials.sections.why')
 @include('partials.sections.how')
-@include('partials.sections.reviews')
+@include('partials.sections.reviews', ['reviewsTitle' => $testimonials->first()?->tour_type_id === $type->id ? 'What travelers say about our '.strtolower($base).' tours' : null])
 @include('partials.sections.faq', ['faqTitle' => 'Questions about '.strtolower($base).' tours'])
 @endsection
