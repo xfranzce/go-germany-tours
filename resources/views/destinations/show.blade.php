@@ -61,5 +61,8 @@
 {{-- REVIEWS: this destination's own (Admin > Testimonials "About"), else the general ones --}}
 @include('partials.sections.reviews', ['reviewsTitle' => $testimonials->first()?->destination_id === $destination->id ? 'What travelers say about '.$destination->name : null])
 
+{{-- FAQ: this destination's own (Admin > FAQs "Shows on"), else the general ones --}}
+@include('partials.sections.faq', ['faqTitle' => $ownFaqs ? 'Questions about '.$destination->name : null])
+
 @include('partials.ready-band', ['eyebrow' => $destination->name, 'before' => 'Ready for', 'emphasis' => $destination->name.'?', 'subject' => $destination->name])
 @endsection

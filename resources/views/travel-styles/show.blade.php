@@ -61,5 +61,8 @@
 {{-- REVIEWS: this style's own (Admin > Testimonials "About"), else the general ones --}}
 @include('partials.sections.reviews', ['reviewsTitle' => $testimonials->first()?->travel_style_id === $style->id ? 'What '.strtolower($style->name).' travelers say' : null])
 
+{{-- FAQ: this style's own (Admin > FAQs "Shows on"), else the general ones --}}
+@include('partials.sections.faq', ['faqTitle' => $ownFaqs ? 'Questions about '.strtolower($style->name).' trips' : null])
+
 @include('partials.ready-band', ['eyebrow' => $style->name, 'before' => 'Ready for a', 'emphasis' => strtolower($style->name).' trip?', 'subject' => 'a '.strtolower($style->name).' trip'])
 @endsection

@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             TourTypeFaqSeeder::class,
             ImageSeeder::class,
             TravelStyleSeeder::class,
+            PageFaqSeeder::class,
             FiveToursPerDestinationSeeder::class,
             PackageContentSeeder::class,
             MoreBlogPostsSeeder::class,

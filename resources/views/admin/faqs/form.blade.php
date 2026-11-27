@@ -9,7 +9,7 @@
     @csrf @if(! $isNew) @method('PUT') @endif
     <x-admin.field name="question" label="Question" :value="$item->question" required maxlength="250"/>
     <x-admin.field name="answer" label="Answer (plain text)" type="textarea" :rows="5" :value="$item->answer" required maxlength="3000"/>
-    <x-admin.field name="tour_type_id" label="Shows on" type="select" :options="['' => 'Home page'] + $tourTypes->all()" :value="$item->tour_type_id" help="The home page, or one tour type page."/>
+    <x-admin.field name="place" label="Shows on" type="select" :options="$places" :value="$item->placeKey()" help="Home page (general) FAQs also show on the FAQs page, the Packages and Destinations overviews, and on any tour type, destination or travel style page that has no FAQs of its own."/>
     <div class="grid gap-4 sm:grid-cols-2"><x-admin.field name="sort" label="Order" type="number" :value="$item->sort"/><x-admin.field name="is_active" label="Show on the site" type="checkbox" :value="$item->is_active"/></div>
     <div><button class="btn btn-primary">Save</button></div>
 </form>

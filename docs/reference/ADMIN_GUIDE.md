@@ -29,7 +29,9 @@ The questions in the orange "Start your adventure" box. For each step: question,
 
 ## Pages
 Home page wording (leave a box empty to use the default shown in it), hero background image, About, Contact, Terms and Conditions, Privacy Policy, plus SEO title/description per page and a "hide from search engines" tick. In legal pages `{company}` is replaced with the legal company name. **The Terms and Privacy pages are starter templates: have a lawyer review them.**
-Also here: **Testimonials** (only publish real, permissioned reviews) and **Home page FAQs** (also sent to Google as FAQ data).
+Also here: **Testimonials** (only publish real, permissioned reviews) and **FAQs** (also sent to Google as FAQ data).
+
+**Where an FAQ shows.** Each FAQ has one "Shows on" choice: **Home page (general)**, or one **Tour type**, **Destination** or **Travel style** page (e.g. "Destination: Cochem"). Those pages show their own questions under "Questions about Cochem". General FAQs show on the FAQs page, the Packages and Destinations overviews, and on any tour type, destination or travel style page that has no FAQs of its own. Every destination and travel style starts with five draft questions; answers containing `[CONFIRM: ...]` need your real answer before ads run.
 
 **Where a testimonial shows.** In the testimonial form, "What is this review about?" has three dropdowns: Destination, Tour type and Travel style. Pick the one the guest is talking about (e.g. a review of a Mosel trip: Destination = Cochem) and the review shows on that page, with a heading like "What travelers say about Cochem". Leave all three on "None" for a **general** review: general reviews show on the home page, Packages and the Destinations overview, and on any destination / tour type / travel style page that has no reviews of its own yet. The **About** column in the list shows where each one goes. The Testimonials page (`/testimonials`) always lists every active review.
 

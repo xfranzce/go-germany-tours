@@ -15,13 +15,13 @@ class TourTypeController extends Controller
         $type = TourType::where('slug', $slug)->where('is_active', true)->firstOrFail();
         $packages = $type->packages()->published()->with(['tourType', 'destination', 'images'])->get();
 
-        $faqs = Faq::forTourType($type->id)->get();
+        [$faqs, $ownFaqs] = Faq::forPage('tour_type_id', $type->id);
 
         return view('tours.show', [
-            'page' => Page::byKey('home'), 'testimonials' => Testimonial::forPage('tour_type_id', $type->id), 'faqs' => $faqs,
+            'page' => Page::byKey('home'), 'testimonials' => Testimonial::forPage('tour_type_id', $type->id), 'faqs' => $faqs, 'ownFaqs' => $ownFaqs,
             'type' => $type, 'packages' => $packages, 'others' => TourType::active()->where('id', '!=', $type->id)->get(),
             'seo' => Seo::make($type->seo_title ?: "{$type->name} Tours", $type->meta_description ?: $type->summary, [
-                'image' => $type->image, 'schema' => [Seo::faqSchema($faqs)],
+                'image' => $type->image, 'schema' => $ownFaqs ? [Seo::faqSchema($faqs)] : [],
                 'breadcrumbs' => [['name' => 'Home', 'url' => url('/')], ['name' => 'Tours', 'url' => route('packages.index')], ['name' => $type->name, 'url' => route('tours.show', $type->slug)]],
             ]),
         ]);

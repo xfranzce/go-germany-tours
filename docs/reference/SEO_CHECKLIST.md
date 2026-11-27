@@ -3,7 +3,7 @@
 ## Built in (verify, don't rebuild)
 - Fully server-rendered HTML, one `<h1>` per page (a test enforces it), semantic landmarks (`header`, `nav`, `main`, `footer`), skip link, descriptive link text.
 - Unique `<title>` and meta description per page (edit in Admin), canonical URL, Open Graph + Twitter cards, per-page `noindex` toggle.
-- JSON-LD: `TravelAgency` (all pages), `BreadcrumbList`, `FAQPage` (tour type pages, `/faqs` and packages with FAQs; the home page shows no FAQs so it has none), `TouristTrip` (packages; **no price Offer is emitted while a package is flagged Sample**), `Article` (guides).
+- JSON-LD: `TravelAgency` (all pages), `BreadcrumbList`, `FAQPage` (tour type, destination and travel style pages when they have FAQs of their own, `/faqs` and packages with FAQs; the home page shows no FAQs so it has none), `TouristTrip` (packages; **no price Offer is emitted while a package is flagged Sample**), `Article` (guides).
 - `/sitemap.xml` auto-generated (excludes drafts, noindex, thank-you, admin); `/robots.txt` blocks `/admin`, `/thank-you`, `/enquiry` and lists the sitemap. Filtered package listings (`?type=`/`?destination=`) are `noindex`.
 - Images: WebP, `srcset`, width/height set (no layout shift), lazy below the fold, hero preloaded, alt text mandatory in admin. Fonts self-hosted, `font-display: swap`, preloaded. About 30 KB gzipped JS and 15 KB CSS (brotli) on public pages. reCAPTCHA loads only when a form is used.
 - Security headers, HTTPS HSTS header when served over HTTPS, `.htaccess` compression and long caching for `/build`.

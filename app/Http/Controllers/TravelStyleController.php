@@ -30,11 +30,13 @@ class TravelStyleController extends Controller
         $style = TravelStyle::where('slug', $slug)->where('is_active', true)->firstOrFail();
         $packages = $style->packages()->published()->with(['tourType', 'destination', 'images'])->orderBy('sort')->get();
 
-        return view('travel-styles.show', $this->shared('travel_style_id', $style->id) + [
+        [$faqs, $ownFaqs] = Faq::forPage('travel_style_id', $style->id);
+
+        return view('travel-styles.show', ['faqs' => $faqs, 'ownFaqs' => $ownFaqs] + $this->shared('travel_style_id', $style->id) + [
             'style' => $style, 'packages' => $packages,
             'others' => TravelStyle::active()->where('id', '!=', $style->id)->withCount(['packages' => fn ($q) => $q->published()])->get(),
             'seo' => Seo::make($style->seo_title ?: "{$style->name} Tours of Germany", $style->meta_description ?: $style->summary, [
-                'image' => $style->image,
+                'image' => $style->image, 'schema' => $ownFaqs ? [Seo::faqSchema($faqs)] : [],
                 'breadcrumbs' => [['name' => 'Home', 'url' => url('/')], ['name' => 'Travel styles', 'url' => route('travel-styles.index')], ['name' => $style->name, 'url' => route('travel-styles.show', $style->slug)]],
             ]),
         ]);

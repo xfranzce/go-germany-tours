@@ -12,7 +12,7 @@ class ContentSeeder extends Seeder
 {
     public function run(): void
     {
-        if (! Faq::whereNull('package_id')->exists()) {
+        if (! Faq::whereNull('package_id')->whereNull('tour_type_id')->whereNull('destination_id')->whereNull('travel_style_id')->exists()) {
             $faqs = [
                 ['How does the quote process work?', 'Answer a few quick questions or fill in the enquiry form. We review your dates, group size and preferences and send you a tailored quote. There is no obligation to book.'],
                 ['What is the difference between self drive, chauffeur driven and coach tours?', 'On a self drive you drive yourself between pre-arranged stays. With a chauffeur a private driver takes you. A coach tour is a guided itinerary with other travelers.'],

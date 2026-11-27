@@ -30,11 +30,13 @@ class DestinationController extends Controller
         $destination = Destination::where('slug', $slug)->where('is_active', true)->firstOrFail();
         $packages = \App\Models\Package::published()->listedOn($destination)->with(['tourType', 'destination', 'images'])->get();
 
-        return view('destinations.show', $this->shared('destination_id', $destination->id) + [
+        [$faqs, $ownFaqs] = Faq::forPage('destination_id', $destination->id);
+
+        return view('destinations.show', ['faqs' => $faqs, 'ownFaqs' => $ownFaqs] + $this->shared('destination_id', $destination->id) + [
             'destination' => $destination, 'packages' => $packages,
             'others' => Destination::withListedCounts(Destination::active()->where('id', '!=', $destination->id)->get()),
             'seo' => Seo::make($destination->seo_title ?: $destination->name.' Tours and Vacations', $destination->meta_description ?: $destination->summary, [
-                'image' => $destination->image,
+                'image' => $destination->image, 'schema' => $ownFaqs ? [Seo::faqSchema($faqs)] : [],
                 'breadcrumbs' => [['name' => 'Home', 'url' => url('/')], ['name' => 'Destinations', 'url' => route('destinations.index')], ['name' => $destination->name, 'url' => route('destinations.show', $destination->slug)]],
             ]),
         ]);
